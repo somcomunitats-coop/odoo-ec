@@ -32,6 +32,7 @@ from ..exceptions import (
     URLValidationError,
 )
 from ..schemas import (
+    SubscriptionMode,
     SubscriptionRequestCreationParams,
     WebsiteShareSubscriptionContext,
     WebsiteShareSubscriptionSubmissionBase,
@@ -76,24 +77,18 @@ class WebsiteShareSubscriptionController(http.Controller):
         # Create and validate context, handle validation errors
         try:
             # Build context creation parameters from URL kwargs
-            context_creation_params_dict = self._get_context_creation_params_dict(
-                kwargs
-            )
-            ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
+            ctx = self._get_website_share_subscription_context(kwargs)
             values = self._get_page_values(ctx)
             if request.httprequest.method == HTTPMethod.GET:
                 return self._render_page(values, HTTPStatus.OK)
             if request.httprequest.method == HTTPMethod.POST:
-                values = self._process_form(request, ctx)
+                values = self._process_form(ctx)
         except (ControllerContextValidationError, URLValidationError) as e:
             # Render error page if context validation fails
             return self._render_error_page(e)
         except FormValidationError as e:
             _logger.error(traceback.format_exc())
             _logger.error(str(e))
-            # now we return form with values pre-selected and error message on top
-            if e.http_error_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-                return self._render_error_page(e)
             values["error"] = {"title": e.title, "messages": e.messages}
             self._populate_form_values_from_submission(request, values)
             return self._render_page(values, e.http_error_code)
@@ -104,56 +99,36 @@ class WebsiteShareSubscriptionController(http.Controller):
 
         return self._render_successfullpage()
 
-    def _render_successfullpage(self):
-        return request.render("energy_communities.website_form_submit_confirmation")
-
-    def _render_page(self, values, status_code):
+    def _process_form(self, ctx):
         """
-        Render the subscription page template with provided values.
+        Process form submission data using SubscriptionRequestUtils component.
+
+        Validates and creates subscription request from form data.
 
         Args:
-            values: Dictionary containing all data needed for template rendering
-
-        Returns:
-            Rendered template response
+            ctx: WebsiteShareSubscriptionContext containig all context information
         """
-        return request.render(
-            "energy_communities_cooperator.template_subscription_page",
-            values,
-            status=status_code,
-        )
-
-    def _render_error_page(self, error: Exception):
-        """
-        Render the subscription page template with provided values.
-
-        Args:
-            values: Dictionary containing all data needed for template rendering
-
-        Returns:
-            Rendered template response
-        """
-        name = type(error).__name__
-
-        if isinstance(error, (ComponentValidationError, FormValidationError)):
-            error_message = "\n".join(error.messages)
-        elif isinstance(error, ControllerContextValidationError):
-            error_message = error.message
+        try:
+            form_submission = self._get_requested_form(ctx.subscription_mode)
+            with subscription_request_utils(request.env) as component:
+                subscription_request_creation_params = (
+                    component.create_subscription_request_params(form_submission, ctx)
+                )
+                component.create_subscription_request(
+                    subscription_request_creation_params
+                )
+        except PydanticValidationError as e:
+            raise FormValidationError(
+                MAPPING_FORM_ERROR_TITLE["general"],
+                self._get_errors_arr(e),
+            )
+        except ComponentValidationError as e:
+            raise FormValidationError(e.title, e.messages)
         else:
-            error_message = str(error)
-        status_code = getattr(
-            error, "http_error_code", HTTPStatus.INTERNAL_SERVER_ERROR
-        )
-        return request.render(
-            "http_routing.http_error",
-            {
-                "status_code": status_code,
-                "status_message": getattr(error, "title", name),
-                "error_message": error_message,
-                "debug": traceback.format_exc(),
-            },
-            status=status_code,
-        )
+            return self._get_page_base_values(ctx) | {
+                "form_submitted": True,
+                "success_msg": MAPPING_FORM_SUCCESS["general"],
+            }
 
     def _populate_form_values_from_submission(self, request, values):
         form_submission = dict(request.httprequest.form)
@@ -162,70 +137,22 @@ class WebsiteShareSubscriptionController(http.Controller):
             if field_key in form_submission:
                 field["value"] = form_submission[field_key]
 
-    def _process_form(self, request, ctx):
-        """
-        Process form submission data using SubscriptionRequestUtils component.
-
-        Validates and creates subscription request from form data.
-
-        Args:
-            request: Dictionary containing form submission data and context
-            ctx: WebsiteShareSubscriptionContext containig all context information
-        """
-        try:
-            # Extract form data from request
-            if ctx.subscription_mode.value == "voluntary":
-                form_submission = WebsiteShareSubscriptionSubmissionVoluntary(
-                    **dict(request.httprequest.form)
-                )
-            elif ctx.subscription_mode.value == "company_member":
-                form_submission = WebsiteShareSubscriptionSubmissionCompanyMember(
-                    **dict(request.httprequest.form)
-                )
-            else:
-                form_submission = WebsiteShareSubscriptionSubmissionBase(
-                    **dict(request.httprequest.form)
-                )
-        except PydanticValidationError as e:
-            raise FormValidationError(
-                MAPPING_FORM_ERROR_TITLE["general"],
-                self._get_errors_arr(e),
+    # getters
+    def _get_requested_form(self, subscription_mode: SubscriptionMode):
+        # Extract form data from request
+        if subscription_mode.value == SubscriptionMode.voluntary:
+            form_submission = WebsiteShareSubscriptionSubmissionVoluntary(
+                **request.httprequest.form
             )
-        try:
-            creation_params = self._get_subscription_request_creation_params_dict(
-                form_submission, ctx
+        elif subscription_mode.value == SubscriptionMode.company_member:
+            form_submission = WebsiteShareSubscriptionSubmissionCompanyMember(
+                **request.httprequest.form
             )
-        except FormValidationError as e:
-            raise e
-        except Exception as ge:
-            raise FormValidationError(
-                _("There is a problem preparing creation params for request."),
-                [
-                    ge.args[0],
-                    _("Please contact the platform administrator to fix the issue."),
-                ],
+        else:
+            form_submission = WebsiteShareSubscriptionSubmissionBase(
+                **request.httprequest.form
             )
-        try:
-            subscription_request_creation_params = SubscriptionRequestCreationParams(
-                **creation_params
-            )
-        except PydanticValidationError as e:
-            raise FormValidationError(
-                MAPPING_FORM_ERROR_TITLE["general"],
-                self._get_errors_arr(e),
-            )
-        try:
-            # Use component to validate and create subscription request
-            with subscription_request_utils(request.env) as component:
-                component.create_subscription_request(
-                    subscription_request_creation_params
-                )
-        except ComponentValidationError as e:
-            raise FormValidationError(e.title, e.messages)
-        return self._get_page_base_values(ctx) | {
-            "form_submitted": True,
-            "success_msg": MAPPING_FORM_SUCCESS["general"],
-        }
+        return form_submission
 
     def _get_errors_arr(self, e):
         e_msgs = []
@@ -235,11 +162,10 @@ class WebsiteShareSubscriptionController(http.Controller):
             )
         return e_msgs
 
-    # getters
-    def _get_context_creation_params_dict(self, kwargs):
+    def _get_website_share_subscription_context(
+        self, kwargs
+    ) -> WebsiteShareSubscriptionContext:
         """
-        Build dictionary of parameters needed to create WebsiteShareSubscriptionContext.
-
         Extracts and processes URL parameters to build context creation dictionary.
         Maps subscription mode to membership and member type modes, retrieves company
         and product category, and determines form type and available products.
@@ -248,7 +174,7 @@ class WebsiteShareSubscriptionController(http.Controller):
             kwargs: URL parameters from route
 
         Returns:
-            Dictionary with all parameters needed for context creation
+           A websiteShareSubscriptionContext instance
         """
         # Extract subscription mode from URL
         subscription_mode = kwargs.get("subscription_mode")
@@ -280,7 +206,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         )
 
         # Combine base parameters with product information
-        return {
+        subscription_ctx = {
             "membership_mode": membership_mode,
             "membertype_mode": membertype_mode,
             "subscription_mode": subscription_mode,
@@ -290,68 +216,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         } | self._get_page_products_dict(
             company, product_categ, query_product, formtype_mode, membertype_mode
         )
-
-    def _get_subscription_request_creation_params_dict(self, form_submission, ctx):
-        creation_params = form_submission.model_dump()
-        creation_params["share_product_id"] = (
-            request.env["product.template"]
-            .sudo()
-            .search([("id", "=", creation_params["share_product_id"])])
-        )
-        creation_params["product_categ"] = ctx.product_categ
-        creation_params["company_id"] = ctx.company
-        creation_params["membertype_mode"] = ctx.membertype_mode
-        creation_params["membership_mode"] = ctx.membership_mode
-
-        if ctx.subscription_mode.value == "voluntary":
-            creation_params["vat"] = creation_params["vat"].strip().upper()
-            partner = (
-                request.env["res.partner"]
-                .sudo()
-                .get_cooperator_from_vat(creation_params["vat"], ctx.company.id)
-            )
-            # TODO: Must the person be a effective cooperator???
-            if not partner:
-                raise FormValidationError(
-                    MAPPING_FORM_ERROR_TITLE["general"],
-                    [_("We couldn't find a member for ")],
-                )
-            creation_params |= (
-                self._get_subscription_request_creation_params_from_partner(partner)
-            )
-        else:  # memeber or company_member or invited or company_invites
-            creation_params["country_id"] = (
-                request.env["res.country"]
-                .sudo()
-                .search([("id", "=", creation_params["country_id"])])
-            )
-            lang_model = (
-                request.env["res.lang"]
-                .sudo()
-                .search([("id", "=", creation_params["lang"])])
-            )
-            if lang_model:
-                creation_params["lang"] = lang_model.code
-            else:
-                creation_params["lang"] = ""
-        return creation_params
-
-    def _get_subscription_request_creation_params_from_partner(self, partner):
-        return {
-            "partner_id": partner.id,
-            "already_cooperator": partner.member,
-            "email": partner.email or _("Email not found"),
-            "phone": partner.phone or _("Phone not found"),
-            "gender": partner.gender or "not_share",
-            "lastname": partner.lastname or _("Lastname not found"),
-            "firstname": partner.firstname or partner.name,
-            "address": partner.street or _("Address not found"),
-            "city": partner.city or _("City not found"),
-            "zip_code": partner.zip or _("ZIP code not found"),
-            "country_id": (partner.country_id or ctx.company.default_country_id),
-            "lang": partner.lang or ctx.company.default_lang_id.id,
-            "birthdate": partner.birthdate_date.strftime("%d/%m/%Y") or False,
-        }
+        return WebsiteShareSubscriptionContext(**subscription_ctx)
 
     def _get_page_values(self, ctx):
         """
@@ -866,3 +731,55 @@ class WebsiteShareSubscriptionController(http.Controller):
         if ctx.product_categ.product_qty_must_be_read_only:
             if values_field["key"] == "ordered_parts":
                 values_field["readonly"] = True
+
+    # Render methods
+    def _render_successfullpage(self):
+        return request.render("energy_communities.website_form_submit_confirmation")
+
+    def _render_page(self, values, status_code):
+        """
+        Render the subscription page template with provided values.
+
+        Args:
+            values: Dictionary containing all data needed for template rendering
+
+        Returns:
+            Rendered template response
+        """
+        return request.render(
+            "energy_communities_cooperator.template_subscription_page",
+            values,
+            status=status_code,
+        )
+
+    def _render_error_page(self, error: Exception):
+        """
+        Render the subscription page template with provided values.
+
+        Args:
+            values: Dictionary containing all data needed for template rendering
+
+        Returns:
+            Rendered template response
+        """
+        name = type(error).__name__
+
+        if isinstance(error, (ComponentValidationError, FormValidationError)):
+            error_message = "\n".join(error.messages)
+        elif isinstance(error, ControllerContextValidationError):
+            error_message = error.message
+        else:
+            error_message = str(error)
+        status_code = getattr(
+            error, "http_error_code", HTTPStatus.INTERNAL_SERVER_ERROR
+        )
+        return request.render(
+            "http_routing.http_error",
+            {
+                "status_code": status_code,
+                "status_message": getattr(error, "title", name),
+                "error_message": error_message,
+                "debug": traceback.format_exc(),
+            },
+            status=status_code,
+        )

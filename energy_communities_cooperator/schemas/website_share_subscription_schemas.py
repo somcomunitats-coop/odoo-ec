@@ -6,6 +6,8 @@ from pydantic import (
     BaseModel,
     ConfigDict,
     EmailStr,
+    Field,
+    field_serializer,
     field_validator,
     model_validator,
 )
@@ -99,6 +101,15 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
                 data[k] = None
         return data
 
+    @model_validator(mode="after")
+    def check_iban_sepa(self) -> Self:
+        if self.payment_method == PaymentMethodOption.sepa:
+            try:
+                validate_iban(self.iban.replace(" ", ""))
+            except:
+                raise ValueError(_("Invalid iban format"))
+        return self
+
 
 class WebsiteShareSubscriptionSubmissionCompanyMember(
     WebsiteShareSubscriptionSubmissionBase
@@ -127,20 +138,38 @@ class WebsiteShareSubscriptionSubmissionVoluntary(BaseModel):
         return data
 
 
-# TODO: Create this schema for subscription request params creation
-class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
+class SubscriptionRequestCreationParams(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
+    source: str
+    email: EmailStr
+    firstname: str
+    lastname: str
+    gender: GenderOption
     birthdate: date
+    phone: str
+    lang: str
+    vat: str
+    address: str
+    city: str
+    zip_code: str
     country_id: Country
     share_product_id: ProductTemplate
+    ordered_parts: int
     company_id: Company
-    product_categ: ProductCategory
-    membertype_mode: MemberTypeMode
-    membership_mode: MemberShipMode
-    lang: str
     company_name: Optional[str] = None
     company_email: Optional[EmailStr] = None
     contact_person_function: Optional[str] = None
+    iban: Optional[str] = None
+    mandate_approved: Optional[bool] = None
+    data_policy_approved: Optional[bool] = None
+    generic_rules_approved: Optional[bool] = None
+    internal_rules_approved: Optional[bool] = None
+    financial_risk_approved: Optional[bool] = None
+
+    # Not necesary for SR creation
+    membership_mode: MemberShipMode = Field(exclude=True)
+    membertype_mode: MemberTypeMode = Field(exclude=True)
+    product_categ: ProductCategory = Field(exclude=True)
 
     # Avoid empty recordsets
     @field_validator(
@@ -164,14 +193,21 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
                 raise ValueError(_("Invalid date format"))
         return date_date
 
-    @model_validator(mode="after")
-    def check_iban_sepa(self) -> Self:
-        if self.payment_method == PaymentMethodOption.sepa:
-            try:
-                validate_iban(self.iban.replace(" ", ""))
-            except:
-                raise ValueError(_("Invalid iban format"))
-        return self
+    @field_serializer("share_product_id", mode="plain")
+    def serialize_share_product_id(self, share_product_id) -> int:
+        return share_product_id.product_variant_id.id
+
+    @field_serializer("gender", mode="plain")
+    def serialize_gender(self, gender) -> str:
+        return gender.value
+
+    @field_serializer("country_id", mode="plain")
+    def serialize_gender(self, country_id) -> int:
+        return country_id.id
+
+    @field_serializer("company_id", mode="plain")
+    def serialize_gender(self, company_id) -> int:
+        return company_id.id
 
 
 class WebsiteShareSubscriptionContext(BaseModel):

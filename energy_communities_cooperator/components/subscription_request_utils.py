@@ -4,8 +4,11 @@ from odoo.addons.component.core import Component
 
 from ..config import MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE
 from ..exceptions import ComponentValidationError
+from ..models.subscription_request import SubscriptionRequest
 from ..schemas.website_share_subscription_schemas import (
     MemberShipMode,
+    MemberTypeMode,
+    SubscriptionMode,
     SubscriptionRequestCreationParams,
 )
 
@@ -16,10 +19,53 @@ class SubscriptionRequestUtils(Component):
     _apply_on = "subscription.request"
     _collection = "utils.backend"
 
+    def create_subscription_request_params(
+        self, form_submission, ctx
+    ) -> SubscriptionRequestCreationParams:
+        creation_params = form_submission.model_dump()
+        creation_params["share_product_id"] = (
+            self.env["product.template"]
+            .sudo()
+            .search([("id", "=", form_submission.share_product_id)])
+        )
+        creation_params["product_categ"] = ctx.product_categ
+        creation_params["company_id"] = ctx.company
+        creation_params["membertype_mode"] = ctx.membertype_mode
+        creation_params["membership_mode"] = ctx.membership_mode
+        creation_params["is_company"] = ctx.membertype_mode == MemberTypeMode.company
+        creation_params["source"] = "website"  # TODO review diferent type of creation
+        creation_params["data_policy_approved"] = form_submission.privacy_policy
+        creation_params["mandate_approved"] = form_submission.conditions_payment
+
+        if ctx.subscription_mode.value == SubscriptionMode.voluntary:
+            partner = self._get_partner_form(form_submission, ctx)
+            creation_params |= (
+                self._get_subscription_request_creation_params_from_partner(partner)
+            )
+        else:  # memeber or company_member or invited or company_invites
+            creation_params["gender"] = form_submission.gender
+            creation_params["generic_rules_approved"] = form_submission.generic_rules
+            creation_params["internal_rules_approved"] = form_submission.internal_rules
+            creation_params["financial_risk_approved"] = form_submission.financial_risk
+            creation_params["country_id"] = (
+                self.env["res.country"]
+                .sudo()
+                .search([("id", "=", form_submission.country_id)])
+            )
+            lang_model = (
+                self.env["res.lang"].sudo().search([("id", "=", form_submission.lang)])
+            )
+            if lang_model:
+                creation_params["lang"] = lang_model.code
+            else:
+                creation_params["lang"] = ""
+
+        return SubscriptionRequestCreationParams(**creation_params)
+
     def create_subscription_request(
         self,
         creation_params: SubscriptionRequestCreationParams,
-    ):
+    ) -> SubscriptionRequest:
         """
         Create subscription request with validation.
 
@@ -35,9 +81,13 @@ class SubscriptionRequestUtils(Component):
         Returns:
             Created subscription.request recordset
         """
-        self._validate_creation_params(creation_params)
         try:
-            creation_params = self._get_model_creation_params(creation_params)
+            self._validate_subscription_request_params(creation_params)
+            subscription_request = (
+                self.env["subscription.request"]
+                .sudo()
+                .create(creation_params.model_dump())
+            )
         except Exception as e:
             raise ComponentValidationError(
                 _("There is a problem on creating request params"),
@@ -46,23 +96,10 @@ class SubscriptionRequestUtils(Component):
                     _("Please contact the platform administrator to fix the issue."),
                 ],
             ) from e
-        # Create subscription request
-        try:
-            subscription_request = (
-                self.env["subscription.request"].sudo().create(creation_params)
-            )
-        except Exception as e:
-            raise ComponentValidationError(
-                _("There is a problem on creating request."),
-                [
-                    e.args[0],
-                    _("Please contact the platform administrator to fix the issue."),
-                ],
-            ) from e
         self._validate_subscription_data_consistency(subscription_request)
         return subscription_request
 
-    def _validate_creation_params(
+    def _validate_subscription_request_params(
         self, creation_params: SubscriptionRequestCreationParams
     ):
         errors = []
@@ -187,51 +224,33 @@ class SubscriptionRequestUtils(Component):
                 }
             )
 
-    def _get_model_creation_params(
-        self, creation_params: SubscriptionRequestCreationParams
-    ) -> dict:
-        creation_params = creation_params.model_dump()
-        if creation_params["membertype_mode"].value == "company":
-            creation_params["is_company"] = True
-        data_policy_approved = creation_params[
-            "company_id"
-        ].display_data_policy_approval and creation_params.get("privacy_policy", False)
-        generic_rules_approved = creation_params[
-            "company_id"
-        ].display_generic_rules_approval and creation_params.get("generic_rules", False)
-        internal_rules_approved = creation_params[
-            "company_id"
-        ].display_internal_rules_approval and creation_params.get(
-            "internal_rules", False
+    def _get_partner_form(self, form_submission, ctx):
+        partner_vat = form_submission.vat.strip().upper()
+        partner = (
+            self.env["res.partner"]
+            .sudo()
+            .get_cooperator_from_vat(partner_vat, ctx.company.id)
         )
-        financial_risk_approved = creation_params[
-            "company_id"
-        ].display_financial_risk_approval and creation_params.get(
-            "financial_risk", False
-        )
+        if not partner:
+            raise FormValidationError(
+                MAPPING_FORM_ERROR_TITLE["general"],
+                [_("We couldn't find a member with %s", creation_params["vat"])],
+            )
+        return partner
 
-        creation_params |= {
-            "source": "website",  # TODO review diferent type of creation
-            "gender": creation_params["gender"].value,
-            "data_policy_approved": data_policy_approved,
-            "internal_rules_approved": internal_rules_approved,
-            "financial_risk_approved": financial_risk_approved,
-            "generic_rules_approved": generic_rules_approved,
-            "country_id": creation_params["country_id"].id,
-            "share_product_id": creation_params[
-                "share_product_id"
-            ].product_variant_id.id,
-            "company_id": creation_params["company_id"].id,
-            "mandate_approved": creation_params["conditions_payment"],
+    def _get_subscription_request_creation_params_from_partner(self, partner):
+        return {
+            "partner_id": partner.id,
+            "already_cooperator": partner.member,
+            "email": partner.email or _("Email not found"),
+            "phone": partner.phone or _("Phone not found"),
+            "gender": partner.gender or "not_share",
+            "lastname": partner.lastname or _("Lastname not found"),
+            "firstname": partner.firstname or partner.name,
+            "address": partner.street or _("Address not found"),
+            "city": partner.city or _("City not found"),
+            "zip_code": partner.zip or _("ZIP code not found"),
+            "country_id": (partner.country_id or ctx.company.default_country_id),
+            "lang": partner.lang or ctx.company.default_lang_id.id,
+            "birthdate": partner.birthdate_date.strftime("%d/%m/%Y") or False,
         }
-        # Delete not necesary params for creation
-        del creation_params["payment_method"]
-        del creation_params["product_categ"]
-        del creation_params["membertype_mode"]
-        del creation_params["membership_mode"]
-        del creation_params["conditions_payment"]
-        del creation_params["privacy_policy"]
-        del creation_params["generic_rules"]
-        del creation_params["internal_rules"]
-        del creation_params["financial_risk"]
-        return creation_params
