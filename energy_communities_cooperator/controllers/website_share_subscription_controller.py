@@ -81,6 +81,8 @@ class WebsiteShareSubscriptionController(http.Controller):
             )
             ctx = WebsiteShareSubscriptionContext(**context_creation_params_dict)
             values = self._get_page_values(ctx)
+            if request.httprequest.method == HTTPMethod.GET:
+                return self._render_page(values, HTTPStatus.OK)
             if request.httprequest.method == HTTPMethod.POST:
                 values = self._process_form(request, ctx)
         except (ControllerContextValidationError, URLValidationError) as e:
@@ -99,8 +101,11 @@ class WebsiteShareSubscriptionController(http.Controller):
             _logger.error(traceback.format_exc())
             _logger.error(str(e))
             return self._render_error_page(e)
-        else:
-            return self._render_page(values, HTTPStatus.OK)
+
+        return self._render_successfullpage()
+
+    def _render_successfullpage(self):
+        return request.render("energy_communities.website_form_submit_confirmation")
 
     def _render_page(self, values, status_code):
         """
