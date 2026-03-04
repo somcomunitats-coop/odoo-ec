@@ -614,7 +614,5 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             int(SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY["ordered_parts"]),
         )
         # self.assertEqual(subscription_request.privacy_policy, SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY["privacy_policy"])
-        self.assertEqual(
-            subscription_request.iban, SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY["iban"]
-        )
+        self.assertFalse(subscription_request.iban)
         # self.assertEqual(subscription_request.conditions_payment, SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY["conditions_payment"])

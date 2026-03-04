@@ -87,7 +87,8 @@ class WebsiteShareSubscriptionController(http.Controller):
             # Render error page if context validation fails
             return self._render_error_page(e)
         except FormValidationError as e:
-            _logger.error(e.title)
+            _logger.error(traceback.format_exc())
+            _logger.error(str(e))
             # now we return form with values pre-selected and error message on top
             if e.http_error_code == HTTPStatus.INTERNAL_SERVER_ERROR:
                 return self._render_error_page(e)
@@ -95,6 +96,8 @@ class WebsiteShareSubscriptionController(http.Controller):
             self._populate_form_values_from_submission(request, values)
             return self._render_page(values, e.http_error_code)
         except Exception as e:
+            _logger.error(traceback.format_exc())
+            _logger.error(str(e))
             return self._render_error_page(e)
         else:
             return self._render_page(values, HTTPStatus.OK)

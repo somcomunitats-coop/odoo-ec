@@ -66,7 +66,7 @@ class GenderOption(str, Enum):
 
 class PaymentMethodOption(str, Enum):
     sepa = "sepa"
-    transefer = "transfer"
+    transfer = "transfer"
 
 
 class WebsiteShareSubscriptionSubmissionBase(BaseModel):
@@ -84,6 +84,7 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     country_id: int
     share_product_id: int
     ordered_parts: int
+    payment_method: PaymentMethodOption
     iban: Optional[str] = None
     conditions_payment: Optional[bool] = None
     privacy_policy: Optional[bool] = None
@@ -113,6 +114,7 @@ class WebsiteShareSubscriptionSubmissionVoluntary(BaseModel):
     phone: str
     share_product_id: int
     ordered_parts: int
+    payment_method: PaymentMethodOption
     iban: Optional[str] = None
     conditions_payment: Optional[bool] = None
     privacy_policy: Optional[bool] = None
@@ -150,15 +152,6 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
             raise ValueError(_("records_required"))
         return record
 
-    @field_validator("iban", mode="before")
-    @classmethod
-    def check_iban_format(cls, iban: str) -> str:
-        try:
-            validate_iban(iban.replace(" ", ""))
-        except:
-            raise ValueError(_("Invalid iban format"))
-        return iban
-
     @field_validator("birthdate", mode="before")
     @classmethod
     def check_date_format(cls, date_str: str) -> date:
@@ -170,6 +163,15 @@ class SubscriptionRequestCreationParams(WebsiteShareSubscriptionSubmissionBase):
             except:
                 raise ValueError(_("Invalid date format"))
         return date_date
+
+    @model_validator(mode="after")
+    def check_iban_sepa(self) -> Self:
+        if self.payment_method == PaymentMethodOption.sepa:
+            try:
+                validate_iban(self.iban.replace(" ", ""))
+            except:
+                raise ValueError(_("Invalid iban format"))
+        return self
 
 
 class WebsiteShareSubscriptionContext(BaseModel):

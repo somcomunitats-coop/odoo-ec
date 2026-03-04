@@ -224,6 +224,7 @@ class SubscriptionRequestUtils(Component):
             "company_id": creation_params["company_id"].id,
         }
         # Delete not necesary params for creation
+        del creation_params["payment_method"]
         del creation_params["product_categ"]
         del creation_params["membertype_mode"]
         del creation_params["membership_mode"]

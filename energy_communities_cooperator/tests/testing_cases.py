@@ -17,6 +17,7 @@ SUBSCRIPTION_FORM_SUBMISSION = {
     "internal_rules": "on",
     "financial_risk": "on",
     "generic_rules": "on",
+    "payment_method": "sepa",
     "iban": "ES0820385793089381465771",
     "conditions_payment": "on",
 }
@@ -39,6 +40,7 @@ SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER = {
     "internal_rules": "on",
     "financial_risk": "on",
     "generic_rules": "on",
+    "payment_method": "sepa",
     "iban": "ES0820385793089381465771",
     "conditions_payment": "on",
     "company_name": "company name",
@@ -55,6 +57,7 @@ SUBSCRIPTION_FORM_SUBMISSION_VOLUNTARY = {
     "internal_rules": "on",
     "financial_risk": "on",
     "generic_rules": "on",
-    "iban": "ES0820385793089381465771",
+    "payment_method": "transfer",
+    "iban": "",
     "conditions_payment": "on",
 }
