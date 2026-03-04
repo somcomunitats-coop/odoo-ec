@@ -151,7 +151,6 @@ class SubscriptionRequestUtils(Component):
         # TODO: Validate privacy_policy and conditions_payment must be marked
         if errors:
             raise ComponentValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE["general"],
                 errors,
             )

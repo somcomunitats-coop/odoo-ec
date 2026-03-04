@@ -125,7 +125,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         Returns:
             Rendered template response
         """
-        name = type(exception).__name__
+        name = type(error).__name__
 
         if isinstance(error, (ComponentValidationError, FormValidationError)):
             error_message = "\n".join(error.messages)
@@ -180,7 +180,6 @@ class WebsiteShareSubscriptionController(http.Controller):
                 )
         except PydanticValidationError as e:
             raise FormValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 MAPPING_FORM_ERROR_TITLE["general"],
                 self._get_errors_arr(e),
             )
@@ -192,7 +191,6 @@ class WebsiteShareSubscriptionController(http.Controller):
             raise e
         except Exception as ge:
             raise FormValidationError(
-                STATUS_CODE_SERVER_ERROR,
                 _("There is a problem preparing creation params for request."),
                 [
                     ge.args[0],
@@ -205,18 +203,17 @@ class WebsiteShareSubscriptionController(http.Controller):
             )
         except PydanticValidationError as e:
             raise FormValidationError(
-                STATUS_CODE_CONSISTENCY_ERROR,
                 MAPPING_FORM_ERROR_TITLE["general"],
                 self._get_errors_arr(e),
             )
         try:
             # Use component to validate and create subscription request
             with subscription_request_utils(request.env) as component:
-                subscription_request = component.create_subscription_request(
+                component.create_subscription_request(
                     subscription_request_creation_params
                 )
         except ComponentValidationError as e:
-            raise FormValidationError(e.http_error_code, e.title, e.messages)
+            raise FormValidationError(e.title, e.messages)
         return self._get_page_base_values(ctx) | {
             "form_submitted": True,
             "success_msg": MAPPING_FORM_SUCCESS["general"],
@@ -306,7 +303,6 @@ class WebsiteShareSubscriptionController(http.Controller):
             # TODO: Must the person be a effective cooperator???
             if not partner:
                 raise FormValidationError(
-                    STATUS_CODE_CONSISTENCY_ERROR,
                     MAPPING_FORM_ERROR_TITLE["general"],
                     [_("We couldn't find a member for ")],
                 )

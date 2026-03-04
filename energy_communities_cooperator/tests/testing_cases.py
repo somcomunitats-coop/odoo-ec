@@ -7,7 +7,7 @@ SUBSCRIPTION_FORM_SUBMISSION = {
     "phone": "1234",
     "lang": "6",
     # "vat": "47731166W",
-    "vat": "43549978F",
+    "vat": "71838114Y",
     "address": "address test",
     "city": "city test",
     "zip_code": "08301",

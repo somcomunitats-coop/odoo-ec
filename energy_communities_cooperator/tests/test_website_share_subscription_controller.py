@@ -6,11 +6,6 @@ from odoo.tests.common import HttpCase, tagged
 
 from odoo.addons.base_rest.tests.common import RegistryMixin
 
-from ..config import (
-    STATUS_CODE_CONSISTENCY_ERROR,
-    STATUS_CODE_NOT_FOUND_ERROR,
-    STATUS_CODE_UNAVAILABLE_ERROR,
-)
 from .testing_cases import (
     SUBSCRIPTION_FORM_SUBMISSION,
     SUBSCRIPTION_FORM_SUBMISSION_COMPANY_MEMBER,
@@ -57,7 +52,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong subscription_mode
         response = self.client("/subscription/aaaa/{}".format(COMMUNITY_1_EXT_ID))
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     def test_website_form_render__wrong_company(self):
         # given http_client
@@ -65,7 +60,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong company_ext_id
         response = self.client("/subscription/member/1234")
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     def test_website_form_render__wrong_subscription_mode_and_company(self):
         # given http_client
@@ -73,7 +68,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong subscription_mode and company_ext_id
         response = self.client("/subscription/aaaa/1234")
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     def test_website_form_render__with_product_wrong_subscription_mode_and_company(
         self,
@@ -85,7 +80,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             "/subscription/aaaa/1234/{}".format(COMMUNITY_1_SHARE_1_EXT_ID)
         )
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     def test_website_form_render__with_product_wrong_company(self):
         # given http_client
@@ -95,7 +90,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             "/subscription/member/1234/{}".format(COMMUNITY_1_SHARE_1_EXT_ID)
         )
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     def test_website_form_render__with_product_wrong_subscription_mode(self):
         # given http_client
@@ -107,7 +102,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             )
         )
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     def test_website_form_render__with_wrong_product_wrong_company_and_subscription_mode(
         self,
@@ -117,7 +112,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong subscription_mode, company_ext_id and product_ext_id
         response = self.client("/subscription/aaaa/1234/5678")
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     def test_website_form_render__with_wrong_product_wrong_subscription_mode(self):
         # given http_client
@@ -125,7 +120,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong subscription_mode and product_ext_id
         response = self.client("/subscription/aaa/{}/5678".format(COMMUNITY_1_EXT_ID))
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     def test_website_form_render__with_wrong_product_wrong_company(self):
         # given http_client
@@ -133,7 +128,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         # with wrong company_ext_id and product_ext_id
         response = self.client("/subscription/member/1234/5678")
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     def test_website_form_render__with_wrong_product(self):
         # given http_client
@@ -143,7 +138,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             "/subscription/member/{}/5678".format(COMMUNITY_1_EXT_ID)
         )
         # it throws a NotFound error
-        self.assertEqual(response.status_code, STATUS_CODE_NOT_FOUND_ERROR)
+        self.assertEqual(response.status_code, 404)
 
     # Product must belong to defined company
     def test_website_form_render_wrong_consistency_between_product_and_company(self):
@@ -155,8 +150,8 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
                 COMMUNITY_2_EXT_ID, COMMUNITY_1_SHARE_1_EXT_ID
             )
         )
-        # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
+        # the we obtain a bad request error
+        self.assertEqual(response.status_code, 400)
 
     # Product doesn't belong to defined category
     def test_website_form_render_wrong_consistency_between_product_and_category(self):
@@ -175,86 +170,62 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
                 COMMUNITY_1_EXT_ID, COMMUNITY_1_SHARE_2_EXT_ID
             )
         )
-        # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
+        # it throws a bad request erro
+        self.assertEqual(response.status_code, 400)
 
     # Product is not for individuals request on member,invited subscription_mode
     def test_website_form_render_wrong_consistency_with_product_by_individual(self):
         # given http_client
-        # when we call for the single subscription form page
-        # for a product of company 1 with wrong by_individual flag
+        # and a product of company 1 with wrong by_individual flag
         self.env.ref(COMMUNITY_1_SHARE_2_XML_ID).write({"by_individual": False})
-        # case member
-        response = self.client(
-            "/subscription/member/{}/{}".format(
-                COMMUNITY_1_EXT_ID, COMMUNITY_1_SHARE_2_EXT_ID
+        # when we call the single subscription form pages for individuals
+        for subscription_mode in ["member", "invited"]:
+            response = self.client(
+                f"/subscription/{subscription_mode}/{COMMUNITY_1_EXT_ID}/{COMMUNITY_1_SHARE_2_EXT_ID}"
             )
-        )
-        # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
-        # case invited
-        response = self.client(
-            "/subscription/invited/{}/{}".format(
-                COMMUNITY_1_EXT_ID, COMMUNITY_1_SHARE_2_EXT_ID
-            )
-        )
-        # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
+            # it throws a bad request error
+            self.assertEqual(response.status_code, 400)
 
     # Product is not for companies request on member_company,invited_company subscription_mode
     def test_website_form_render_wrong_consistency_with_product_by_company(self):
         # given http_client
-        # when we call for the single subscription form page
-        # for a product of company 1 with wrong by_company flag
+        # and a product of company 1 with wrong by_company flag
         self.env.ref(COMMUNITY_1_SHARE_2_XML_ID).write({"by_company": False})
-        # case member
-        response = self.client(
-            "/subscription/company_member/{}/{}".format(
-                COMMUNITY_1_EXT_ID, COMMUNITY_1_SHARE_2_EXT_ID
+        # when we call the single subscription form page for comanies
+        for subscription_mode in ["company_member", "company_invited"]:
+            response = self.client(
+                f"/subscription/{subscription_mode}/{COMMUNITY_1_EXT_ID}/{COMMUNITY_1_SHARE_2_EXT_ID}"
             )
-        )
-        # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
-        # case invited
-        response = self.client(
-            "/subscription/company_invited/{}/{}".format(
-                COMMUNITY_1_EXT_ID, COMMUNITY_1_SHARE_2_EXT_ID
-            )
-        )
-        # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
+            # it throws a NotAcceptable error
+            self.assertEqual(response.status_code, 400)
 
     # Product is not a share
     def test_website_form_render_wrong_consistency_with_product_is_share(self):
         # given http_client
-        # when we call for the single subscription form page
-        # for a product of company 1 with wrong is_share flag
+        # and a product of company 1 with wrong is_share flag
         self.env.ref(COMMUNITY_1_SHARE_2_XML_ID).write({"is_share": False})
+        # when we call the single subscription form page
         response = self.client(
-            "/subscription/member/{}/{}".format(
-                COMMUNITY_1_EXT_ID, COMMUNITY_1_SHARE_2_EXT_ID
-            )
+            f"/subscription/member/{COMMUNITY_1_EXT_ID}/{COMMUNITY_1_SHARE_2_EXT_ID}"
         )
-        # it throws a NotAcceptable error
-        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
+        # then we have a bad request error
+        self.assertEqual(response.status_code, 400)
 
     # Product not available on single form
     def test_website_form_render_single_wrong_consistency_with_product_not_available(
         self,
     ):
         # given http_client
-        # when we call for the single subscription form page
-        # for a non_available product of company 1
+        # and a non_available product of company 1
         self.env.ref(COMMUNITY_1_SHARE_2_XML_ID).write(
             {"activate_form_specific_products": False}
         )
+        # when we call the single subscription form page
         response = self.client(
-            "/subscription/member/{}/{}".format(
-                COMMUNITY_1_EXT_ID, COMMUNITY_1_SHARE_2_EXT_ID
-            )
+            f"/subscription/member/{COMMUNITY_1_EXT_ID}/{COMMUNITY_1_SHARE_2_EXT_ID}"
         )
-        # it throws a Locked error
-        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
+        # thwn whe have a bad request error
+        self.assertEqual(response.status_code, 400)
 
     # Product not available on generic form
     @patch(
@@ -264,14 +235,14 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         self, patcher
     ):
         # given http_client
-        # when we call for the global subscription form page
-        # for a non_available product of company 1
+        # and a non_available product of company 1
         test_product = self.env.ref(COMMUNITY_1_SHARE_2_XML_ID)
         test_product.write({"display_on_website": False})
         patcher.return_value = {"products": test_product, "product": test_product}
-        response = self.client("/subscription/member/{}".format(COMMUNITY_1_EXT_ID))
-        # it throws a Locked error
-        self.assertEqual(response.status_code, STATUS_CODE_CONSISTENCY_ERROR)
+        # when we call the global subscription form page
+        response = self.client(f"/subscription/member/{COMMUNITY_1_EXT_ID}")
+        # then we have a bad request error
+        self.assertEqual(response.status_code, 400)
 
     def test_website_form_render_member_ok(self):
         # given http_client
@@ -321,25 +292,24 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         company = self.env["res.company"].search(
             [("company_external_id", "=", COMMUNITY_1_EXT_ID)], limit=1
         )
-        # given the old subscription requests
+        # and old subscription requests
         subscriptions_requests_old = self.env["subscription.request"].search(
             [("company_id", "=", company.id)]
         )
-        # given http_client
-        # and a valid data
-        # when we submit the form
+        # and correct form data
         share_product = self.env.ref(COMMUNITY_1_SHARE_1_XML_ID)
         SUBSCRIPTION_FORM_SUBMISSION["share_product_id"] = share_product.id
+        # when we submit the form with that data
         response = self.client(
-            "/subscription/member/{}".format(COMMUNITY_1_EXT_ID),
+            f"/subscription/member/{COMMUNITY_1_EXT_ID}",
             headers={
                 "Content-Type": "application/x-www-form-urlencoded",
             },
             data=SUBSCRIPTION_FORM_SUBMISSION,
         )
-        # it correctly renders the page
+        # we obtain a succesufull response
         self.assertEqual(response.status_code, 200)
-        # it creates a new subscription request
+        # and a new subscription request is created
         subscription_request = self.env["subscription.request"].search(
             [
                 ("company_id", "=", company.id),
@@ -352,6 +322,7 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
             subscription_request.share_product_id.product_variant_id.id,
             share_product.product_variant_id.id,
         )
+
         self.assertEqual(
             subscription_request.email, SUBSCRIPTION_FORM_SUBMISSION["email"]
         )
@@ -406,17 +377,16 @@ class TestShareSubscriptionController(HttpCase, RegistryMixin):
         company = self.env["res.company"].search(
             [("company_external_id", "=", COMMUNITY_1_EXT_ID)], limit=1
         )
-        # given the old subscription requests
+        # and old subscription requests
         subscriptions_requests_old = self.env["subscription.request"].search(
             [("company_id", "=", company.id)]
         )
-        # given http_client
-        # and a valid data
-        # when we submit the form
+        # and a form valid data
         share_product = self.env.ref(COMMUNITY_1_SHARE_ASSOCIATIONS_XML_ID)
         SUBSCRIPTION_FORM_SUBMISSION["share_product_id"] = share_product.id
+        # when we submit the form with that values
         response = self.client(
-            "/subscription/member_associations/{}".format(COMMUNITY_1_EXT_ID),
+            f"/subscription/member_associations/{COMMUNITY_1_EXT_ID}",
             headers={
                 "Content-Type": "application/x-www-form-urlencoded",
             },
