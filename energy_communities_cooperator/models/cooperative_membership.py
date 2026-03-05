@@ -87,8 +87,7 @@ class CooperativeMembership(models.Model):
         for membership in self:
             if membership.membership_type == "invited":
                 membership.cooperator_register_number = 0
-        if membership.cooperator_register_number != 0:
-            super().assign_cooperator_register_number()
+        super().assign_cooperator_register_number()
 
     @api.depends("subscription_request_ids")
     def _compute_subscription_invoice_ids(self):

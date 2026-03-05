@@ -123,28 +123,28 @@ class SubscriptionRequestUtils(Component):
             creation_params.company_id.display_data_policy_approval
             and creation_params.company_id.data_policy_approval_required
         )
-        if privacy_must_approved and not creation_params.privacy_policy:
+        if privacy_must_approved and not creation_params.data_policy_approved:
             errors.append(_("Privacy policy must be approved"))
         # Validate generic rules approval
         generic_rules_must_approved = (
             creation_params.company_id.display_generic_rules_approval
             and creation_params.company_id.generic_rules_approval_required
         )
-        if generic_rules_must_approved and not creation_params.generic_rules:
+        if generic_rules_must_approved and not creation_params.generic_rules_approved:
             errors.append(_("Generic rules must be approved"))
         # Validate internal rules approval
         internal_rules_must_approved = (
             creation_params.company_id.display_internal_rules_approval
             and creation_params.company_id.internal_rules_approval_required
         )
-        if internal_rules_must_approved and not creation_params.internal_rules:
+        if internal_rules_must_approved and not creation_params.internal_rules_approved:
             errors.append(_("Internal rules must be approved"))
         # Validate financial risk approval
         financial_risk_must_approved = (
             creation_params.company_id.display_financial_risk_approval
             and creation_params.company_id.financial_risk_approval_required
         )
-        if financial_risk_must_approved and not creation_params.financial_risk:
+        if financial_risk_must_approved and not creation_params.financial_risk_approved:
             errors.append(_("Financial risk must be approved"))
         # Product must belong to company
         if creation_params.company_id != creation_params.share_product_id.company_id:
