@@ -68,6 +68,29 @@ class CooperativeMembership(models.Model):
         readonly=True,
     )
 
+    @api.depends(
+        "member", "effective_invited", "partner_id.subscription_request_ids.state"
+    )
+    def _compute_coop_candidate(self):
+        for record in self:
+            if record.member:
+                is_candidate = False
+            elif record.effective_invited:
+                is_candidate = False
+            else:
+                sub_requests = record.subscription_request_ids.filtered(
+                    lambda record: record.state == "done"
+                )
+                is_candidate = bool(sub_requests)
+
+            record.coop_candidate = is_candidate
+
+    coop_candidate = fields.Boolean(
+        string="Cooperator candidate",
+        compute=_compute_coop_candidate,
+        store=True,
+    )
+
     def _get_share_type(self):
         categ_ids = [
             self.env.ref(MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["member"]).id,
@@ -84,10 +107,16 @@ class CooperativeMembership(models.Model):
         already assigned.
         If the membership type is invited, the cooperator register number is set to 0.
         """
-        for membership in self:
-            if membership.membership_type == "invited":
-                membership.cooperator_register_number = 0
-        super().assign_cooperator_register_number()
+        invited = self.filtered(
+            lambda m: m.subscription_request_ids.subscription_mode == "invited"
+        )
+        not_invited = self - invited
+        for membership in invited:
+            membership.cooperator_register_number = 0
+        if not_invited:
+            super(
+                CooperativeMembership, not_invited
+            ).assign_cooperator_register_number()
 
     @api.depends("subscription_request_ids")
     def _compute_subscription_invoice_ids(self):
