@@ -11,15 +11,16 @@ from ..schemas.website_share_subscription_schemas import (
     SubscriptionMode,
     SubscriptionRequestCreationParams,
 )
+from ..utils import ValidationMixin
 
 
-class SubscriptionRequestUtils(Component):
+class SubscriptionRequestUtils(Component, ValidationMixin):
     _name = "subscription.request.utils"
     _usage = "subscription.request.utils"
     _apply_on = "subscription.request"
     _collection = "utils.backend"
 
-    def create_subscription_request_params(
+    def get_subscription_request_params(
         self, form_submission, ctx
     ) -> SubscriptionRequestCreationParams:
         creation_params = form_submission.model_dump()
@@ -81,87 +82,21 @@ class SubscriptionRequestUtils(Component):
         Returns:
             Created subscription.request recordset
         """
-        try:
-            self._validate_subscription_request_params(creation_params)
-            subscription_request = (
-                self.env["subscription.request"]
-                .sudo()
-                .create(creation_params.model_dump())
-            )
-        except Exception as e:
-            raise ComponentValidationError(
-                _("There is a problem on creating request params"),
-                [
-                    e.args[0],
-                    _("Please contact the platform administrator to fix the issue."),
-                ],
-            ) from e
-        self._validate_subscription_data_consistency(subscription_request)
+        self._subscription_request_params = creation_params
+        self.validate(creation_params)
+        subscription_request = (
+            self.env["subscription.request"].sudo().create(creation_params.model_dump())
+        )
+        self._check_subscription_data_consistency(subscription_request)
         return subscription_request
 
-    def _validate_subscription_request_params(
+    def _validate_existing_partner(
         self, creation_params: SubscriptionRequestCreationParams
     ):
-        errors = []
-        min_qty = creation_params.share_product_id.minimum_quantity
-        if creation_params.ordered_parts < min_qty:
-            errors.append(_(f"Oder part must be higher than product config {min_qty}"))
-        # Validate subscription maximum amount
-        if creation_params.company_id.subscription_maximum_amount != 0.0:
-            if (
-                creation_params.share_product_id.list_price
-                * creation_params.ordered_parts
-                > creation_params.company_id.subscription_maximum_amount
-            ):
-                errors.append(
-                    _(
-                        f"Subscription maximum amount is {creation_params.share_product_id.list_price * creation_params.ordered_parts} but the maximum amount is {creation_params.company_id.subscription_maximum_amount}"
-                    )
-                )
-        # Validate data policy approval
-        privacy_must_approved = (
-            creation_params.company_id.display_data_policy_approval
-            and creation_params.company_id.data_policy_approval_required
+        error_msg = _(
+            "There is an existing account for this vat number on this community. "
+            "Please contact with the community administrators."
         )
-        if privacy_must_approved and not creation_params.data_policy_approved:
-            errors.append(_("Privacy policy must be approved"))
-        # Validate generic rules approval
-        generic_rules_must_approved = (
-            creation_params.company_id.display_generic_rules_approval
-            and creation_params.company_id.generic_rules_approval_required
-        )
-        if generic_rules_must_approved and not creation_params.generic_rules_approved:
-            errors.append(_("Generic rules must be approved"))
-        # Validate internal rules approval
-        internal_rules_must_approved = (
-            creation_params.company_id.display_internal_rules_approval
-            and creation_params.company_id.internal_rules_approval_required
-        )
-        if internal_rules_must_approved and not creation_params.internal_rules_approved:
-            errors.append(_("Internal rules must be approved"))
-        # Validate financial risk approval
-        financial_risk_must_approved = (
-            creation_params.company_id.display_financial_risk_approval
-            and creation_params.company_id.financial_risk_approval_required
-        )
-        if financial_risk_must_approved and not creation_params.financial_risk_approved:
-            errors.append(_("Financial risk must be approved"))
-        # Product must belong to company
-        if creation_params.company_id != creation_params.share_product_id.company_id:
-            errors.append(
-                _(
-                    f"Product {creation_params.share_product_id.name} must belong to company {creation_params.company_id.name}"
-                )
-            )
-        # Product must have correct subrciption context
-        if creation_params.share_product_id.categ_id != creation_params.product_categ:
-            errors.append(
-                _(
-                    f"Product {creation_params.share_product_id.name} must have correct subscription context"
-                )
-            )
-
-        # Existing partner
         partners = (
             self.env["res.partner"]
             .sudo()
@@ -177,28 +112,35 @@ class SubscriptionRequestUtils(Component):
                 for partner in partners
             ]
         )
-        if (
+
+        assert not (
             existing_partner
             and creation_params.membership_mode != MemberShipMode.voluntary
-        ):
-            errors.append(
-                _(
-                    "There is an existing account for this"
-                    " vat number on this community. "
-                    "Please contact with the community administrators."
+        ), error_msg
+
+    def _validate_existing_invited_partner(
+        self, creation_params: SubscriptionRequestCreationParams
+    ):
+        error_msg = _(
+            "There is an existing account for this vat number on this community. "
+            "Please contact with the community administrators."
+        )
+        if creation_params.membership_mode == MemberShipMode.invited:
+            partners = (
+                self.env["res.partner"]
+                .sudo()
+                .search(
+                    [
+                        ("vat", "ilike", creation_params.vat),
+                        ("parent_id", "=", False),
+                        ("effective_invited", "=", True),
+                    ]
                 )
             )
-
-        # TODO: Validate privacy_policy and conditions_payment must be marked
-        if errors:
-            raise ComponentValidationError(
-                MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE["general"],
-                errors,
-            )
-        return True
+            assert not (partners), error_msg
 
     # TODO: Do we need to validate more fields that might change? Wich ones?
-    def _validate_subscription_data_consistency(self, subscription_request):
+    def _check_subscription_data_consistency(self, subscription_request):
         consistency_errors = []
         subscription_partner = subscription_request.partner_id
         if subscription_partner:

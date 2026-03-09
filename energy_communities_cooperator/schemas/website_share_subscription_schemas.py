@@ -193,6 +193,92 @@ class SubscriptionRequestCreationParams(BaseModel):
                 raise ValueError(_("Invalid date format"))
         return date_date
 
+    @model_validator(mode="after")
+    def check_minimun_quantity(self) -> Self:
+        min_qty = self.share_product_id.minimum_quantity
+        if self.ordered_parts < min_qty:
+            raise ValueError(
+                _(f"Oder part must be higher than product config {min_qty}")
+            )
+        return self
+
+    @model_validator(mode="after")
+    def check_maximum_amount(self) -> Self:
+        maximum_amount = all(
+            [
+                self.company_id.subscription_maximum_amount != 0,
+                self.share_product_id.list_price * self.ordered_parts
+                > self.company_id.subscription_maximum_amount,
+            ]
+        )
+        if maximum_amount:
+            raise ValueError(
+                _(
+                    f"Subscription maximum amount is {creation_params.share_product_id.list_price * creation_params.ordered_parts} but the maximum amount is {creation_params.company_id.subscription_maximum_amount}"
+                )
+            )
+        return self
+
+    @model_validator(mode="after")
+    def check_product_belong_company(self) -> Self:
+        if self.company_id != self.share_product_id.company_id:
+            raise ValueError(
+                _(
+                    f"Product {creation_params.share_product_id.name} must belong to company {creation_params.company_id.name}"
+                )
+            )
+        return self
+
+    @model_validator(mode="after")
+    def check_product_correct_context(self) -> Self:
+        if self.share_product_id.categ_id != self.product_categ:
+            raise ValueError(
+                _(
+                    f"Product {creation_params.share_product_id.name} must have correct subscription context"
+                )
+            )
+        return self
+
+    @model_validator(mode="after")
+    def check_data_policy_approval(self) -> Self:
+        privacy_must_approved = (
+            self.company_id.display_data_policy_approval
+            and self.company_id.data_policy_approval_required
+        )
+        if privacy_must_approved and not self.data_policy_approved:
+            raise ValueEror(_("Privacy policy must be approved"))
+        return self
+
+    @model_validator(mode="after")
+    def check_generic_rules_approval(self) -> Self:
+        generic_rules_must_approved = (
+            self.company_id.display_generic_rules_approval
+            and self.company_id.generic_rules_approval_required
+        )
+        if generic_rules_must_approved and not self.generic_rules_approved:
+            raise ValueError(_("Generic rules must be approved"))
+        return self
+
+    @model_validator(mode="after")
+    def check_internal_rules_approval(self) -> Self:
+        internal_rules_must_approved = (
+            self.company_id.display_internal_rules_approval
+            and self.company_id.internal_rules_approval_required
+        )
+        if internal_rules_must_approved and not self.internal_rules_approved:
+            raise ValueError(_("Internal rules must be approved"))
+        return self
+
+    @model_validator(mode="after")
+    def check_financial_rules_approval(self) -> Self:
+        financial_risk_must_approved = (
+            self.company_id.display_financial_risk_approval
+            and self.company_id.financial_risk_approval_required
+        )
+        if financial_risk_must_approved and not self.financial_risk_approved:
+            raise ValueError(_("Financial risk must be approved"))
+        return self
+
     @field_serializer("share_product_id", mode="plain")
     def serialize_share_product_id(self, share_product_id) -> int:
         return share_product_id.product_variant_id.id
