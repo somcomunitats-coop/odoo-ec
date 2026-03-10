@@ -2,6 +2,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
+from ..schemas import MemberShipMode
 
 
 class SubscriptionRequest(models.Model):
@@ -129,6 +130,9 @@ class SubscriptionRequest(models.Model):
         return subscription_request
 
     def validate_subscription_request(self):
+        error_partner_msg = _(
+            "There is an existing account for this vat number on this community."
+        )
         if self.subscription_mode == "voluntary" and not self.partner_id:
             raise ValidationError(
                 _(
@@ -143,12 +147,23 @@ class SubscriptionRequest(models.Model):
                     self.company_id.id
                 )
                 if membership:
-                    raise ValidationError(
-                        _(
-                            "There is an existing account for this"
-                            " vat number on this community. "
-                        )
-                    )
+                    raise ValidationError(error_partner_msg)
+        if self.subscription_mode == MemberShipMode.invited:
+            partners = (
+                self.env["res.partner"]
+                .sudo()
+                .search(
+                    [
+                        ("vat", "ilike", creation_params.vat),
+                        ("parent_id", "=", False),
+                        ("effective_invited", "=", True),
+                        ("company_id", "=", creation_params.company_id.id),
+                    ]
+                )
+            )
+            if partners:
+                raise ValidationError(error_partner_msg)
+
         super().validate_subscription_request()
 
     def get_partner_vals(self):

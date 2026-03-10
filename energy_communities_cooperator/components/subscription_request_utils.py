@@ -82,7 +82,6 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         Returns:
             Created subscription.request recordset
         """
-        self._subscription_request_params = creation_params
         self.validate(creation_params)
         subscription_request = (
             self.env["subscription.request"].sudo().create(creation_params.model_dump())
@@ -134,6 +133,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
                         ("vat", "ilike", creation_params.vat),
                         ("parent_id", "=", False),
                         ("effective_invited", "=", True),
+                        ("company_id", "=", creation_params.company_id.id),
                     ]
                 )
             )
