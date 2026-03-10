@@ -2,7 +2,11 @@ from odoo import _
 
 from odoo.addons.component.core import Component
 
-from ..config import MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE
+from ..config import (
+    MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE,
+    MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
+    MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE,
+)
 from ..exceptions import ComponentValidationError
 from ..models.subscription_request import SubscriptionRequest
 from ..schemas.website_share_subscription_schemas import (
@@ -37,9 +41,11 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         creation_params["source"] = "website"  # TODO review diferent type of creation
         creation_params["data_policy_approved"] = form_submission.privacy_policy
         creation_params["mandate_approved"] = form_submission.conditions_payment
+        # setup company_register_number on SR based on vat
+        creation_params["company_register_number"] = creation_params["vat"]
 
         if ctx.subscription_mode.value == SubscriptionMode.voluntary:
-            partner = self._get_partner_form(form_submission, ctx)
+            partner = self._get_partner_form(form_submission.vat, ctx.company)
             creation_params |= (
                 self._get_subscription_request_creation_params_from_partner(partner)
             )
@@ -60,6 +66,44 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
                 creation_params["lang"] = lang_model.code
             else:
                 creation_params["lang"] = ""
+
+        return SubscriptionRequestCreationParams(**creation_params)
+
+    def get_subscription_request_params_from_dict(
+        self, vals: dict
+    ) -> SubscriptionRequestCreationParams:
+        creation_params = dict(vals.items())
+        creation_params["company_id"] = self.env["res.company"].browse(
+            vals["company_id"]
+        )
+        creation_params["country_id"] = self.env["res.country"].browse(
+            vals.get("country_id")
+        )
+        creation_params["share_product_id"] = self.env["product.template"].search(
+            [("id", "=", vals.get("share_product_id"))]
+        )
+        subscription_mode = creation_params["share_product_id"].categ_id.type_url
+        creation_params[
+            "membership_mode"
+        ] = MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(subscription_mode)
+        categ = self.env.ref(
+            MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(subscription_mode),
+            raise_if_not_found=False,
+        )
+        creation_params["product_categ"] = categ.with_company(
+            creation_params["company_id"]
+        )
+
+        # setup company_register_number on SR based on vat
+        creation_params["company_register_number"] = vals["vat"]
+
+        if subscription_mode == SubscriptionMode.voluntary:
+            partner = self._get_partner_form(
+                creation_params["vat"], creation_params["company_id"]
+            )
+            creation_params |= (
+                self._get_subscription_request_creation_params_from_partner(partner)
+            )
 
         return SubscriptionRequestCreationParams(**creation_params)
 
@@ -84,9 +128,11 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         """
         self.validate(creation_params)
         subscription_request = (
-            self.env["subscription.request"].sudo().create(creation_params.model_dump())
+            self.env["subscription.request"]
+            .sudo()
+            .with_context({"from_form": True})
+            .create(creation_params.model_dump())
         )
-        self._check_subscription_data_consistency(subscription_request)
         return subscription_request
 
     def _validate_existing_partner(
@@ -166,17 +212,17 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
                 }
             )
 
-    def _get_partner_form(self, form_submission, ctx):
-        partner_vat = form_submission.vat.strip().upper()
+    def _get_partner_form(self, vat, company):
+        partner_vat = vat.strip().upper()
         partner = (
             self.env["res.partner"]
             .sudo()
-            .get_cooperator_from_vat(partner_vat, ctx.company.id)
+            .get_cooperator_from_vat(partner_vat, company.id)
         )
         if not partner:
             raise FormValidationError(
                 MAPPING_FORM_ERROR_TITLE["general"],
-                [_("We couldn't find a member with %s", creation_params["vat"])],
+                [_("We couldn't find a member with %s", vat)],
             )
         return partner
 

@@ -114,7 +114,10 @@ class WebsiteShareSubscriptionController(http.Controller):
                 subscription_request_params = component.get_subscription_request_params(
                     form_submission, ctx
                 )
-                component.create_subscription_request(subscription_request_params)
+                subscription_request = component.create_subscription_request(
+                    subscription_request_params
+                )
+                component._check_subscription_data_consistency(subscription_request)
         except PydanticValidationError as e:
             raise FormValidationError(
                 MAPPING_FORM_ERROR_TITLE["general"],

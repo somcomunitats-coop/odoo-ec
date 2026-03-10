@@ -1,8 +1,12 @@
+from pydantic import ValidationError as PydanticValidationError
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
+from ..exceptions import ComponentValidationError
 from ..schemas import MemberShipMode
+from ..utils import subscription_request_utils
 
 
 class SubscriptionRequest(models.Model):
@@ -108,25 +112,25 @@ class SubscriptionRequest(models.Model):
     def create(self, vals):
         # Somewhere the company_id is assigned as string
         # Can't find where, this is a workaround
-        for val in vals:
-            if "company_id" in val:
-                val["company_id"] = int(val["company_id"])
-            if "country_id" in val:
-                val["country_id"] = int(val["country_id"])
-            # setup company_register_number on SR based on vat
-            if "vat" in val.keys():
-                val["company_register_number"] = val["vat"]
+        if not self.env.context.get("from_form", False):
+            with subscription_request_utils(self.env) as component:
+                for val in vals:
+                    try:
+                        subscription_request_params = (
+                            component.get_subscription_request_params_from_dict(val)
+                        )
+                        component.validate(subscription_request_params)
+                    except (PydanticValidationError, ComponentValidationError) as e:
+                        raise ValidationError(str(e))
 
         subscription_request = super().create(vals)
-        if not subscription_request.payment_mode_id or (
+        skip_iban_control = not subscription_request.payment_mode_id or (
             subscription_request.payment_mode_id
             and subscription_request.payment_mode_id.payment_method_id
-            and (
-                not subscription_request.payment_mode_id.payment_method_id.code
-                == "sepa_direct_debit"
-            )
-        ):
-            subscription_request.skip_iban_control = True
+            and subscription_request.payment_mode_id.payment_method_id.code
+            != "sepa_direct_debit"
+        )
+        subscription_request.skip_iban_control = skip_iban_control
         return subscription_request
 
     def validate_subscription_request(self):

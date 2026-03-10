@@ -155,9 +155,11 @@ class SubscriptionRequestCreationParams(BaseModel):
     country_id: Country
     share_product_id: ProductTemplate
     ordered_parts: int
+    is_company: bool
     company_id: Company
     company_name: Optional[str] = None
     company_email: Optional[EmailStr] = None
+    company_register_number: Optional[str] = None
     contact_person_function: Optional[str] = None
     iban: Optional[str] = None
     mandate_approved: Optional[bool] = None
@@ -167,9 +169,9 @@ class SubscriptionRequestCreationParams(BaseModel):
     financial_risk_approved: Optional[bool] = None
 
     # Not necesary for SR creation
-    membership_mode: MemberShipMode = Field(exclude=True)
-    membertype_mode: MemberTypeMode = Field(exclude=True)
-    product_categ: ProductCategory = Field(exclude=True)
+    membership_mode: Optional[MemberShipMode] = Field(exclude=True, default=None)
+    membertype_mode: Optional[MemberTypeMode] = Field(exclude=True, default=None)
+    product_categ: Optional[ProductCategory] = Field(exclude=True, default=None)
 
     # Avoid empty recordsets
     @field_validator(
@@ -180,6 +182,16 @@ class SubscriptionRequestCreationParams(BaseModel):
         if not record:
             raise ValueError(_("records_required"))
         return record
+
+    # Empty values in odoo allways came as False, tricki shit to transfor that values to strings
+    @field_validator(
+        "company_name", "company_email", "contact_person_function", mode="before"
+    )
+    @classmethod
+    def ensure_string(cls, value: Any) -> Any:
+        if value is False:
+            return None
+        return value
 
     @field_validator("birthdate", mode="before")
     @classmethod
@@ -214,7 +226,7 @@ class SubscriptionRequestCreationParams(BaseModel):
         if maximum_amount:
             raise ValueError(
                 _(
-                    f"Subscription maximum amount is {creation_params.share_product_id.list_price * creation_params.ordered_parts} but the maximum amount is {creation_params.company_id.subscription_maximum_amount}"
+                    f"Subscription maximum amount is {self.share_product_id.list_price * creation_params.ordered_parts} but the maximum amount is {self.company_id.subscription_maximum_amount}"
                 )
             )
         return self
@@ -224,7 +236,7 @@ class SubscriptionRequestCreationParams(BaseModel):
         if self.company_id != self.share_product_id.company_id:
             raise ValueError(
                 _(
-                    f"Product {creation_params.share_product_id.name} must belong to company {creation_params.company_id.name}"
+                    f"Product {self.share_product_id.name} must belong to company {self.company_id.name}"
                 )
             )
         return self
@@ -234,7 +246,7 @@ class SubscriptionRequestCreationParams(BaseModel):
         if self.share_product_id.categ_id != self.product_categ:
             raise ValueError(
                 _(
-                    f"Product {creation_params.share_product_id.name} must have correct subscription context"
+                    f"Product {self.share_product_id.name} must have correct subscription context"
                 )
             )
         return self
@@ -288,11 +300,11 @@ class SubscriptionRequestCreationParams(BaseModel):
         return gender.value
 
     @field_serializer("country_id", mode="plain")
-    def serialize_gender(self, country_id) -> int:
+    def serialize_country(self, country_id) -> int:
         return country_id.id
 
     @field_serializer("company_id", mode="plain")
-    def serialize_gender(self, company_id) -> int:
+    def serialize_company(self, company_id) -> int:
         return company_id.id
 
 
