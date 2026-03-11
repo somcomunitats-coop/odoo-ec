@@ -148,18 +148,14 @@ class SubscriptionRequest(models.Model):
         return partner
 
     def _get_partner_domain(self):
+        is_representative = self.env.context.get("is_representative", False)
         # used for representative
-        if self.is_company:
-            if self.email:
-                return [("email", "=", self.email), ("is_company", "=", False)]
-            else:
-                return None
+        if is_representative:
+            return None
         # used for members (normal and company)
-        else:
-            if self.vat:
-                return [("vat", "=", self.vat)]
-            else:
-                return None
+        if self.vat:
+            return [("vat", "=", self.vat)]
+        return None
 
     def _find_or_create_partner(self):
         if self.is_voluntary:
@@ -181,7 +177,9 @@ class SubscriptionRequest(models.Model):
         return partner
 
     def _find_or_create_representative(self):
-        super(SubscriptionRequest, self.sudo())._find_or_create_representative()
+        super(
+            SubscriptionRequest, self.sudo().with_context({"is_representative": True})
+        )._find_or_create_representative()
 
     def set_membership(self):
         if self.is_company:
