@@ -110,18 +110,8 @@ class SubscriptionRequest(models.Model):
 
     @api.model_create_multi
     def create(self, vals):
-        # Somewhere the company_id is assigned as string
-        # Can't find where, this is a workaround
         if not self.env.context.get("from_form", False):
-            with subscription_request_utils(self.env) as component:
-                for val in vals:
-                    try:
-                        subscription_request_params = (
-                            component.get_subscription_request_params_from_dict(val)
-                        )
-                        component.validate(subscription_request_params)
-                    except (PydanticValidationError, ComponentValidationError) as e:
-                        raise ValidationError(str(e))
+            self._validate_vals(vals)
 
         subscription_request = super().create(vals)
         skip_iban_control = not subscription_request.payment_mode_id or (
@@ -301,3 +291,17 @@ class SubscriptionRequest(models.Model):
             else:
                 res["tax_ids"] = None
         return res
+
+    def _validate_vals(self, vals):
+        """
+        Convert vals in SubscriptionRequestCreationParams schema to validate that vals
+        """
+        with subscription_request_utils(self.env) as component:
+            for val in vals:
+                try:
+                    subscription_request_params = (
+                        component.get_subscription_request_params_from_dict(val)
+                    )
+                    component.validate(subscription_request_params)
+                except (PydanticValidationError, ComponentValidationError) as e:
+                    raise ValidationError(str(e))
