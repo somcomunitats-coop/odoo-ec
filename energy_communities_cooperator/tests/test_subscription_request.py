@@ -1,12 +1,15 @@
+import unittest
 from functools import partial
 
 from odoo import _
 from odoo.exceptions import ValidationError
-from odoo.tests import common
+from odoo.tests import Form, common
 
 from odoo.addons.account.models.account_move import AccountMove
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
+from ..models.subscription_request import SubscriptionRequest
+from .testing_cases import SUBSCRIPTION_REQUEST_PARAMS
 
 
 class TestSubscriptionRequest(common.TransactionCase):
@@ -19,9 +22,9 @@ class TestSubscriptionRequest(common.TransactionCase):
         self.maxDiff = None
 
         # Subscription request
-        self.base_subscription = self.env.ref(
-            "energy_communities_service_invoicing.subscription_6_community_1_demo"
-        )
+        # self.base_subscription = self.env.ref(
+        #     "energy_communities_service_invoicing.subscription_6_community_1_demo"
+        # )
 
     def _get_subscription_request(self, subscription_mode):
         product_categ = self.env.ref(
@@ -45,6 +48,23 @@ class TestSubscriptionRequest(common.TransactionCase):
         return subscription_request
 
     _get_member_subscription_request = partial(_get_subscription_request, "member")
+
+    @unittest.skip("wip test")
+    def test__create_subscription_request__member_ok(self):
+        # given the necessary data to create a subscruption request
+        subscription_request_params = SUBSCRIPTION_REQUEST_PARAMS
+
+        # when we create a new subscription request in the form view
+        subscription_form = Form(self.env["subscription.request"])
+        for attr, value in subscription_request_params.items():
+            try:
+                setattr(subscription_form, attr, value)
+            except AssertionError:
+                pass
+        subscription_request = subscription_form.save()
+
+        # Then a new subscription request is created
+        self.assertIsInstance(subscription_request, SubscriptionRequest)
 
     def test__validate_subscription_request__member_ok(self):
         # given a member subscription request
