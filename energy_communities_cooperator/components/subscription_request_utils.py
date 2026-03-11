@@ -79,9 +79,12 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         creation_params["country_id"] = self.env["res.country"].browse(
             vals.get("country_id")
         )
-        creation_params["share_product_id"] = self.env["product.template"].search(
-            [("id", "=", vals.get("share_product_id"))]
+        creation_params["share_product_id"] = (
+            self.env["product.product"]
+            .search([("id", "=", vals.get("share_product_id"))])
+            .product_tmpl_id
         )
+
         subscription_mode = creation_params["share_product_id"].categ_id.type_url
         creation_params[
             "membership_mode"

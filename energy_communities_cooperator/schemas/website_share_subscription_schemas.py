@@ -185,7 +185,11 @@ class SubscriptionRequestCreationParams(BaseModel):
 
     # Empty values in odoo allways came as False, tricki shit to transfor that values to strings
     @field_validator(
-        "company_name", "company_email", "contact_person_function", mode="before"
+        "company_name",
+        "company_email",
+        "contact_person_function",
+        "iban",
+        mode="before",
     )
     @classmethod
     def ensure_string(cls, value: Any) -> Any:

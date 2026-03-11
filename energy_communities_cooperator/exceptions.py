@@ -38,6 +38,7 @@ class FormValidationError(ValidationError):
     def __init__(self, title, messages):
         self.title = title
         self.messages = messages
+        self.message = "\n".join(messages)
 
 
 class ComponentValidationError(FormValidationError):
