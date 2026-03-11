@@ -86,14 +86,10 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         creation_params[
             "membership_mode"
         ] = MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE.get(subscription_mode)
-        categ = self.env.ref(
-            MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.get(subscription_mode),
-            raise_if_not_found=False,
-        )
-        creation_params["product_categ"] = categ.with_company(
+        categ = creation_params["share_product_id"].categ_id.with_company(
             creation_params["company_id"]
         )
-
+        creation_params["product_categ"] = categ
         # setup company_register_number on SR based on vat
         creation_params["company_register_number"] = vals["vat"]
 
