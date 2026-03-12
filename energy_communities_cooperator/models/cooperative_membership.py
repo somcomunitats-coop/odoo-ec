@@ -108,7 +108,8 @@ class CooperativeMembership(models.Model):
         If the membership type is invited, the cooperator register number is set to 0.
         """
         invited = self.filtered(
-            lambda m: m.subscription_request_ids.subscription_mode == "invited"
+            lambda m: "invited"
+            in m.subscription_request_ids.mapped("subscription_mode")
         )
         not_invited = self - invited
         for membership in invited:
