@@ -17,7 +17,7 @@
       <field name="view_mode">tree</field>
       <field name="search_view_id" eval="False" /> <!-- Force empty -->
       <field name="view_id" eval="False" /> <!-- Force empty -->
-      <field name="domain">[('member','=',True)]</field>
+      <field name="domain">['|',('member','=',True),('effective_invited','=',True)]</field>
   </record>
   <record
     id="action_cooperative_membership_representative"

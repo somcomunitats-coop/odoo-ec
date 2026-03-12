@@ -91,6 +91,9 @@
       <field name="title" position="after">
         <field name="gender" />
       </field>
+      <page name="share" position="attributes">
+        <attribute name="attrs">{'invisible': [('member', '=', False),('effective_invited', '=', False)]}</attribute>
+      </page>
     </field>
   </record>
   <record model="ir.ui.menu" id="cooperator.menu_cooperator_cooperator">
