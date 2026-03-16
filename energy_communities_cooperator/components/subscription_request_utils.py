@@ -40,8 +40,11 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         creation_params["membership_mode"] = ctx.membership_mode
         creation_params["is_company"] = ctx.membertype_mode == MemberTypeMode.company
         creation_params["source"] = "website"  # TODO review diferent type of creation
-        creation_params["data_policy_approved"] = form_submission.privacy_policy
         creation_params["mandate_approved"] = form_submission.conditions_payment
+        creation_params["data_policy_approved"] = form_submission.privacy_policy
+        creation_params["generic_rules_approved"] = form_submission.generic_rules
+        creation_params["internal_rules_approved"] = form_submission.internal_rules
+        creation_params["financial_risk_approved"] = form_submission.financial_risk
         # setup company_register_number on SR based on vat
         creation_params["company_register_number"] = creation_params["vat"]
 
@@ -53,18 +56,16 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             creation_params["type"] = SubscriptionType.increase.value
         else:  # memeber or company_member or invited or company_invites
             creation_params["gender"] = form_submission.gender
-            creation_params["generic_rules_approved"] = form_submission.generic_rules
-            creation_params["internal_rules_approved"] = form_submission.internal_rules
-            creation_params["financial_risk_approved"] = form_submission.financial_risk
             creation_params["country_id"] = (
                 self.env["res.country"]
                 .sudo()
                 .search([("id", "=", form_submission.country_id)])
             )
-            lang_model = (
-                self.env["res.lang"].sudo().search([("id", "=", form_submission.lang)])
-            )
-            if lang_model:
+            if (
+                lang_model := self.env["res.lang"]
+                .sudo()
+                .search([("id", "=", form_submission.lang)])
+            ):
                 creation_params["lang"] = lang_model.code
             else:
                 creation_params["lang"] = ""
