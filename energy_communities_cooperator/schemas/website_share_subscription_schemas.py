@@ -17,6 +17,7 @@ from odoo.tools.translate import _
 
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.base.models.res_country import Country
+from odoo.addons.base.models.res_partner import Partner
 from odoo.addons.base_iban.models.res_partner_bank import validate_iban
 from odoo.addons.product.models.product_category import ProductCategory
 from odoo.addons.product.models.product_template import ProductTemplate
@@ -39,6 +40,11 @@ class SubscriptionMode(str, Enum):
     invited = "invited"
     company_invited = "company_invited"
     voluntary = "voluntary"
+
+
+class SubscriptionType(str, Enum):
+    new = "new"
+    increase = "increase"
 
 
 class MemberShipMode(str, Enum):
@@ -155,14 +161,19 @@ class SubscriptionRequestCreationParams(BaseModel):
     country_id: Country
     share_product_id: ProductTemplate
     ordered_parts: int
-    is_company: bool
+    partner_id: Partner
     company_id: Company
     company_name: Optional[str] = None
     company_email: Optional[EmailStr] = None
     company_register_number: Optional[str] = None
     contact_person_function: Optional[str] = None
+    is_company: bool
+    already_cooperator: bool
     iban: Optional[str] = None
     mandate_approved: Optional[bool] = None
+    type_: Optional[SubscriptionType] = Field(
+        alias="type", default=SubscriptionType.new
+    )
     data_policy_approved: Optional[bool] = None
     generic_rules_approved: Optional[bool] = None
     internal_rules_approved: Optional[bool] = None
@@ -299,10 +310,6 @@ class SubscriptionRequestCreationParams(BaseModel):
     def serialize_share_product_id(self, share_product_id) -> int:
         return share_product_id.product_variant_id.id
 
-    @field_serializer("gender", mode="plain")
-    def serialize_gender(self, gender) -> str:
-        return gender.value
-
     @field_serializer("country_id", mode="plain")
     def serialize_country(self, country_id) -> int:
         return country_id.id
@@ -310,6 +317,10 @@ class SubscriptionRequestCreationParams(BaseModel):
     @field_serializer("company_id", mode="plain")
     def serialize_company(self, company_id) -> int:
         return company_id.id
+
+    @field_serializer("partner_id", mode="plain")
+    def serialize_partner(self, partner_id) -> int:
+        return partner_id.id
 
 
 class WebsiteShareSubscriptionContext(BaseModel):

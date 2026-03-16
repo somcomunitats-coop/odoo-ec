@@ -7,13 +7,14 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
     MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE,
 )
-from ..exceptions import ComponentValidationError
+from ..exceptions import ComponentValidationError, FormValidationError
 from ..models.subscription_request import SubscriptionRequest
 from ..schemas.website_share_subscription_schemas import (
     MemberShipMode,
     MemberTypeMode,
     SubscriptionMode,
     SubscriptionRequestCreationParams,
+    SubscriptionType,
 )
 from ..utils import ValidationMixin
 
@@ -44,11 +45,12 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         # setup company_register_number on SR based on vat
         creation_params["company_register_number"] = creation_params["vat"]
 
-        if ctx.subscription_mode.value == SubscriptionMode.voluntary:
+        if ctx.subscription_mode == SubscriptionMode.voluntary:
             partner = self._get_partner_form(form_submission.vat, ctx.company)
             creation_params |= (
                 self._get_subscription_request_creation_params_from_partner(partner)
             )
+            creation_params["type"] = SubscriptionType.increase.value
         else:  # memeber or company_member or invited or company_invites
             creation_params["gender"] = form_submission.gender
             creation_params["generic_rules_approved"] = form_submission.generic_rules
@@ -130,7 +132,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             self.env["subscription.request"]
             .sudo()
             .with_context({"from_form": True})
-            .create(creation_params.model_dump())
+            .create(creation_params.model_dump(by_alias=True))
         )
         return subscription_request
 
@@ -227,7 +229,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
 
     def _get_subscription_request_creation_params_from_partner(self, partner):
         return {
-            "partner_id": partner.id,
+            "partner_id": partner,
             "already_cooperator": partner.member,
             "email": partner.email or _("Email not found"),
             "phone": partner.phone or _("Phone not found"),
