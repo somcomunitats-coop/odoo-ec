@@ -158,9 +158,8 @@ class WebsiteShareSubscriptionController(http.Controller):
     def _get_errors_arr(self, e):
         e_msgs = []
         for error in e.errors():
-            e_msgs.append(
-                "{}: {} ({})".format(error["loc"][0], error["msg"], error["type"])
-            )
+            loc = error["loc"] and error["loc"][0] or ""
+            e_msgs.append("{}: {} ({})".format(loc, error["msg"], error["type"]))
         return e_msgs
 
     def _get_website_share_subscription_context(
