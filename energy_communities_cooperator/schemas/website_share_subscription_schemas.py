@@ -164,14 +164,14 @@ class SubscriptionRequestCreationParams(BaseModel):
     country_id: Country
     share_product_id: ProductTemplate
     ordered_parts: int
-    partner_id: Partner
+    partner_id: Partner = Field(default=None)
     company_id: Company
     company_name: Optional[str] = None
     company_email: Optional[EmailStr] = None
     company_register_number: Optional[str] = None
     contact_person_function: Optional[str] = None
     is_company: bool
-    already_cooperator: bool
+    already_cooperator: bool = Field(default=False)
     iban: Optional[str] = None
     mandate_approved: Optional[bool] = None
     type_: Optional[SubscriptionType] = Field(
@@ -203,6 +203,7 @@ class SubscriptionRequestCreationParams(BaseModel):
         "company_email",
         "contact_person_function",
         "iban",
+        "partner_id",
         mode="before",
     )
     @classmethod
@@ -323,7 +324,8 @@ class SubscriptionRequestCreationParams(BaseModel):
 
     @field_serializer("partner_id", mode="plain")
     def serialize_partner(self, partner_id) -> int:
-        return partner_id.id
+        if partner_id:
+            return partner_id.id
 
 
 class WebsiteShareSubscriptionContext(BaseModel):

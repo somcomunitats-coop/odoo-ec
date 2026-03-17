@@ -3,6 +3,7 @@ from odoo import _
 from odoo.addons.component.core import Component
 
 from ..config import (
+    COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS,
     MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
     MAPPING_FORM_ERROR_TITLE,
@@ -55,7 +56,6 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
                 self._get_subscription_request_creation_params_from_partner(partner)
             )
             creation_params["type"] = SubscriptionType.increase.value
-            creation_params["already_cooperator"] = True
         else:  # memeber or company_member or invited or company_invites
             creation_params["gender"] = form_submission.gender
             creation_params["country_id"] = (
@@ -162,9 +162,17 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             ]
         )
 
+        is_cooperative_share = (
+            creation_params.share_product_id.categ_id.data_xml_id
+            == COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS
+        )
+
         assert not (
             existing_partner
-            and creation_params.membership_mode != MemberShipMode.voluntary
+            and (
+                not is_cooperative_share
+                and creation_params.membership_mode != MemberShipMode.voluntary
+            )
         ), error_msg
 
     def _validate_existing_invited_partner(
