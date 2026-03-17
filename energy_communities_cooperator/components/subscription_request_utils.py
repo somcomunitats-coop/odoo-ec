@@ -5,6 +5,7 @@ from odoo.addons.component.core import Component
 from ..config import (
     MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
+    MAPPING_FORM_ERROR_TITLE,
     MAPPING_SUBSCRIPTION_COMPONENT_ERROR_TITLE,
 )
 from ..exceptions import ComponentValidationError, FormValidationError
@@ -54,6 +55,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
                 self._get_subscription_request_creation_params_from_partner(partner)
             )
             creation_params["type"] = SubscriptionType.increase.value
+            creation_params["already_cooperator"] = True
         else:  # memeber or company_member or invited or company_invites
             creation_params["gender"] = form_submission.gender
             creation_params["country_id"] = (
