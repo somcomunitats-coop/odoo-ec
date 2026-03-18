@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
 from ..exceptions import ComponentValidationError
 from ..schemas import MemberShipMode
-from ..utils import subscription_request_utils
+from ..utils import convert_errors, subscription_request_utils
 
 
 class SubscriptionRequest(models.Model):
@@ -304,4 +304,7 @@ class SubscriptionRequest(models.Model):
                     )
                     component.validate(subscription_request_params)
                 except (PydanticValidationError, ComponentValidationError) as e:
-                    raise ValidationError(str(e))
+                    error_msg = str(e)
+                    if isinstance(e, PydanticValidationError):
+                        error_msg = "\n".join(convert_errors(e))
+                    raise ValidationError(error_msg)

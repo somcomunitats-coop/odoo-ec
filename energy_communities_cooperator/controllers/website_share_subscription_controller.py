@@ -39,7 +39,7 @@ from ..schemas import (
     WebsiteShareSubscriptionSubmissionCompanyMember,
     WebsiteShareSubscriptionSubmissionVoluntary,
 )
-from ..utils import subscription_request_utils
+from ..utils import convert_errors, subscription_request_utils
 
 _logger = logging.getLogger(__name__)
 
@@ -156,11 +156,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         return form_submission
 
     def _get_errors_arr(self, e):
-        e_msgs = []
-        for error in e.errors():
-            loc = error["loc"] and error["loc"][0] or ""
-            e_msgs.append("{}: {} ({})".format(loc, error["msg"], error["type"]))
-        return e_msgs
+        return convert_errors(e)
 
     def _get_website_share_subscription_context(
         self, kwargs

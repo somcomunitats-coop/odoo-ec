@@ -1,5 +1,7 @@
 from contextlib import contextmanager
 
+from pydantic import ValidationError
+
 from odoo.api import Environment
 
 from odoo.addons.component.core import Component
@@ -12,6 +14,14 @@ from .exceptions import ComponentValidationError
 @contextmanager
 def subscription_request_utils(env: Environment) -> Component:
     yield _get_component(env, "subscription.request", "subscription.request.utils")
+
+
+def convert_errors(e: ValidationError) -> list:
+    e_msgs = []
+    for error in e.errors():
+        loc = "{}: ".format(error["loc"][0]) if error["loc"] else ""
+        e_msgs.append("{}{} ({})".format(loc, error["msg"], error["type"]))
+    return e_msgs
 
 
 class ValidationMixin:
