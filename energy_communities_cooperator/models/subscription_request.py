@@ -304,4 +304,4 @@ class SubscriptionRequest(models.Model):
                     )
                     component.validate(subscription_request_params)
                 except (PydanticValidationError, ComponentValidationError) as e:
-                    raise ValidationError(e.message)
+                    raise ValidationError(str(e))

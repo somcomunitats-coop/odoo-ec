@@ -164,7 +164,7 @@ class SubscriptionRequestCreationParams(BaseModel):
     country_id: Country
     share_product_id: ProductTemplate
     ordered_parts: int
-    partner_id: Partner = Field(default=None)
+    partner_id: Optional[Partner] = Field(default=None)
     company_id: Company
     company_name: Optional[str] = None
     company_email: Optional[EmailStr] = None
@@ -277,7 +277,7 @@ class SubscriptionRequestCreationParams(BaseModel):
             and self.company_id.data_policy_approval_required
         )
         if privacy_must_approved and not self.data_policy_approved:
-            raise ValueEror(_("Privacy policy must be approved"))
+            raise ValueError(_("Privacy policy must be approved"))
         return self
 
     @model_validator(mode="after")

@@ -12,6 +12,10 @@ class ValidationError(Exception):
         self.title = title
         self.message = message
 
+    def __str__(self):
+        class_name = self.__class__.__name__
+        return f"{class_name}: {self.message}"
+
 
 class ControllerContextValidationError(ValidationError):
     """
