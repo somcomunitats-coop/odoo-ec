@@ -43,14 +43,14 @@
         <filter
           string="Mandatory Shares"
           name="mandatory_share"
-          domain="['|',('subscription_mode','=', 'generic'), ('subscription_mode','=', 'member'), ('subscription_mode','=', 'member_associations')]"
+          domain="['|','|',('subscription_mode','=', 'generic'),('subscription_mode','=', 'member'), ('subscription_mode','=', 'member_associations')]"
         />
         <filter
           string="Voluntary Shares"
           name="voluntary_share"
           domain="[('subscription_mode','=', 'voluntary')]"
         />
-        
+
         <filter
           string="Invited Shares"
           name="invited_share"
