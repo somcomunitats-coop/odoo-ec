@@ -141,11 +141,14 @@ class WebsiteShareSubscriptionController(http.Controller):
     # getters
     def _get_requested_form(self, subscription_mode: SubscriptionMode):
         # Extract form data from request
-        if subscription_mode.value == SubscriptionMode.voluntary:
+        if subscription_mode == SubscriptionMode.voluntary:
             form_submission = WebsiteShareSubscriptionSubmissionVoluntary(
                 **request.httprequest.form
             )
-        elif subscription_mode.value == SubscriptionMode.company_member:
+        elif subscription_mode in [
+            SubscriptionMode.company_member,
+            SubscriptionMode.company_invited,
+        ]:
             form_submission = WebsiteShareSubscriptionSubmissionCompanyMember(
                 **request.httprequest.form
             )
