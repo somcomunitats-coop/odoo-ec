@@ -110,7 +110,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         """
         try:
             form_submission = self._get_requested_form(ctx.subscription_mode)
-            with subscription_request_utils(request.env) as component:
+            with subscription_request_utils(request.env, ctx.company) as component:
                 subscription_request_params = component.get_subscription_request_params(
                     form_submission, ctx
                 )

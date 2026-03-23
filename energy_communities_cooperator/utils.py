@@ -4,6 +4,7 @@ from pydantic import ValidationError
 
 from odoo.api import Environment
 
+from odoo.addons.base.models.res_company import Company
 from odoo.addons.component.core import Component
 from odoo.addons.energy_communities.utils import _get_component
 
@@ -12,8 +13,10 @@ from .exceptions import ComponentValidationError
 
 
 @contextmanager
-def subscription_request_utils(env: Environment) -> Component:
-    yield _get_component(env, "subscription.request", "subscription.request.utils")
+def subscription_request_utils(env: Environment, company: Company) -> Component:
+    yield _get_component(
+        env, "subscription.request", "subscription.request.utils", company
+    )
 
 
 def convert_errors(e: ValidationError) -> list:
