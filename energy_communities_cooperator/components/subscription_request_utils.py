@@ -3,7 +3,7 @@ from odoo import _
 from odoo.addons.component.core import Component
 
 from ..config import (
-    COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS,
+    COOP_SHARE_PRODUCT_CATEG_REF,
     MAPPING__SUBSCRIPTION_MODE__MEMBERSHIP_MODE,
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
     MAPPING_FORM_ERROR_TITLE,
@@ -163,17 +163,16 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             ]
         )
 
-        is_cooperative_share = (
+        is_not_cooperative_share = (
             creation_params.share_product_id.categ_id.data_xml_id
-            == COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS
+            != COOP_SHARE_PRODUCT_CATEG_REF
+        )
+        is_not_voluntary_share = (
+            creation_params.membership_mode != MemberShipMode.voluntary
         )
 
         assert not (
-            existing_partner
-            and (
-                not is_cooperative_share
-                and creation_params.membership_mode != MemberShipMode.voluntary
-            )
+            existing_partner and is_not_cooperative_share and is_not_voluntary_share
         ), error_msg
 
     def _validate_existing_invited_partner(
