@@ -234,7 +234,12 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         if not partner:
             raise FormValidationError(
                 MAPPING_FORM_ERROR_TITLE["general"],
-                [_("We couldn't find a member with %s", vat)],
+                [
+                    _(
+                        "It looks like your aren't still a member of this energy community, please contact with the energy community administrators at %s",
+                        company.email,
+                    )
+                ],
             )
         return partner
 
