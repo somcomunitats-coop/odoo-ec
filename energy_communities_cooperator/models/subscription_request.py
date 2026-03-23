@@ -4,7 +4,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
-from ..exceptions import ComponentValidationError
+from ..exceptions import ComponentValidationError, FormValidationError
 from ..schemas import MemberShipMode
 from ..utils import convert_errors, subscription_request_utils
 
@@ -303,7 +303,10 @@ class SubscriptionRequest(models.Model):
                         component.get_subscription_request_params_from_dict(val)
                     )
                     component.validate(subscription_request_params)
-                except (PydanticValidationError, ComponentValidationError) as e:
+                except (
+                    PydanticValidationError,
+                    FormValidationError,
+                ) as e:
                     error_msg = str(e)
                     if isinstance(e, PydanticValidationError):
                         error_msg = "\n".join(convert_errors(e))

@@ -236,7 +236,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
                 MAPPING_FORM_ERROR_TITLE["general"],
                 [
                     _(
-                        "It looks like your aren't still a member of this energy community, please contact with the energy community administrators at %s",
+                        "It looks like this vat number %s doesn't belong to an effective member of this energy community, please contact with the energy community administrators at %s",
                         company.email,
                     )
                 ],

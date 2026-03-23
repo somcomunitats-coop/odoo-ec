@@ -13,7 +13,7 @@ from .exceptions import ComponentValidationError
 
 
 @contextmanager
-def subscription_request_utils(env: Environment, company: Company) -> Component:
+def subscription_request_utils(env: Environment, company: Company = None) -> Component:
     yield _get_component(
         env, "subscription.request", "subscription.request.utils", company
     )
