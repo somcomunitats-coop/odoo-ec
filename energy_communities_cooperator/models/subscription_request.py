@@ -148,10 +148,10 @@ class SubscriptionRequest(models.Model):
                 .sudo()
                 .search(
                     [
-                        ("vat", "ilike", creation_params.vat),
+                        ("vat", "ilike", self.vat),
                         ("parent_id", "=", False),
                         ("effective_invited", "=", True),
-                        ("company_id", "=", creation_params.company_id.id),
+                        ("company_id", "=", self.company_id.id),
                     ]
                 )
             )
