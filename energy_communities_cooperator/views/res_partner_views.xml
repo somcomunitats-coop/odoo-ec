@@ -57,8 +57,8 @@
         <field name="effective_invited" readonly="1" />
         <field name="no_member_autorized_in_energy_actions" />
         <field name="member" invisible="1"/>
-        <field name="effective_date" attrs="{'invisible': [('member', '=', False)]}" />
-        <field name="cooperator_type" attrs="{'invisible': [('member', '=', False)]}" />
+        <field name="effective_date" attrs="{'invisible': [('member', '=', False), ('effective_invited', '=', False)]}" />
+        <field name="cooperator_type" attrs="{'invisible': [('member', '=', False), ('effective_invited', '=', False)]}" />
         <field name="cooperator" readonly="1" />
         <field
           name="coop_candidate"
