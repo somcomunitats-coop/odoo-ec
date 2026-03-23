@@ -111,7 +111,7 @@ class SubscriptionRequest(models.Model):
     @api.model_create_multi
     def create(self, vals):
         if not self.env.context.get("from_form", False):
-            self._validate_vals(vals)
+            vals = self._validate_and_get_vals(vals)
 
         subscription_request = super().create(vals)
         skip_iban_control = not subscription_request.payment_mode_id or (
@@ -292,10 +292,11 @@ class SubscriptionRequest(models.Model):
                 res["tax_ids"] = None
         return res
 
-    def _validate_vals(self, vals):
+    def _validate_and_get_vals(self, vals):
         """
         Convert vals in SubscriptionRequestCreationParams schema to validate that vals
         """
+        result_vals = []
         with subscription_request_utils(self.env) as component:
             for val in vals:
                 try:
@@ -311,3 +312,8 @@ class SubscriptionRequest(models.Model):
                     if isinstance(e, PydanticValidationError):
                         error_msg = "\n".join(convert_errors(e))
                     raise ValidationError(error_msg)
+                else:
+                    result_vals.append(
+                        subscription_request_params.model_dump(by_alias=True)
+                    )
+        return result_vals

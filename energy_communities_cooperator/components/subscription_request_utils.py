@@ -108,6 +108,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             creation_params |= (
                 self._get_subscription_request_creation_params_from_partner(partner)
             )
+            creation_params["type"] = SubscriptionType.increase.value
 
         return SubscriptionRequestCreationParams(**creation_params)
 
@@ -237,6 +238,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
                 [
                     _(
                         "It looks like this vat number %s doesn't belong to an effective member of this energy community, please contact with the energy community administrators at %s",
+                        partner_vat,
                         company.email,
                     )
                 ],
