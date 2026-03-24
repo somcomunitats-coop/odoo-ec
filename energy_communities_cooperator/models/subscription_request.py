@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
 from ..exceptions import ComponentValidationError, FormValidationError
-from ..schemas import MemberShipMode, MemberTypeMode
+from ..schemas import MemberShipMode, MemberTypeMode, SubscriptionMode
 from ..utils import convert_errors, subscription_request_utils
 
 
@@ -159,13 +159,18 @@ class SubscriptionRequest(models.Model):
                 raise ValidationError(error_partner_msg)
 
         invoice = super().validate_subscription_request()
+
         membership = self.partner_id.get_cooperative_membership(self.company_id)
-        is_new_member_invited = (
-            self.subscription_mode == MemberShipMode.cooperator
+        is_new_pending_member_invited = (
+            self.subscription_mode
+            in [SubscriptionMode.member, SubscriptionMode.member_associations]
             and membership.membership_type == MemberShipMode.invited
+            and membership.coop_candidate
+            and not membership.effective_invited
         )
-        if is_new_member_invited:
-            membership.invited2member()
+        if is_new_pending_member_invited:
+            raise ValidationError(_("Invited member has pending invoices to be paid"))
+
         return invoice
 
     def get_partner_vals(self):

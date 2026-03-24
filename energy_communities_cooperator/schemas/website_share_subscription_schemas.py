@@ -214,12 +214,14 @@ class SubscriptionRequestCreationParams(BaseModel):
 
     @field_validator("birthdate", mode="before")
     @classmethod
-    def check_date_format(cls, date_str: str) -> date:
+    def check_date_format(cls, date_: Any) -> date:
+        if isinstance(date_, date):
+            return date_
         try:
-            date_date = datetime.strptime(date_str, "%d/%m/%Y").date()
+            date_date = datetime.strptime(date_, "%d/%m/%Y").date()
         except:
             try:
-                date_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+                date_date = datetime.strptime(date_, "%Y-%m-%d").date()
             except:
                 raise ValueError(_("Invalid date format"))
         return date_date

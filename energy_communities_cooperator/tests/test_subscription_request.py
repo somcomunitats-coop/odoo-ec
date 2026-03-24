@@ -1,4 +1,5 @@
 import unittest
+from datetime import date
 from functools import partial
 
 from odoo import _
@@ -9,6 +10,7 @@ from odoo.addons.account.models.account_move import AccountMove
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
 from ..models.subscription_request import SubscriptionRequest
+from ..schemas import MemberShipMode
 from .testing_cases import SUBSCRIPTION_REQUEST_PARAMS
 
 
@@ -39,6 +41,13 @@ class TestSubscriptionRequest(common.TransactionCase):
         self.base_subscription = self.env.ref(
             "energy_communities_service_invoicing.subscription_6_community_1_demo"
         )
+        # Journal
+        self.journal = self.env["account.journal"].search(
+            [
+                ("type", "=", "bank"),
+                ("company_id", "=", self.base_subscription.company_id.id),
+            ]
+        )[0]
 
     def _get_subscription_request(self, subscription_mode):
         product_categ = self.env.ref(
@@ -52,7 +61,7 @@ class TestSubscriptionRequest(common.TransactionCase):
             limit=1,
         )
         subscription_request = self.base_subscription.copy(
-            {"share_product_id": product.product_variant_id.id}
+            {"ordered_parts": 5, "share_product_id": product.product_variant_id.id}
         )
 
         assert (
@@ -87,7 +96,6 @@ class TestSubscriptionRequest(common.TransactionCase):
         # when we validate that subscription_request
         invoice = member_subscription_request.validate_subscription_request()
         # TODO: review this, this should be a invoice object but is a None
-        print(invoice)
 
         self.assertIsInstance(invoice, AccountMove)
         # a correct invoice has been created
@@ -101,11 +109,11 @@ class TestSubscriptionRequest(common.TransactionCase):
     def test__validate_subscription_request__invited_ok(self):
         # given a invited subscription request
         invited_subscription_request = self._get_subscription_request("invited")
+        invited_subscription_request.share_product_id.taxes_id = None
 
         # when we validate that subscription_request
         invoice = invited_subscription_request.validate_subscription_request()
         # TODO: review this, this should be a invoice object but is a None
-        print(invoice)
 
         self.assertIsInstance(invoice, AccountMove)
         # a correct invoice has been created
@@ -115,6 +123,75 @@ class TestSubscriptionRequest(common.TransactionCase):
         # and a candidate membership is also linked to the partner
 
         # and subscription request is done
+
+    def test__subscription_request__invited2member(self):
+        def get_invited_membership():
+            invited_subscription_request = self._get_subscription_request("invited")
+            invited_subscription_request.share_product_id.taxes_id = None
+            invited_subscription_request.share_product_id.lst_price = 0
+            invited_subscription_request.validate_subscription_request()
+            return invited_subscription_request.partner_id.get_cooperative_membership(
+                invited_subscription_request.company_id
+            )
+
+        def get_member_subscription_request(vat):
+            return self._get_subscription_request("member")
+
+        def pay_invoice(invoice):
+            payment_form = Form(
+                self.env["account.payment.register"].with_context(
+                    active_ids=[invoice.id], active_model="account.move"
+                )
+            )
+            payment_form.journal_id = self.journal
+            payment_form.payment_date = date.today()
+            payment_form.save().action_create_payments()
+
+        # given a invited membership
+        invited_membership = get_invited_membership()
+
+        # and a member subscription request (for that invited partner = VAT)
+        subscription_request = get_member_subscription_request(
+            invited_membership.partner_id.vat
+        )
+
+        # when we validate that subscription request
+        invoice = subscription_request.validate_subscription_request()
+        # then the member subs.req. has same partner_id ofpre-existing invited membership
+        self.assertEqual(subscription_request.partner_id, invited_membership.partner_id)
+
+        # and the same memebership
+        self.assertEqual(
+            subscription_request.partner_id.get_cooperative_membership(
+                subscription_request.company_id
+            ).id,
+            invited_membership.id,
+        )
+
+        # and the invited membership has been updated with the correct values
+        self.assertEqual(
+            invited_membership.membership_type, MemberShipMode.cooperator.value
+        )
+        self.assertTrue(invited_membership.coop_candidate)
+        self.assertTrue(invited_membership.effective_invited)
+        self.assertEqual(invited_membership.cooperator_register_number, 0)
+
+        # when we pay the invoice
+        pay_invoice(invoice)
+        # invoice is paid
+        self.assertEqual(invoice.payment_state, "paid")
+        # and invited membership is now a member membership
+        self.assertEqual(
+            invited_membership.membership_type, MemberShipMode.cooperator.value
+        )
+        self.assertFalse(invited_membership.coop_candidate)
+        self.assertFalse(invited_membership.effective_invited)
+        self.assertTrue(invited_membership.member)
+        self.assertNotEqual(invited_membership.cooperator_register_number, 0)
+        self.assertEqual(
+            invited_membership.cooperator_type,
+            subscription_request.share_product_id.code,
+        )
 
     def test__validate_subscription_request__voluntary_ok(self):
         # given a voluntary subscription request

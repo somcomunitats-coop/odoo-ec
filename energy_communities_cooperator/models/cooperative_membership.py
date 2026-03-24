@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
-from ..schemas import MemberShipMode
+from ..schemas import MemberShipMode, SubscriptionMode
 
 
 class CooperativeMembership(models.Model):
@@ -74,18 +74,22 @@ class CooperativeMembership(models.Model):
         "member", "effective_invited", "partner_id.subscription_request_ids.state"
     )
     def _compute_coop_candidate(self):
-        for record in self:
-            if record.member:
+        for membership in self:
+            sub_requests = membership.subscription_request_ids.filtered(
+                lambda record: record.state == "done"
+            )
+            sub_requests_member = sub_requests.filtered(
+                lambda record: record.subscription_mode
+                in [SubscriptionMode.member, SubscriptionMode.member_associations]
+            )
+            if membership.member:
                 is_candidate = False
-            elif record.effective_invited:
+            elif membership.effective_invited and not bool(sub_requests_member):
                 is_candidate = False
             else:
-                sub_requests = record.subscription_request_ids.filtered(
-                    lambda record: record.state == "done"
-                )
                 is_candidate = bool(sub_requests)
 
-            record.coop_candidate = is_candidate
+            membership.coop_candidate = is_candidate
 
     coop_candidate = fields.Boolean(
         string="Cooperator candidate",
@@ -151,11 +155,3 @@ class CooperativeMembership(models.Model):
                 "default_effective_date": datetime.now(),
             },
         }
-
-    def invited2member(self):
-        self.ensure_one()
-        if self.coop_candidate:
-            raise ValidationError(_("Invited member has pending invoices to be paid"))
-
-        self.coop_candidate = True
-        self.membership_type = MemberShipMode.cooperator.value
