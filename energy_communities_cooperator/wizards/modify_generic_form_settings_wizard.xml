@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record id="view_modify_generic_form_settings_wizard_form" model="ir.ui.view">
+            <field name="name">modify.generic.form.settings.wizard.form</field>
+            <field name="model">modify.coop.generic.form.settings.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Modify generic form settings wizard">
+                    <sheet>
+                        <group>
+                            <field name="show_cooperator" invisible="1"/>
+                            <field name="show_cooperator_associations" invisible="1"/>  
+                            <field name="show_voluntary" invisible="1"/>
+                            <field name="show_invited" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="product_website"/>
+                            <field name="product_qty_must_be_read_only"/>
+                            <field name="cooperator_share_form_header_text" attrs="{'invisible': [('show_cooperator','=',False)]}"/>
+                            <field name="cooperator_association_share_form_header_text" attrs="{'invisible': [('show_cooperator_associations','=',False)]}"/>
+                            <field name="voluntary_share_form_header_text" attrs="{'invisible': [('show_voluntary','=',False)]}"/>
+                            <field name="invited_share_form_header_text" attrs="{'invisible': [('show_invited','=',False)]}"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button
+              name="execute"
+              string="Execute"
+              type="object"
+              class="btn-primary"
+            />
+                        <button
+              string="Cancel"
+              class="btn-secondary"
+              special="cancel"
+            />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

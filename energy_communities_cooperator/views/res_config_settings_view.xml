@@ -6,8 +6,61 @@
         <field name="inherit_id" ref="cooperator.res_config_settings_cooperator_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//div[@id='email_settings']" position="after">
+                <h2>Customizable header texts on generic forms</h2>
+                <div class="row mt16 o_settings_container" id="product_category_shares_generic_form_header_text">
+                    <div class="col-12 o_setting_box">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="cooperator_share_form_header_text" string="For mandatory shares product category (cooperatives)" />
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                            <div class="text-muted">
+                                Display the customizable paragraph in the header text of the generic cooperator website form
+                            </div>
+                            <field name="cooperator_share_form_header_text" />
+                        </div>
+                    </div>
+                    <div class="col-12 o_setting_box">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="cooperator_association_share_form_header_text" string="For mandatory shares product category (associations)" />
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                            <div class="text-muted">
+                                Display the customizable paragraph in the header text of the generic cooperator website form
+                            </div>
+                            <field name="cooperator_association_share_form_header_text" />
+                        </div>
+                    </div>
+                    <div class="col-12 o_setting_box">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="voluntary_share_form_header_text" string="For voluntary shares product category" />
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                            <div class="text-muted">
+                                Display the customizable paragraph in the header text of the generic cooperator website form
+                            </div>
+                            <field name="voluntary_share_form_header_text" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt16 o_settings_container" id="invited_share_generic_form_header_text">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="invited_share_form_header_text" string="For invited shares product category" />
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                            <div class="text-muted">
+                                Display the customizable paragraph in the header text of the generic cooperator website form
+                            </div>
+                            <field name="invited_share_form_header_text" />
+                        </div>
+                    </div>
+                </div>
                 <h2>Voluntary shares</h2>
-                <div class="row mt16 o_settings_container" id="mandatory_contribution_base_form_settings">
+                <div class="row mt16 o_settings_container" id="voluntary_share_settings">
                     <div class="col-12 col-lg-6 o_setting_box">
                         <div class="o_setting_left_pane">
                         </div>
@@ -45,22 +98,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <h2>Cooperator shares</h2>
-                <div class="row mt16 o_settings_container" id="mandatory_contribution_base_form_settings">
-                    <div class="col-12 o_setting_box">
-                        <div class="o_setting_left_pane">
-                            
-                        </div>
-                        <div class="o_setting_right_pane">
-                            <label for="cooperator_share_form_header_text" string="Customizable paragraph in the header text of the form" />
-                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
-                            <div class="text-muted">
-                                Display the customizable paragraph in the header text of the form on the cooperator website form
-                            </div>
-                            <field name="cooperator_share_form_header_text" />
-                        </div>
-                    </div>
-                </div> -->
             </xpath>
         </field>
     </record>

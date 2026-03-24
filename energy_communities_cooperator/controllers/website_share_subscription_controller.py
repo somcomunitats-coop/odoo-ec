@@ -503,10 +503,10 @@ class WebsiteShareSubscriptionController(http.Controller):
             return ctx.product.html_specific_products
         if (
             ctx.formtype_mode.value == "generic"
-            and ctx.product_categ.share_form_header_text
-            and ctx.product_categ.share_form_header_text != empty_headline
+            and ctx.product_categ._get_share_form_header_text()
+            and ctx.product_categ._get_share_form_header_text() != empty_headline
         ):
-            return ctx.product_categ.share_form_header_text
+            return ctx.product_categ._get_share_form_header_text()
         return _get_subscription_mode_headline_message(
             ctx.subscription_mode,
             ctx.company.comercial_name,

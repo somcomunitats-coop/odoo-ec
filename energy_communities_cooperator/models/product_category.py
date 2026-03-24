@@ -1,6 +1,6 @@
-from odoo import fields, models
+from odoo import api,fields, models
 
-from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
+from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF, MAPPING__PRODUCT_CATEG_REF__RES_COMPANY_CUSTOM_HEADER_FORM_TEXT_FIELD
 
 
 class ProductCategory(models.Model):
@@ -96,10 +96,13 @@ class ProductCategory(models.Model):
         company_dependent=True,
         help="If checked, the generic and specific web forms for products in this category are configured to allow the product quantity field to the right of the drop-down menu for selecting the product to be modified.",
     )
+
     share_form_header_text = fields.Html(
         string="Customizable paragraph in the header text of the form",
         translate=True,
-        company_dependent=True,
+        compute="_compute_share_form_header_text",
+        readonly=True,
+        store=False,
     )
 
     def url_individual_button(self):
@@ -141,3 +144,21 @@ class ProductCategory(models.Model):
             "url": url_company,
             "target": "new",
         }
+
+    def _get_share_form_header_text(self):
+        empty_headline = "<p><br></p>"
+        for xmlid, field_name in MAPPING__PRODUCT_CATEG_REF__RES_COMPANY_CUSTOM_HEADER_FORM_TEXT_FIELD.items():
+            if self.data_xml_id == xmlid:
+                value = getattr(self.env.company, field_name, False)
+                return value or empty_headline
+        return empty_headline
+
+    @api.depends("data_xml_id")
+    def _compute_share_form_header_text(self):
+        empty_headline = "<p><br></p>"
+        for rec in self:
+            rec.share_form_header_text = empty_headline
+            for xmlid, field_name in MAPPING__PRODUCT_CATEG_REF__RES_COMPANY_CUSTOM_HEADER_FORM_TEXT_FIELD.items():
+                if rec.data_xml_id == xmlid:
+                    value = getattr(self.env.company, field_name, False)
+                    rec.share_form_header_text = value or empty_headline

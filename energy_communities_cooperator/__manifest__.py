@@ -56,6 +56,7 @@
         "wizards/multicompany_easy_creation.xml",
         "wizards/voluntary_share_interest_return.xml",
         "wizards/email_sending_assistant.xml",
+        "wizards/modify_generic_form_settings_wizard.xml",
     ],
     # only loaded in demonstration mode
     "demo": [

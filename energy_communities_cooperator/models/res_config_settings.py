@@ -26,7 +26,6 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.voluntary_share_email_template",
         readonly=False,
     )
-
     voluntary_share_url_individual = fields.Char(
         string="Voluntary share URL individual",
         related="company_id.voluntary_share_url_individual",
@@ -38,4 +37,28 @@ class ResConfigSettings(models.TransientModel):
     invitation_share_url_company = fields.Char(
         string="Invitation share URL company",
         related="company_id.invitation_share_url_company",
+    )
+    cooperator_share_form_header_text = fields.Html(
+        string="Cooperator share form header text (Cooperatives)",
+        translate=True,
+        related="company_id.cooperator_share_form_header_text",
+        readonly=False,
+    )
+    cooperator_association_share_form_header_text = fields.Html(
+        string="Cooperator share form header text (Associations)",
+        translate=True,
+        related="company_id.cooperator_association_share_form_header_text",
+        readonly=False,
+    )
+    voluntary_share_form_header_text = fields.Html(
+        string="Voluntary share form header text",
+        translate=True,
+        related="company_id.voluntary_share_form_header_text",
+        readonly=False,
+    )
+    invited_share_form_header_text = fields.Html(
+        string="Invited share form header text",
+        translate=True,
+        related="company_id.invited_share_form_header_text",
+        readonly=False,
     )

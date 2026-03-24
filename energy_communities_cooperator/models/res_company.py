@@ -61,6 +61,18 @@ class ResCompany(models.Model):
         compute="_compute_numberof_effective_cooperators",
         store=False,
     )
+    cooperator_share_form_header_text = fields.Html(
+        string="Cooperator share form header text", translate=True
+    )
+    cooperator_association_share_form_header_text = fields.Html(
+        string="Cooperator Association share form header text", translate=True
+    )
+    invited_share_form_header_text = fields.Html(
+        string="Invited share form header text", translate=True
+    )
+    voluntary_share_form_header_text = fields.Html(
+        string="Voluntary share form header text", translate=True
+    )
 
     def _compute_numberof_effective_inviteds(self):
         for record in self:

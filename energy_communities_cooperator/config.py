@@ -27,7 +27,12 @@ MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF = {
     "company_invited": COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
     "voluntary": COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
 }
-
+MAPPING__PRODUCT_CATEG_REF__RES_COMPANY_CUSTOM_HEADER_FORM_TEXT_FIELD = {
+    COOP_SHARE_PRODUCT_CATEG_REF: 'cooperator_share_form_header_text',
+    COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS: 'cooperator_association_share_form_header_text',
+    COOP_SHARE_INVITED_PRODUCT_CATEG_REF: 'invited_share_form_header_text',
+    COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF: 'voluntary_share_form_header_text',
+}
 
 def _get_subscription_mode_page_title_message(subscription_mode, company_name):
     MAPPING__SUBSCRIPTION_MODE__DEFAULT_PAGE_TITLE = {
