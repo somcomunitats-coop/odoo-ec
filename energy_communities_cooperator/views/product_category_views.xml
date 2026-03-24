@@ -1,4 +1,20 @@
 <odoo>
+  <record id="act_window_modify_shares_generic_form_settings" model="ir.actions.act_window">
+    <field name="name">Modify shares generic form settings </field>
+    <field name="binding_model_id" ref="product.model_product_category" />
+    <field name="binding_view_types">form</field>
+    <field name="res_model">modify.coop.generic.form.settings.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field
+        name="groups_id"
+        eval="[
+          (4,ref('energy_communities.role_platform_admin_res_groups')),
+          (4,ref('energy_communities.role_coord_admin_res_groups')),
+          (4,ref('energy_communities.role_ce_manager_res_groups')),
+          (4,ref('energy_communities.role_ce_admin_res_groups'))
+        ]"/>
+  </record>
   <record id="view_category_property_form" model="ir.ui.view">
     <field name="name">product.category.property.form.inherit (cooperator)</field>
     <field name="model">product.category</field>
@@ -21,20 +37,4 @@
     </field>
   </record>
 
-  <record id="act_window_modify_shares_generic_form_settings" model="ir.actions.act_window">
-    <field name="name">Modify shares generic form settings </field>
-    <field name="binding_model_id" ref="product.model_product_category" />
-    <field name="binding_view_types">form</field>
-    <field name="res_model">modify.coop.generic.form.settings.wizard</field>
-    <field name="view_mode">form</field>
-    <field name="target">new</field>
-    <field
-        name="groups_id"
-        eval="[
-          (4,ref('energy_communities.role_platform_admin_res_groups')),
-          (4,ref('energy_communities.role_coord_admin_res_groups')),
-          (4,ref('energy_communities.role_ce_manager_res_groups')),
-          (4,ref('energy_communities.role_ce_admin_res_groups'))
-        ]"/>
-  </record>
 </odoo>
