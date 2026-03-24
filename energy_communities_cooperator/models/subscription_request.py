@@ -160,6 +160,9 @@ class SubscriptionRequest(models.Model):
 
         invoice = super().validate_subscription_request()
 
+        if invoice.amount_total == 0 and invoice.payment_state == "paid":
+            self.write({"state": "paid"})
+
         membership = self.partner_id.get_cooperative_membership(self.company_id)
         is_new_pending_member_invited = (
             self.subscription_mode

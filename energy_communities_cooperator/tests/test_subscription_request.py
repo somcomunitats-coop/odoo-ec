@@ -5,6 +5,7 @@ from functools import partial
 from odoo import _
 from odoo.exceptions import ValidationError
 from odoo.tests import Form, common
+from odoo.tests.common import tagged
 
 from odoo.addons.account.models.account_move import AccountMove
 
@@ -14,6 +15,7 @@ from ..schemas import MemberShipMode
 from .testing_cases import SUBSCRIPTION_REQUEST_PARAMS
 
 
+@tagged("-at_install", "post_install")
 class TestSubscriptionRequest(common.TransactionCase):
     def setUpComponents(self):
         builder = self.env["component.builder"]
@@ -170,24 +172,24 @@ class TestSubscriptionRequest(common.TransactionCase):
 
         # and the invited membership has been updated with the correct values
         self.assertEqual(
-            invited_membership.membership_type, MemberShipMode.cooperator.value
+            invited_membership.membership_type, MemberShipMode.invited.value
         )
-        self.assertTrue(invited_membership.coop_candidate)
         self.assertTrue(invited_membership.effective_invited)
         self.assertEqual(invited_membership.cooperator_register_number, 0)
+        self.assertTrue(invited_membership.coop_candidate)
 
         # when we pay the invoice
         pay_invoice(invoice)
         # invoice is paid
         self.assertEqual(invoice.payment_state, "paid")
         # and invited membership is now a member membership
+        self.assertFalse(invited_membership.coop_candidate)
         self.assertEqual(
             invited_membership.membership_type, MemberShipMode.cooperator.value
         )
-        self.assertFalse(invited_membership.coop_candidate)
-        self.assertFalse(invited_membership.effective_invited)
         self.assertTrue(invited_membership.member)
         self.assertNotEqual(invited_membership.cooperator_register_number, 0)
+        self.assertFalse(invited_membership.effective_invited)
         self.assertEqual(
             invited_membership.cooperator_type,
             subscription_request.share_product_id.code,
