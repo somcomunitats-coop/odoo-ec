@@ -155,11 +155,3 @@ class CooperativeMembership(models.Model):
                 "default_effective_date": datetime.now(),
             },
         }
-
-    def invited2member(self):
-        self.ensure_one()
-        if self.coop_candidate:
-            raise ValidationError(_("Invited member has pending invoices to be paid"))
-
-        self.coop_candidate = True
-        self.membership_type = MemberShipMode.cooperator.value
