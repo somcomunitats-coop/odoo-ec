@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
 from ..exceptions import ComponentValidationError, FormValidationError
-from ..schemas import MemberShipMode
+from ..schemas import MemberShipMode, MemberTypeMode
 from ..utils import convert_errors, subscription_request_utils
 
 
@@ -158,7 +158,15 @@ class SubscriptionRequest(models.Model):
             if partners:
                 raise ValidationError(error_partner_msg)
 
-        super().validate_subscription_request()
+        invoice = super().validate_subscription_request()
+        membership = self.partner_id.get_cooperative_membership(self.company_id)
+        is_new_member_invited = (
+            self.subscription_mode == MemberShipMode.cooperator
+            and membership.membership_type == MemberShipMode.invited
+        )
+        if is_new_member_invited:
+            membership.invited2member()
+        return invoice
 
     def get_partner_vals(self):
         vals = super().get_partner_vals()

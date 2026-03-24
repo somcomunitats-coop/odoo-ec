@@ -1,9 +1,11 @@
 from datetime import datetime
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
+from ..schemas import MemberShipMode
 
 
 class CooperativeMembership(models.Model):
@@ -149,3 +151,11 @@ class CooperativeMembership(models.Model):
                 "default_effective_date": datetime.now(),
             },
         }
+
+    def invited2member(self):
+        self.ensure_one()
+        if self.coop_candidate:
+            raise ValidationError(_("Invited member has pending invoices to be paid"))
+
+        self.coop_candidate = True
+        self.membership_type = MemberShipMode.cooperator.value

@@ -13,18 +13,32 @@ from .testing_cases import SUBSCRIPTION_REQUEST_PARAMS
 
 
 class TestSubscriptionRequest(common.TransactionCase):
+    def setUpComponents(self):
+        builder = self.env["component.builder"]
+        # build the components of every installed addons
+        comp_registry = builder._init_global_registry()
+        # ensure that we load only the components of the 'installed'
+        # modules, not 'to install', which means we load only the
+        # dependencies of the tested addons, not the siblings or
+        # children addons
+        builder.build_registry(comp_registry, states=("installed",))
+        # build the componenets fot energy_communities_invoicing
+        builder.load_components("energy_communities_cooperator", comp_registry)
+        self.env.context = dict(self.env.context, components_registry=comp_registry)
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
 
     def setUp(self):
         super().setUp()
+        self.setUpComponents()
         self.maxDiff = None
 
         # Subscription request
-        # self.base_subscription = self.env.ref(
-        #     "energy_communities_service_invoicing.subscription_6_community_1_demo"
-        # )
+        self.base_subscription = self.env.ref(
+            "energy_communities_service_invoicing.subscription_6_community_1_demo"
+        )
 
     def _get_subscription_request(self, subscription_mode):
         product_categ = self.env.ref(
