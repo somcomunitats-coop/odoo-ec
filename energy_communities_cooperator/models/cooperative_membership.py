@@ -4,7 +4,13 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
-from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF, COOP_SHARE_PRODUCT_CATEG_REF, COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS, COOP_SHARE_INVITED_PRODUCT_CATEG_REF, COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF
+from ..config import (
+    COOP_SHARE_INVITED_PRODUCT_CATEG_REF,
+    COOP_SHARE_PRODUCT_CATEG_REF,
+    COOP_SHARE_PRODUCT_CATEG_REF_ASSOCIATIONS,
+    COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
+    MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
+)
 from ..schemas import MemberShipMode, SubscriptionMode
 
 
@@ -17,44 +23,61 @@ class CooperativeMembership(models.Model):
         "partner_id.share_ids.share_product_id",
         "partner_id.share_ids.share_product_id.categ_id",
         "partner_id.share_ids.share_product_id.categ_id.type_url",
-        "partner_id.subscription_request_ids"
+        "partner_id.subscription_request_ids",
     )
     def _compute_membership_type(self):
         # Get mapping directly to avoid dependency on type_url during initialization
-        
+
         def get_membership_type_value(categ):
-            mapping = self.env["product.category"].get_mapping_product_category_id_subscription_mode()
-            membership_type = ''
+            mapping = self.env[
+                "product.category"
+            ].get_mapping_product_category_id_subscription_mode()
+            membership_type = ""
             # Use mapping if available, otherwise fallback to type_url
             if mapping and categ.id in mapping:
                 membership_type = mapping[categ.id]
             elif categ.type_url:
                 membership_type = categ.type_url
             return membership_type
-            
+
         for membership in self:
             has_member_shares = membership.share_ids.filtered(
-                lambda record: record.share_line >0 and get_membership_type_value(record.share_product_id.categ_id) in ('member', 'member_associations')
+                lambda record: record.share_number > 0
+                and get_membership_type_value(record.share_product_id.categ_id)
+                in ("member", "member_associations")
             )
             has_invited_shares = membership.share_ids.filtered(
-                lambda record: record.share_line >0 and get_membership_type_value(record.share_product_id.categ_id) == 'invited'
+                lambda record: record.share_number > 0
+                and get_membership_type_value(record.share_product_id.categ_id)
+                == "invited"
             )
             sub_requests_member_done = membership.subscription_request_ids.filtered(
-                lambda record: record.state == "done" and record.subscription_mode in [SubscriptionMode.member, SubscriptionMode.member_associations]
+                lambda record: record.state == "done"
+                and record.subscription_mode
+                in [SubscriptionMode.member, SubscriptionMode.member_associations]
             )
             sub_requests_invited_done = membership.subscription_request_ids.filtered(
-                lambda record: record.state == "done" and record.subscription_mode == SubscriptionMode.invited
+                lambda record: record.state == "done"
+                and record.subscription_mode == SubscriptionMode.invited
             )
-            if bool(has_member_shares): 
-                membership.membership_type = get_membership_type_value(has_member_shares[0].share_product_id.categ_id)
+            if bool(has_member_shares):
+                membership.membership_type = get_membership_type_value(
+                    has_member_shares[0].share_product_id.categ_id
+                )
             elif bool(has_invited_shares):
-                membership.membership_type = get_membership_type_value(has_invited_shares[0].share_product_id.categ_id)
+                membership.membership_type = get_membership_type_value(
+                    has_invited_shares[0].share_product_id.categ_id
+                )
             elif bool(sub_requests_member_done):
-                membership.membership_type = get_membership_type_value(sub_requests_member_done[0].share_product_id.categ_id)
+                membership.membership_type = get_membership_type_value(
+                    sub_requests_member_done[0].share_product_id.categ_id
+                )
             elif bool(sub_requests_invited_done):
-                membership.membership_type = get_membership_type_value(sub_requests_invited_done[0].share_product_id.categ_id)
-            else:         
-                membership.membership_type = ''
+                membership.membership_type = get_membership_type_value(
+                    sub_requests_invited_done[0].share_product_id.categ_id
+                )
+            else:
+                membership.membership_type = ""
 
     active = fields.Boolean(string="Active", default=True)
     representative = fields.Boolean(

@@ -14,7 +14,7 @@ class SubscriptionRequest(models.Model):
     )
 
     def validate_subscription_request(self):
-        super().validate_subscription_request()
+        invoice = super().validate_subscription_request()
         if self.share_product_id.is_contract:
             # check pricelist is defined in order to create related service invoicing sale order
             if not self.company_id.pricelist_id:
@@ -38,3 +38,4 @@ class SubscriptionRequest(models.Model):
                 self.write(
                     {"service_invoicing_sale_order_id": component.work.record.id}
                 )
+        return invoice
