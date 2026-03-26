@@ -7,13 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-26 12:02+0000\n"
-"PO-Revision-Date: 2026-03-26 12:02+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2026-03-26 16:29+0000\n"
+"Last-Translator: Xavier Bonet <xavier.bonet@somenergia.coop>\n"
+"Language-Team: Catalan <https://traduccio.somenergia.coop/projects/som-comunitats/energy-communities-cooperator/ca/>\n"
+"Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_subscription_request__vat
@@ -515,7 +517,7 @@ msgid ""
 "Before executing the mass mailing, you can do a ‘Test mailing’ to a specific"
 " email address that the wizard will ask you for when you click the ‘Test "
 "mailing’ button."
-msgstr ""
+msgstr "Abans de fer l'enviament massiu, podeu fer una \"Prova d'enviament\" a una adreça de correu electrònic específica que l'assistent us demanarà quan feu clic al botó \"Prova d'enviament\"."
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -728,7 +730,7 @@ msgstr "Cooperador"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__cooperator_association_share_form_header_text
 msgid "Cooperator Association share form header text"
-msgstr ""
+msgstr "Paràgraf personalitzable a la capçalera dels formularis genèrics (Ap.Obligatòries - Associacions)"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__coop_candidate
@@ -738,19 +740,19 @@ msgstr "Vol ser sòcia"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__cooperator_share_form_header_text
 msgid "Cooperator share form header text"
-msgstr ""
+msgstr "Párrafo de cabecera en formularios aportaciones societarias"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__cooperator_association_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__cooperator_association_share_form_header_text
 msgid "Cooperator share form header text (Associations)"
-msgstr ""
+msgstr "Paràgraf de capçalera en formularis aportacions societàries (Ap.Obligatòries - Associacions)"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__cooperator_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__cooperator_share_form_header_text
 msgid "Cooperator share form header text (Cooperatives)"
-msgstr ""
+msgstr "Paràgraf de capçalera en formularis aportacions societàries (Ap.Obligatòries - Cooperatives)"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_company_form
@@ -834,7 +836,7 @@ msgstr "Paràgraf personalitzable a la capçalera del formulari específic"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Customizable header texts on generic forms"
-msgstr ""
+msgstr "Paràgrafs personalitzables a la capçalera dels formularis genèrics"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__share_form_header_text
@@ -859,7 +861,7 @@ msgstr "Mostrar Nom"
 msgid ""
 "Display the customizable paragraph in the header text of the generic "
 "cooperator website form"
-msgstr ""
+msgstr "Mostrar el paràgraf personalitzable al text de la capçalera del formulari genèric"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -969,17 +971,17 @@ msgstr "Confirmació per correu electrònic"
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_email_sending_assistant_wiz
 msgid "Email Sending Assistant"
-msgstr ""
+msgstr "Assistent enviament correu"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__email_template_id
 msgid "Email Template"
-msgstr ""
+msgstr "Plantilla de correu electrònic"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__recipient_email_address_for_test
 msgid "Email address to receive the test email"
-msgstr ""
+msgstr "Adreça de correu per rebre el correu electrònic de prova"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1073,27 +1075,27 @@ msgstr "Seguidors (Contactes)"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "For invited shares product category"
-msgstr ""
+msgstr "Per a la Categoria d'aportacions de Convidades"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "For mandatory shares product category (associations)"
-msgstr ""
+msgstr "Per a la Categoria d'aportacions obligatòries (associacions)"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "For mandatory shares product category (cooperatives)"
-msgstr ""
+msgstr "Per a la categoria d'aportacions obligatòries (cooperatives)"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "For voluntary shares product category"
-msgstr ""
+msgstr "Per a la categoria d'aportacions voluntàries"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__force_language
 msgid "Force language"
-msgstr ""
+msgstr "Forçar idioma"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1135,7 +1137,7 @@ msgstr "Gènere"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1340,14 +1342,14 @@ msgstr "Invitadas a participar"
 #: code:addons/energy_communities_cooperator/models/subscription_request.py:0
 #, python-format
 msgid "Invited member has pending invoices to be paid"
-msgstr ""
+msgstr "Hi ha un contacte amb vincle de convidada que encara té documents pendents de pagament"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__invited_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__invited_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__invited_share_form_header_text
 msgid "Invited share form header text"
-msgstr ""
+msgstr "Paràgraf de capçalera en formularis aportacions societàries (convidades)"
 
 #. module: energy_communities_cooperator
 #: model:ir.ui.menu,name:energy_communities_cooperator.menu_cooperator_cooperator_invited
@@ -1394,7 +1396,7 @@ msgid ""
 "It looks like this vat number %s doesn't belong to an effective member of "
 "this energy community, please contact with the energy community "
 "administrators at %s"
-msgstr ""
+msgstr "Aquest NIF %s sembla que no pertany a un membre efectiu d'aquesta comunitat energètica. Poseu-vos en contacte amb els administradors de la comunitat energètica a %s"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__journal_id
@@ -1422,7 +1424,7 @@ msgstr "Idioma"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__force_language
 msgid "Language to send the email in"
-msgstr ""
+msgstr "Idioma amb el que enviar el correu electrònic"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz____last_update
@@ -1526,7 +1528,7 @@ msgstr "Missatges"
 #. module: energy_communities_cooperator
 #: model:ir.model,name:energy_communities_cooperator.model_modify_coop_generic_form_settings_wizard
 msgid "Modify cooperator generic form settings wizard"
-msgstr ""
+msgstr "Assistent per modificar la configuració del formulari genèric"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1534,22 +1536,22 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/wizards/modify_generic_form_settings_wizard.py:0
 #, python-format
 msgid "Modify generic form settings"
-msgstr ""
+msgstr "Modificar configuració formulari genèric"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_modify_generic_form_settings_wizard_form
 msgid "Modify generic form settings wizard"
-msgstr ""
+msgstr "Assistent per modificar configuració formulari genèric"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
 msgid "Modify options"
-msgstr ""
+msgstr "Modificar opcions"
 
 #. module: energy_communities_cooperator
 #: model:ir.actions.act_window,name:energy_communities_cooperator.act_window_modify_shares_generic_form_settings
 msgid "Modify shares generic form settings "
-msgstr ""
+msgstr "Modificar configuració formulari genèric "
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__account_move_ids
@@ -1848,7 +1850,7 @@ msgstr "L'IBAN proporcionat no és vàlid."
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__recipient_email_address_for_test
 msgid "Recipient email address for test"
-msgstr ""
+msgstr "Adreça de correu electrònic del destinatari per a la prova"
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -1984,7 +1986,7 @@ msgstr ""
 #: code:addons/energy_communities_cooperator/wizards/modify_generic_form_settings_wizard.py:0
 #, python-format
 msgid "Settings already modified."
-msgstr ""
+msgstr "Opcions modificades."
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -2139,7 +2141,7 @@ msgstr ""
 msgid ""
 "The sender will be defined in the template (Configuration tab field). "
 "Otherwise, it will be the email address of the user executing the sending."
-msgstr ""
+msgstr "El remitent es pot definir a la plantilla (camp de la pestanya Configuració). En cas contrari, serà l'adreça de correu electrònic de l'usuari que realitza l'enviament."
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -2218,7 +2220,7 @@ msgstr "Hi ha un problema amb les dades que has enviat"
 #: code:addons/energy_communities_cooperator/models/subscription_request.py:0
 #, python-format
 msgid "There is an existing account for this vat number on this community."
-msgstr ""
+msgstr "Ja existeix un compte (persona o entitat) amb aquest NIF associada/vinculada a la Comunitat."
 
 #. module: energy_communities_cooperator
 #. odoo-python
@@ -2299,7 +2301,7 @@ msgstr ""
 msgid ""
 "This wizard cannot be executed on Product Categories that are not related to"
 " Cooperative share products."
-msgstr ""
+msgstr "Aquest assistent no es pot executar en categories de productes que no estiguin relacionades amb productes d'aportacions societàries."
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
@@ -2430,7 +2432,7 @@ msgstr "URL de compartició voluntària individual"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_form_header_text
 msgid "Voluntary share form header text"
-msgstr ""
+msgstr "Paràgraf de capçalera en formularis aportacions societàries (Voluntàries)"
 
 #. module: energy_communities_cooperator
 #: model:ir.actions.act_window,name:energy_communities_cooperator.view_voluntary_share_interest_return_window
@@ -2611,7 +2613,7 @@ msgstr "Revisa la transferència SEPA."
 #: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
 #, python-format
 msgid "You must specify a recipient email address for test"
-msgstr ""
+msgstr "Heu d'especificar una adreça de correu electrònic del destinatari per a la prova"
 
 #. module: energy_communities_cooperator
 #. odoo-python
