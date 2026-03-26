@@ -79,6 +79,36 @@ class CooperativeMembership(models.Model):
             else:
                 membership.membership_type = ""
 
+    @api.depends(
+        "partner_id.share_ids",
+        "partner_id.share_ids.share_product_id.default_code",
+        "partner_id.share_ids.share_number",
+    )
+    def _compute_cooperator_type(self):
+        for record in self:
+            share_type = ""
+            invited = record.share_ids.filtered(
+                lambda sr: sr.share_product_id.categ_id.type_url == "invited"
+            )
+            member = record.share_ids.filtered(
+                lambda sr: sr.share_product_id.categ_id.type_url
+                in ["member", "member_associations"]
+            )
+            for line in invited:
+                if line.share_number > 0:
+                    share_type = line.share_product_id.default_code
+                    break
+            for line in member:
+                if line.share_number > 0:
+                    share_type = line.share_product_id.default_code
+                    break
+            record.cooperator_type = share_type
+
+    cooperator_type = fields.Selection(
+        compute=_compute_cooperator_type,
+        store=True,
+    )
+
     active = fields.Boolean(string="Active", default=True)
     representative = fields.Boolean(
         string="Legal Representative", related="partner_id.representative", store=True
