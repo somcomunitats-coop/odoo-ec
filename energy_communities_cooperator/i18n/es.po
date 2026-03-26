@@ -6,77 +6,55 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-27 11:12+0000\n"
-"PO-Revision-Date: 2026-02-26 09:36+0000\n"
-"Last-Translator: Weblate Admin <weblate.admin@example.com>\n"
-"Language-Team: Spanish <http://localhost:8080/projects/odoo/"
-"energy_communities_cooperator/es/>\n"
-"Language: es\n"
+"POT-Creation-Date: 2026-03-26 12:02+0000\n"
+"PO-Revision-Date: 2026-03-26 12:02+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,help:energy_communities_cooperator.field_subscription_request__vat
 msgid ""
 "\n"
-"        The Tax Identification Number. Complete it if the contact is "
-"subjected to\n"
+"        The Tax Identification Number. Complete it if the contact is subjected to\n"
 "        government taxes. Used in some legal statements.\"\n"
 "        "
 msgstr ""
 "\n"
-"        El Número de Identificación Fiscal. Rellénelo si el contacto está "
-"sujeto a\n"
-"           impuestos gubernamentales. Se utiliza en algunas declaraciones "
-"legales\".\n"
+"        El Número de Identificación Fiscal. Rellénelo si el contacto está sujeto a\n"
+"           impuestos gubernamentales. Se utiliza en algunas declaraciones legales\".\n"
 "        "
 
 #. module: energy_communities_cooperator
 #: model:mail.template,body_html:energy_communities_cooperator.email_template_confirmation_voluntary_share
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
-"\">\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                        Dear <t t-out=\"object.firstname\"></t>,<br><br>\n"
-"                        We confirm that we have correctly received your "
-"request to make a voluntary contribution to the capital social of <b><t t-"
-"out=\"object.company_id.name\"></t></b>, with the following data:<br><br>\n"
+"                        We confirm that we have correctly received your request to make a voluntary contribution to the capital social of <b><t t-out=\"object.company_id.name\"></t></b>, with the following data:<br><br>\n"
 "                        <ul>\n"
-"                            <li>Partner VAT: <b><t t-out=\"object.vat\"></"
-"t></b></li>\n"
-"                            <li>Partner name: <b><t t-"
-"out=\"object.firstname\"></t> <t t-out=\"object.lastname\"></t></b></li>\n"
-"                            <li>Charging account finished on: <b><t t-"
-"out=\"object.iban[-4:]\"></t></b></li>\n"
-"                            <li>Subscription amount: <b><t t-"
-"out=\"object.subscription_amount\"></t> €</b></li>\n"
+"                            <li>Partner VAT: <b><t t-out=\"object.vat\"></t></b></li>\n"
+"                            <li>Partner name: <b><t t-out=\"object.firstname\"></t> <t t-out=\"object.lastname\"></t></b></li>\n"
+"                            <li>Charging account finished on: <b><t t-out=\"object.iban[-4:]\"></t></b></li>\n"
+"                            <li>Subscription amount: <b><t t-out=\"object.subscription_amount\"></t> €</b></li>\n"
 "                        </ul>\n"
 "                        <br>\n"
-"                        In the next few days you will receive the bank "
-"charge in this account, please verify that all the data\n"
-"                        provided is correct and you have the money you want "
-"to invest, to avoid any incident in the\n"
+"                        In the next few days you will receive the bank charge in this account, please verify that all the data\n"
+"                        provided is correct and you have the money you want to invest, to avoid any incident in the\n"
 "                        draft of the receipt.\n"
 "                        <br><br>\n"
-"                        Once the validity of the payment has been verified, "
-"you will receive a new notification confirming the contribution made.\n"
+"                        Once the validity of the payment has been verified, you will receive a new notification confirming the contribution made.\n"
 "                        <br><br>\n"
-"                        Thank you for your involvement and we inform you "
-"that for any doubt or clarification you can\n"
+"                        Thank you for your involvement and we inform you that for any doubt or clarification you can\n"
 "                        <t t-if=\"object.company_id.website\">\n"
-"                        consult our website: <a t-"
-"if=\"object.company_id.website\" t-att-"
-"href=\"object.company_id.website\"><t t-out=\"object.company_id.website\"></"
-"t></a>\n"
+"                        consult our website: <a t-if=\"object.company_id.website\" t-att-href=\"object.company_id.website\"><t t-out=\"object.company_id.website\"></t></a>\n"
 "                        or\n"
-"                        </t> send us an email to <t t-"
-"out=\"object.company_id.email\"></t>.\n"
+"                        </t> send us an email to <t t-out=\"object.company_id.email\"></t>.\n"
 "                        <br><br>\n"
-"                        Get the word out by explaining the project to "
-"family and friends. The more we are, the further we will go!\n"
+"                        Get the word out by explaining the project to family and friends. The more we are, the further we will go!\n"
 "                        <br>\n"
 "                        Thank you very much and good energy!\n"
 "                        <br><br>\n"
@@ -88,45 +66,28 @@ msgid ""
 msgstr ""
 "<p>Apreciado/a <t t-out=\"object.firstname\"></t>,</p>\n"
 "    <p>\n"
-"Te confirmamos que hemos recibido correctamente tu solicitud para realizar "
-"una aportación voluntaria al capital social de <b style=\"font-"
-"weight:bolder;\"><t t-out=\"object.company_id.comercial_name or "
-"object.company_id.name\"></t></b>, con los siguientes datos:\n"
+"Te confirmamos que hemos recibido correctamente tu solicitud para realizar una aportación voluntaria al capital social de <b style=\"font-weight:bolder;\"><t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t></b>, con los siguientes datos:\n"
 "    </p>\n"
 "    <ul style=\"margin:0px 0 1rem 0;\">\n"
-"        <li>Socio/a NIF: <b style=\"font-weight:bolder;\"><t t-"
-"out=\"object.vat\"></t></b></li>\n"
-"        <li>Socio/a: <b style=\"font-weight:bolder;\"><t t-"
-"out=\"object.firstname\"></t> <t t-out=\"object.lastname\"></t></b></li>\n"
-"        <li>Cuenta de cargo: <b style=\"font-weight:bolder;\"><t t-"
-"out=\"object.iban\"></t></b></li>\n"
-"        <li>Importe aportación: <b style=\"font-weight:bolder;\"><t t-"
-"out=\"object.subscription_amount\"></t>€</b></li>\n"
+"        <li>Socio/a NIF: <b style=\"font-weight:bolder;\"><t t-out=\"object.vat\"></t></b></li>\n"
+"        <li>Socio/a: <b style=\"font-weight:bolder;\"><t t-out=\"object.firstname\"></t> <t t-out=\"object.lastname\"></t></b></li>\n"
+"        <li>Cuenta de cargo: <b style=\"font-weight:bolder;\"><t t-out=\"object.iban\"></t></b></li>\n"
+"        <li>Importe aportación: <b style=\"font-weight:bolder;\"><t t-out=\"object.subscription_amount\"></t>€</b></li>\n"
 "    </ul>\n"
 "    <p>\n"
-"En los próximos días recibirás el cargo bancario en esta cuenta, por favor "
-"verifica que todos los datos facilitados sean correctos y dispones del "
-"dinero que quieres invertir, para evitar cualquier incidencia en el giro "
-"del recibo.\n"
+"En los próximos días recibirás el cargo bancario en esta cuenta, por favor verifica que todos los datos facilitados sean correctos y dispones del dinero que quieres invertir, para evitar cualquier incidencia en el giro del recibo.\n"
 "    </p>\n"
 "    <p>\n"
-"Una vez verificada la validez del pago realizado recibirás una nueva "
-"notificación confirmando la aportación realizada y detallando las "
-"condiciones particulares de tu aportación.\n"
+"Una vez verificada la validez del pago realizado recibirás una nueva notificación confirmando la aportación realizada y detallando las condiciones particulares de tu aportación.\n"
 "    </p>\n"
 "    <p>\n"
-"Agradecer tu implicación con la cooperativa y informarte que para cualquier "
-"duda o aclaración puedes consultar nuestra web&nbsp;\n"
-"        <a t-if=\"object.company_id.website\" t-att-"
-"href=\"object.company_id.website\"><t t-out=\"object.company_id.website\"></"
-"t></a>\n"
+"Agradecer tu implicación con la cooperativa y informarte que para cualquier duda o aclaración puedes consultar nuestra web&nbsp;\n"
+"        <a t-if=\"object.company_id.website\" t-att-href=\"object.company_id.website\"><t t-out=\"object.company_id.website\"></t></a>\n"
 "        &nbsp;o enviarnos un correo electrónico a\n"
-"        <a t-att-href=\"object.company_id.email\"><t t-"
-"out=\"object.company_id.email\"></t></a>\n"
+"        <a t-att-href=\"object.company_id.email\"><t t-out=\"object.company_id.email\"></t></a>\n"
 "    </p>\n"
 "    <p>\n"
-"Haz que corra la voz explicando el proyecto a familiares y amigos/as. "
-"Cuantos más seamos, más lejos llegaremos!\n"
+"Haz que corra la voz explicando el proyecto a familiares y amigos/as. Cuantos más seamos, más lejos llegaremos!\n"
 "    </p>\n"
 "    <p>\n"
 "¡Muchas gracias y buena energía!\n"
@@ -140,21 +101,12 @@ msgstr ""
 #: model:mail.template,body_html:energy_communities_cooperator.email_template_conditions_voluntary_share
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
-"\">\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                    Hello <t t-out=\"object.name\"></t>,<br><br>\n"
-"                    Recently we have allready charged your account the "
-"amount corresponding to your voluntary contribution to the share capital of "
-"<b><t t-out=\"object.company_id.comercial_name or "
-"object.company_id.name\"></t></b>.<br><br>\n"
-"                    We take this opportunity to <b>thank you</b>, once "
-"again, for your involvement with the objective to promote actions and "
-"projects that contribute to an energy and social transition.<br><br>\n"
-"                    Please find in attachment your <t t-"
-"out=\"object.company_id.comercial_name or object.company_id.name\"></t> "
-"cooperator certificate.<br><br>\n"
-"                    Get the word out by explaining the project to family "
-"and friends. The more we are, the further we will go!<br><br>\n"
+"                    Recently we have allready charged your account the amount corresponding to your voluntary contribution to the share capital of <b><t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t></b>.<br><br>\n"
+"                    We take this opportunity to <b>thank you</b>, once again, for your involvement with the objective to promote actions and projects that contribute to an energy and social transition.<br><br>\n"
+"                    Please find in attachment your <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> cooperator certificate.<br><br>\n"
+"                    Get the word out by explaining the project to family and friends. The more we are, the further we will go!<br><br>\n"
 "                    We keep in touch for any questions.<br><br>\n"
 "                    Yours faithfully,<br>\n"
 "                </p>\n"
@@ -163,31 +115,20 @@ msgid ""
 msgstr ""
 "<p>Apreciado/a ${object.firstname} <t t-out=\"object.firstname\"></t>,</p>\n"
 "    <p>\n"
-"        Te confirmamos que ya hemos hecho el cargo a tu cuenta bancaria "
-"correspondiente a tu aportación voluntaria al capital social de la "
-"cooperativa \n"
-"        <b><t t-out=\"object.company_id.comercial_name or "
-"object.company_id.name\"></t></b>.\n"
+"        Te confirmamos que ya hemos hecho el cargo a tu cuenta bancaria correspondiente a tu aportación voluntaria al capital social de la cooperativa \n"
+"        <b><t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t></b>.\n"
 "    </p>\n"
 "    <p>\n"
-"        Quedamos a tu disposición para cualquier duda o aclaración en "
-"relación a la aportación realizada a través de nuestro correo electrónico \n"
-"        <a t-att-href=\"object.company_id.email\"><t t-"
-"out=\"object.company_id.email\"></t></a> o consultando la web \n"
-"        <a t-att-href=\"object.company_id.website\"><t t-"
-"out=\"object.company_id.website\"></t></a>.\n"
+"        Quedamos a tu disposición para cualquier duda o aclaración en relación a la aportación realizada a través de nuestro correo electrónico \n"
+"        <a t-att-href=\"object.company_id.email\"><t t-out=\"object.company_id.email\"></t></a> o consultando la web \n"
+"        <a t-att-href=\"object.company_id.website\"><t t-out=\"object.company_id.website\"></t></a>.\n"
 "    </p>\n"
 "    <p>\n"
-"        Aprovechamos para agradecerte, una vez más, tu implicación con el "
-"objetivo de <b><t t-out=\"object.company_id.comercial_name or "
-"object.company_id.name\"></t></b>\n"
-"        para impulsar aquellas acciones o proyectos que contribuyan a una "
-"transición energética, económica y social en <t t-"
-"out=\"object.company_id.city\"></t>.\n"
+"        Aprovechamos para agradecerte, una vez más, tu implicación con el objetivo de <b><t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t></b>\n"
+"        para impulsar aquellas acciones o proyectos que contribuyan a una transición energética, económica y social en <t t-out=\"object.company_id.city\"></t>.\n"
 "    </p>\n"
 "    <p>\n"
-"Haz que corra la voz explicando el proyecto a familiares y amigos/as. "
-"Cuantos/as más seamos, más lejos podremos llegar.\n"
+"Haz que corra la voz explicando el proyecto a familiares y amigos/as. Cuantos/as más seamos, más lejos podremos llegar.\n"
 "    </p>\n"
 "    <p>\n"
 "¡Muchas gracias y buena energía!\n"
@@ -201,111 +142,66 @@ msgstr ""
 #: model:mail.template,body_html:energy_communities_cooperator.email_template_voluntary_share_interest_return
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
-"\">\n"
-"                    Hello <t t-out=\"object.partner_id.firstname\"></t>,"
-"<br><br>\n"
-"                    We have generated the yearly interest return of your "
-"voluntary shares contribution.<br>\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Hello <t t-out=\"object.partner_id.firstname\"></t>,<br><br>\n"
+"                    We have generated the yearly interest return of your voluntary shares contribution.<br>\n"
 "                    <t t-if=\"object.partner_bank_id.acc_number\">\n"
-"                    Soon you'll receive a transfer on your IBAN account "
-"finished on: <t t-out=\"object.partner_bank_id.acc_number[-4:]\"></"
-"t><br><br>.\n"
+"                    Soon you'll receive a transfer on your IBAN account finished on: <t t-out=\"object.partner_bank_id.acc_number[-4:]\"></t><br><br>.\n"
 "                    </t>\n"
 "                    <t t-else=\"\">\n"
-"                    Soon you'll receive a transfer on your IBAN account."
-"<br><br>\n"
+"                    Soon you'll receive a transfer on your IBAN account.<br><br>\n"
 "                    </t>\n"
 "                    The summary of the transaction:<br>\n"
 "                    <ul>\n"
-"                        <t t-"
-"if=\"object.voluntary_share_interest_return_id\">\n"
-"                            <li><strong>Period:</strong> from <t t-"
-"out=\"object.voluntary_share_interest_return_id.start_date_period.strftime('%d/"
-"%m/%Y')\"></t> to <t t-"
-"out=\"object.voluntary_share_interest_return_id.end_date_period.strftime('%d/"
-"%m/%Y')\"></t></li>\n"
+"                        <t t-if=\"object.voluntary_share_interest_return_id\">\n"
+"                            <li><strong>Period:</strong> from <t t-out=\"object.voluntary_share_interest_return_id.start_date_period.strftime('%d/%m/%Y')\"></t> to <t t-out=\"object.voluntary_share_interest_return_id.end_date_period.strftime('%d/%m/%Y')\"></t></li>\n"
 "                        </t>\n"
-"                        <li><strong>Total contribution:</strong> <t t-"
-"out=\"('%.2f'% object.voluntary_share_total_contribution).replace('.',',')"
-"\"></t>€</li>\n"
-"                        <li><strong>Total interest:</strong> <t t-"
-"out=\"('%.2f'% object.amount_untaxed).replace('.',',')\"></t>€</li>\n"
-"                        <li><strong>Taxes:</strong> <t t-out=\"('%.2f'% "
-"object.amount_tax).replace('.',',')\"></t>€</li>\n"
-"                        <li><strong>Total to receive:</strong> <t t-"
-"out=\"('%.2f'% object.amount_total).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong>Total contribution:</strong> <t t-out=\"('%.2f'% object.voluntary_share_total_contribution).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong>Total interest:</strong> <t t-out=\"('%.2f'% object.amount_untaxed).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong>Taxes:</strong> <t t-out=\"('%.2f'% object.amount_tax).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong>Total to receive:</strong> <t t-out=\"('%.2f'% object.amount_total).replace('.',',')\"></t>€</li>\n"
 "                    </ul>\n"
 "                    <br>\n"
-"                    Don't hesitate to contact us at <a t-"
-"if=\"object.company_id.email\" t-att-href=\"object.company_id.email\"><t t-"
-"out=\"object.company_id.email\"></t></a> for any question you might have "
-"using the code: <t t-out=\"object.name\"></t><br>\n"
-"                    Thanks for your contribution helping generate our green "
-"energy.<br><br>\n"
+"                    Don't hesitate to contact us at <a t-if=\"object.company_id.email\" t-att-href=\"object.company_id.email\"><t t-out=\"object.company_id.email\"></t></a> for any question you might have using the code: <t t-out=\"object.name\"></t><br>\n"
+"                    Thanks for your contribution helping generate our green energy.<br><br>\n"
 "                    Yours faithfully,<br>\n"
 "                    </p>\n"
 "                </div>\n"
 "            "
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"                    <p style=\"box-sizing:border-box;margin: 0px; padding: "
-"0px; font-size: 13px;\">\n"
-"                    Hola <t t-out=\"object.partner_id.firstname\"></t>,"
-"<br><br>\n"
-"                    Acabamos de generar el documento y la orden de pago "
-"correspondiente al retorno anual de los intereses de tus aportaciones "
-"voluntarias.<br>\n"
+"                    <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Hola <t t-out=\"object.partner_id.firstname\"></t>,<br><br>\n"
+"                    Acabamos de generar el documento y la orden de pago correspondiente al retorno anual de los intereses de tus aportaciones voluntarias.<br>\n"
 "                    <t t-if=\"object.partner_bank_id.acc_number\">\n"
-"                    Próximamente recibirás el pago en tu cuenta con IBAN "
-"finalizado en: <t t-out=\"object.partner_bank_id.acc_number[-4:]\"></"
-"t><br><br>.\n"
+"                    Próximamente recibirás el pago en tu cuenta con IBAN finalizado en: <t t-out=\"object.partner_bank_id.acc_number[-4:]\"></t><br><br>.\n"
 "                    </t>\n"
 "                    <t t-else=\"\">\n"
 "                    Próximamente recibirás el pago en tu cuenta.<br><br>\n"
 "                    </t>\n"
 "                    El resumen de la operación:<br>\n"
-"                    </p><ul style=\"padding:0 0 0 24px;margin:0px 0 12px "
-"0;box-sizing:border-box;\">\n"
-"                        <t t-"
-"if=\"object.voluntary_share_interest_return_id\">\n"
-"                            <li><strong style=\"box-sizing:border-box;font-"
-"weight:bolder;\">Periodo:</strong> desde <t t-"
-"out=\"object.voluntary_share_interest_return_id.start_date_period.strftime('%d/"
-"%m/%Y')\"></t> hasta el <t t-"
-"out=\"object.voluntary_share_interest_return_id.end_date_period.strftime('%d/"
-"%m/%Y')\"></t></li>\n"
+"                    </p><ul style=\"padding:0 0 0 24px;margin:0px 0 12px 0;box-sizing:border-box;\">\n"
+"                        <t t-if=\"object.voluntary_share_interest_return_id\">\n"
+"                            <li><strong style=\"box-sizing:border-box;font-weight:bolder;\">Periodo:</strong> desde <t t-out=\"object.voluntary_share_interest_return_id.start_date_period.strftime('%d/%m/%Y')\"></t> hasta el <t t-out=\"object.voluntary_share_interest_return_id.end_date_period.strftime('%d/%m/%Y')\"></t></li>\n"
 "                        </t>\n"
-"                        <li><strong style=\"box-sizing:border-box;font-"
-"weight:bolder;\">Total de tu aportación:</strong> <t t-out=\"('%.2f'% "
-"object.voluntary_share_total_contribution).replace('.',',')\"></t>€</li>\n"
-"                        <li><strong style=\"box-sizing:border-box;font-"
-"weight:bolder;\">Intereses generados:</strong> <t t-out=\"('%.2f'% "
-"object.amount_untaxed).replace('.',',')\"></t>€</li>\n"
-"                        <li><strong style=\"box-sizing:border-box;font-"
-"weight:bolder;\">Impuestos (IRPF 19%):</strong> <t t-out=\"('%.2f'% "
-"object.amount_tax).replace('.',',')\"></t>€</li>\n"
-"                        <li><strong style=\"box-sizing:border-box;font-"
-"weight:bolder;\">Total a ingresar:</strong> <t t-out=\"('%.2f'% "
-"object.amount_total).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong style=\"box-sizing:border-box;font-weight:bolder;\">Total de tu aportación:</strong> <t t-out=\"('%.2f'% object.voluntary_share_total_contribution).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong style=\"box-sizing:border-box;font-weight:bolder;\">Intereses generados:</strong> <t t-out=\"('%.2f'% object.amount_untaxed).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong style=\"box-sizing:border-box;font-weight:bolder;\">Impuestos (IRPF 19%):</strong> <t t-out=\"('%.2f'% object.amount_tax).replace('.',',')\"></t>€</li>\n"
+"                        <li><strong style=\"box-sizing:border-box;font-weight:bolder;\">Total a ingresar:</strong> <t t-out=\"('%.2f'% object.amount_total).replace('.',',')\"></t>€</li>\n"
 "                    </ul>\n"
 "                    <br>\n"
-"                    No dudes en contactar con nosotros en <a t-"
-"if=\"object.company_id.email\" t-att-href=\"object.company_id.email\" "
-"style=\"text-decoration: none; box-sizing: border-box; color: #495057;\"><t "
-"t-out=\"object.company_id.email\"></t></a> para cualquier duda, utilizando "
-"la referencia: <t t-out=\"object.name\"></t><br>\n"
-"                    Gracias a las aportaciones como la tuya, la cooperativa "
-"financia proyectos y puede generar cada vez más energía proveniente de "
-"fuentes renovables.<br><br>\n"
+"                    No dudes en contactar con nosotros en <a t-if=\"object.company_id.email\" t-att-href=\"object.company_id.email\" style=\"text-decoration: none; box-sizing: border-box; color: #495057;\"><t t-out=\"object.company_id.email\"></t></a> para cualquier duda, utilizando la referencia: <t t-out=\"object.name\"></t><br>\n"
+"                    Gracias a las aportaciones como la tuya, la cooperativa financia proyectos y puede generar cada vez más energía proveniente de fuentes renovables.<br><br>\n"
 "                    Atentamente,<br>\n"
-"                    <p style=\"margin:0px 0 12px 0;box-sizing:border-box;"
-"\"></p>\n"
+"                    <p style=\"margin:0px 0 12px 0;box-sizing:border-box;\"></p>\n"
 "                </div>\n"
 "            "
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -322,6 +218,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "<p id='sepa_text'>To formalize the contribution, you must first fill out "
@@ -330,13 +227,19 @@ msgid ""
 "id='prodPrice'>%(product_price)s</span>%(currency_symbol)s</p>"
 msgstr ""
 "<p id='sepa_text'>Para formalizar la aportación,  debes rellenar este "
-"formulario donde te pedimos una cuenta bancaria y la autorización para "
-"girar un recibo bancario para cobrar la aportación económica obligatoria "
-"inicial de <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s."
-"</p>"
+"formulario donde te pedimos una cuenta bancaria y la autorización para girar"
+" un recibo bancario para cobrar la aportación económica obligatoria inicial "
+"de <span id='prodPrice'>%(product_price)s</span>%(currency_symbol)s.</p>"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -353,11 +256,19 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "<p id='transfer_text'>To be a member you must fulfill this form and lateron "
-"proceed to pay the initial share of <span id='prodPrice'>%(product_price)s</"
-"span>%(currency_symbol)s by follow the steps you will receive by email.</p>"
+"proceed to pay the initial share of <span "
+"id='prodPrice'>%(product_price)s</span>%(currency_symbol)s by follow the "
+"steps you will receive by email.</p>"
 msgstr ""
 "<p id='transfer_text'>Para ser socio/a primero debes rellenar este "
 "cuestionario y después formalizar la aportación económica inicial de <span "
@@ -367,6 +278,9 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -384,6 +298,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "<p id='transfer_text'>To formalize the contribution, you must fulfill this "
@@ -400,6 +315,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "<p>Once you become a member, you will be able to use the services available "
@@ -413,20 +329,23 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "<p>Once your request has been received, you will receive a confirmation "
 "email with instructions to follow.</p><p>Note: If you are not yet a member, "
-"please complete the following forms: <a href='/subscription/member/"
-"%(external_id)s'>INDIVIDUAL MEMBERSHIP REGISTRATION</a> and <a href='/"
-"subscription/company_member/%(external_id)s'>LEGAL ENTITY MEMBERSHIP "
+"please complete the following forms: <a "
+"href='/subscription/member/%(external_id)s'>INDIVIDUAL MEMBERSHIP "
+"REGISTRATION</a> and <a "
+"href='/subscription/company_member/%(external_id)s'>LEGAL ENTITY MEMBERSHIP "
 "REGISTRATION</a></p>"
 msgstr ""
 "<p>Una vez recibida tu petición recibirás un correo de confirmación con las "
 "instrucciones a seguir.</p><p>Nota: Por favor, si aún no eres socia, debes "
-"tramitarlo a través de estos formularios: <a href='/subscription/member/"
-"%(external_id)s'>ALTA SOCIA PERSONA FÍSICA</a> y <a href='/subscription/"
-"company_member/%(external_id)s'>ALTA SOCIA PERSONA JURÍDICA</a>.</p>"
+"tramitarlo a través de estos formularios: <a "
+"href='/subscription/member/%(external_id)s'>ALTA SOCIA PERSONA FÍSICA</a> y "
+"<a href='/subscription/company_member/%(external_id)s'>ALTA SOCIA PERSONA "
+"JURÍDICA</a>.</p>"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
@@ -435,9 +354,9 @@ msgid ""
 "specific.\" aria-label=\"Values set here are company-specific.\" "
 "groups=\"base.group_multi_company\" role=\"img\"/>"
 msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Los valores establecidos "
-"aquí son específicos de la empresa.\" aria-label=\"Los valores establecidos "
-"aquí son específicos de la empresa\" role=\"img\"/>"
+"<span class=\"fa fa-lg fa-building-o\" title=\"Los valores establecidos aquí"
+" son específicos de la empresa.\" aria-label=\"Los valores establecidos aquí"
+" son específicos de la empresa\" role=\"img\"/>"
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.theme_voluntary_share_interest_return_document
@@ -530,13 +449,16 @@ msgstr "Activo"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Address"
 msgstr "Dirección"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Address not found"
@@ -567,6 +489,13 @@ msgstr "Invitado autorizado"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Bank details"
 msgstr "Datos bancarios"
@@ -574,12 +503,28 @@ msgstr "Datos bancarios"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Become a member of %(company_name)s "
 msgstr "Conviértete en miembro de %(company_name)s "
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid ""
+"Before executing the mass mailing, you can do a ‘Test mailing’ to a specific"
+" email address that the wizard will ask you for when you click the ‘Test "
+"mailing’ button."
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Birthdate"
@@ -609,6 +554,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.share_line_form
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_modify_generic_form_settings_wizard_form
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -631,13 +577,16 @@ msgstr "Certificado {{ (object.cooperator_register_number or '') }}"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "City"
 msgstr "Ciudad"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "City not found"
@@ -645,6 +594,13 @@ msgstr "Ciudad no encontrada"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
 #, python-format
 msgid "Clauses"
@@ -656,6 +612,7 @@ msgid "Companies"
 msgstr "Compañías"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__company_id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__company_id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__company_id
 msgid "Company"
@@ -664,12 +621,16 @@ msgstr "Compañía"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company Email"
 msgstr "Correo electrónico de la empresa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company Information"
@@ -682,6 +643,7 @@ msgstr "Representante legal de compañía"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company Name"
@@ -696,12 +658,14 @@ msgstr "Número del Registro Mercantil"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Company bank details"
 msgstr "Datos bancarios de la entidad/empresa"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "CompanyEmail Confirmation"
@@ -716,8 +680,8 @@ msgstr "Ajustes de configuración"
 #: model:mail.template,name:energy_communities_cooperator.email_template_confirmation_voluntary_share
 msgid "Confirmation Email for CE Voluntary Share Receipt"
 msgstr ""
-"Correo electrónico de confirmación para el recibo de acciones voluntarias "
-"de CE"
+"Correo electrónico de confirmación para el recibo de acciones voluntarias de"
+" CE"
 
 #. module: energy_communities_cooperator
 #: model:mail.template,name:energy_communities_cooperator.email_template_conditions_voluntary_share
@@ -733,6 +697,9 @@ msgstr "Contacte"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Contact Person"
 msgstr "Persona de Contacto"
@@ -745,10 +712,8 @@ msgstr "Contactos"
 #. module: energy_communities_cooperator
 #: model:mail.template,subject:energy_communities_cooperator.email_template_confirmation_voluntary_share
 msgid ""
-"Contribute to {{object.company_id.comercial_name or "
-"object.company_id.name}} Ref. ACSV{{object.id}}"
-"Contribute to {{object.company_id.comercial_name or "
-"object.company_id.name}} Ref. ACSV{{object.id}}"
+"Contribute to {{object.company_id.comercial_name or object.company_id.name}}"
+" Ref. ACSV{{object.id}}"
 msgstr ""
 "Aportación voluntaria a {{object.company_id.comercial_name or "
 "object.company_id.name}} Ref. ACSV{{object.id}}: Solicitud recibida"
@@ -769,6 +734,33 @@ msgid "Cooperator"
 msgstr "Socio"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__cooperator_association_share_form_header_text
+msgid "Cooperator Association share form header text"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__coop_candidate
+msgid "Cooperator candidate"
+msgstr "Candidato a cooperador"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__cooperator_share_form_header_text
+msgid "Cooperator share form header text"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__cooperator_association_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__cooperator_association_share_form_header_text
+msgid "Cooperator share form header text (Associations)"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__cooperator_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__cooperator_share_form_header_text
+msgid "Cooperator share form header text (Cooperatives)"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_company_form
 msgid "Cooperator shares"
 msgstr "Acciones cooperativas"
@@ -781,6 +773,7 @@ msgstr "Socios"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Country"
 msgstr "País"
@@ -792,6 +785,7 @@ msgstr "Crear"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/models/cooperative_membership.py:0
 #: code:addons/energy_communities_cooperator/models/cooperative_membership.py:0
 #, python-format
 msgid "Create a share line"
@@ -820,6 +814,7 @@ msgstr "Crear retorno de intereses de aportaciones voluntarias"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__create_uid
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__create_uid
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__create_uid
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__create_uid
 msgid "Created by"
@@ -827,6 +822,7 @@ msgstr "Creado por"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__create_date
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__create_date
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__create_date
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__create_date
 msgid "Created on"
@@ -844,6 +840,11 @@ msgid "Custom paragraph in specific form"
 msgstr "Párrafo personalizable en la cabecera del formulario específico"
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "Customizable header texts on generic forms"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__share_form_header_text
 msgid "Customizable paragraph in the header text of the form"
 msgstr "Párrafo personalizable en la cabecera del formulario genérico"
@@ -854,6 +855,8 @@ msgid "Default product in Base form"
 msgstr "Producto por defecto en el formulario genérico"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__display_name
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__display_name
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__display_name
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__display_name
 msgid "Display Name"
@@ -862,18 +865,13 @@ msgstr "Nombre Mostrado"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid ""
-"Display the customizable paragraph in the header text of the form on the "
+"Display the customizable paragraph in the header text of the generic "
 "cooperator website form"
 msgstr ""
 
 #. module: energy_communities_cooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
-msgid ""
-"Display the voluntary share form header text on the cooperator website form"
-msgstr ""
-
-#. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__email_sending_assistant_wiz__state__draft
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__draft
@@ -884,6 +882,7 @@ msgstr "Borrador"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
+#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid "ERROR on Invoice {}. Related membership not in same company"
 msgstr ""
@@ -892,6 +891,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid ""
@@ -905,6 +905,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
+#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid ""
 "ERROR on Membership {membership_id}. More than one related invoice line for "
@@ -915,6 +916,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid ""
@@ -927,14 +929,18 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
+#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid "ERROR on Membership {}. No related invoice for voluntary share"
 msgstr ""
-"ERROR en la membresía {}. No hemos encontrado una factura relacionada con "
-"la aportación"
+"ERROR en la membresía {}. No hemos encontrado una factura relacionada con la"
+" aportación"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
+#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
+#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #, python-format
 msgid "ERROR on partner {}. Related membership not found"
@@ -952,6 +958,9 @@ msgstr "Invitado efectivo"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__partner_email
 #, python-format
 msgid "Email"
@@ -960,13 +969,33 @@ msgstr "Correo electrónico"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Email Confirmation"
 msgstr "Confirmación de Correo"
 
 #. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_email_sending_assistant_wiz
+msgid "Email Sending Assistant"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__email_template_id
+msgid "Email Template"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__recipient_email_address_for_test
+msgid "Email address to receive the test email"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email and confirmation email addresses don't match."
@@ -974,7 +1003,9 @@ msgstr "El correo electrónico y el de confirmación no coinciden."
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Email not found"
@@ -997,6 +1028,7 @@ msgstr ""
 "Comunidad."
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_modify_generic_form_settings_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_wizard_form
 msgid "Execute"
 msgstr "Ejecutar"
@@ -1011,7 +1043,13 @@ msgid "External ID"
 msgstr "ID externo"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__failed_message_ids
+msgid "Failed Messages"
+msgstr "Mensajes fallidos"
+
+#. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Female"
@@ -1020,12 +1058,14 @@ msgstr "Mujer"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Financial Risk"
 msgstr "Riesgo financiero"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Firstname"
@@ -1042,7 +1082,33 @@ msgid "Followers (Partners)"
 msgstr "Seguidores (Contactos)"
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "For invited shares product category"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "For mandatory shares product category (associations)"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "For mandatory shares product category (cooperatives)"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
+msgid "For voluntary shares product category"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__force_language
+msgid "Force language"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Form can't be loaded"
@@ -1061,12 +1127,14 @@ msgstr "Fórmulas (cantidad)"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Function"
 msgstr "Función"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_partner__gender
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_users__gender
@@ -1082,6 +1150,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Generic Rules"
@@ -1105,6 +1174,7 @@ msgstr "Tiene mensage"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "I confirm that the holder of the bank account, whether myself or another "
@@ -1116,6 +1186,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_share
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_share
 #, python-format
@@ -1125,11 +1196,14 @@ msgstr "Prefiero no compartirlo"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "IBAN"
 msgstr "Número de cuenta bancaria"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__company_id_id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__partner_id_id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_share_line__share_product_id_id
@@ -1168,23 +1242,25 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si está seleccionado algunos mensajes tienen errores de envío."
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__product_qty_must_be_read_only
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_category__product_qty_must_be_read_only
 msgid ""
-"If checked, the generic and specific web forms for products in this "
-"category are configured to allow the product quantity field to the right of "
-"the drop-down menu for selecting the product to be modified."
+"If checked, the generic and specific web forms for products in this category"
+" are configured to allow the product quantity field to the right of the "
+"drop-down menu for selecting the product to be modified."
 msgstr ""
 "Si se marca, los formularios web genérico y específico de los productos de "
-"esta categoría se configuran para no permitir que pueda modificarse el campo "
-"de la cantidad de producto que aparece a la derecha del desplegable para "
+"esta categoría se configuran para no permitir que pueda modificarse el campo"
+" de la cantidad de producto que aparece a la derecha del desplegable para "
 "elegir el producto."
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__product_website
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_category__product_website
 msgid ""
 "If checked, the group of fields in the generic form will be hidden so that "
-"you can choose the product from the list of those included. The product "
-"that will be linked to the form by default will be the one marked in the "
+"you can choose the product from the list of those included. The product that"
+" will be linked to the form by default will be the one marked in the "
 "‘Default product in the generic form’ field."
 msgstr ""
 "Si se marca, quedará visible el grupo de campos que hay en el formulario "
@@ -1196,8 +1272,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.product_template_only_form_view
 msgid ""
 "If checked, the product will be preselected by default in the drop-down "
-"field of the form to choose from the list of products that have been sent/"
-"added to the generic form."
+"field of the form to choose from the list of products that have been "
+"sent/added to the generic form."
 msgstr ""
 "Si se marca, el producto será el preseleccionado por defecto en el campo "
 "desplegable del formulario para elegir entre la lista de productos que se "
@@ -1225,6 +1301,7 @@ msgstr "Tipo de interés"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Internal Rules"
 msgstr "Normas internas"
@@ -1232,12 +1309,14 @@ msgstr "Normas internas"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/schemas/website_share_subscription_schemas.py:0
+#: code:addons/energy_communities_cooperator/schemas/website_share_subscription_schemas.py:0
 #, python-format
 msgid "Invalid date format"
 msgstr "Formato de fecha invalido"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/schemas/website_share_subscription_schemas.py:0
 #: code:addons/energy_communities_cooperator/schemas/website_share_subscription_schemas.py:0
 #, python-format
 msgid "Invalid iban format"
@@ -1263,7 +1342,22 @@ msgstr "Invitado"
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
 msgid "Invited Shares"
-msgstr "Invitadas a participar"
+msgstr "Convidades a participar"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/subscription_request.py:0
+#: code:addons/energy_communities_cooperator/models/subscription_request.py:0
+#, python-format
+msgid "Invited member has pending invoices to be paid"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__invited_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__invited_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__invited_share_form_header_text
+msgid "Invited share form header text"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.ui.menu,name:energy_communities_cooperator.menu_cooperator_cooperator_invited
@@ -1283,12 +1377,14 @@ msgstr "Fecha de vencimiento"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "Invoices successfully posted"
 msgstr "Documentos confirmados correctamente"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "Invoices successfully sent"
@@ -1298,6 +1394,17 @@ msgstr "Documentos correctamente enviados"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__message_is_follower
 msgid "Is Follower"
 msgstr "Es un seguidor"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#, python-format
+msgid ""
+"It looks like this vat number %s doesn't belong to an effective member of "
+"this energy community, please contact with the energy community "
+"administrators at %s"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__journal_id
@@ -1317,11 +1424,19 @@ msgstr "Apunte contable"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Language"
 msgstr "Idioma"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,help:energy_communities_cooperator.field_email_sending_assistant_wiz__force_language
+msgid "Language to send the email in"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz____last_update
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard____last_update
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return____last_update
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard____last_update
 msgid "Last Modified on"
@@ -1329,6 +1444,7 @@ msgstr "Última modificación el"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__write_uid
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__write_uid
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__write_uid
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__write_uid
 msgid "Last Updated by"
@@ -1336,6 +1452,7 @@ msgstr "Última actualización por"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__write_date
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__write_date
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__write_date
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return_wizard__write_date
 msgid "Last Updated on"
@@ -1344,13 +1461,15 @@ msgstr "Última actualización el"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Lastname"
 msgstr "Apellidos"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
 #, python-format
 msgid "Lastname not found"
 msgstr "Apellido no encontrado"
@@ -1368,6 +1487,9 @@ msgstr "Representante legal"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Main Address"
 msgstr "Dirección principal"
@@ -1380,6 +1502,7 @@ msgstr "Adjunto principal"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Male"
 msgstr "Hombre"
@@ -1388,16 +1511,6 @@ msgstr "Hombre"
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
 msgid "Mandatory Shares"
 msgstr "Aportaciones obligatorias"
-
-#. module: energy_communities_cooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
-msgid "Member Associations Shares"
-msgstr "Asociaciones miembro Acciones"
-
-#. module: energy_communities_cooperator
-#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_subscription_request_filter_inherit
-msgid "Member Shares"
-msgstr "Acciones de los miembros"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__membership_type
@@ -1421,6 +1534,34 @@ msgid "Messages"
 msgstr "Mensajes"
 
 #. module: energy_communities_cooperator
+#: model:ir.model,name:energy_communities_cooperator.model_modify_coop_generic_form_settings_wizard
+msgid "Modify cooperator generic form settings wizard"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/modify_generic_form_settings_wizard.py:0
+#: code:addons/energy_communities_cooperator/wizards/modify_generic_form_settings_wizard.py:0
+#, python-format
+msgid "Modify generic form settings"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_modify_generic_form_settings_wizard_form
+msgid "Modify generic form settings wizard"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_category_property_form
+msgid "Modify options"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.actions.act_window,name:energy_communities_cooperator.act_window_modify_shares_generic_form_settings
+msgid "Modify shares generic form settings "
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__account_move_ids
 msgid "Moves"
 msgstr "Movimientos"
@@ -1438,6 +1579,7 @@ msgstr "No se han encontrado contactos."
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__res_partner__gender__not_binary
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__subscription_request__gender__not_binary
 #, python-format
@@ -1447,6 +1589,7 @@ msgstr "No binario"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Not valid parameter value [odoo_company_id]"
 msgstr "Valor de parámetro no válido [odoo_company_id]"
@@ -1454,6 +1597,8 @@ msgstr "Valor de parámetro no válido [odoo_company_id]"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/mixin.py:0
+#: code:addons/energy_communities_cooperator/controllers/mixin.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Not valid parameter value [odoo_company_id] or [external_company_id]"
@@ -1462,6 +1607,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/controllers/mixin.py:0
 #: code:addons/energy_communities_cooperator/controllers/mixin.py:0
 #, python-format
 msgid "Not valid parameter value [product_external_id]"
@@ -1522,12 +1668,14 @@ msgstr "Socios antiguos"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Ordered Parts"
 msgstr "Cantidad"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Other"
@@ -1541,6 +1689,15 @@ msgstr "Socio"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Partner not found"
 msgstr "Contacto no encontrado"
@@ -1553,6 +1710,7 @@ msgstr "Contactos notificados"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Payment Method"
 msgstr "Método de Pago"
@@ -1564,6 +1722,7 @@ msgstr "Orden de pago OK"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__payment
 #, python-format
@@ -1579,6 +1738,7 @@ msgstr "Modo de pago"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__payment_order_id
 #, python-format
 msgid "Payment order"
@@ -1586,6 +1746,7 @@ msgstr "Orden de pago"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "Payment order generated"
@@ -1608,6 +1769,9 @@ msgstr "Fecha inicial del periodo"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_cooperative_membership__partner_phone
 #, python-format
 msgid "Phone"
@@ -1615,23 +1779,15 @@ msgstr "Teléfono"
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
 #, python-format
 msgid "Phone not found"
 msgstr "No se encuentra el teléfono."
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
-#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
-#, python-format
-msgid "Please contact the platform administrator to fix the issue."
-msgstr ""
-"Póngase en contacto con el administrador de la plataforma para solucionar "
-"el problema."
-
-#. module: energy_communities_cooperator
-#. odoo-python
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Please upload a scan of your ID card."
@@ -1645,12 +1801,14 @@ msgstr "Confirmar"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Postal Code"
 msgstr "Código Postal"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: model:ir.model.fields.selection,name:energy_communities_cooperator.selection__voluntary_share_interest_return__state__posted
 #, python-format
@@ -1659,6 +1817,7 @@ msgstr "Confirmado"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Privacy Policy"
@@ -1675,11 +1834,13 @@ msgid "Product Category"
 msgstr "Categoría de producto"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__product_qty_must_be_read_only
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_qty_must_be_read_only
 msgid "Product Qty Must Be Read Only"
 msgstr "Cantidad de producto no modificable"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__product_website
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_product_category__product_website
 msgid "Product Website"
 msgstr "Mostrar selector de productos en el formulario genérico"
@@ -1687,13 +1848,23 @@ msgstr "Mostrar selector de productos en el formulario genérico"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "Provided IBAN is not valid."
 msgstr "El IBAN proporcionado no es válido."
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_email_sending_assistant_wiz__recipient_email_address_for_test
+msgid "Recipient email address for test"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -1734,6 +1905,8 @@ msgstr "Cuenta de la línea de retorno"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/res_company.py:0
+#: code:addons/energy_communities_cooperator/models/res_company.py:0
+#: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/wizards/voluntary_share_interest_return.py:0
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_wizard_form
 #, python-format
@@ -1742,6 +1915,7 @@ msgstr "Retorno de intereses de aportaciones voluntarias"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "SEPA"
@@ -1774,6 +1948,7 @@ msgstr "Enviar"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
 #, python-format
 msgid "Send a test email"
 msgstr "Enviar un correo electrónico de prueba"
@@ -1786,6 +1961,9 @@ msgstr "Enviar email"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
 #: model:ir.actions.act_window,name:energy_communities_cooperator.action_send_email_wizard_partner
 #: model:ir.actions.act_window,name:energy_communities_cooperator.action_send_email_wizard_subscription_request
 #, python-format
@@ -1795,8 +1973,8 @@ msgstr "Enviar correo usando plantilla preexistente"
 #. module: energy_communities_cooperator
 #: model:mail.template,description:energy_communities_cooperator.email_template_conditions_voluntary_share
 msgid ""
-"Sent to cooperators after its voluntary share have been received, with "
-"share voluntary conditions and certificate in attachment"
+"Sent to cooperators after its voluntary share have been received, with share"
+" voluntary conditions and certificate in attachment"
 msgstr ""
 "Enviado a los miembros una vez la aportación voluntaria ha sido recivida. "
 "Contiene las condiciones de la aportación i el certificado como adjunto"
@@ -1811,6 +1989,15 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/modify_generic_form_settings_wizard.py:0
+#: code:addons/energy_communities_cooperator/wizards/modify_generic_form_settings_wizard.py:0
+#, python-format
+msgid "Settings already modified."
+msgstr ""
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Share Product"
@@ -1818,6 +2005,15 @@ msgstr "Tipo aportación"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Share Selection"
@@ -1844,7 +2040,28 @@ msgid "Share type category"
 msgstr "Categoría de participación"
 
 #. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__show_invited
+msgid "Show invited"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__show_cooperator_associations
+msgid "Show mandatory (Associations)"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__show_cooperator
+msgid "Show mandatory (Cooperatives)"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__show_voluntary
+msgid "Show voluntary"
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "Some mandatory fields have not been filled."
@@ -1852,6 +2069,7 @@ msgstr "Algunos campos obligatorios no se han rellenado."
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/models/res_users.py:0
 #: code:addons/energy_communities_cooperator/models/res_users.py:0
 #, python-format
 msgid ""
@@ -1909,12 +2127,13 @@ msgid ""
 "country format. You can use '/' to indicate that the partner is not subject "
 "to tax."
 msgstr ""
-"El número de identificación fiscal. Los valores seran validados basandose "
-"en el formato de país. Puedes usar '/' para indicar que el miembro no está "
+"El número de identificación fiscal. Los valores seran validados basandose en"
+" el formato de país. Puedes usar '/' para indicar que el miembro no está "
 "sujeto a impuestos."
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -1925,7 +2144,15 @@ msgstr ""
 "para obtener más información."
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid ""
+"The sender will be defined in the template (Configuration tab field). "
+"Otherwise, it will be the email address of the user executing the sending."
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -1938,11 +2165,12 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
-"There is a problem loading the form. This form requires at least one "
-"product to be linked to it. Please contact the administrators of your "
-"Energy Community."
+"There is a problem loading the form. This form requires at least one product"
+" to be linked to it. Please contact the administrators of your Energy "
+"Community."
 msgstr ""
 "Hay un problema al cargar el formulario. Este formulario requiere de la "
 "existencia de al menos un producto que esté vinculado al mismo. Por favor, "
@@ -1950,6 +2178,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -1964,6 +2193,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "There is a problem loading the form. This form requires the existence of an "
@@ -1976,28 +2206,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
-#, python-format
-msgid "There is a problem on creating request params"
-msgstr "Hay un problema al crear los parámetros de la solicitud"
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
-#, python-format
-msgid "There is a problem on creating request."
-msgstr "Hay un problema al crear la solicitud."
-
-#. module: energy_communities_cooperator
-#. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
-#, python-format
-msgid "There is a problem preparing creation params for request."
-msgstr ""
-"Hay un problema al preparar los parámetros de creación para la solicitud."
-
-#. module: energy_communities_cooperator
-#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "There is a problem validating the creation of the request"
@@ -2006,6 +2215,7 @@ msgstr "Hay un problema al validar la creación de la solicitud."
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "There is a problem with the data you submitted"
 msgstr "Hay un problema con los datos que ha enviado"
@@ -2013,6 +2223,14 @@ msgstr "Hay un problema con los datos que ha enviado"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/subscription_request.py:0
+#: code:addons/energy_communities_cooperator/models/subscription_request.py:0
+#, python-format
+msgid "There is an existing account for this vat number on this community."
+msgstr ""
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/tests/test_subscription_request.py:0
 #: code:addons/energy_communities_cooperator/tests/test_subscription_request.py:0
 #, python-format
 msgid "There is an existing account for this vat number on this community. "
@@ -2020,27 +2238,40 @@ msgstr "Existe una cuenta para este número de identidad en la Comunidad. "
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid ""
 "There is an existing account for this vat number on this community. Please "
 "contact with the community administrators."
 msgstr ""
-"Existe una cuenta para este número de identificación fiscal en la "
-"comunidad. Por favor contacta con el administrador de la comunidad."
+"Existe una cuenta para este número de identificación fiscal en la comunidad."
+" Por favor contacta con el administrador de la comunidad."
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "This form allow you to request be member of the community: %(company_name)s "
 msgstr ""
-"Este es el formulario para solicitar ser socio/a de la comunidad "
-"energética: %(company_name)s "
+"Este es el formulario para solicitar ser socio/a de la comunidad energética:"
+" %(company_name)s "
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -2053,6 +2284,9 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
 "This is the form to register as a person/entity invited to participate in "
@@ -2063,12 +2297,23 @@ msgstr ""
 "%(company_name)s "
 
 #. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/modify_generic_form_settings_wizard.py:0
+#: code:addons/energy_communities_cooperator/wizards/modify_generic_form_settings_wizard.py:0
+#, python-format
+msgid ""
+"This wizard cannot be executed on Product Categories that are not related to"
+" Cooperative share products."
+msgstr ""
+
+#. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.view_voluntary_share_interest_return_form
 msgid "Total"
 msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Total Price"
@@ -2084,12 +2329,14 @@ msgstr "Aportación total"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Transfer"
 msgstr "Transferir"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/models/res_users.py:0
 #: code:addons/energy_communities_cooperator/models/res_users.py:0
 #, python-format
 msgid ""
@@ -2102,6 +2349,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/models/res_users.py:0
 #: code:addons/energy_communities_cooperator/models/res_users.py:0
 #, python-format
 msgid ""
@@ -2153,6 +2401,7 @@ msgstr "Rol actual del usuario"
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/config.py:0
+#: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "VAT"
 msgstr "NIF"
@@ -2164,6 +2413,7 @@ msgstr "Proveedor"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid "Voluntary Share of %(company_name)s "
@@ -2179,6 +2429,13 @@ msgstr "Aportaciones voluntarias"
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_url_individual
 msgid "Voluntary share URL individual"
 msgstr "Compartir URL de forma voluntaria individual"
+
+#. module: energy_communities_cooperator
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__voluntary_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_form_header_text
+msgid "Voluntary share form header text"
+msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.actions.act_window,name:energy_communities_cooperator.view_voluntary_share_interest_return_window
@@ -2238,13 +2495,7 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
-#, python-format
-msgid "We couldn't find a member for "
-msgstr "No hemos podido encontrar ningún miembro para "
-
-#. module: energy_communities_cooperator
-#. odoo-python
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "We have generated the payment order in order to return the interests."
@@ -2255,6 +2506,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid "We have posted the voluntary share interest return invoice documents"
 msgstr ""
@@ -2264,13 +2516,14 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
+#: code:addons/energy_communities_cooperator/models/voluntary_share_interest_return.py:0
 #, python-format
 msgid ""
-"We have sent the voluntary share interest return document to related "
-"members via email."
+"We have sent the voluntary share interest return document to related members"
+" via email."
 msgstr ""
-"Se han enviado correctamente por email los documentos para el retorno de "
-"los intereses de las aportaciones voluntarias."
+"Se han enviado correctamente por email los documentos para el retorno de los"
+" intereses de las aportaciones voluntarias."
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_voluntary_share_interest_return__website_message_ids
@@ -2289,14 +2542,14 @@ msgid ""
 "the selected records but using the specified address as the recipient."
 msgstr ""
 "Al ejecutar se enviará un correo electrónico de prueba usando los datos del "
-"1º de los registros seleccionados pero usando como destinatario la "
-"dirección especificada."
+"1º de los registros seleccionados pero usando como destinatario la dirección"
+" especificada."
 
 #. module: energy_communities_cooperator
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
 msgid ""
-"When executed, an email with the selected email template will be sent to "
-"all underlying records."
+"When executed, an email with the selected email template will be sent to all"
+" underlying records."
 msgstr ""
 "Al ejecutar se enviará a todos los registros subyacentes, un correo "
 "electrónico con la plantilla de correo seleccionada."
@@ -2307,8 +2560,20 @@ msgid "Wizard Account Multi-company Easy Creation"
 msgstr "Asistente de creación fácil de cuenta multi-compañía"
 
 #. module: energy_communities_cooperator
+#: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.email_sending_assistant_form_wizard
+msgid ""
+"You can set the language in which recipients will receive the email using "
+"the (optional) ‘Force language’ field. Otherwise, the language will depend "
+"on the settings defined in the template (Language field in the Settings "
+"tab). If not defined in the template, it will be sent in the language of the"
+" user context sending the email."
+msgstr ""
+
+#. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/models/subscription_request.py:0
+#: code:addons/energy_communities_cooperator/models/subscription_request.py:0
+#: code:addons/energy_communities_cooperator/tests/test_subscription_request.py:0
 #: code:addons/energy_communities_cooperator/tests/test_subscription_request.py:0
 #, python-format
 msgid "You can't create a voluntary subscription share for a new cooperator."
@@ -2316,6 +2581,7 @@ msgstr "No puedes crear una aportación voluntaria para un miembro nuevo."
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid ""
@@ -2326,6 +2592,7 @@ msgstr ""
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_main.py:0
 #, python-format
 msgid "You can't subscribe to two different types of share."
 msgstr "No puedes subscribirte a dos tipos de aportaciones diferentes."
@@ -2333,12 +2600,22 @@ msgstr "No puedes subscribirte a dos tipos de aportaciones diferentes."
 #. module: energy_communities_cooperator
 #. odoo-python
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "You must check the SEPA transference."
 msgstr "Debes marcar la opción de transferencia SEPA."
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#: code:addons/energy_communities_cooperator/wizards/email_sending_assistant.py:0
+#, python-format
+msgid "You must specify a recipient email address for test"
+msgstr ""
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/config.py:0
 #: code:addons/energy_communities_cooperator/config.py:0
 #, python-format
 msgid ""
@@ -2350,7 +2627,9 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #. odoo-python
-#: code:addons/energy_communities_cooperator/controllers/website_share_subscription_controller.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/components/subscription_request_utils.py:0
+#: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #: code:addons/energy_communities_cooperator/controllers/website_subscription_voluntary_share.py:0
 #, python-format
 msgid "ZIP code not found"
@@ -2368,6 +2647,7 @@ msgstr "en"
 
 #. module: energy_communities_cooperator
 #. odoo-python
+#: code:addons/energy_communities_cooperator/schemas/website_share_subscription_schemas.py:0
 #: code:addons/energy_communities_cooperator/schemas/website_share_subscription_schemas.py:0
 #, python-format
 msgid "records_required"
