@@ -188,6 +188,7 @@ class TestSubscriptionRequest(common.TransactionCase):
             invited_membership.membership_type, MemberShipMode.cooperator.value
         )
         self.assertTrue(invited_membership.member)
+
         self.assertNotEqual(invited_membership.cooperator_register_number, 0)
         self.assertFalse(invited_membership.effective_invited)
         self.assertEqual(

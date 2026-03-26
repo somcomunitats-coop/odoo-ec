@@ -160,9 +160,12 @@ class CooperativeMembership(models.Model):
             lambda m: "invited"
             in m.subscription_request_ids.mapped("subscription_mode")
         )
-        not_invited = self - invited
         for membership in invited:
             membership.cooperator_register_number = 0
+        not_invited = self.filtered(
+            lambda m: set(m.subscription_request_ids.mapped("subscription_mode"))
+            - {"invited"}
+        )
         if not_invited:
             super(
                 CooperativeMembership, not_invited
