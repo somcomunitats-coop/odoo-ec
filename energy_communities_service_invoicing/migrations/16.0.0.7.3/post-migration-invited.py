@@ -35,7 +35,7 @@ def setup_components(env):
 
 
 def migrate(cr, version):
-    logger.info("energy_communities_cooperator")
+    logger.info("energy_communities_service_invoicing")
     logger.info("Running post migration {}".format(version))
     env = api.Environment(cr, SUPERUSER_ID, {})
     env = setup_components(env)
@@ -194,4 +194,3 @@ def migrate(cr, version):
                 )
         except Exception as e:
             logger.error("Error creating invited cooperator: %s", e)
-            raise e
