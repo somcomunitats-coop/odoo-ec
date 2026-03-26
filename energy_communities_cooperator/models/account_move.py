@@ -35,6 +35,8 @@ class AccountMove(models.Model):
             self.partner_id.user_ids[0].make_ce_user(
                 self.company_id.id, "role_ce_member"
             )
+        if cooperative_membership.member and cooperative_membership.effective_invited:
+            cooperative_membership.write({"effective_invited": False})
         if cooperative_membership.membership_type == "invited":
             cooperative_membership.write({"effective_invited": True, "member": False})
 
