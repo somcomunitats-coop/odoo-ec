@@ -142,3 +142,12 @@ class ResPartner(models.Model):
             "view_mode": "form",
             "res_id": self.env.company.partner_id.id,
         }
+
+    @api.model
+    def _get_default_address_format(self):
+        return super()._get_default_address_format() + "\n%(vat)s"
+
+    @api.model
+    def _formatting_address_fields(self):
+        """Returns the list of address fields usable to format addresses."""
+        return super()._formatting_address_fields() + ["vat"]
