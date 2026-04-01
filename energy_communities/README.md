@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-04-01 (v16.0.0.7.12)
+
+- Add vat in format address.
+
 ### 2026-02-18 (v16.0.0.7.11)
 
 - Fix security rules for email template.
