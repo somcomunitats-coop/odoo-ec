@@ -153,8 +153,8 @@ class SubscriptionRequestCreationParams(BaseModel):
     email: EmailStr
     firstname: str
     lastname: str
-    gender: GenderOption
-    birthdate: date
+    gender: Optional[GenderOption] = Field(default=GenderOption.not_share)
+    birthdate: Optional[date] = None
     phone: str
     lang: str
     vat: str
@@ -207,14 +207,42 @@ class SubscriptionRequestCreationParams(BaseModel):
         mode="before",
     )
     @classmethod
-    def ensure_string(cls, value: Any) -> Any:
+    def ensure_none(cls, value: Any) -> Any:
         if value is False:
             return None
+        return value
+
+    # Empty values in odoo allways came as False, tricki shit to transfor that values to strings
+    @field_validator(
+        "email",
+        "phone",
+        "address",
+        "city",
+        "zip_code",
+        mode="before",
+    )
+    @classmethod
+    def ensure_string(cls, value: Any) -> Any:
+        if value is False:
+            return ""
+        return value
+
+    # Empty values in odoo allways came as False, default gender
+    @field_validator(
+        "gender",
+        mode="before",
+    )
+    @classmethod
+    def default_gender(cls, value: Any) -> Any:
+        if value is False:
+            return GenderOption.not_share
         return value
 
     @field_validator("birthdate", mode="before")
     @classmethod
     def check_date_format(cls, date_: Any) -> date:
+        if date_ is False:
+            return None
         if isinstance(date_, date):
             return date_
         try:

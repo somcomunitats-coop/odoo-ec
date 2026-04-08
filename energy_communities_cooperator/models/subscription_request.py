@@ -226,6 +226,10 @@ class SubscriptionRequest(models.Model):
         return None
 
     def _find_or_create_partner(self):
+        if self.is_company:
+            domain = self._get_partner_domain()
+            if domain:
+                self.partner_id = self.env["res.partner"].search(domain, limit=1)
         if self.subscription_mode == "voluntary":
             super_model = super()
         else:

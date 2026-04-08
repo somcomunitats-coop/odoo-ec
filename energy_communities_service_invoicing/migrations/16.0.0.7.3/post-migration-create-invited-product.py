@@ -2,6 +2,7 @@ import logging
 
 from odoo import SUPERUSER_ID, api
 
+from odoo.addons.energy_communities.config import STATE_NONE
 from odoo.addons.energy_communities.utils import product_utils
 from odoo.addons.energy_communities_cooperator.config import (
     COOP_SHARE_PRODUCT_CATEG_REF,
@@ -111,6 +112,7 @@ def migrate(cr, version):
                 invited_product = product_component.create_product(
                     _invited_product_creation_params(company)
                 )
+                invited_product.pack_type = STATE_NONE
                 _invited_product_translations(invited_product)
                 return True, invited_product
         return False, invited_product
