@@ -112,7 +112,12 @@ def migrate(cr, version):
                 invited_product = product_component.create_product(
                     _invited_product_creation_params(company)
                 )
-                invited_product.pack_type = STATE_NONE
+                invited_product.write(
+                    {
+                        "pack_type": STATE_NONE,
+                        "is_contract": False,
+                    }
+                )
                 _invited_product_translations(invited_product)
                 return True, invited_product
         return False, invited_product
