@@ -5,8 +5,11 @@
     <field name="inherit_id" ref="cooperator.cooperative_membership_view_search"/>
     <field name="type">search</field>
     <field name="arch" type="xml">
-      <filter name="filter_by_effective_date" position="after">
+      <filter name="filter_by_effective_date" position="before">
+        <separator />
         <filter name="filter_by_effective_invited" string="Effective Invited" domain="[('effective_invited','=',True)]" />
+        <filter name="filter_by_member" string="Member" domain="[('member','=',True)]" />
+        <separator />
       </filter>
     </field>
   </record>
@@ -17,8 +20,14 @@
       <field name="view_mode">tree</field>
       <field name="search_view_id" eval="False" /> <!-- Force empty -->
       <field name="view_id" eval="False" /> <!-- Force empty -->
-      <field name="domain">['|',('member','=',True),('effective_invited','=',True)]</field>
+      <field name="domain">[('member','=',True)]</field>
   </record>
+  <record id="cooperator.cooperator_register_action" model="ir.actions.act_window">
+        <field name="name">Cooperator Register</field>
+        <field name="res_model">cooperative.membership</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">['|', ("member", "=", True),('effective_invited','=',True)]</field>
+    </record>
   <record
     id="action_cooperative_membership_representative"
     model="ir.actions.act_window"
