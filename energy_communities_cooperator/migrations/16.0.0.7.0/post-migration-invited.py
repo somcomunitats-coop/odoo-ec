@@ -114,6 +114,14 @@ def migrate(cr, version):
         return SubscriptionRequestCreationParams(**creation_params)
 
     def _get_or_create_invited_cooperator(partner, company, invited_product):
+        if not partner.email:
+            msg = (
+                "Validation error partner dont have email for <Company=%s, Partner=%s>"
+            )
+            logger.warning(msg, company.name, partner.name)
+            logger.warning("Marking %s as pending", partner.name)
+            _mark_partner_to_pending(partner)
+            return False, None
         cooperator = _get_invited_cooperator(partner, company)
         if not cooperator:
             try:
@@ -180,8 +188,11 @@ def migrate(cr, version):
             )
         )
 
-    companies = env["res.company"].search([("id", "=", 233)])
+    companies = env["res.company"].search([])
     for company in companies:
+        send_certificate_email = company.send_certificate_email
+        send_confirmation_email = company.send_confirmation_email
+        send_capital_release_email = company.send_capital_release_email
         logger.info(">>>>>>>> Starting migration for company %s", company.name)
         invited_product = _get_invited_product(company)
         if not (partners := _get_partners_to_migrate(company)):
@@ -206,3 +217,10 @@ def migrate(cr, version):
                         partner.name,
                     )
         logger.info("========= End migration for company %s", company.name)
+        company.write(
+            {
+                "send_certificate_email": send_certificate_email,
+                "send_confirmation_email": send_confirmation_email,
+                "send_capital_release_email": send_capital_release_email,
+            }
+        )
