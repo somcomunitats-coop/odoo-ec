@@ -4,6 +4,12 @@
 
 ## Changelog
 
+### 2026-04-27 (v16.0.0.7.0)
+
+- New form for new cooperative members
+- New form for voluntary shares
+- New views to manage forms and products
+
 ### 2026-03-02 (v16.0.0.6.3)
 
 - fix bad partner_bank_id assignation on voluntary interest return invoices

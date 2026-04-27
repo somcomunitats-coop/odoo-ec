@@ -4,6 +4,11 @@ HTTP API to request information about energy communities, members and projects
 
 ## Changelog
 
+### 2026-04-27 (v16.0.0.4.4)
+
+- bump email_validator to 2.3.0
+- added translations
+
 ### 2026-01-08 (v16.0.0.4.3)
 
 - wp_coordinator_landing_page_id on landing opendata endpoint

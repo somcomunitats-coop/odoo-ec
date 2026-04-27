@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-04-27 (v16.0.0.7.4)
+
+- migrate products to new invited product
+
 ### 2026-04-27 (v16.0.0.7.3)
 
 - Fix: paused contracts should not be factured
