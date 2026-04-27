@@ -9,6 +9,7 @@ from odoo.addons.energy_communities.utils import contract_utils
 from ..config import (
     CONTRACT_CLOSING_ACTION_DEFAULT_VALUE,
     CONTRACT_CLOSING_ACTION_VALUES,
+    CONTRACT_STATUS_PAUSED,
     CONTRACT_STATUS_VALUES,
     PACK_TYPE_NONE,
     PACK_TYPE_PLATFORM,
@@ -326,3 +327,9 @@ class ContractContract(models.Model):
     @api.model
     def cron_recurring_create_invoice(self, date_ref=None):
         return self.with_delay()._cron_recurring_create(date_ref, create_type="invoice")
+
+    @api.model
+    def _get_contracts_to_invoice_domain(self, date_ref=None):
+        domain = super()._get_contracts_to_invoice_domain(date_ref)
+        domain.extend([("status", "!=", CONTRACT_STATUS_PAUSED)])
+        return domain
