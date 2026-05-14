@@ -741,7 +741,70 @@ class Selfconsumption(models.Model):
             "target": "current",
         }
 
+    def check_dates_contract(self):
+        if not self.get_active_contracts():
+            return True
+        last_date_invoiced = self.get_active_contracts()[0].last_date_invoiced
+        if self.get_active_contracts().filtered(
+            lambda contract: contract.last_date_invoiced != last_date_invoiced
+        ):
+            raise ValidationError(
+                _("The last date invoiced is not the same for all contracts.")
+            )
+        next_period_date_start = self.get_active_contracts()[0].next_period_date_start
+        if self.get_active_contracts().filtered(
+            lambda contract: contract.next_period_date_start != next_period_date_start
+        ):
+            raise ValidationError(
+                _("The next period date start is not the same for all contracts.")
+            )
+        next_period_date_end = self.get_active_contracts()[0].next_period_date_end
+        if self.get_active_contracts().filtered(
+            lambda contract: contract.next_period_date_end != next_period_date_end
+        ):
+            raise ValidationError(
+                _("The next period date end is not the same for all contracts.")
+            )
+        recurring_next_date = self.get_active_contracts()[0].recurring_next_date
+        if self.get_active_contracts().filtered(
+            lambda contract: contract.recurring_next_date != recurring_next_date
+        ):
+            raise ValidationError(
+                _("The recurring next date is not the same for all contracts.")
+            )
+
+        recurring_invoicing_type = self.get_active_contracts()[
+            0
+        ].recurring_invoicing_type
+        if self.get_active_contracts().filtered(
+            lambda contract: contract.recurring_invoicing_type
+            != recurring_invoicing_type
+        ):
+            raise ValidationError(
+                _("The recurring invoicing type is not the same for all contracts.")
+            )
+        if last_date_invoiced and recurring_invoicing_type == "postpaid":
+            if self.get_active_contracts().filtered(
+                lambda contract: contract.recurring_next_date == next_period_date_end
+            ):
+                raise ValidationError(
+                    _(
+                        "The recurring next date is not the same as the next period date end for all contracts."
+                    )
+                )
+        elif last_date_invoiced and recurring_invoicing_type == "prepaid":
+            if self.get_active_contracts().filtered(
+                lambda contract: contract.recurring_next_date == next_period_date_start
+            ):
+                raise ValidationError(
+                    _(
+                        "The recurring next date is not the same as the next period date start for all contracts."
+                    )
+                )
+        return True
+
     def distribution_table_state(self, actual_state, new_state):
+        self.check_dates_contract()
         distribution_table_to_activate = self.distribution_table_ids.filtered(
             lambda table: table.state == actual_state
         )
@@ -769,15 +832,60 @@ class Selfconsumption(models.Model):
                         "state": INSCRIPTION_STATE_ACTIVE,
                     }
                 )
+                contracts = self.get_active_contracts()
+                for contract in contracts:
+                    _logger.info(f"Contract: {contract.name}")
+                    _logger.info(f"Inscription: {inscription.name}")
+                    _logger.info(f"Inscription partner: {inscription.partner_id.name}")
+                    _logger.info(f"Contract partner: {contract.partner_id.name}")
+                    _logger.info(f"Contract partner id: {contract.partner_id.id}")
+                    _logger.info(f"Inscription partner id: {inscription.partner_id.id}")
+                    _logger.info(
+                        f"contract last_date_invoiced: {contract.last_date_invoiced}"
+                    )
+                    _logger.info(
+                        f"contract next_period_date_start: {contract.next_period_date_start}"
+                    )
+                    _logger.info(
+                        f"contract next_period_date_end: {contract.next_period_date_end}"
+                    )
+                    _logger.info(
+                        f"contract recurring_next_date: {contract.recurring_next_date}"
+                    )
+                    _logger.info(
+                        f"supply_point_assignation : {supply_point_assignation.supply_point_id.name}"
+                    )
+                    _logger.info(
+                        f"supply_point_assignation : {supply_point_assignation.supply_point_id.code}"
+                    )
+                    if contract.partner_id.id in inscription.mapped("partner_id").ids:
+                        with contract_utils(self.env, contract) as component:
+                            component.modify(
+                                execution_date=contract.last_date_invoiced
+                                if contract.last_date_invoiced
+                                else contract.recurring_next_date,
+                                executed_modification_action="modify",
+                                pricelist_id=contract.pricelist_id,
+                                pack_id=contract.pack_id,
+                                discount=contract.discount,
+                                payment_mode_id=contract.payment_mode_id,
+                            )
+                            contract.write(
+                                {
+                                    "supply_point_assignation_id": supply_point_assignation.id
+                                }
+                            )
+                            component.activate(fields.Date.today())
             inscriptions = self.inscription_ids.filtered_domain(
                 [("state", "=", INSCRIPTION_STATE_CHANGE)]
             )
             inscriptions.write({"state": "cancelled"})
-            contracts = self.get_contracts()
+            contracts = self.get_active_contracts()
             for contract in contracts:
                 if contract.partner_id.id in inscriptions.mapped("partner_id").ids:
                     with contract_utils(self.env, contract) as component:
                         component.close(fields.Date.today())
+            self.check_dates_contract()
 
     def validate_state(self, state):
         if state not in (PROJECT_STATE_ACTIVATION, PROJECT_STATE_ACTIVE):

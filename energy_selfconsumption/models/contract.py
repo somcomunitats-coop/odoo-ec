@@ -53,6 +53,29 @@ class Contract(models.Model):
         help="Name of the associated supply point",
     )
 
+    def create(self, vals_list):
+        """
+        Override contract creation to set supply point assignation
+        """
+        res = super().create(vals_list)
+        for contract in res:
+            if contract.supply_point_assignation_id:
+                distribution_table_name = (
+                    contract.supply_point_assignation_id.distribution_table_id.name
+                )
+                selfconsumption_project_name = (
+                    contract.supply_point_assignation_id.distribution_table_id.selfconsumption_project_id.name
+                )
+                contract.message_post(
+                    subject=_("Contract created linked to distribution table"),
+                    body=_(
+                        "This contract is linked to the distribution table %s for the project %s",
+                        distribution_table_name,
+                        selfconsumption_project_name,
+                    ),
+                )
+        return res
+
     # Business logic methods
     def get_main_line(self):
         """
