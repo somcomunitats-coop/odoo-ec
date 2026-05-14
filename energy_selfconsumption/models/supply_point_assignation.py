@@ -396,3 +396,18 @@ class SupplyPointAssignation(models.Model):
             "city": f"{self.supply_point_postalcode or ''} {self.supply_point_town or ''}".strip(),
             "state": self.supply_point_state or _("No State"),
         }
+
+    def get_contract(self):
+        """
+        Get the contract record associated with this assignation
+
+        Returns:
+            contract: The contract record linking the partner and supply point to the project
+        """
+        self.ensure_one()
+        contract = self.env["contract.contract"].search(
+            [("supply_point_assignation_id", "=", self.id)], limit=1
+        )
+        if not contract:
+            return self.env["contract.contract"]
+        return contract

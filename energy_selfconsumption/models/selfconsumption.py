@@ -808,15 +808,14 @@ class Selfconsumption(models.Model):
         distribution_table_to_activate = self.distribution_table_ids.filtered(
             lambda table: table.state == actual_state
         )
+        distribution_table_active = self.distribution_table_ids.filtered(
+            lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
+        )
         # If the new state is active, we need to cancel the active distribution table
-        if new_state == DISTRIBUTION_STATE_ACTIVE:
-            distribution_table_active = self.distribution_table_ids.filtered(
-                lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
+        if new_state == DISTRIBUTION_STATE_ACTIVE and distribution_table_active:
+            distribution_table_active.write(
+                {"date_end": fields.Date.today(), "state": "cancelled"}
             )
-            if distribution_table_active:
-                distribution_table_active.write(
-                    {"date_end": fields.Date.today(), "state": "cancelled"}
-                )
         distribution_table_to_activate.write({"state": new_state})
         if new_state == DISTRIBUTION_STATE_ACTIVE:
             # We need to update the start date of the distribution table
@@ -826,14 +825,27 @@ class Selfconsumption(models.Model):
                 "supply_point_assignation_ids"
             ):
                 inscription = supply_point_assignation.get_inscription()
+                _logger.info(f"Inscription state: {inscription.state}")
+                _logger.info(
+                    f"Inscription participation_assigned_quantity: {inscription.participation_assigned_quantity}"
+                )
+                _logger.info(
+                    f"supply_point_assignation energy_shares: {supply_point_assignation.energy_shares}"
+                )
                 inscription.write(
                     {
                         "participation_real_quantity": supply_point_assignation.energy_shares,
                         "state": INSCRIPTION_STATE_ACTIVE,
                     }
                 )
-                contracts = self.get_active_contracts()
-                for contract in contracts:
+                supply_point_assignation_ids = distribution_table_active.mapped(
+                    "supply_point_assignation_ids"
+                ).filtered(
+                    lambda assignation: assignation.supply_point_id.id
+                    == inscription.supply_point_id.id
+                )
+                for supply_point_assignation_id in supply_point_assignation_ids:
+                    contract = supply_point_assignation_id.get_contract()
                     _logger.info(f"Contract: {contract.name}")
                     _logger.info(f"Inscription: {inscription.name}")
                     _logger.info(f"Inscription partner: {inscription.partner_id.name}")
@@ -858,31 +870,47 @@ class Selfconsumption(models.Model):
                     _logger.info(
                         f"supply_point_assignation : {supply_point_assignation.supply_point_id.code}"
                     )
-                    if contract.partner_id.id in inscription.mapped("partner_id").ids:
-                        with contract_utils(self.env, contract) as component:
-                            component.modify(
-                                execution_date=contract.last_date_invoiced
-                                if contract.last_date_invoiced
-                                else contract.recurring_next_date,
-                                executed_modification_action="modify",
-                                pricelist_id=contract.pricelist_id,
-                                pack_id=contract.pack_id,
-                                discount=contract.discount,
-                                payment_mode_id=contract.payment_mode_id,
-                            )
-                            contract.write(
-                                {
-                                    "supply_point_assignation_id": supply_point_assignation.id
-                                }
-                            )
-                            component.activate(fields.Date.today())
+                    with contract_utils(self.env, contract) as component:
+                        component.modify(
+                            execution_date=contract.last_date_invoiced
+                            if contract.last_date_invoiced
+                            else contract.recurring_next_date,
+                            executed_modification_action="modify",
+                            pricelist_id=contract.pricelist_id,
+                            pack_id=contract.pack_id,
+                            discount=contract.discount,
+                            payment_mode_id=contract.payment_mode_id,
+                        )
+                        component.work.record.write(
+                            {"supply_point_assignation_id": supply_point_assignation.id}
+                        )
+                        component.activate(fields.Date.today())
+                        _logger.info(
+                            f"Contract predecessor_contract_id: {component.work.record.predecessor_contract_id.name}"
+                        )
+                        _logger.info(
+                            f"Contract successor_contract_id: {component.work.record.successor_contract_id.name}"
+                        )
             inscriptions = self.inscription_ids.filtered_domain(
                 [("state", "=", INSCRIPTION_STATE_CHANGE)]
             )
             inscriptions.write({"state": "cancelled"})
-            contracts = self.get_active_contracts()
-            for contract in contracts:
-                if contract.partner_id.id in inscriptions.mapped("partner_id").ids:
+            for inscription in inscriptions:
+                supply_point_assignation_id = distribution_table_active.mapped(
+                    "supply_point_assignation_ids"
+                ).filtered(
+                    lambda assignation: assignation.supply_point_id.id
+                    == inscription.supply_point_id.id
+                )
+                contract = supply_point_assignation_id.get_contract()
+                if contract:
+                    _logger.info(f"Contract to close: {contract.name}")
+                    _logger.info(
+                        f"Contract predecessor_contract_id: {contract.predecessor_contract_id.name}"
+                    )
+                    _logger.info(
+                        f"Contract sucessor_contract_id: {contract.successor_contract_id.name}"
+                    )
                     with contract_utils(self.env, contract) as component:
                         component.close(fields.Date.today())
             self.check_dates_contract()
