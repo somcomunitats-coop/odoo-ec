@@ -548,11 +548,12 @@ class Selfconsumption(models.Model):
                         self.env, existing_closed_contract
                     ) as component:
                         service_invoicing_id = component.reopen(
-                            self.initial_last_date_invoiced + relativedelta(days=+1),
-                            self.pricelist_id,
+                            component.work.record.last_date_invoiced
+                            + relativedelta(days=+1),
+                            component.work.record.pricelist_id,
                             pack,
                             False,
-                            self.payment_mode_id,
+                            component.work.record.payment_mode_id,
                         )
             if service_invoicing_id:
                 # 2.- setup contract line main_line
@@ -872,9 +873,7 @@ class Selfconsumption(models.Model):
                     )
                     with contract_utils(self.env, contract) as component:
                         component.modify(
-                            execution_date=contract.last_date_invoiced
-                            if contract.last_date_invoiced
-                            else contract.recurring_next_date,
+                            execution_date=contract.recurring_next_date,
                             executed_modification_action="modify",
                             pricelist_id=contract.pricelist_id,
                             pack_id=contract.pack_id,
@@ -884,6 +883,12 @@ class Selfconsumption(models.Model):
                         component.work.record.write(
                             {"supply_point_assignation_id": supply_point_assignation.id}
                         )
+
+                        # 2.- setup contract line main_line
+                        component.work.record.contract_line_ids[0].write(
+                            {"main_line": True}
+                        )
+                        # 3.- mark contract as active
                         component.activate(fields.Date.today())
                         _logger.info(
                             f"Contract predecessor_contract_id: {component.work.record.predecessor_contract_id.name}"
@@ -912,7 +917,7 @@ class Selfconsumption(models.Model):
                         f"Contract sucessor_contract_id: {contract.successor_contract_id.name}"
                     )
                     with contract_utils(self.env, contract) as component:
-                        component.close(fields.Date.today())
+                        component.close(contract.last_date_invoiced)
             self.check_dates_contract()
 
     def validate_state(self, state):
