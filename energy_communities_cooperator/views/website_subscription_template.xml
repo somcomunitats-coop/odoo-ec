@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <template
+        id="become_energy_communities_cooperator_es_share_div"
+        inherit_id="cooperator_website.shares_template"
+        name="Removing Share div"
+    >
+        <xpath expr="//div[@name='share_div']" position="attributes">
+            <attribute name="hidden" remove="1"/>
+            <attribute name="t-if">display_product_website</attribute>
+        </xpath>
+
+    </template>
+
     <template id="main_form_template_ccee" inherit_id="cooperator_website.main_form_template">
       <xpath expr="//div[@id='wrap']//h1" position="replace">
             <h1 class="mt-4 text-center">
@@ -30,7 +42,7 @@
                 </t>
               </t>
             </t>
-            <p><t t-raw="company.cooperator_share_form_header_text" /></p>
+            <!-- <p><t t-raw="company.cooperator_share_form_header_text" /></p> -->
             <p
       >Once you are a member you can enjoy the services available from the community and be part of a movement
                 of social and energy model transformation.</p>
@@ -379,11 +391,11 @@
                     t-attf-value="#{company_id or ''}"
                   />
                                 </div>
-                                <div name="voluntary_share_form_header_text_container">
+                                <!-- <div name="voluntary_share_form_header_text_container">
                                     <p><t
                       t-out="company.voluntary_share_form_header_text"
                     /></p>
-                                </div>
+                                </div> -->
                 <div name="become_cooperator_terms">
                             <p
                   >Note: Please, if you are not yet a member, you must process it through

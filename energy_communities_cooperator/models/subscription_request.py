@@ -1,7 +1,12 @@
+from pydantic import ValidationError as PydanticValidationError
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..config import COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF
+from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
+from ..exceptions import ComponentValidationError, FormValidationError
+from ..schemas import MemberShipMode, MemberTypeMode, SubscriptionMode
+from ..utils import convert_errors, subscription_request_utils
 
 
 class SubscriptionRequest(models.Model):
@@ -9,16 +14,51 @@ class SubscriptionRequest(models.Model):
     _inherit = "subscription.request"
     _description = "Subscription request"
 
-    @api.depends("share_product_id", "share_product_id.categ_id")
-    def _compute_is_voluntary(self):
-        product_category_voluntary_share = self.env.ref(
-            COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF,
-            raise_if_not_found=False,
+    def get_mapping_product_category_id_subscription_mode(self):
+        mapping = {}
+        for mode, xmlid in MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.items():
+            if mode in ("member", "invited", "voluntary", "member_associations"):
+                try:
+                    category = self.env.ref(xmlid, raise_if_not_found=False)
+                    if category:
+                        mapping[category.id] = mode
+                except ValueError:
+                    # XML ID not yet loaded during module initialization
+                    pass
+        return mapping
+
+    @api.depends(
+        "share_product_id",
+        "share_product_id.categ_id",
+        "share_product_id.categ_id.type_url",
+    )
+    def _compute_subscription_mode(self):
+        MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE = (
+            self.get_mapping_product_category_id_subscription_mode()
         )
+        if not MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE:
+            for record in self:
+                record.subscription_mode = "generic"
+            return
         for record in self:
-            record.is_voluntary = (
-                record.share_product_id.categ_id == product_category_voluntary_share
-            )
+            if (
+                record.share_product_id.categ_id.id
+                in MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE.keys()
+            ):
+                record.subscription_mode = MAPPING__PRODUCT_CATEG_ID__SUBSCRIPTION_MODE[
+                    record.share_product_id.categ_id.id
+                ]
+            else:
+                record.subscription_mode = "generic"
+
+    def get_subscription_mode_selection(self):
+        return [
+            ("generic", "Generic"),
+            ("member", "Member"),
+            ("member_associations", "Member Associations"),
+            ("invited", "Invited"),
+            ("voluntary", "Voluntary"),
+        ]
 
     gender = fields.Selection(
         selection_add=[
@@ -29,11 +69,13 @@ class SubscriptionRequest(models.Model):
     vat = fields.Char(
         required=True, readonly=True, states={"draft": [("readonly", False)]}
     )
-    is_voluntary = fields.Boolean(
-        compute=_compute_is_voluntary,
-        string="Is voluntary contribution",
-        readonly=True,
+    subscription_mode = fields.Selection(
+        string="Subscription mode",
+        selection=lambda self: self.get_subscription_mode_selection(),
+        compute="_compute_subscription_mode",
+        default="generic",
         store=True,
+        readonly=True,
     )
     share_product_categ_id = fields.Many2one(
         "product.category",
@@ -68,33 +110,30 @@ class SubscriptionRequest(models.Model):
 
     @api.model_create_multi
     def create(self, vals):
-        # Somewhere the company_id is assigned as string
-        # Can't find where, this is a workaround
-        for val in vals:
-            if "company_id" in val:
-                val["company_id"] = int(val["company_id"])
-            if "country_id" in val:
-                val["country_id"] = int(val["country_id"])
-            # setup company_register_number on SR based on vat
-            if "vat" in val.keys():
-                val["company_register_number"] = val["vat"]
+        if not self.env.context.get("from_form", False):
+            vals = self._validate_and_get_vals(vals)
 
         subscription_request = super().create(vals)
-        if (
-            not subscription_request.payment_mode_id.payment_method_id.code
-            == "sepa_direct_debit"
-        ):
-            subscription_request.skip_iban_control = True
+        skip_iban_control = not subscription_request.payment_mode_id or (
+            subscription_request.payment_mode_id
+            and subscription_request.payment_mode_id.payment_method_id
+            and subscription_request.payment_mode_id.payment_method_id.code
+            != "sepa_direct_debit"
+        )
+        subscription_request.skip_iban_control = skip_iban_control
         return subscription_request
 
     def validate_subscription_request(self):
-        if self.is_voluntary and not self.partner_id:
+        error_partner_msg = _(
+            "There is an existing account for this vat number on this community."
+        )
+        if self.subscription_mode == "voluntary" and not self.partner_id:
             raise ValidationError(
                 _(
                     "You can't create a voluntary subscription share for a new cooperator."
                 )
             )
-        if not self.is_voluntary and self.type == "new" and self.vat:
+        if self.subscription_mode != "voluntary" and self.type == "new" and self.vat:
             partners = self.env["res.partner"].search([("vat", "ilike", self.vat)])
             if partners:
                 partner = partners[0]
@@ -102,16 +141,44 @@ class SubscriptionRequest(models.Model):
                     self.company_id.id
                 )
                 if membership:
-                    raise ValidationError(
-                        _(
-                            "There is an existing account for this"
-                            " vat number on this community. "
-                        )
-                    )
-        super().validate_subscription_request()
+                    raise ValidationError(error_partner_msg)
+        if self.subscription_mode == MemberShipMode.invited:
+            partners = (
+                self.env["res.partner"]
+                .sudo()
+                .search(
+                    [
+                        ("vat", "ilike", self.vat),
+                        ("parent_id", "=", False),
+                        ("effective_invited", "=", True),
+                        ("company_id", "=", self.company_id.id),
+                    ]
+                )
+            )
+            if partners:
+                raise ValidationError(error_partner_msg)
+
+        invoice = super().validate_subscription_request()
+
+        if invoice.amount_total == 0 and invoice.payment_state == "paid":
+            self.write({"state": "paid"})
+
+        membership = self.partner_id.get_cooperative_membership(self.company_id)
+        is_new_pending_member_invited = (
+            self.subscription_mode
+            in [SubscriptionMode.member, SubscriptionMode.member_associations]
+            and membership.membership_type == MemberShipMode.invited
+            and membership.coop_candidate
+            and not membership.effective_invited
+        )
+        if is_new_pending_member_invited:
+            raise ValidationError(_("Invited member has pending invoices to be paid"))
+
+        return invoice
 
     def get_partner_vals(self):
         vals = super().get_partner_vals()
+        vals["gender"] = self.gender
         # vals["company_id"] = self.company_id.id
         return vals
 
@@ -120,6 +187,7 @@ class SubscriptionRequest(models.Model):
         # vals["company_id"] = self.company_id.id
         # This propagates vat from SR to res.partner
         vals["vat"] = self.vat
+        vals["gender"] = self.gender
         return vals
 
     def get_representative_vals(self):
@@ -158,7 +226,11 @@ class SubscriptionRequest(models.Model):
         return None
 
     def _find_or_create_partner(self):
-        if self.is_voluntary:
+        if self.is_company:
+            domain = self._get_partner_domain()
+            if domain:
+                self.partner_id = self.env["res.partner"].search(domain, limit=1)
+        if self.subscription_mode == "voluntary":
             super_model = super()
         else:
             super_model = super(SubscriptionRequest, self.sudo())
@@ -203,7 +275,7 @@ class SubscriptionRequest(models.Model):
             mail_template_notif = (
                 self.company_id.get_cooperator_confirmation_mail_template()
             )
-            if self.is_voluntary:
+            if self.subscription_mode == "voluntary":
                 mail_template_notif = self.env.ref(
                     "energy_communities_cooperator.email_template_confirmation_voluntary_share"
                 )
@@ -239,3 +311,29 @@ class SubscriptionRequest(models.Model):
             else:
                 res["tax_ids"] = None
         return res
+
+    def _validate_and_get_vals(self, vals):
+        """
+        Convert vals in SubscriptionRequestCreationParams schema to validate that vals
+        """
+        result_vals = []
+        with subscription_request_utils(self.env) as component:
+            for val in vals:
+                try:
+                    subscription_request_params = (
+                        component.get_subscription_request_params_from_dict(val)
+                    )
+                    component.validate(subscription_request_params)
+                except (
+                    PydanticValidationError,
+                    FormValidationError,
+                ) as e:
+                    error_msg = str(e)
+                    if isinstance(e, PydanticValidationError):
+                        error_msg = "\n".join(convert_errors(e))
+                    raise ValidationError(error_msg)
+                else:
+                    result_vals.append(
+                        subscription_request_params.model_dump(by_alias=True)
+                    )
+        return result_vals

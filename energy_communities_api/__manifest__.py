@@ -9,7 +9,7 @@
     "author": "Coopdevs Treball SCCL & Som Energia SCCL & SomIT",
     "website": "https://git.coopdevs.org/coopdevs/comunitats-energetiques/odoo-ce",
     "category": "Customizations",
-    "version": "16.0.0.4.3",
+    "version": "16.0.0.4.4",
     "license": "AGPL-3",
     "depends": [
         "auth_jwt",
@@ -25,7 +25,7 @@
         "python": [
             "pydantic==2.9.2",
             "extendable-pydantic==1.3.2",
-            "email_validator==2.2.0",
+            "email_validator==2.3.0",
         ]
     },
     "data": [

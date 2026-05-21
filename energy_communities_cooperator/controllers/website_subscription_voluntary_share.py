@@ -3,10 +3,13 @@ import logging
 from urllib.parse import urljoin
 
 from odoo import http
+from odoo.exceptions import ValidationError
 from odoo.http import request
 from odoo.tools.translate import _
 
 from odoo.addons.cooperator_website.controllers import main as emyc_wsc
+
+from .mixin import Controller_company_and_product_mixin
 
 logger = logging.getLogger(__name__)
 _VOLUNTARY_SHARE_FORM_FIELD = [
@@ -22,7 +25,9 @@ _VOLUNTARY_SHARE_FORM_FIELD = [
 ]
 
 
-class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
+class WebsiteSubscriptionCCEE(
+    emyc_wsc.WebsiteSubscription, Controller_company_and_product_mixin
+):
     @http.route(
         ["/page/voluntary_share", "/voluntary_share"],
         type="http",
@@ -30,58 +35,23 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         website=True,
     )
     def display_voluntary_share_page(self, **kwargs):
-        target_odoo_company_id = False
-        if kwargs.get("odoo_company_id", False):
-            try:
-                target_odoo_company_id = int(kwargs.get("odoo_company_id"))
-            except:
-                pass
-
-        if ("odoo_company_id" in kwargs) and (
-            not target_odoo_company_id
-            or not request.env["res.company"]
-            .sudo()
-            .search([("id", "=", target_odoo_company_id)])
-        ):
-            return http.Response(
-                _("Not valid parameter value [odoo_company_id]"), status=500
+        try:
+            (
+                target_odoo_company_id,
+                target_product_external_id,
+            ) = self.get_company_and_product(**kwargs)
+        except ValidationError as e:
+            return http.Response(str(e), status=500)
+        if target_odoo_company_id and target_product_external_id:
+            url = "/subscription/voluntary/{company_external_id}/{product_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id,
+                product_external_id=target_product_external_id.product_external_id,
             )
-
-        ctx = request.context.copy()
-        ctx.update({"target_odoo_company_id": target_odoo_company_id})
-        request.env.context = ctx
-
-        values = {}
-        logged = False
-
-        if request.env.user.login != "public":
-            logged = True
-        for field in _VOLUNTARY_SHARE_FORM_FIELD:
-            if kwargs.get(field):
-                values[field] = kwargs.pop(field)
-
-        if request.env.user.login != "public":
-            logged = True
-        values = self.fill_values(values, True, logged, True)
-
-        values.update(kwargs=kwargs.items())
-        values.update({"company_id": target_odoo_company_id})
-        company_id = request.env["res.company"].sudo().browse(target_odoo_company_id)
-        values.update(
-            {
-                "company_id": target_odoo_company_id,
-            }
+            return request.redirect(urljoin(request.httprequest.host_url, url), 303)
+        url = "/subscription/voluntary/{company_external_id}".format(
+            company_external_id=target_odoo_company_id.company_external_id
         )
-        if company_id.voluntary_share_id:
-            values.update({"share_product_id": company_id.voluntary_share_id.id})
-        else:
-            raise UserWarning(
-                _("This company doesn't have a voluntary product share selected.")
-            )
-
-        # redirect url to fall back on become cooperator in template redirection
-        values["redirect_url"] = request.httprequest.url
-        return request.render("energy_communities_cooperator.voluntary_share", values)
+        return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
     def voluntary_share_validation(  # noqa: C901 (method too complex)
         self, kwargs, logged, values, post_file

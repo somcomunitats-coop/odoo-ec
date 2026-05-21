@@ -9,6 +9,19 @@
     </function>
     <record id="cooperator.product_category_company_share" model="product.category">
       <field name="data_xml_id">cooperator.product_category_company_share</field>
+      <field name="product_website" eval="False" />
+      <field name="product_qty_must_be_read_only" eval="True" />
+    </record>
+    <record id="energy_communities_cooperator.product_category_company_invited_share" model="product.category">
+      <field name="name">Registration of invited person/entity</field>
+      <field name="product_website" eval="False" />
+      <field name="product_qty_must_be_read_only" eval="True" />
+      <field name="data_xml_id">energy_communities_cooperator.product_category_company_invited_share</field>
+    </record>
+    <record id="energy_communities.product_category_share_recurring_fee_pack" model="product.category">
+      <field name="product_website" eval="False" />
+      <field name="product_qty_must_be_read_only" eval="True" />
+      <field name="data_xml_id">energy_communities.product_category_share_recurring_fee_pack</field>
     </record>
     <function name="write" model="ir.model.data">
       <function name="search" model="ir.model.data">
@@ -30,6 +43,8 @@
     <record id="product_category_company_voluntary_share" model="product.category">
       <field name="name">Voluntary Company Share</field>
       <field name="data_xml_id">energy_communities_cooperator.product_category_company_voluntary_share</field>
+      <field name="product_website" eval="True" />
+      <field name="product_qty_must_be_read_only" eval="False" />
     </record>
     <function name="write" model="ir.model.data">
       <function name="search" model="ir.model.data">

@@ -7,6 +7,7 @@
     <field name="arch" type="xml">
       <field name="share_short_name" position="after">
         <field name="share_product_categ_id" />
+        <field name="subscription_mode" invisible="1"/>
       </field>
     </field>
   </record>
@@ -18,7 +19,7 @@
     <field name="arch" type="xml">
       <field name="country_id" position="after">
         <field name="share_product_categ_id" />
-        <field name="is_voluntary" />
+        <field name="subscription_mode" />
       </field>
     </field>
   </record>
@@ -42,12 +43,18 @@
         <filter
           string="Mandatory Shares"
           name="mandatory_share"
-          domain="[('is_voluntary','=', False)]"
+          domain="['|','|',('subscription_mode','=', 'generic'),('subscription_mode','=', 'member'), ('subscription_mode','=', 'member_associations')]"
         />
         <filter
           string="Voluntary Shares"
           name="voluntary_share"
-          domain="[('is_voluntary','=', True)]"
+          domain="[('subscription_mode','=', 'voluntary')]"
+        />
+
+        <filter
+          string="Invited Shares"
+          name="invited_share"
+          domain="[('subscription_mode','=', 'invited')]"
         />
       </xpath>
     </field>

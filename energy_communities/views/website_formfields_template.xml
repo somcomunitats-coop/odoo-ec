@@ -4,7 +4,7 @@
       <span
       style="display:block;font-size:13px;font-family:'Roboto',sans-serif;font-weight:300;"
       t-if="field_description"
-    ><t t-raw="field_description" /></span>
+    ><t t-out="field_description" /></span>
     </template>
     <template id="form_field_part_label" name="form_field_part_label">
       <label t-att="{'for': field_key}"><t t-esc="field_label" /><span
@@ -29,8 +29,14 @@
       </span>
       </label>
     </template>
+    <template id="form_h1" name="form_h1">
+      <h1 class="text-center"><t t-out="field_description" /></h1>
+    </template>
     <template id="form_h3" name="form_h3">
-      <h3 class="d-flex align-items-center mb-4 mt-4"><t t-raw="field_description" /><div class="flex-grow-1 border-bottom ms-2"></div></h3>
+      <h3 class="d-flex align-items-center mb-4 mt-4"><t t-out="description" /><div class="flex-grow-1 border-bottom ms-2"></div></h3>
+    </template>
+    <template id="form_p" name="form_p">
+      <p><t t-out="field_description" /></p>
     </template>
     <template id="form_headline" name="form_headline">
       <div
@@ -65,6 +71,7 @@
         t-attf-value="#{value or ''}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       />
       </div>
@@ -109,6 +116,7 @@
         t-attf-value="#{value or ''}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       />
       </div>
@@ -138,6 +146,7 @@
         t-attf-value="#{value or ''}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       />
       </div>
@@ -166,6 +175,7 @@
         t-attf-maxlength="#{maxlength}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       ><t t-esc="value or ''" /></textarea>
       </div>
@@ -192,14 +202,16 @@
         t-attf-name="#{key}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       >
             <option value="">Please choose an option</option>
             <t t-foreach="options or []" t-as="option">
               <option
             t-att-value="option['id']"
-            t-att-selected="str(option['id']) == str(value)"
-          >
+              t-att-selected="str(option['id']) == str(value)"
+              t-att="option.get('data_attrs', {})"
+            >
                 <t t-esc="option['name']" />
               </option>
             </t>
@@ -236,6 +248,7 @@
               t-att-name="option['id']"
               t-att-checked="option['id'] in value"
               t-att-disabled="disabled"
+              t-att-readonly="readonly"
             />
             <span><t t-esc="option['name']" /></span>
           </div>
@@ -259,6 +272,7 @@
           t-att-checked="value=='on'"
           t-att-required="required"
           t-att-disabled="disabled"
+          t-att-readonly="readonly"
         />
           <t t-call="energy_communities.form_field_part_label">
             <t t-set="field_key" t-value="key" />
@@ -303,6 +317,7 @@
               t-att-checked="option['id'] == value"
               t-att-required="required"
               t-att-disabled="disabled"
+              t-att-readonly="readonly"
             />
             <span><t t-esc="option['name']" /></span>
           </div>
@@ -339,6 +354,7 @@
           t-attf-name="#{key}"
           t-att-required="required and not value"
           t-att-disabled="disabled"
+          t-att-readonly="readonly"
           t-att-data-trigger="trigger"
         />
         </div>
@@ -367,7 +383,7 @@
           </t>
           <input
         t-attf-class="form-control form-control-sm o_website_form_date_past#{trigger and ' data-trigger'}"
-        type="text"
+        type="date"
         t-attf-id="#{key}"
         t-attf-name="#{key}"
         t-attf-value="#{value or ''}"
@@ -375,6 +391,7 @@
         t-attf-placeholder="#{date_placeholder}"
         t-att-required="required"
         t-att-disabled="disabled"
+        t-att-readonly="readonly"
         t-att-data-trigger="trigger"
       />
         </div>

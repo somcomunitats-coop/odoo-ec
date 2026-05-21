@@ -325,12 +325,6 @@ class CreateInscription(models.AbstractModel):
         Returns:
             bool: True if partner is authorized, False otherwise
         """
-        # Check if partner is authorized for energy actions without membership
-        if partner.with_company(
-            project.company_id.id
-        ).no_member_autorized_in_energy_actions:
-            return True
-
         # Check cooperative membership
         return bool(
             self.env["cooperative.membership"]
@@ -339,8 +333,9 @@ class CreateInscription(models.AbstractModel):
                 [
                     ("company_id", "=", project.company_id.id),
                     ("partner_id", "=", partner.id),
-                    ("cooperator", "=", True),
+                    "|",
                     ("member", "=", True),
+                    ("effective_invited", "=", True),
                 ]
             )
         )

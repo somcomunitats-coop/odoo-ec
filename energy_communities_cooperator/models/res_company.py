@@ -1,4 +1,6 @@
-from odoo import fields, models
+import hashlib
+
+from odoo import api, fields, models
 from odoo.tools.translate import _
 
 
@@ -6,16 +8,31 @@ class ResCompany(models.Model):
     _name = "res.company"
     _inherit = "res.company"
 
+    @api.depends("name")
+    def _compute_company_external_id(self):
+        for record in self:
+            record.company_external_id = hashlib.sha1(
+                str(record.id).encode()
+            ).hexdigest()
+
+    @api.depends("company_external_id")
+    def _compute_share_urls(self):
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        for record in self:
+            record.voluntary_share_url_individual = (
+                f"{base_url}/subscription/voluntary/{record.company_external_id}"
+            )
+            record.invitation_share_url_individual = (
+                f"{base_url}/subscription/invited/{record.company_external_id}"
+            )
+            record.invitation_share_url_company = (
+                f"{base_url}/subscription/company_invited/{record.company_external_id}"
+            )
+
     voluntary_share_id = fields.Many2one(
         comodel_name="product.template",
         domain=[("is_share", "=", True)],
         string="Voluntary share to show on website",
-    )
-    cooperator_share_form_header_text = fields.Html(
-        string="Cooperator share form header text", translate=True
-    )
-    voluntary_share_form_header_text = fields.Html(
-        string="Voluntary share form header text", translate=True
     )
     voluntary_share_journal_account = fields.Many2one(
         "account.journal",
@@ -44,31 +61,31 @@ class ResCompany(models.Model):
         compute="_compute_numberof_effective_cooperators",
         store=False,
     )
+    cooperator_share_form_header_text = fields.Html(
+        string="Cooperator share form header text", translate=True
+    )
+    cooperator_association_share_form_header_text = fields.Html(
+        string="Cooperator Association share form header text", translate=True
+    )
+    invited_share_form_header_text = fields.Html(
+        string="Invited share form header text", translate=True
+    )
+    voluntary_share_form_header_text = fields.Html(
+        string="Voluntary share form header text", translate=True
+    )
 
     def _compute_numberof_effective_inviteds(self):
         for record in self:
-            numberof_effective_inviteds = 0
-            effective_inviteds = (
-                self.env["res.partner"]
+            record.numberof_effective_inviteds = (
+                self.env["cooperative.membership"]
                 .with_company(record)
-                .search([("no_member_autorized_in_energy_actions", "=", True)])
+                .search_count(
+                    [
+                        ("company_id", "=", record.id),
+                        ("effective_invited", "=", True),
+                    ]
+                )
             )
-            # We check the invited is not considered effective cooperator to increase the value
-            for effective_invited in effective_inviteds:
-                if (
-                    not self.env["cooperative.membership"]
-                    .with_company(record)
-                    .search(
-                        [
-                            ("partner_id", "=", effective_invited.id),
-                            ("company_id", "=", record.id),
-                            ("member", "=", True),
-                        ]
-                    )
-                ):
-                    # if non_cooperator.with_company(record).no_member_autorized_in_energy_actions:
-                    numberof_effective_inviteds += 1
-            record.numberof_effective_inviteds = numberof_effective_inviteds
 
     def _compute_numberof_effective_members(self):
         for record in self:
@@ -83,6 +100,26 @@ class ResCompany(models.Model):
             record.numberof_effective_cooperators = (
                 record.numberof_effective_members + record.numberof_effective_inviteds
             )
+
+    company_external_id = fields.Char(
+        string="External ID", compute="_compute_company_external_id", store=True
+    )
+
+    voluntary_share_url_individual = fields.Char(
+        string="Voluntary share URL individual",
+        compute="_compute_share_urls",
+        readonly=True,
+    )
+    invitation_share_url_individual = fields.Char(
+        string="Invitation share URL individual",
+        compute="_compute_share_urls",
+        readonly=True,
+    )
+    invitation_share_url_company = fields.Char(
+        string="Invitation share URL company",
+        compute="_compute_share_urls",
+        readonly=True,
+    )
 
     def action_open_volutary_share_interest_return_wizard(self):
         wizard = self.env["voluntary.share.interest.return.wizard"].create(

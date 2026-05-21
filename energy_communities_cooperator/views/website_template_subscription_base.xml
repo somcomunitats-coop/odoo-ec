@@ -1,0 +1,68 @@
+<odoo>
+  <template id="template_subscription_header" name="template_subscription_header">
+    <t t-call="energy_communities.form_h1">
+      <t t-set="field_description" t-value="page_title" />
+    </t>
+  </template>
+
+  <template id="template_subscription_error_message" name="template_subscription_error_message">
+    <br />
+    <div class="alert alert-danger">
+      <t t-set="error_title" t-value="error['title']" />
+      <h5><t t-raw="error_title" /></h5>
+      <ul>
+        <t t-foreach="error['messages'] or []" t-as="error_msg">
+          <li><t t-raw="error_msg" /></li>
+        </t>
+      </ul>
+    </div>
+  </template>
+
+  <template id="template_subscription_form_successful_message" name="template_subscription_form_successful_message">
+    <div class="alert alert-success">
+      <p><t t-raw="success_msg" /></p>
+    </div>
+  </template>
+
+  <template id="template_subscription_headline" name="template_subscription_headline">
+    <div><t t-raw="page_headline" /></div>
+    <div><t t-raw="page_headline_fixed_transfer" /></div>
+    <div><t t-raw="page_headline_fixed_sepa" /></div>
+  </template>
+
+  <template id="template_subscription_page" name="template_subscription_page">
+    <t t-call="website.layout">
+      <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      />
+      <link
+        href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+        rel='stylesheet'
+      />
+      <script
+        src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+      />
+      <div id="wrap" class="o_portal_wrap">
+        <div class="container subscription_container">
+          <div class="row justify-content-center">
+            <div class="col-xs-12 col-sm-10  col-md-8 col-lg-8">
+                <t t-call="energy_communities_cooperator.template_subscription_header"/>
+                <t t-call="energy_communities_cooperator.template_subscription_headline" />
+                <t t-if="form_submitted">
+                  <t
+                    t-call="energy_communities_cooperator.template_subscription_form_successful_message"
+                  />
+                </t>
+                <t t-else="">
+                  <t t-if="error">
+                    <t t-call="energy_communities_cooperator.template_subscription_error_message" />
+                  </t>
+                  <t t-call="energy_communities_cooperator.template_subscription_form_base"/>
+                </t>
+            </div>
+          </div>
+        </div>
+      </div>
+    </t>
+  </template>
+</odoo>

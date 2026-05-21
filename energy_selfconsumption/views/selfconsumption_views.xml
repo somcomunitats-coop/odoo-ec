@@ -280,6 +280,10 @@ Main functionalities:
                     name="conf_bank_details"
                     attrs="{'readonly': [('conf_state', '==', 'active')]}"
                   />
+                                    <field
+                    name="conf_cadastral_reference_readonly"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
                                 </group>
                                 <group name="conf_participation" string="Participation">
                                     <field

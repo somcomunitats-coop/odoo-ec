@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-02 14:47+0000\n"
-"PO-Revision-Date: 2024-12-02 14:47+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2026-02-26 09:36+0000\n"
+"Last-Translator: Weblate Admin <weblate.admin@example.com>\n"
+"Language-Team: Basque <http://localhost:8080/projects/odoo/"
+"energy_communities_cooperator-extra/eu/>\n"
 "Language: eu_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.16\n"
 
 #. module: cooperator
 #: model:ir.ui.menu,name:cooperator.menu_cooperator_main_subscription
@@ -179,25 +181,34 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"    Kaixo, <t t-out=\"object.subscription_request.firstname\"></t><br><br>:\n"
+"        Kaixo, <t t-out=\"object.subscription_request.firstname\"></t>:\n"
+"    </p>\n"
+"    <p>\n"
+"        <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> Komunitateko bazkide izateko eskaera prozesatzen ari gara.\n"
+"    </p>\n"
 "    <t t-if=\"object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit'\">\n"
-"    <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> komunitateko bazkide izateko eskaera prozesatzen ari gara.<br><br>\n"
-"    Ordainagiri bat igorriko dugu berehala <t t-out=\"object.subscription_request.iban[-4:]\"></t> zenbakiekin amaitzen den banku-kontura, hasierako nahitaezko ekarpena (<t t-out=\"object.amount_total\"></t> €) kobratzeko.<br>\n"
-"    Ordainketa prozesatu ondoren, behin betiko ongietorri-mezu bat jasoko duzu posta elektronikoan, <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> komunitatearekin lotuko zaituen bazkide-zenbakiarekin batera.<br><br>\n"
+"        <p>\n"
+"            Ordainagiri bat igorriko dugu berehala <t t-out=\"object.subscription_request.iban[-4:]\"></t> zenbakiekin amaitzen den banku-kontura, hasierako nahitaezko ekarpena (<t t-out=\"object.amount_total\"></t> €) kobratzeko.\n"
+"            <br>\n"
+"            Ordainketa prozesatu ondoren, behin betiko ongietorri-mezu bat jasoko duzu posta elektronikoan, <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> komunitatearekin lotuko zaituen bazkide-zenbakiarekin batera.\n"
+"        </p>\n"
 "    </t>\n"
 "    <t t-else=\"\">\n"
-"    <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> Komunitateko bazkide izateko eskaera prozesatzen ari gara.<br>\n"
-"    Prozesua osatzeko, zenbateko hau ordaindu beharko duzu jarraian adierazitako banku-kontuan:<br><br>\n"
-"    <ul>\n"
-"       <li><strong>Hasierako ekarpena:</strong> <t t-out=\"object.amount_total\"></t> €<br></li>\n"
-"       <li><strong>Kontu-zenbakia:</strong> <t t-if=\"object.payment_mode_id and object.payment_mode_id.bank_account_link == 'fixed' and object.payment_mode_id.fixed_journal_id\"><t t-out=\"( object.payment_mode_id.fixed_journal_id.bank_account_id.acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t></t><t t-else=\"\"><t t-out=\"( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t></t><br></li>\n"
-"       <li><strong>Onuraduna:</strong> <t t-out=\"object.company_id.name\"></t><br></li>\n"
-"       <li><strong>Kontzeptua:</strong> Zure izen-abizenak<br><br></li>\n"
-"    </ul>\n"
-"    Ordainketa egin ondoren, bidal iezaguzu ordainagiria mezu elektroniko bidez hona idatzita: <t t-out=\"( object.company_id.coop_email_contact or object.company_id.email_formatted )\"></t><br><br>\n"
+"        <p>\n"
+"            Prozesua osatzeko, zenbateko hau ordaindu beharko duzu jarraian adierazitako banku-kontuan:\n"
+"            <br>\n"
+"            <ul>\n"
+"               <li><strong>Hasierako ekarpena:</strong> <t t-out=\"object.amount_total\"></t> €</li>\n"
+"               <li><strong>Kontu-zenbakia:</strong> <t t-if=\"object.payment_mode_id and object.payment_mode_id.bank_account_link == 'fixed' and object.payment_mode_id.fixed_journal_id\"><t t-out=\"( object.payment_mode_id.fixed_journal_id.bank_account_id.acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t></t><t t-else=\"\"><t t-out=\"( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t></t></li>\n"
+"               <li><strong>Onuraduna:</strong> <t t-out=\"object.company_id.name\"></t></li>\n"
+"               <li><strong>Kontzeptua:</strong> Zure izen-abizenak</li>\n"
+"            </ul>\n"
+"            Ordainketa egin ondoren, bidal iezaguzu ordainagiria mezu elektroniko bidez hona idatzita: <t t-out=\"( object.company_id.coop_email_contact or object.company_id.email_formatted )\"></t>\n"
+"        </p>\n"
 "    </t>\n"
-"    Zalantzarik baduzu, jarri gurekin harremanetan.<br>\n"
-"    Adeitasunez,\n"
+"    <p>\n"
+"        Zalantzarik baduzu, jarri gurekin harremanetan.<br>\n"
+"        Adeitasunez,\n"
 "    </p>\n"
 "</div>\n"
 
@@ -970,7 +981,7 @@ msgstr "Ezin duzu bi motatako ekarpenetan harpidetu."
 #. module: l10n_es_cooperator
 #: model_terms:ir.ui.view,arch_db:l10n_es_cooperator.iban_template_es
 msgid "VAT"
-msgstr "BEZa"
+msgstr "IFZ"
 
 #. module: cooperator
 #: model:ir.actions.report,name:cooperator.action_cooperator_report_certificate
@@ -1001,7 +1012,6 @@ msgstr "bazkideen erregistroan jasota dago, zenbaki honekin:"
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
 msgid "Effective Date"
 msgstr "Eraginetarako data"
-
 
 #. module: cooperator
 #: model:ir.model.fields.selection,name:cooperator.selection__operation_request__operation_type__transfer
@@ -1041,3 +1051,15 @@ msgstr "<strong>Guztira</strong>"
 #: model_terms:ir.ui.view,arch_db:cooperator.report_cooperator_register
 msgid "Total"
 msgstr "Guztira"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_product_product__is_share
+#: model:ir.model.fields,field_description:cooperator.field_product_template__is_share
+msgid "Is share?"
+msgstr "Sozietate-kudeaketako produktua (ekarpena edo kuota)"
+
+#. module: cooperator
+#: model:ir.actions.act_window,name:cooperator.subscription_request_action
+#: model:ir.ui.menu,name:cooperator.menu_cooperator_subscription_request
+msgid "Subscriptions"
+msgstr "Harpidetza eskaera"

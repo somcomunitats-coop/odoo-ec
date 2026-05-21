@@ -283,27 +283,25 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         """
         partner_with_type = partner.get_partner_with_type()
 
-        if not partner_with_type.with_company(
-            project.company_id.id
-        ).no_member_autorized_in_energy_actions:
-            cooperator = (
-                request.env["cooperative.membership"]
-                .sudo()
-                .search(
-                    [
-                        ("company_id", "=", project.company_id.id),
-                        ("partner_id", "=", partner_with_type.id),
-                        ("cooperator", "=", True),
-                        ("member", "=", True),
-                    ]
-                )
+        cooperator = (  # TODO: Move this to generic function on energy_communities_cooperator
+            request.env["cooperative.membership"]
+            .sudo()
+            .search(
+                [
+                    ("company_id", "=", project.company_id.id),
+                    ("partner_id", "=", partner_with_type.id),
+                    "|",
+                    ("member", "=", True),
+                    ("effective_invited", "=", True),
+                ]
             )
+        )
 
-            if not cooperator:
-                return {
-                    "error_msgs": [_("Partner is not a cooperator.")],
-                    "global_error": True,
-                }
+        if not cooperator:
+            return {
+                "error_msgs": [_("Partner is not a cooperator.")],
+                "global_error": True,
+            }
 
         return None
 
@@ -738,6 +736,11 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             # Add language options
             values["supplypoint_owner_id_lang_options"] = self._get_language_options()
 
+            # Add cadastral reference options
+            values[
+                "supplypoint_cadastral_reference_options"
+            ] = self._get_cadastral_reference_options(values)
+
             # Add help text
             values.update(self._get_help_texts())
 
@@ -746,6 +749,24 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         except Exception as e:
             logger.error(f"Error filling custom values: {e}")
             return values
+
+    def _get_cadastral_reference_options(self, values):
+        """
+        Get cadastral reference options
+
+        Returns:
+            list: Cadastral reference options
+        """
+        try:
+            self_consumption_project = (
+                request.env["energy_selfconsumption.selfconsumption"]
+                .sudo()
+                .browse(int(values["model_id"]))
+            )
+            return self_consumption_project.conf_cadastral_reference_readonly
+        except Exception as e:
+            logger.error(f"Error getting cadastral reference options: {e}")
+            return True
 
     def _get_boolean_choice_options(self):
         """

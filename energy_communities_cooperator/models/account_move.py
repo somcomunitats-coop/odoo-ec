@@ -35,13 +35,20 @@ class AccountMove(models.Model):
             self.partner_id.user_ids[0].make_ce_user(
                 self.company_id.id, "role_ce_member"
             )
+        if cooperative_membership.member and cooperative_membership.effective_invited:
+            cooperative_membership.write({"effective_invited": False})
+        if cooperative_membership.membership_type == "invited":
+            cooperative_membership.write({"effective_invited": True, "member": False})
 
     # TODO: Should we maintain this method?
     def send_capital_release_request_mail(self):
         # temporal fix por Gares Bide needs
         # capital_release_mail only must be sent when is a mandatory share
         # TODO Remove it and implement a configuration
-        if not self.subscription_request.is_voluntary:
+        if (
+            self.subscription_request.subscription_mode != "voluntary"
+            and self.amount_total != 0.0
+        ):
             return super().send_capital_release_request_mail()
 
     def _get_starting_sequence(self):
@@ -64,7 +71,7 @@ class AccountMove(models.Model):
         # "cooperator.email_template_certificate" in else case
         mail_template_obj = super().get_mail_template_certificate()
 
-        if self.subscription_request.is_voluntary:
+        if self.subscription_request.subscription_mode == "voluntary":
             mail_template_obj = self.env.ref(
                 "energy_communities_cooperator.email_template_conditions_voluntary_share"
             )

@@ -1,4 +1,18 @@
 <odoo>
+  <record id="view_res_partner_filter_invited" model="ir.ui.view">
+      <field name="name">res.partner.select</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="cooperator.view_res_partner_filter" />
+      <field name="arch" type="xml">
+          <filter name="cooperator_company_representative" position='after'>
+              <filter
+                  string="Invited"
+                  name="invited"
+                  domain="[('effective_invited', '=', True)]"
+              />
+          </filter>
+      </field>
+  </record>
   <record id="cooperator_view_partner_form" model="ir.ui.view">
     <field name="name">view_company_form.inherit</field>
     <field name="model">res.partner</field>
@@ -31,14 +45,21 @@
       <field name="generic_rules_approved" position="attributes">
         <attribute name="readonly">1</attribute>
       </field>
+      <field name="cooperator_type" position="replace">
+      </field>
+      <field name="effective_date" position="replace">
+      </field>
       <field name="vat" position="attributes">
         <attribute name="attrs">{'readonly': [('parent_id','!=',False)], 'required': [('no_member_autorized_in_energy_actions', '=', True)]}</attribute>
       </field>
       <field name="legal_form" position="after">
         <field name="user_current_role" invisible="1" />
-        <field name="cooperator" readonly="1" />
+        <field name="effective_invited" readonly="1" />
         <field name="no_member_autorized_in_energy_actions" />
-        
+        <field name="member" invisible="1"/>
+        <field name="effective_date" attrs="{'invisible': [('member', '=', False), ('effective_invited', '=', False)]}" />
+        <field name="cooperator_type" attrs="{'invisible': [('member', '=', False), ('effective_invited', '=', False)]}" />
+        <field name="cooperator" readonly="1" />
         <field
           name="coop_candidate"
           readonly="1"
@@ -67,6 +88,12 @@
         <!--  attrs="{'invisible': [('member', '=', False)], 'readonly': True}"-->
         <!--/>-->
       </field>
+      <field name="title" position="after">
+        <field name="gender" />
+      </field>
+      <page name="share" position="attributes">
+        <attribute name="attrs">{'invisible': [('member', '=', False),('effective_invited', '=', False)]}</attribute>
+      </page>
     </field>
   </record>
   <record model="ir.ui.menu" id="cooperator.menu_cooperator_cooperator">

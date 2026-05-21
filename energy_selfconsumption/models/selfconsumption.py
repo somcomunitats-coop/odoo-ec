@@ -198,6 +198,11 @@ class Selfconsumption(models.Model):
         string="Cadastral reference",
         help="Official cadastral reference for the project location",
     )
+    conf_cadastral_reference_readonly = fields.Boolean(
+        "Cadastral reference readonly",
+        default=True,
+        help="Make the cadastral reference field readonly",
+    )
     conf_state = fields.Selection(
         SELFCONSUMPTION_CONF_STATE_VALUES,
         string="Activate Registration Form",

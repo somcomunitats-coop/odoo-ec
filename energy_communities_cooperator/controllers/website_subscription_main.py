@@ -1,10 +1,13 @@
 from urllib.parse import urljoin
 
 from odoo import http
+from odoo.exceptions import ValidationError
 from odoo.http import request
 from odoo.tools.translate import _
 
 from odoo.addons.cooperator_website.controllers import main as emyc_wsc
+
+from .mixin import Controller_company_and_product_mixin
 
 _VOLUNTARY_SHARE_FORM_FIELD = [
     "email",
@@ -19,61 +22,73 @@ _VOLUNTARY_SHARE_FORM_FIELD = [
 ]
 
 
-class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
+class WebsiteSubscriptionCCEE(
+    emyc_wsc.WebsiteSubscription, Controller_company_and_product_mixin
+):
     def get_subscription_response(self, values, kwargs):
         return request.render("energy_communities.website_form_submit_confirmation")
 
     @http.route()
     def display_become_cooperator_page(self, **kwargs):
-        target_odoo_company_id = False
-        if kwargs.get("odoo_company_id", False):
-            try:
-                target_odoo_company_id = int(kwargs.get("odoo_company_id"))
-            except:
-                pass
-
-        if ("odoo_company_id" in kwargs) and (
-            not target_odoo_company_id
-            or not request.env["res.company"]
-            .sudo()
-            .search([("id", "=", target_odoo_company_id)])
-        ):
-            return http.Response(
-                _("Not valid parameter value [odoo_company_id]"), status=500
+        try:
+            (
+                target_odoo_company_id,
+                target_product_external_id,
+            ) = self.get_company_and_product(**kwargs)
+        except ValidationError as e:
+            return http.Response(str(e), status=500)
+        if target_odoo_company_id and target_product_external_id:
+            if target_odoo_company_id.legal_form == "non_profit":
+                url = "/subscription/member_associations/{company_external_id}/{product_external_id}".format(
+                    company_external_id=target_odoo_company_id.company_external_id,
+                    product_external_id=target_product_external_id.product_external_id,
+                )
+            else:
+                url = "/subscription/member/{company_external_id}/{product_external_id}".format(
+                    company_external_id=target_odoo_company_id.company_external_id,
+                    product_external_id=target_product_external_id.product_external_id,
+                )
+            return request.redirect(urljoin(request.httprequest.host_url, url), 303)
+        if target_odoo_company_id.legal_form == "non_profit":
+            url = "/subscription/member_associations/{company_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id
             )
-
-        ctx = request.context.copy()
-        ctx.update({"target_odoo_company_id": target_odoo_company_id})
-        request.env.context = ctx
-
-        res = super().display_become_cooperator_page(**kwargs)
-        return res
+        else:
+            url = "/subscription/member/{company_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id
+            )
+        return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
     @http.route()
     def display_become_company_cooperator_page(self, **kwargs):
-        target_odoo_company_id = False
-        if kwargs.get("odoo_company_id", False):
-            try:
-                target_odoo_company_id = int(kwargs.get("odoo_company_id"))
-            except:
-                pass
-
-        if ("odoo_company_id" in kwargs) and (
-            not target_odoo_company_id
-            or not request.env["res.company"]
-            .sudo()
-            .search([("id", "=", target_odoo_company_id)])
-        ):
-            return http.Response(
-                _("Not valid parameter value [odoo_company_id]"), status=500
+        try:
+            (
+                target_odoo_company_id,
+                target_product_external_id,
+            ) = self.get_company_and_product(**kwargs)
+        except ValidationError as e:
+            return http.Response(str(e), status=500)
+        if target_odoo_company_id and target_product_external_id:
+            if target_odoo_company_id.legal_form == "non_profit":
+                url = "/subscription/member_associations/{company_external_id}/{product_external_id}".format(
+                    company_external_id=target_odoo_company_id.company_external_id,
+                    product_external_id=target_product_external_id.product_external_id,
+                )
+            else:
+                url = "/subscription/company_member/{company_external_id}/{product_external_id}".format(
+                    company_external_id=target_odoo_company_id.company_external_id,
+                    product_external_id=target_product_external_id.product_external_id,
+                )
+            return request.redirect(urljoin(request.httprequest.host_url, url), 303)
+        if target_odoo_company_id.legal_form == "non_profit":
+            url = "/subscription/company_member_associations/{company_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id
             )
-
-        ctx = request.context.copy()
-        ctx.update({"target_odoo_company_id": target_odoo_company_id})
-        request.env.context = ctx
-
-        res = super().display_become_company_cooperator_page(**kwargs)
-        return res
+        else:
+            url = "/subscription/company_member/{company_external_id}".format(
+                company_external_id=target_odoo_company_id.company_external_id
+            )
+        return request.redirect(urljoin(request.httprequest.host_url, url), 303)
 
     @http.route()  # noqa: C901 (method too complex)
     def share_subscription(self, **kwargs):
@@ -84,21 +99,47 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             except:
                 pass
 
-        if ("odoo_company_id" in kwargs) and (
-            not target_odoo_company_id
-            or not request.env["res.company"]
-            .sudo()
-            .search([("id", "=", target_odoo_company_id)])
+        if kwargs.get("external_company_id", False):
+            try:
+                target_odoo_company_id = (
+                    request.env["res.company"]
+                    .sudo()
+                    .search(
+                        [
+                            (
+                                "company_external_id",
+                                "=",
+                                kwargs.get("external_company_id"),
+                            )
+                        ]
+                    )
+                    .id
+                )
+            except:
+                pass
+
+        if (
+            ("odoo_company_id" in kwargs)
+            or ("external_company_id" in kwargs)
+            and (
+                not target_odoo_company_id
+                or not request.env["res.company"]
+                .sudo()
+                .search([("id", "=", target_odoo_company_id)])
+            )
         ):
             return http.Response(
-                _("Not valid parameter value [odoo_company_id]"), status=500
+                _(
+                    "Not valid parameter value [odoo_company_id] or [external_company_id]"
+                ),
+                status=500,
             )
 
         if "vat" in kwargs:
             kwargs["vat"] = kwargs["vat"].upper().strip()
 
         ctx = request.context.copy()
-        ctx.update({"target_odoo_company_id": target_odoo_company_id})
+        ctx.update({"target_odoo_company_id": target_odoo_company_id.id})
         request.env.context = ctx
 
         res = super().share_subscription(**kwargs)
@@ -106,6 +147,9 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
 
     def fill_values(self, values, is_company, logged, load_from_user=False):
         target_company_id = request.context.get("target_odoo_company_id", False)
+        target_product_external_id = request.context.get(
+            "target_product_external_id", False
+        )
 
         sub_req_obj = request.env["subscription.request"]
         if target_company_id:
@@ -113,6 +157,14 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
         else:
             company = request.website.company_id
         products = self.get_products_share(is_company)
+
+        product = False
+        if target_product_external_id:
+            product = (
+                request.env["product.template"]
+                .sudo()
+                .search([("product_external_id", "=", target_product_external_id)])
+            )
 
         if load_from_user:
             values = self.get_values_from_user(values, is_company)
@@ -165,6 +217,7 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
 
         values.update(
             {
+                "display_product_website": company.product_website,
                 "display_data_policy": company.display_data_policy_approval,
                 "data_policy_required": company.data_policy_approval_required,
                 "data_policy_text": company.data_policy_approval_text,
@@ -236,20 +289,30 @@ class WebsiteSubscriptionCCEE(emyc_wsc.WebsiteSubscription):
             if vat:
                 vat = vat.strip().upper()
 
-            partner = request.env["res.partner"].sudo().search([("vat", "ilike", vat)])
-            if partner:
-                membership = partner._get_member_or_candidate_cooperative_membership(
-                    company.id
-                )
-                if membership:
-                    values = self.fill_values(values, is_company, logged)
-                    values.update(kwargs)
-                    values["error_msg"] = _(
-                        "There is an existing account for this"
-                        " vat number on this community. "
-                        "Please contact with the community administrators."
+            partners = (
+                request.env["res.partner"]
+                .sudo()
+                .search([("vat", "ilike", vat), ("parent_id", "=", "False")])
+            )
+            existing_partner = any(
+                [
+                    bool(
+                        partner._get_member_or_candidate_cooperative_membership(
+                            company.id
+                        )
                     )
-                    return request.render(redirect, values)
+                    for partner in partners
+                ]
+            )
+            if existing_partner:
+                values = self.fill_values(values, is_company, logged)
+                values.update(kwargs)
+                values["error_msg"] = _(
+                    "There is an existing account for this"
+                    " vat number on this community. "
+                    "Please contact with the community administrators."
+                )
+                return request.render(redirect, values)
 
         # upload id card image validation
         if company.allow_id_card_upload:

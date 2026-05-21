@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="product_template_only_form_view" model="ir.ui.view">
+            <field name="name">product.template.product.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <field name="display_on_website" position="attributes">
+                    <attribute name="string">Activate for the BASE form</attribute>
+                    <attribute name="help">By checking this box, this product will be considered for display on the BASE form for its category.</attribute>
+                </field>
+                <field name="default_share_product" position="attributes">
+                    <attribute name="string">Default product in Base form</attribute>
+                    <attribute name="help">If checked, the product will be preselected by default in the drop-down field of the form to choose from the list of products that have been sent/added to the generic form.</attribute>
+                </field>
+                <field name="display_on_website" position="before">
+                    <div class="form-group" invisible="1">
+                        <label for="product_external_id" string="External ID" />
+                        <field name="product_external_id" />
+                    </div>
+                </field>
+                <xpath expr="//label[@for='display_on_website']" position="after">
+                    <div class="form-group">
+                        <button name="url_individual_button" type="object" class="btn btn-primary m-2" string="URL individual" groups="cooperator.cooperator_group_user" attrs="{'invisible':['|',('display_on_website','=',False),('by_individual','=',False)]}"  />
+                        <button name="url_company_button" type="object" class="btn btn-primary" string="URL company" groups="cooperator.cooperator_group_user" attrs="{'invisible':['|',('display_on_website','=',False),('by_company','=',False)]}"  />    
+                    </div>
+                    <field name="activate_form_specific_products" />
+                    <label for="activate_form_specific_products" string="Activate form specific products" />
+                    
+                    <div class="form-group">
+                        <button name="url_specific_individual_button" type="object" class="btn btn-primary m-2" string="URL individual" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_individual','=',False)]}"/>
+                        <button name="url_specific_company_button" type="object" class="btn btn-primary" string="URL company" attrs="{'invisible':['|',('activate_form_specific_products','=',False),('by_company','=',False)]}"/>  
+                    </div>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Custom form specific products" groups="cooperator.cooperator_group_user" attrs="{'invisible':[('activate_form_specific_products','=',False)]}">
+                        <group string="Custom form specific products">
+                            <field name="html_specific_products" attrs="{'invisible':[('activate_form_specific_products','=',False)]}"/>        
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

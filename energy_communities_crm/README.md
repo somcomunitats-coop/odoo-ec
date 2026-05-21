@@ -1,10 +1,11 @@
 # Energy Communities CRM
 
-<add description>
-
 ## Changelog
 
-## Changelog
+### 2026-04-27 (v16.0.0.3.5)
+
+- added translations
+- fix views to adapt them to the new forms
 
 ### 2025-12-03 (v16.0.0.3.4)
 

@@ -4,6 +4,7 @@ from typing import Any
 from odoo.api import Environment
 from odoo.tools.translate import code_translations
 
+from odoo.addons.base.models.res_company import Company
 from odoo.addons.base.models.res_users import Users
 from odoo.addons.component.core import Component, WorkContext
 from odoo.addons.contract.models.contract import ContractContract
@@ -15,10 +16,14 @@ def _get_component(
     env: Environment,
     model_name: str,
     usage: str,
+    company: Company = None,
     record: Any = None,
     use_sudo: bool = False,
 ) -> Component:
     backend = env["utils.backend"].browse(1)
+    if company:
+        backend = env["utils.backend"].with_company(company).browse(1)
+
     work = WorkContext(
         model_name=model_name, collection=backend, record=record, use_sudo=use_sudo
     )

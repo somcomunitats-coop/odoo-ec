@@ -6,9 +6,13 @@
     <field name="arch" type="xml">
       <group name="first" position="after">
         <group name="internal_ref">
-          <field name="data_xml_id" />
-          <field name="pack_type" />
-          <field name="is_pack_service" />
+          <field name="data_xml_id" readonly="1" invisible="1" />
+        </group>
+        <group name="service_pack_property" >
+          <group string="Service pack Properties">
+            <field name="pack_type" />
+            <field name="is_pack_service" />
+          </group>
         </group>
         <group name="service_invoicing_property" >
           <group string="Service invoicing Properties">

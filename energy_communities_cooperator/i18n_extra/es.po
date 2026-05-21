@@ -2,6 +2,9 @@
 # This file contains the translation of the following modules:
 # 	* cooperator
 # 	* cooperator_website
+# 	* l10n_es_cooperator
+#   * account_banking_mandate
+#   * contract_mandate
 #
 msgid ""
 msgstr ""
@@ -178,27 +181,34 @@ msgid ""
 "            "
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"    Hola <t t-out=\"object.subscription_request.firstname\"></t>,<br><br>\n"
+"    <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hola <t t-out=\"object.subscription_request.firstname\"></t>,\n"
+"    </p>\n"
+"    <br>\n"
+"    <p>\n"
+"        ¡Tu petición de alta como persona socia en <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> está en trámite!\n"
+"    </p>\n"
 "    <t t-if=\"object.payment_mode_id.payment_method_id.code == 'sepa_direct_debit'\">\n"
-"    ¡Tu petición de alta como persona socia en <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> está en trámite!<br><br>\n"
-"    En breve giraremos un recibo bancario a tu cuenta terminada en <t t-out=\"object.subscription_request.iban[-4:]\"></t> para el cobro de la aportación obligatoria inicial (<t t-out=\"object.amount_total\"></t> €).<br>\n"
-"    Una vez hayamos podido tramitar este cobro, recibirás un correo final de bienvenida donde ya te proporcionaremos tu número de socia que te vinculará con <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t>.<br><br>\n"
+"        <p>\n"
+"            En breve giraremos un recibo bancario a tu cuenta terminada en <t t-out=\"object.subscription_request.iban[-4:]\"></t> para el cobro de la aportación obligatoria inicial (<t t-out=\"object.amount_total\"></t> €).\n"
+"            <br>\n"
+"            Una vez hayamos podido tramitar este cobro, recibirás un correo final de bienvenida donde ya te proporcionaremos tu número de socia que te vinculará con <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t>.\n"
+"        </p>\n"
 "    </t>\n"
 "    <t t-else=\"\">\n"
-"    Tu petición de alta como persona socia en <t t-out=\"object.company_id.comercial_name or object.company_id.name\"></t> está en trámite!<br>\n"
-"    Para completar el proceso es necesario realizar el ingreso bancario del importe que te indicamos a continuación:<br><br>\n"
-"    <ul>\n"
-"       <li><strong>Aportación inicial:</strong> <t t-out=\"object.amount_total\"></t> €<br></li>\n"
-"       <li><strong>Número de cuenta:</strong> <t t-if=\"object.payment_mode_id and object.payment_mode_id.bank_account_link == 'fixed' and object.payment_mode_id.fixed_journal_id\"><t t-out=\"( object.payment_mode_id.fixed_journal_id.bank_account_id.acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t></t><t t-else=\"\"><t t-out=\"( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t></t><br></li>\n"
-"       <li><strong>Beneficiario:</strong> <t t-out=\"object.company_id.name\"></t><br></li>\n"
-"       <li><strong>Concepto:</strong> <i>--Su nombre y apellidos--</i><br><br></li>\n"
-"    </ul>\n"
-"    Una vez realizado el ingreso, puedes enviarnos el justificante de pago respondiendo este mismo correo electrónico o escribiendo a <t t-out=\"( object.company_id.coop_email_contact or object.company_id.email_formatted )\"></t><br><br>\n"
-"    </t>\n"
+"        <p>\n"
+"            Para completar el proceso es necesario realizar el ingreso bancario del importe que te indicamos a continuación: <br>\n"
+"            <ul style=\"padding:0 0 0 24px;margin:0px 0 12px 0;box-sizing:border-box;\">\n"
+"                <li><strong style=\"box-sizing:border-box;font-weight:bolder;\">Aportación inicial:</strong> <t t-out=\"object.amount_total\"></t> €</li>\n"
+"                <li><strong style=\"box-sizing:border-box;font-weight:bolder;\">Número de cuenta:</strong> <t t-if=\"object.payment_mode_id and object.payment_mode_id.bank_account_link == 'fixed' and object.payment_mode_id.fixed_journal_id\"><t t-out=\"( object.payment_mode_id.fixed_journal_id.bank_account_id.acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t></t><t t-else=\"\"><t t-out=\"( object.company_id.bank_ids and object.company_id.bank_ids[0].acc_number ) or 'ESXX XXXX XXXX XX XXXXXXXXXX'\"></t></t></li>\n"
+"                <li><strong style=\"box-sizing:border-box;font-weight:bolder;\">Beneficiario:</strong> <t t-out=\"object.company_id.name\"></t><br></li>\n"
+"                <li><strong style=\"box-sizing:border-box;font-weight:bolder;\">Concepto:</strong> <i>--Su nombre y apellidos--</i></li>\n"
+"            </ul>\n"
+"            Una vez realizado el ingreso, puedes enviarnos el justificante de pago respondiendo este mismo correo electrónico o escribiendo a <t t-out=\"( object.company_id.coop_email_contact or object.company_id.email_formatted )\"></t>\n"
+"        </p>\n"
+"    </t>       \n"
 "    Seguimos en contacto para cualquier duda.<br>\n"
 "    Atentamente,\n"
-"    </p>\n"
 "</div>\n"
 
 #. module: cooperator
@@ -1004,3 +1014,151 @@ msgstr "No puedes subscribirte a dos tipos de aportaciones diferentes."
 #: model_terms:ir.ui.view,arch_db:l10n_es_cooperator.iban_template_es
 msgid "VAT"
 msgstr "NIF"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_product_product__is_share
+#: model:ir.model.fields,field_description:cooperator.field_product_template__is_share
+msgid "Is share?"
+msgstr "Producto de gestión societaria (aportación o cuota)"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.product_template_form_view
+msgid "Share Information"
+msgstr "Información Aportación"
+
+#. module: cooperator
+#: model:ir.actions.act_window,name:cooperator.subscription_request_action
+#: model:ir.ui.menu,name:cooperator.menu_cooperator_subscription_request
+msgid "Subscriptions"
+msgstr "Solicitud de suscripción"
+
+#. module: cooperator
+#: model:ir.actions.act_window,name:cooperator.cooperator_register_action
+#: model:ir.actions.report,name:cooperator.action_report_cooperator_register
+#: model:ir.ui.menu,name:cooperator.menu_cooperator_register
+msgid "Cooperator Register"
+msgstr "Registro de cooperadores/as"
+
+#. module: account_banking_mandate
+#: model:ir.model.fields,field_description:account_banking_mandate.field_account_bank_statement_line__mandate_id
+#: model:ir.model.fields,field_description:account_banking_mandate.field_account_move__mandate_id
+#: model:ir.model.fields,field_description:account_banking_mandate.field_account_payment__mandate_id
+#: model:ir.model.fields,field_description:account_banking_mandate.field_account_payment_line__mandate_id
+msgid "Direct Debit Mandate"
+msgstr "Mandato de débito directo"
+
+#. module: contract_mandate
+#: model:ir.model.fields,field_description:contract_mandate.field_contract_contract__mandate_id
+msgid "Direct Debit Mandate"
+msgstr "Mandato de débito directo"
+
+#. module: cooperator
+#: model:ir.actions.report,name:cooperator.action_cooperator_invoices
+msgid "Capital Release Request"
+msgstr "Aportación solicitada"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__capital_release_request
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_view_form
+msgid "Capital release request"
+msgstr "Aportación solicitada"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_invoice_document
+msgid "Request to Release Capital"
+msgstr "Aportación solicitada"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__capital_release_request_date
+msgid "Force the capital release request date"
+msgstr "Forzar fecha pago aportación"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__date
+msgid "Subscription date request"
+msgstr "Fecha solicitud suscripción"
+
+#. module: cooperator
+#: model:ir.model,name:cooperator.model_subscription_register
+msgid "Subscription register"
+msgstr "Fecha solicitud suscripción"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_share_line__share_number
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__ordered_parts
+msgid "Number of Share"
+msgstr "Número aportaciones"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.report_subscription_register
+msgid "Number of Shares"
+msgstr "Número aportaciones"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__number_of_share
+#: model:ir.model.fields,field_description:cooperator.field_operation_request__quantity
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__number_of_share
+#: model:ir.model.fields,field_description:cooperator.field_res_users__number_of_share
+#: model:ir.model.fields,field_description:cooperator.field_subscription_register__quantity
+msgid "Number of share"
+msgstr "Número aportaciones"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__cooperator_register_number
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__cooperator_register_number
+#: model:ir.model.fields,field_description:cooperator.field_res_users__cooperator_register_number
+msgid "Cooperator Number"
+msgstr "Número socia"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_product_product__display_on_website
+#: model:ir.model.fields,field_description:cooperator.field_product_template__display_on_website
+msgid "Display on website"
+msgstr "Socia efectiva"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__member
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__member
+#: model:ir.model.fields,field_description:cooperator.field_res_users__member
+msgid "Effective cooperator"
+msgstr "Socia efectiva"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__cooperator_type
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__cooperator_type
+#: model:ir.model.fields,field_description:cooperator.field_res_users__cooperator_type
+msgid "Cooperator Type"
+msgstr "Tipo de Cooperador"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_operation_request__partner_id
+#: model:ir.model.fields,field_description:cooperator.field_partner_create_subscription__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_res_users__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_share_line__partner_id
+#: model:ir.model.fields,field_description:cooperator.field_share_line_update_info__cooperator
+#: model:ir.model.fields,field_description:cooperator.field_subscription_register__partner_id
+#: model:ir.model.fields,field_description:cooperator.field_subscription_request__partner_id
+#: model_terms:ir.ui.view,arch_db:cooperator.report_subscription_register
+#: model_terms:ir.ui.view,arch_db:cooperator.subscription_request_view_form
+#: model_terms:ir.ui.view,arch_db:cooperator.view_share_line_filter
+msgid "Cooperator"
+msgstr "Cooperador"
+
+#. module: cooperator
+#: model:ir.model.fields,field_description:cooperator.field_cooperative_membership__old_member
+#: model:ir.model.fields,field_description:cooperator.field_res_partner__old_member
+#: model:ir.model.fields,field_description:cooperator.field_res_users__old_member
+msgid "Old cooperator"
+msgstr "Antiguo cooperador"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.view_partner_form
+msgid "Shares"
+msgstr "Aportaciones"
+
+#. module: cooperator
+#: model_terms:ir.ui.view,arch_db:cooperator.view_partner_form
+msgid "Share subscriptions"
+msgstr "Solicitudes de suscripción"

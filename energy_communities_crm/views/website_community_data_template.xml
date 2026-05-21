@@ -8,7 +8,7 @@
       <div class="row">
         <div id="col-md-12">
           <t t-call="energy_communities.form_h3">
-            <t t-set="field_description" t-value="general_data_h3" />
+            <t t-set="description" t-value="general_data_h3" />
           </t>
         </div>
         <div class="col-md-12">
@@ -89,7 +89,7 @@
         </div>
         <div id="col-md-12">
           <t t-call="energy_communities.form_h3">
-            <t t-set="field_description" t-value="coordinator_h3" />
+            <t t-set="description" t-value="coordinator_h3" />
           </t>
         </div>
         <div class="col-md-12">
@@ -117,7 +117,7 @@
         </div>
         <div id="col-md-12">
           <t t-call="energy_communities.form_h3">
-            <t t-set="field_description" t-value="status_h3" />
+            <t t-set="description" t-value="status_h3" />
           </t>
         </div>
         <div class="col-md-12">
@@ -193,7 +193,7 @@
         </div>
         <div id="col-md-12">
           <t t-call="energy_communities.form_h3">
-            <t t-set="field_description" t-value="activity_h3" />
+            <t t-set="description" t-value="activity_h3" />
           </t>
         </div>
         <div class="col-md-12">
@@ -226,7 +226,7 @@
         </div>
         <div id="col-md-12">
           <t t-call="energy_communities.form_h3">
-            <t t-set="field_description" t-value="corporate_and_administrative_management_h3" />
+            <t t-set="description" t-value="corporate_and_administrative_management_h3" />
           </t>
         </div>
         <div class="col-md-12">
@@ -284,7 +284,7 @@
         </div>
         <div id="col-md-12">
           <t t-call="energy_communities.form_h3">
-            <t t-set="field_description" t-value="website_data_and_map_h3" />
+            <t t-set="description" t-value="website_data_and_map_h3" />
           </t>
         </div>
         <div class="col-md-12">
@@ -362,7 +362,7 @@
         </div>
         <div id="col-md-12">
           <t t-call="energy_communities.form_h3">
-            <t t-set="field_description" t-value="social_media_h3" />
+            <t t-set="description" t-value="social_media_h3" />
           </t>
         </div>
         <div class="col-md-12">
@@ -423,7 +423,7 @@
         </div>
         <div id="col-md-12">
           <t t-call="energy_communities.form_h3">
-            <t t-set="field_description" t-value="comments_h3" />
+            <t t-set="description" t-value="comments_h3" />
           </t>
         </div>
         <div class="col-md-12">

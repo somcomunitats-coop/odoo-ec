@@ -1,4 +1,18 @@
 <odoo>
+  <record id="cooperative_membership_view_search" model="ir.ui.view">
+    <field name="name">cooperative.membership.search (inherit)</field>
+    <field name="model">cooperative.membership</field>
+    <field name="inherit_id" ref="cooperator.cooperative_membership_view_search"/>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+      <filter name="filter_by_effective_date" position="before">
+        <separator />
+        <filter name="filter_by_effective_invited" string="Effective Invited" domain="[('effective_invited','=',True)]" />
+        <filter name="filter_by_member" string="Member" domain="[('member','=',True)]" />
+        <separator />
+      </filter>
+    </field>
+  </record>
   <record id="action_cooperative_membership_cooperator" model="ir.actions.act_window">
       <field name="name">Cooperators</field>
       <field name="type">ir.actions.act_window</field>
@@ -8,6 +22,12 @@
       <field name="view_id" eval="False" /> <!-- Force empty -->
       <field name="domain">[('member','=',True)]</field>
   </record>
+  <record id="cooperator.cooperator_register_action" model="ir.actions.act_window">
+        <field name="name">Cooperator Register</field>
+        <field name="res_model">cooperative.membership</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">['|', ("member", "=", True),('effective_invited','=',True)]</field>
+    </record>
   <record
     id="action_cooperative_membership_representative"
     model="ir.actions.act_window"
@@ -73,7 +93,9 @@
           <field name="partner_vat" />
           <field name="number_of_share" />
           <field name="total_value" />
+          <field name="is_company" />
           <field name="effective_date" />
+          <field name="cooperator_type" />
           <field name="company_id" />
         </tree>
       </field>
@@ -174,10 +196,12 @@
             <group>
               <field name="cooperator" />
               <field name="member" readonly="0" />
+              <field name="effective_invited" readonly="1" />
               <field name="coop_candidate" readonly="0" />
               <field name="old_member" />
               <field name="representative" readonly="0" />
               <field name="representative_of_member_company" />
+              <field name="membership_type" />
             </group>
             <group attrs="{'invisible': [('id', '=', False)]}">
               <field name="share_ids" widget="one2many" readonly="0">

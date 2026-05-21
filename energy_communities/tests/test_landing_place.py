@@ -378,7 +378,7 @@ class TestLandingPlace(common.TransactionCase):
                             "web.base.url"
                         ),
                         lang="en_US",
-                        odoo_company_id=self.landing.company_id.id,
+                        company_external_id=self.landing.company_id.company_external_id,
                     ),
                 )
                 self.assertEqual(
@@ -390,7 +390,7 @@ class TestLandingPlace(common.TransactionCase):
                             "web.base.url"
                         ),
                         lang=lang,
-                        odoo_company_id=self.landing.company_id.id,
+                        company_external_id=self.landing.company_id.company_external_id,
                     ),
                 )
             if button.mode == "landing_page":

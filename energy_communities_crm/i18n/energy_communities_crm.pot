@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 09:20+0000\n"
-"PO-Revision-Date: 2025-10-13 09:20+0000\n"
+"POT-Creation-Date: 2026-01-22 10:25+0000\n"
+"PO-Revision-Date: 2026-01-22 10:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -294,6 +294,14 @@ msgid "Allowed Companies"
 msgstr ""
 
 #. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid ""
+"Amount of the mandatory initial contribution/fee required of new members"
+msgstr ""
+
+#. module: energy_communities_crm
 #: model:mail.template,subject:energy_communities_crm.email_templ_lead_ce_source_coord_web_hiring_id
 msgid "Application for Recruitment Coordinator"
 msgstr ""
@@ -306,13 +314,6 @@ msgstr ""
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.view_assign_crm_to_coordinator_wizard_form
 msgid "Assign CRM to Coordinator Company Wizard"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/models/crm_lead.py:0
-#, python-format
-msgid "Assign CRM to coordinator company"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -427,6 +428,11 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Comments"
+msgstr ""
+
+#. module: energy_communities_crm
+#: model:crm.team,name:energy_communities_crm.crm_team_coord_company_demo
+msgid "Community 3"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -613,10 +619,7 @@ msgid "Corporate and administrative management"
 msgstr ""
 
 #. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/models/crm_lead.py:0
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.ce_crm_lead_view_form
-#, python-format
 msgid "Create community"
 msgstr ""
 
@@ -1101,13 +1104,6 @@ msgid "Mastodon url"
 msgstr ""
 
 #. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/models/crm_lead.py:0
-#, python-format
-msgid "Metadata 'ce_name' must be defined for creating a company"
-msgstr ""
-
-#. module: energy_communities_crm
 #: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead_metadata_mapping_field__metadata_key
 msgid "Metadata key"
 msgstr ""
@@ -1129,6 +1125,11 @@ msgstr ""
 #. module: energy_communities_crm
 #: model:mail.template,subject:energy_communities_crm.email_templ_lead_ce_creation_receipt_confirm_id
 msgid "New Community Creation Request"
+msgstr ""
+
+#. module: energy_communities_crm
+#: model:crm.stage,name:energy_communities_crm.crm_stage_coord_company_demo
+msgid "New demo"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1309,6 +1310,11 @@ msgid "Process for becoming a member"
 msgstr ""
 
 #. module: energy_communities_crm
+#: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__lead_properties
+msgid "Properties"
+msgstr ""
+
+#. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
@@ -1352,6 +1358,7 @@ msgstr ""
 
 #. module: energy_communities_crm
 #: model:ir.model,name:energy_communities_crm.model_crm_team
+#: model:ir.model.fields,field_description:energy_communities_crm.field_crm_lead__team_id
 msgid "Sales Team"
 msgstr ""
 
@@ -1585,22 +1592,6 @@ msgstr ""
 #. module: energy_communities_crm
 #. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid ""
-"What amount of mandatory contribution to the social capital do you ask for "
-"when a new member joins?"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
-#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
-#, python-format
-msgid ""
-"Amount of the mandatory initial contribution/fee required of new members"
-msgstr ""
-
-#. module: energy_communities_crm
-#. odoo-python
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "Which one?"
@@ -1716,7 +1707,12 @@ msgstr ""
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "ce_legal_form:non_profit,residents_association"
+msgid "ce_legal_form:non_profit"
+msgstr ""
+
+#. module: energy_communities_crm
+#: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
+msgid "ce_legal_form:other"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1731,7 +1727,8 @@ msgstr ""
 
 #. module: energy_communities_crm
 #: model_terms:ir.ui.view,arch_db:energy_communities_crm.community_data_form_fields_template
-msgid "ce_member_mandatory_contribution,ce_member_recurrent_contribution_date"
+msgid ""
+"ce_member_recurrent_contribution,ce_member_recurrent_contribution_date,ce_legal_form_other"
 msgstr ""
 
 #. module: energy_communities_crm
@@ -1809,6 +1806,19 @@ msgstr ""
 #: code:addons/energy_communities_crm/controllers/website_community_data.py:0
 #, python-format
 msgid "{} field must be a past date"
+msgstr ""
+
+#. module: energy_communities_crm
+#. odoo-python
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#: code:addons/energy_communities_crm/controllers/website_community_data.py:0
+#, python-format
+msgid "{} field must begin with https://"
 msgstr ""
 
 #. module: energy_communities_crm

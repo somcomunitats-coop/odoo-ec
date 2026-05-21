@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Cooperative management",
-    "version": "16.0.0.6.3",
+    "version": "16.0.0.7.0",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -42,22 +42,31 @@
         "views/share_line_views.xml",
         "views/cooperative_membership_views.xml",
         "views/operation_request_views.xml",
+        "views/product_views.xml",
+        "views/product_category_views.xml",
         "views/res_company_views.xml",
+        "views/res_config_settings_view.xml",
         "views/res_partner_views.xml",
-        "views/res_company_views.xml",
         "views/voluntary_share_interest_return_views.xml",
         "views/subscription_request_view.xml",
-        "views/website_subscription_template.xml",
-        "views/res_config_settings_view.xml",
+        "views/website_template_subscription_base.xml",
+        "views/website_template_subscription_form.xml",
+        "views/website_template_subscription_form_base.xml",
+        # "views/website__subscription_template.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/voluntary_share_interest_return.xml",
         "wizards/email_sending_assistant.xml",
+        "wizards/modify_generic_form_settings_wizard.xml",
+        "data/partner_tags.xml",
     ],
     # only loaded in demonstration mode
-    "demo": ["demo/res_company_demo.xml"],
+    "demo": [
+        "demo/res_company_demo.xml",
+    ],
     "assets": {
-        "web.assets_common": [
-            "energy_communities_cooperator/static/src/js/cooperator.js",
+        "web.assets_frontend": [
+            # "energy_communities_cooperator/static/src/js/cooperator.js",
+            "energy_communities_cooperator/static/src/js/share-subscription-website.js",
         ]
     },
 }

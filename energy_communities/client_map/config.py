@@ -1,8 +1,8 @@
 class LandingClientConfig:
     TRANSLATION_LANGS_MANAGED = ["ca_ES", "es_ES", "eu_ES"]
     COOPERATOR_BUTTON_URL_CONFIG = {
-        "become_cooperator": "{base_url}/{lang}/become_cooperator?odoo_company_id={odoo_company_id}",
-        "become_company_cooperator": "{base_url}/{lang}/become_company_cooperator?odoo_company_id={odoo_company_id}",
+        "become_cooperator": "{base_url}/{lang}/subscription/member/{company_external_id}",
+        "become_company_cooperator": "{base_url}/{lang}/subscription/company_member/{company_external_id}",
         "contact": "{landing_link}#contacte",
     }
     COOPERATOR_BUTTON_LABEL_CONFIG = {

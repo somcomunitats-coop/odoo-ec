@@ -1,0 +1,175 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* energy_communities_api
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 10:43+0000\n"
+"PO-Revision-Date: 2026-01-22 11:44+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_res_partner__allowed_companies
+msgid "Allowed Companies"
+msgstr "Compañias permitidas"
+
+#. module: energy_communities_api
+#: model:res.groups,name:energy_communities_api.role_api_provider_res_groups
+#, fuzzy
+msgid "Api Provider Role"
+msgstr "Función del proveedor de API"
+
+#. module: energy_communities_api
+#. odoo-python
+#: code:addons/energy_communities_api/services/api_service_utils.py:0
+#, fuzzy, python-format
+msgid "CommunityId header is missing"
+msgstr "Falta el encabezado CommunityId."
+
+#. module: energy_communities_api
+#: model:ir.model,name:energy_communities_api.model_res_partner
+msgid "Contact"
+msgstr "Contacte"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_api_info_backend__create_uid
+#, fuzzy
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_api_info_backend__create_date
+#, fuzzy
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_api_info_backend__display_name
+#, fuzzy
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: energy_communities_api
+#: model:ir.module.category,name:energy_communities_api.api_category
+#, fuzzy
+msgid "Energy Communities API"
+msgstr "API de comunidades energéticas"
+
+#. module: energy_communities_api
+#: model:res.groups,name:energy_communities_api.group_api_providers
+#, fuzzy
+msgid "Energy Communities API Providers Group"
+msgstr "Grupo de proveedores de API para comunidades energéticas"
+
+#. module: energy_communities_api
+#: model:ir.model,name:energy_communities_api.model_ir_http
+msgid "HTTP Routing"
+msgstr "Enrutamiento HTTP"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_api_info_backend__id
+#, fuzzy
+msgid "ID"
+msgstr "ID"
+
+#. module: energy_communities_api
+#. odoo-python
+#: code:addons/energy_communities_api/models/auth_jwt_validator.py:0
+#: model:ir.model.fields.selection,name:energy_communities_api.selection__auth_jwt_validator__user_id_strategy__jwt-dynamic
+#, fuzzy, python-format
+msgid "JWT Dynamic"
+msgstr "JWT Dinámico"
+
+#. module: energy_communities_api
+#. odoo-python
+#: code:addons/energy_communities_api/models/auth_jwt_validator.py:0
+#: model:ir.model,name:energy_communities_api.model_auth_jwt_validator
+#, python-format
+msgid "JWT Validator Energy Communties costumizations"
+msgstr "Configuración del validador JWT"
+
+#. module: energy_communities_api
+#: model:ir.model,name:energy_communities_api.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_api_info_backend____last_update
+#, fuzzy
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_api_info_backend__write_uid
+#, fuzzy
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_api_info_backend__write_date
+#, fuzzy
+msgid "Last Updated on"
+msgstr "Actualizado el"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_res_partner__member_number
+#: model:ir.model.fields,field_description:energy_communities_api.field_res_users__member_number
+#, fuzzy
+msgid "Member Number"
+msgstr "Número de miembr"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_auth_jwt_validator__partner_id_strategy
+msgid "Partner Id Strategy"
+msgstr "Estrategia de ID de socio"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_account_bank_statement_line__payment_state_for_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_account_move__payment_state_for_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_account_payment__payment_state_for_api
+#, fuzzy
+msgid "Payment State For Api"
+msgstr "Estado del pago para API"
+
+#. module: energy_communities_api
+#. odoo-python
+#: code:addons/energy_communities_api/models/auth_jwt_validator.py:0
+#: model:ir.model.fields.selection,name:energy_communities_api.selection__auth_jwt_validator__partner_id_strategy__related-user
+#, fuzzy, python-format
+msgid "Related User"
+msgstr "Cuenta como Usuario"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_res_partner__user_current_company
+msgid "User Current Company"
+msgstr "Companyia actual del usuario"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_res_partner__user_current_role
+msgid "User Current Role"
+msgstr "Rol actual del usuario"
+
+#. module: energy_communities_api
+#: model:ir.model.fields,field_description:energy_communities_api.field_auth_jwt_validator__user_id_strategy
+msgid "User Id Strategy"
+msgstr "Estrategia de ID de usuario"
+
+#. module: energy_communities_api
+#: model:ir.model,name:energy_communities_api.model_res_users_role
+msgid "User role"
+msgstr "Rol de usuario"
+
+#. module: energy_communities_api
+#: model:ir.model,name:energy_communities_api.model_api_info_backend
+#, fuzzy
+msgid "api.info.backend"
+msgstr "api.info.backend"

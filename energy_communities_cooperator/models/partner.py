@@ -22,6 +22,24 @@ class ResPartner(models.Model):
         company_dependent=True,
         help="Enable the contact to participate in Community Energy Actions despite not being an effective member of the Community.",
     )
+    effective_invited = fields.Boolean(
+        string="Effective Invited",
+        compute="_compute_effective_invited",
+        store=True,
+        default=False,
+    )
+
+    @api.depends(
+        "cooperative_membership_ids", "cooperative_membership_ids.effective_invited"
+    )
+    def _compute_effective_invited(self):
+        for record in self:
+            record.effective_invited = (
+                record.cooperative_membership_ids.filtered(
+                    lambda x: x.effective_invited == True
+                )
+                or False
+            )
 
     @api.depends("vat")
     def _compute_company_register_number(self):
