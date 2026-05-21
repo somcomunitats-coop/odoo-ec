@@ -57,7 +57,7 @@ Template structure:
         <!-- Project Description -->
         <div class="row">
             <div class="col-md-12">
-                <t t-esc="project_header_description" />
+                <t t-raw="project_header_description" />
             </div>
         </div>
         
@@ -134,7 +134,7 @@ Template structure:
                     <t t-set="value" t-value="supplypoint_cadastral_reference" />
                     <t t-set="key" t-value="supplypoint_cadastral_reference_key" />
                     <t t-set="label" t-value="supplypoint_cadastral_reference_label" />
-                    <t t-set="required" t-value="True" />
+                    <t t-set="required" t-value="supplypoint_cadastral_reference_options" />
                     <t t-set="help" t-value="True" />
                     <t t-set="title" t-value="supplypoint_cadastral_reference_title" />
                 </t>

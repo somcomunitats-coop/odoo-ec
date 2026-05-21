@@ -69,8 +69,9 @@ class Project(models.Model):
             )
         )
 
-    conf_header_description = fields.Text(
+    conf_header_description = fields.Html(
         string="Header description on website form",
+        translate=True,
         default=lambda self: self.get_default_header_description(),
     )
 
