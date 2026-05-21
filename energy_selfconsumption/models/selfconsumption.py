@@ -200,7 +200,7 @@ class Selfconsumption(models.Model):
     )
     conf_cadastral_reference_readonly = fields.Boolean(
         "Cadastral reference readonly",
-        default=False,
+        default=True,
         help="Make the cadastral reference field readonly",
     )
     conf_state = fields.Selection(
