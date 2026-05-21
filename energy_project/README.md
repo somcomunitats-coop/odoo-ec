@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### 2026-05-21 (v16.0.0.2.6)
+
+- New translate for default of conf_header_description field
+
 ### 2025-01-19 (v16.0.0.2.5)
 
 - Interpret null values as 0 for float attributes

@@ -183,6 +183,10 @@ team or refer to the project documentation.
 
 ## Changelog
 
+### 2026-05-21 (v16.0.0.6.1)
+
+- Now the field reference cadastral is no required (It is configuration)
+
 ### 2026-04-27 (v16.0.0.6.0)
 
 - Added invited product and adaptations to new forms
