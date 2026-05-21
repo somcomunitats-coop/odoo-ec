@@ -872,7 +872,7 @@ class Selfconsumption(models.Model):
                         f"supply_point_assignation : {supply_point_assignation.supply_point_id.code}"
                     )
                     with contract_utils(self.env, contract) as component:
-                        component.modify(
+                        new_contract = component.modify(
                             execution_date=contract.recurring_next_date,
                             executed_modification_action="modify",
                             pricelist_id=contract.pricelist_id,
@@ -880,6 +880,7 @@ class Selfconsumption(models.Model):
                             discount=contract.discount,
                             payment_mode_id=contract.payment_mode_id,
                         )
+                    with contract_utils(self.env, new_contract) as component:
                         component.work.record.write(
                             {"supply_point_assignation_id": supply_point_assignation.id}
                         )
