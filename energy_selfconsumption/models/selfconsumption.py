@@ -873,7 +873,7 @@ class Selfconsumption(models.Model):
                     )
                     with contract_utils(self.env, contract) as component:
                         new_contract = component.modify(
-                            execution_date=contract.recurring_next_date,
+                            execution_date=contract.last_date_invoiced,
                             executed_modification_action="modify",
                             pricelist_id=contract.pricelist_id,
                             pack_id=contract.pack_id,
@@ -890,7 +890,9 @@ class Selfconsumption(models.Model):
                             {"main_line": True}
                         )
                         # 3.- mark contract as active
-                        component.activate(fields.Date.today())
+                        component.activate(
+                            contract.last_date_invoiced + relativedelta(days=+1)
+                        )
                         _logger.info(
                             f"Contract predecessor_contract_id: {component.work.record.predecessor_contract_id.name}"
                         )
