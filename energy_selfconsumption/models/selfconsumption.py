@@ -14,7 +14,7 @@ from stdnum.exceptions import (
     InvalidLength,
 )
 
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import ValidationError
 
 from odoo.addons.energy_communities.utils import (
@@ -462,6 +462,36 @@ class Selfconsumption(models.Model):
         self.distribution_table_state(
             DISTRIBUTION_STATE_VALIDATED, DISTRIBUTION_STATE_ACTIVE
         )
+        contact_example = self.get_active_contracts()
+        execution_date = fields.Date.today()
+        if contact_example:
+            if self.recurring_invoicing_type == "daily":
+                execution_date = fields.Date.today()
+            elif self.recurring_invoicing_type == "weekly":
+                execution_date = contact_example[0].recurring_next_date + relativedelta(
+                    days=-7
+                )
+            elif self.recurring_invoicing_type == "monthly":
+                execution_date = contact_example[0].recurring_next_date + relativedelta(
+                    months=-1
+                )
+            elif self.recurring_invoicing_type == "monthlylastday":
+                execution_date = contact_example[0].recurring_next_date + relativedelta(
+                    months=-1
+                )
+                execution_date = execution_date.replace(day=1) - timedelta(days=1)
+            elif self.recurring_invoicing_type == "quarterly":
+                execution_date = contact_example[0].recurring_next_date + relativedelta(
+                    months=-3
+                )
+            elif self.recurring_invoicing_type == "semesterly":
+                execution_date = contact_example[0].recurring_next_date + relativedelta(
+                    months=-6
+                )
+            elif self.recurring_invoicing_type == "yearly":
+                execution_date = contact_example[0].recurring_next_date + relativedelta(
+                    years=-1
+                )
 
         # TODO:
         # Generate new sale orders
@@ -529,7 +559,7 @@ class Selfconsumption(models.Model):
                         inscription_id.partner_id,
                         pack,
                         self.pricelist_id,
-                        fields.Date.today(),
+                        execution_date,
                         "activate",
                         "active_selfconsumption_contract",
                         self.payment_mode_id,
@@ -548,8 +578,8 @@ class Selfconsumption(models.Model):
                         self.env, existing_closed_contract
                     ) as component:
                         service_invoicing_id = component.reopen(
-                            component.work.record.last_date_invoiced
-                            + relativedelta(days=+1),
+                            # component.work.record.last_date_invoiced+ relativedelta(days=+1),
+                            execution_date,
                             component.work.record.pricelist_id,
                             pack,
                             False,
@@ -561,6 +591,84 @@ class Selfconsumption(models.Model):
                 # 3.- mark contract as active
                 with contract_utils(self.env, service_invoicing_id) as component:
                     component.activate(fields.Date.today())
+
+                try:
+                    if (
+                        not service_invoicing_id.predecessor_contract_id
+                        and not service_invoicing_id.successor_contract_id
+                    ):
+                        generated_invoices = (
+                            service_invoicing_id.recurring_create_invoice()
+                        )
+                        accounts_invoice = (
+                            self.env["account.move"]
+                            .sudo()
+                            .browse(generated_invoices.ids)
+                        )
+                        _logger.info(
+                            f"Accounts_invoice: {accounts_invoice.name}[{accounts_invoice.id}]"
+                        )
+                        _logger.info(
+                            f"recurring_next_date: {service_invoicing_id.contract_line_ids[0].recurring_next_date}"
+                        )
+                        _logger.info(f"fields.Date.today(): {fields.Date.today()}")
+                        days_invoiced = 0
+                        days_timedelta = (
+                            service_invoicing_id.contract_line_ids[
+                                0
+                            ].recurring_next_date
+                            - fields.Date.today()
+                        )
+                        if days_timedelta:
+                            days_invoiced = days_timedelta.days + 1
+                        _logger.info(f"Days invoiced: {days_invoiced}")
+                        qty = (
+                            round(supply_point_assignation.coefficient, 6)
+                            * self.power
+                            * days_invoiced
+                        )
+                        _logger.info(f"Qty: {qty}")
+                        invoice_product_line = (
+                            accounts_invoice.invoice_line_ids.filtered(
+                                lambda line: not line.display_type
+                            )[:1]
+                        )
+                        if not invoice_product_line:
+                            _logger.warning(
+                                "No invoice product line available on invoice %s",
+                                accounts_invoice.id,
+                            )
+                            continue
+                        invoice_product_line.quantity = qty
+                        _logger.info(
+                            "Accounts invoice line : %s[%s]",
+                            invoice_product_line.name,
+                            invoice_product_line.quantity,
+                        )
+                        accounts_invoice.write(
+                            {
+                                "invoice_line_ids": [
+                                    Command.create(
+                                        {
+                                            "display_type": "line_note",
+                                            "name": _(
+                                                "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this supply point"
+                                            ).format(days_invoiced=days_invoiced),
+                                        }
+                                    )
+                                ],
+                            }
+                        )
+                        _logger.info(
+                            "Invoice note line created on invoice %s",
+                            accounts_invoice.id,
+                        )
+                except Exception:
+                    _logger.exception(
+                        "Error while customizing generated invoice for contract %s",
+                        service_invoicing_id.id,
+                    )
+                    raise
 
     def set_in_activation_state(self):
         for record in self:
