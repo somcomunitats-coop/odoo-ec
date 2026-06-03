@@ -40,6 +40,7 @@ class ContractUtils(Component):
         pack_id=None,
         discount=None,
         payment_mode_id=None,
+        metadata=None,
     ):
         self.close(execution_date)
         sale_order_utils = self.component(
@@ -54,6 +55,7 @@ class ContractUtils(Component):
                 pack_id,
                 discount,
                 payment_mode_id,
+                metadata,
             )
         )
         self.propagate_recurrency_values_to_contract(new_service_invoicing_id)

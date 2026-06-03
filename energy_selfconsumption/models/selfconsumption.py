@@ -464,34 +464,40 @@ class Selfconsumption(models.Model):
         )
         contact_example = self.get_active_contracts()
         execution_date = fields.Date.today()
-        if contact_example:
-            if self.recurring_invoicing_type == "daily":
+        if contact_example and contact_example[0].predecessor_contract_id:
+            execution_date = contact_example[
+                0
+            ].predecessor_contract_id.last_date_invoiced
+            if self.recurring_rule_type == "daily":
                 execution_date = fields.Date.today()
-            elif self.recurring_invoicing_type == "weekly":
-                execution_date = contact_example[0].recurring_next_date + relativedelta(
-                    days=-7
-                )
-            elif self.recurring_invoicing_type == "monthly":
-                execution_date = contact_example[0].recurring_next_date + relativedelta(
-                    months=-1
-                )
-            elif self.recurring_invoicing_type == "monthlylastday":
-                execution_date = contact_example[0].recurring_next_date + relativedelta(
-                    months=-1
-                )
+            elif self.recurring_rule_type == "weekly":
+                execution_date = contact_example[
+                    0
+                ].predecessor_contract_id.last_date_invoiced + relativedelta(days=-7)
+            elif self.recurring_rule_type == "monthly":
+                execution_date = contact_example[
+                    0
+                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-1)
+            elif self.recurring_rule_type == "monthlylastday":
+                execution_date = contact_example[
+                    0
+                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-1)
                 execution_date = execution_date.replace(day=1) - timedelta(days=1)
-            elif self.recurring_invoicing_type == "quarterly":
-                execution_date = contact_example[0].recurring_next_date + relativedelta(
-                    months=-3
-                )
-            elif self.recurring_invoicing_type == "semesterly":
-                execution_date = contact_example[0].recurring_next_date + relativedelta(
-                    months=-6
-                )
-            elif self.recurring_invoicing_type == "yearly":
-                execution_date = contact_example[0].recurring_next_date + relativedelta(
-                    years=-1
-                )
+            elif self.recurring_rule_type == "quarterly":
+                execution_date = contact_example[
+                    0
+                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-3)
+            elif self.recurring_rule_type == "semesterly":
+                execution_date = contact_example[
+                    0
+                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-6)
+            elif self.recurring_rule_type == "yearly":
+                execution_date = contact_example[
+                    0
+                ].predecessor_contract_id.last_date_invoiced + relativedelta(years=-1)
+
+            if self.recurring_rule_type != "daily":
+                execution_date = execution_date + timedelta(days=2)
 
         # TODO:
         # Generate new sale orders
@@ -544,6 +550,7 @@ class Selfconsumption(models.Model):
                 so_metadata = {
                     "selfconsumption_id": self.id,
                     "supply_point_id": supply_point_assignation.supply_point_id.id,
+                    "supply_point_assignation_id": supply_point_assignation.id,
                     "recurring_interval": self.recurring_interval,
                     "recurring_rule_type": self.recurring_rule_type,
                     "recurring_invoicing_type": self.recurring_invoicing_type,
@@ -553,6 +560,7 @@ class Selfconsumption(models.Model):
                     if inscription_id.mandate_id
                     else None,
                 }
+
                 # create service invoicing
                 with sale_order_utils(self.env) as component:
                     service_invoicing_id = component.create_service_invoicing_initial(
@@ -590,85 +598,49 @@ class Selfconsumption(models.Model):
                 service_invoicing_id.contract_line_ids[0].write({"main_line": True})
                 # 3.- mark contract as active
                 with contract_utils(self.env, service_invoicing_id) as component:
-                    component.activate(fields.Date.today())
+                    component.activate(execution_date)
 
-                try:
-                    if (
-                        not service_invoicing_id.predecessor_contract_id
-                        and not service_invoicing_id.successor_contract_id
-                    ):
-                        generated_invoices = (
-                            service_invoicing_id.recurring_create_invoice()
-                        )
-                        accounts_invoice = (
-                            self.env["account.move"]
-                            .sudo()
-                            .browse(generated_invoices.ids)
-                        )
-                        _logger.info(
-                            f"Accounts_invoice: {accounts_invoice.name}[{accounts_invoice.id}]"
-                        )
-                        _logger.info(
-                            f"recurring_next_date: {service_invoicing_id.contract_line_ids[0].recurring_next_date}"
-                        )
-                        _logger.info(f"fields.Date.today(): {fields.Date.today()}")
-                        days_invoiced = 0
-                        days_timedelta = (
-                            service_invoicing_id.contract_line_ids[
-                                0
-                            ].recurring_next_date
-                            - fields.Date.today()
-                        )
-                        if days_timedelta:
-                            days_invoiced = days_timedelta.days + 1
-                        _logger.info(f"Days invoiced: {days_invoiced}")
-                        qty = (
-                            round(supply_point_assignation.coefficient, 6)
-                            * self.power
-                            * days_invoiced
-                        )
-                        _logger.info(f"Qty: {qty}")
-                        invoice_product_line = (
-                            accounts_invoice.invoice_line_ids.filtered(
-                                lambda line: not line.display_type
-                            )[:1]
-                        )
-                        if not invoice_product_line:
-                            _logger.warning(
-                                "No invoice product line available on invoice %s",
-                                accounts_invoice.id,
-                            )
-                            continue
-                        invoice_product_line.quantity = qty
-                        _logger.info(
-                            "Accounts invoice line : %s[%s]",
-                            invoice_product_line.name,
-                            invoice_product_line.quantity,
-                        )
-                        accounts_invoice.write(
-                            {
-                                "invoice_line_ids": [
-                                    Command.create(
-                                        {
-                                            "display_type": "line_note",
-                                            "name": _(
-                                                "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this supply point"
-                                            ).format(days_invoiced=days_invoiced),
-                                        }
-                                    )
-                                ],
-                            }
-                        )
-                        _logger.info(
-                            "Invoice note line created on invoice %s",
-                            accounts_invoice.id,
-                        )
-                except Exception:
-                    _logger.exception(
-                        "Error while customizing generated invoice for contract %s",
-                        service_invoicing_id.id,
+                if (
+                    not service_invoicing_id.predecessor_contract_id
+                    and not service_invoicing_id.successor_contract_id
+                ):
+                    accounts_invoice = service_invoicing_id.recurring_create_invoice()
+                    days_invoiced = 0
+                    days_timedelta = (
+                        service_invoicing_id.contract_line_ids[0].recurring_next_date
+                        - fields.Date.today()
                     )
-                    raise
+                    if days_timedelta:
+                        days_invoiced = days_timedelta.days + 1
+                    qty = (
+                        round(supply_point_assignation.coefficient, 6)
+                        * self.power
+                        * days_invoiced
+                    )
+                    invoice_product_line = accounts_invoice.invoice_line_ids[0]
+                    invoice_product_line.write({"quantity": qty, "sequence": 2})
+                    accounts_invoice.write(
+                        {
+                            "invoice_line_ids": [
+                                Command.create(
+                                    {
+                                        "display_type": "line_note",
+                                        "name": _(
+                                            "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this supply point. {coefficient} * {power} * {days_invoiced} = {qty}"
+                                        ).format(
+                                            days_invoiced=days_invoiced,
+                                            coefficient=round(
+                                                supply_point_assignation.coefficient, 6
+                                            ),
+                                            power=self.power,
+                                            qty=qty,
+                                        ),
+                                        "sequence": 1,
+                                    }
+                                )
+                            ],
+                        }
+                    )
 
     def set_in_activation_state(self):
         for record in self:
@@ -934,13 +906,6 @@ class Selfconsumption(models.Model):
                 "supply_point_assignation_ids"
             ):
                 inscription = supply_point_assignation.get_inscription()
-                _logger.info(f"Inscription state: {inscription.state}")
-                _logger.info(
-                    f"Inscription participation_assigned_quantity: {inscription.participation_assigned_quantity}"
-                )
-                _logger.info(
-                    f"supply_point_assignation energy_shares: {supply_point_assignation.energy_shares}"
-                )
                 inscription.write(
                     {
                         "participation_real_quantity": supply_point_assignation.energy_shares,
@@ -955,29 +920,14 @@ class Selfconsumption(models.Model):
                 )
                 for supply_point_assignation_id in supply_point_assignation_ids:
                     contract = supply_point_assignation_id.get_contract()
-                    _logger.info(f"Contract: {contract.name}")
-                    _logger.info(f"Inscription: {inscription.name}")
-                    _logger.info(f"Inscription partner: {inscription.partner_id.name}")
-                    _logger.info(f"Contract partner: {contract.partner_id.name}")
-                    _logger.info(f"Contract partner id: {contract.partner_id.id}")
-                    _logger.info(f"Inscription partner id: {inscription.partner_id.id}")
-                    _logger.info(
-                        f"contract last_date_invoiced: {contract.last_date_invoiced}"
-                    )
-                    _logger.info(
-                        f"contract next_period_date_start: {contract.next_period_date_start}"
-                    )
-                    _logger.info(
-                        f"contract next_period_date_end: {contract.next_period_date_end}"
-                    )
-                    _logger.info(
-                        f"contract recurring_next_date: {contract.recurring_next_date}"
-                    )
-                    _logger.info(
-                        f"supply_point_assignation : {supply_point_assignation.supply_point_id.name}"
-                    )
-                    _logger.info(
-                        f"supply_point_assignation : {supply_point_assignation.supply_point_id.code}"
+                    inscription_id = self.selfconsumption_id.inscription_ids.filtered_domain(
+                        [
+                            (
+                                "partner_id",
+                                "=",
+                                supply_point_assignation_id.supply_point_id.partner_id.id,
+                            )
+                        ]
                     )
                     with contract_utils(self.env, contract) as component:
                         new_contract = component.modify(
@@ -987,12 +937,21 @@ class Selfconsumption(models.Model):
                             pack_id=contract.pack_id,
                             discount=contract.discount,
                             payment_mode_id=contract.payment_mode_id,
+                            metadata={
+                                "selfconsumption_id": self.id,
+                                "supply_point_id": supply_point_assignation.supply_point_id.id,
+                                "supply_point_assignation_id": supply_point_assignation.id,
+                                "recurring_interval": self.recurring_interval,
+                                "recurring_rule_type": self.recurring_rule_type,
+                                "recurring_invoicing_type": self.recurring_invoicing_type,
+                                "project_id": self.id,
+                                "company_id": self.company_id.id,
+                                "mandate_id": inscription_id.mandate_id.id
+                                if inscription_id.mandate_id
+                                else None,
+                            },
                         )
                     with contract_utils(self.env, new_contract) as component:
-                        component.work.record.write(
-                            {"supply_point_assignation_id": supply_point_assignation.id}
-                        )
-
                         # 2.- setup contract line main_line
                         component.work.record.contract_line_ids[0].write(
                             {"main_line": True}
@@ -1000,12 +959,6 @@ class Selfconsumption(models.Model):
                         # 3.- mark contract as active
                         component.activate(
                             contract.last_date_invoiced + relativedelta(days=+1)
-                        )
-                        _logger.info(
-                            f"Contract predecessor_contract_id: {component.work.record.predecessor_contract_id.name}"
-                        )
-                        _logger.info(
-                            f"Contract successor_contract_id: {component.work.record.successor_contract_id.name}"
                         )
             inscriptions = self.inscription_ids.filtered_domain(
                 [("state", "=", INSCRIPTION_STATE_CHANGE)]
@@ -1020,13 +973,6 @@ class Selfconsumption(models.Model):
                 )
                 contract = supply_point_assignation_id.get_contract()
                 if contract:
-                    _logger.info(f"Contract to close: {contract.name}")
-                    _logger.info(
-                        f"Contract predecessor_contract_id: {contract.predecessor_contract_id.name}"
-                    )
-                    _logger.info(
-                        f"Contract sucessor_contract_id: {contract.successor_contract_id.name}"
-                    )
                     with contract_utils(self.env, contract) as component:
                         component.close(contract.last_date_invoiced)
             self.check_dates_contract()
