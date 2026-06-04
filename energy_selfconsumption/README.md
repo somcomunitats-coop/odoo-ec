@@ -183,6 +183,10 @@ team or refer to the project documentation.
 
 ## Changelog
 
+### 2026-06-4 (v16.0.0.6.2)
+
+- Workflow change distribution table
+
 ### 2026-05-21 (v16.0.0.6.1)
 
 - Now the field reference cadastral is no required (It is configuration)

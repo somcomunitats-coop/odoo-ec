@@ -42,7 +42,7 @@ def user_role_utils(
     env: Environment, user_id: Users, use_sudo: bool = False
 ) -> Component:
     yield _get_component(
-        env, "res.users", "user.role.utils", user_id, use_sudo=use_sudo
+        env, "res.users", "user.role.utils", record=user_id, use_sudo=use_sudo
     )
 
 
@@ -61,7 +61,7 @@ def contract_utils(
     env: Environment,
     contract_id: ContractContract,
 ) -> Component:
-    yield _get_component(env, "contract.contract", "contract.utils", contract_id)
+    yield _get_component(env, "contract.contract", "contract.utils", record=contract_id)
 
 
 @contextmanager
@@ -71,7 +71,11 @@ def product_utils(
     use_sudo: bool = False,
 ) -> Component:
     yield _get_component(
-        env, "product.template", "product.utils", product_template_id, use_sudo=use_sudo
+        env,
+        "product.template",
+        "product.utils",
+        record=product_template_id,
+        use_sudo=use_sudo,
     )
 
 
@@ -80,7 +84,7 @@ def sale_order_utils(
     env: Environment,
     sale_order_id: SaleOrder = None,
 ) -> Component:
-    yield _get_component(env, "sale.order", "sale.order.utils", sale_order_id)
+    yield _get_component(env, "sale.order", "sale.order.utils", record=sale_order_id)
 
 
 def get_translation(source, lang, mods):
