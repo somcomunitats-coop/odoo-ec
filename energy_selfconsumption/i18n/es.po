@@ -3627,10 +3627,10 @@ msgstr ""
 #, python-format
 msgid ""
 "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this "
-"supply point. {coefficient} % * {power} Kw * {days_invoiced} days = {qty} KwH"
+"supply point. {coefficient} * {power} Kw * {days_invoiced} days = {qty} KwH"
 msgstr ""
 "NOTA: Solo hay {days_invoiced} días facturables activos que deben tenerse en cuenta en el periodo de facturación actual para este "
-"punto de suministro. {coefficient} % * {power} kW * {days_invoiced} días = {qty} kWh"
+"punto de suministro. {coefficient} * {power} kW * {days_invoiced} días = {qty} kWh"
 
 #. module: energy_selfconsumption
 #. odoo-python

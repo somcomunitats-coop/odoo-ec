@@ -626,7 +626,7 @@ class Selfconsumption(models.Model):
                                     {
                                         "display_type": "line_note",
                                         "name": _(
-                                            "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this supply point. {coefficient} % * {power} Kw * {days_invoiced} days = {qty} KwH"
+                                            "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this supply point. {coefficient} * {power} Kw * {days_invoiced} days = {qty} KwH"
                                         ).format(
                                             days_invoiced=days_invoiced,
                                             coefficient=round(
