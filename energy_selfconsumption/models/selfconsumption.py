@@ -607,7 +607,7 @@ class Selfconsumption(models.Model):
                     accounts_invoice = service_invoicing_id.recurring_create_invoice()
                     days_invoiced = 0
                     days_timedelta = (
-                        service_invoicing_id.contract_line_ids[0].recurring_next_date
+                        service_invoicing_id.contract_line_ids[0].last_date_invoiced
                         - fields.Date.today()
                     )
                     if days_timedelta:
@@ -626,7 +626,7 @@ class Selfconsumption(models.Model):
                                     {
                                         "display_type": "line_note",
                                         "name": _(
-                                            "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this supply point. {coefficient} * {power} * {days_invoiced} = {qty}"
+                                            "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this supply point. {coefficient} % * {power} Kw * {days_invoiced} days = {qty} KwH"
                                         ).format(
                                             days_invoiced=days_invoiced,
                                             coefficient=round(
