@@ -32,6 +32,7 @@
         "security/ir_rule_data.xml",
         "report/reports.xml",
         "report/voluntary_share_interest_return_report.xml",
+        "report/cooperator_certificate_report.xml",
         "data/product_data.xml",
         "security/res_users_role_data.xml",
         "data/mail_template_data.xml",

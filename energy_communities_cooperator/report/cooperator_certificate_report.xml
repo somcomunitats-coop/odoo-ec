@@ -1,0 +1,13 @@
+<odoo>
+    <template id="cooperator_certificate_report" inherit_id="cooperator.report_cooperator_certificate_document">
+        <xpath expr="//t[@t-set='address']/address" position="after">
+            <div t-if="o.vat" id="partner_vat_no_shipping">
+                <t t-if="o.company_id.account_fiscal_country_id.vat_label"
+                   t-esc="o.company_id.account_fiscal_country_id.vat_label"
+                   id="inv_tax_id_label"/>
+                <t t-else="">Tax ID</t>:
+                <span t-field="o.vat"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
