@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-06-04 (v16.0.0.7.14)
+
+- Fix generate contract
+
 ### 2026-04-27 (v16.0.0.7.13)
 
 - Adaptations to new energy communities forms
