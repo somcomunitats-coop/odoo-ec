@@ -1,12 +1,12 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.7.14",
+    "version": "16.0.0.7.15",
     "depends": [
         "account",
+        "account_payment_partner",
         "account_banking_mandate",
         "account_lock_date_update",
         "account_multicompany_easy_creation",
-        "account_payment_order",
         "account_reconcile_oca",
         "auth_api_key",
         "auth_oidc",
@@ -97,6 +97,7 @@
         "views/website_form_submit_confirmation.xml",
         "views/website_formfields_template.xml",
         "views/account_banking_mandate_views.xml",
+        "views/contact_views.xml",
         "data/community_maps_data.xml",
         "wizards/multicompany_easy_creation.xml",
         "wizards/create_users_wizard.xml",

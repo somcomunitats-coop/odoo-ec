@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="contacts.menu_partner_category_form"
+        action="base.action_partner_category_form"
+        name="Contact Tags"
+        sequence="1" parent="contacts.res_partner_menu_config" groups="energy_communities.role_platform_admin"/>
+
+    <menuitem id="contacts.menu_partner_title_contact"
+        action="base.action_partner_title_contact"
+        name="Contact Titles" parent="contacts.res_partner_menu_config"
+        sequence="3" groups="energy_communities.role_platform_admin"/>
+
+    <menuitem id="contactsres_partner_industry_menu" name="Industries"
+        action="base.res_partner_industry_action" parent="contacts.res_partner_menu_config"
+        sequence="4" groups="energy_communities.role_platform_admin"/>
+
+    <menuitem id="contacts.menu_localisation" name="Localization"
+        parent="contacts.res_partner_menu_config" sequence="5" groups="energy_communities.role_platform_admin"/>
+
+    <menuitem id="contacts.menu_action_res_bank_form"
+        action="base.action_res_bank_form"
+        parent="contacts.menu_config_bank_accounts"
+        sequence="1" groups="energy_communities.role_platform_admin"/>
+
+</odoo>
