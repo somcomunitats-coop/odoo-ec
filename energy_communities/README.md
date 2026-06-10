@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-06-10 (v16.0.0.7.15)
+
+- New security groups for menus of contacts
+
 ### 2026-06-04 (v16.0.0.7.14)
 
 - Fix generate contract
