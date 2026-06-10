@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-06-10 (v16.0.0.7.1)
+
+- Fix duplicate vat on reports
+
 ### 2026-04-27 (v16.0.0.7.0)
 
 - New form for new cooperative members
