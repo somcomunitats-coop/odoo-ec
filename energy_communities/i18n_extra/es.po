@@ -17,6 +17,27 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.8\n"
 
+#. module: account_payment_partner
+#: model_terms:ir.ui.view,arch_db:account_payment_partner.report_invoice_payment_mode
+msgid "<strong>Bank Account:</strong>"
+msgstr "<strong>Cuenta bancaria:</strong>"
+
+#. module: account_payment_partner
+#: model_terms:ir.ui.view,arch_db:account_payment_partner.report_invoice_payment_mode
+msgid "<strong>Payment Mode:</strong>"
+msgstr "<strong>Modo de pago:</strong>"
+
+#. module: l10n_es_facturae
+#: model:ir.model.fields.selection,name:l10n_es_facturae.selection__account_move__facturae_refund_reason__16
+#: model:ir.model.fields.selection,name:l10n_es_facturae.selection__account_move_reversal__refund_reason__16
+msgid "Base imponible"
+msgstr "Base imponible"
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_invoice_amount_untaxed
+msgid "Untaxed Amount"
+msgstr "Base imponible"
+
 #. module: account
 #: model:mail.template,body_html:account.email_template_edi_invoice
 msgid ""

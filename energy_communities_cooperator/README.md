@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-06-10 (v16.0.0.7.2)
+
+- Add and improve translations
+
 ### 2026-06-10 (v16.0.0.7.1)
 
 - Fix duplicate vat on reports

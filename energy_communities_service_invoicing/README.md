@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-06-10 (v16.0.0.7.6)
+
+- Add and improve translations
+
 ### 2026-06-04 (v16.0.0.7.5)
 
 - Fix generate contract
