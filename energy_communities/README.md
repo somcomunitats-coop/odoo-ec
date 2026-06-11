@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-06-11 (v16.0.0.7.17)
+
+- New security groups for menus of ticketby
+
 ### 2026-06-10 (v16.0.0.7.16)
 
 - Add and improve translations
