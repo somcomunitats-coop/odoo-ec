@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- res_partner_menu_config -->
     <menuitem id="contacts.menu_partner_category_form"
         action="base.action_partner_category_form"
         name="Contact Tags"
@@ -10,7 +11,7 @@
         name="Contact Titles" parent="contacts.res_partner_menu_config"
         sequence="3" groups="energy_communities.role_platform_admin"/>
 
-    <menuitem id="contactsres_partner_industry_menu" name="Industries"
+    <menuitem id="contacts.res_partner_industry_menu" name="Industries"
         action="base.res_partner_industry_action" parent="contacts.res_partner_menu_config"
         sequence="4" groups="energy_communities.role_platform_admin"/>
 
@@ -22,4 +23,43 @@
         parent="contacts.menu_config_bank_accounts"
         sequence="1" groups="energy_communities.role_platform_admin"/>
 
+    <!-- TicketBAI -->
+    <menuitem
+        id="l10n_es_ticketbai.menu_tbai_installation"
+        parent="l10n_es_ticketbai.menu_l10n_es_tbai_config"
+        action="l10n_es_ticketbai_api.action_tbai_installations"
+        name="TicketBAI Installations"
+        groups="energy_communities.role_platform_admin"/>
+    <menuitem
+        id="l10n_es_ticketbai.menu_tbai_account_fiscal_position_template"
+        parent="l10n_es_ticketbai.menu_l10n_es_tbai_config"
+        action="l10n_es_ticketbai.action_tbai_account_fiscal_position_template"
+        name="Fiscal Position Template"
+        groups="energy_communities.role_platform_admin"/>
+    <menuitem
+        id="l10n_es_ticketbai.menu_tbai_tax_map"
+        parent="l10n_es_ticketbai.menu_l10n_es_tbai_config"
+        action="l10n_es_ticketbai.action_tbai_tax_map"
+        name="TicketBAI Tax Map"
+        groups="energy_communities.role_platform_admin"/>
+    <menuitem
+        id="l10n_es_ticketbai.menu_tbai_vat_exemption_key"
+        parent="l10n_es_ticketbai.menu_l10n_es_tbai_config"
+        action="l10n_es_ticketbai.action_tbai_vat_exemption_key"
+        name="TicketBAI VAT Exemption mapping keys"
+        groups="energy_communities.role_platform_admin"/>
+    <menuitem
+        id="l10n_es_ticketbai.menu_tbai_vat_regime_key"
+        parent="l10n_es_ticketbai.menu_l10n_es_tbai_config"
+        action="l10n_es_ticketbai.action_tbai_vat_regime_key"
+        name="TicketBAI VAT Regime mapping keys"
+        groups="energy_communities.role_platform_admin"/>
+
+    <!-- LROE -->
+    <menuitem
+        id="l10n_es_ticketbai_api_batuz.menu_lroe_chapters"
+        parent="l10n_es_ticketbai_api_batuz.menu_lroe_root"
+        action="l10n_es_ticketbai_api_batuz.action_lroe_chapter"
+        name="Chapters"
+        groups="energy_communities.role_platform_admin"/>
 </odoo>
