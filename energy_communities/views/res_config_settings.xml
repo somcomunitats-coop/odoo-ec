@@ -24,4 +24,38 @@
       </xpath>
     </field>
   </record>
+
+  <record id="energy_communities_res_config_settings_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.energy_communities</field>
+    <field name="model">res.config.settings</field>
+    <field name="priority" eval="101" />
+    <field name="arch" type="xml">
+      <form string="Energy Communities Settings">
+        <sheet>
+          <div
+            class="app_settings_block"
+            data-string="wordpress_credentials"
+            string="Wordpress credentials"
+            data-key="worpress_credentials"
+          >
+              <div class="row mt16 o_settings_container">
+                  <group>
+                      <field name="wordpress_base_url" />
+                      <field name="wordpress_db_username" />
+                      <field name="wordpress_db_password" />
+                  </group>
+              </div>
+          </div>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="energy_communities_res_config_settings_action" model="ir.actions.act_window">
+    <field name="name">Energy Communities Settings</field>
+    <field name="res_model">res.config.settings</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="energy_communities.energy_communities_res_config_settings_view_form" />
+  </record>
+
 </odoo>
