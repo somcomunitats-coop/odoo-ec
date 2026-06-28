@@ -25,6 +25,7 @@
             type="object"
             string="Create map place"
             attrs="{'invisible': [('map_sync_mode','!=','create')]}"
+            groups="energy_communities.role_platform_admin"
           />
           <button
             name="action_update_public_data"
@@ -49,7 +50,7 @@
             <field name="publicdata_lastupdate_datetime" readonly="True" />
             <field name="wp_landing_page_id" readonly="True" />
             <field name="name" />
-            <field name="slug_id" required="True" />
+            <field name="slug_id" required="True" groups="energy_communities.role_platform_admin" />
             <field name="hierarchy_level" />
             <field name="allow_new_members" />
             <field name="number_of_members" />
@@ -80,7 +81,7 @@
           <group>
             <field name="lat" required="1" />
             <field name="lng" required="1" />
-            <field name="map_place_ids" options="{'widget': 'one2many'}">
+            <field name="map_place_ids" options="{'widget': 'one2many'}" groups="energy_communities.role_platform_admin">
               <tree editable="bottom" create="0" delete="0">
                 <field name="name" readonly="true" />
                 <field name="status" readonly="true" />
@@ -110,7 +111,7 @@
               </tree>
             </field>
           </group>
-          <group name="Coordinators">
+          <group name="Coordinators" groups="energy_communities.role_platform_admin,energy_communities.role_coord_admin">
             <field name="awareness_services" />
             <field name="design_services" />
             <field name="management_services" />
@@ -118,5 +119,14 @@
         </sheet>
       </form>
     </field>
+  </record>
+
+  <record id="energy_communities_web_data_map_action" model="ir.actions.server">
+      <field name="name">Web Data/Map</field>
+      <field name="model_id" ref="energy_communities.model_landing_page"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = env.company.get_landing_page_form()
+      </field>
   </record>
 </odoo>

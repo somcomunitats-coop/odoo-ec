@@ -13,13 +13,34 @@
     name="Communities"
     parent="ce_root_menu"
     sequence="100"
+  />
+    
+  <menuitem
+    id="ce_my_community"
+    name="My Community"
+    parent="ce_communities_root_menu"
+    sequence="100"
   >
     <menuitem
-      id="ce_my_community"
-      name="My Community"
+      id="ce_my_community_basic_information"
+      name="Basic Information"
+      sequence="100"
       action="action_ce_my_community"
     />
-
+    <menuitem
+      id="ce_my_community_web_data_map"
+      name="Web Data/Map"
+      sequence="200"
+      action="energy_communities_web_data_map_action"
+      groups="role_platform_admin,role_coord_admin,role_ce_admin,role_ce_manager"
+    />
+    <menuitem
+      id="ce_my_community_advanced_settings"
+      name="Advanced Settings"
+      sequence="300"
+      action="energy_communities_res_config_settings_action"
+      groups="role_platform_admin,role_coord_admin,role_ce_admin,role_ce_manager"
+    />
   </menuitem>
 
   <menuitem
