@@ -110,7 +110,7 @@ class CRMLeadService(Component):
     # TODO: Add contact coordinator source mapping
     def _get_crm_lead_name(self, lead_id, params):
         source_xml_id = self._get_metadata_value(params, "source_xml_id")
-        email = params["email_from"]
+        email = self._get_metadata_value(params, "email_from")
         prefix = ""
         if source_xml_id == "ce_source_existing_ce_contact":
             prefix = _("[Contact CE]")
@@ -245,7 +245,7 @@ class CRMLeadService(Component):
             # setup context data to be used on template
             email_values = {
                 "metadata": self._convert_params_metadata_to_dict(params),
-                "email_to": params["email_from"],
+                "email_to": self._get_metadata_value(params, "email_from"),
             }
             template = self.env.ref(
                 "energy_communities_crm.{}".format(template_external_id)
