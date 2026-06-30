@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### 2026-04-28 (v16.0.0.3.6)
+
+- fix access to `email_from` from metadata values
+
 ### 2026-04-27 (v16.0.0.3.5)
 
 - added translations
