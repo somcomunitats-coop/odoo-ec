@@ -383,7 +383,6 @@
           </t>
           <input
         t-attf-class="form-control form-control-sm o_website_form_date_past#{trigger and ' data-trigger'}"
-        type="date"
         t-attf-id="#{key}"
         t-attf-name="#{key}"
         t-attf-value="#{value or ''}"
