@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-07-08 (v16.0.0.7.18)
+
+- Delete date type in form_field_date_past field
+
 ### 2026-06-11 (v16.0.0.7.17)
 
 - New security groups for menus of ticketby
