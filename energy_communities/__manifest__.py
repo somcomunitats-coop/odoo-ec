@@ -34,6 +34,8 @@
         "queue_job",
         "sale_management",
         "sales_team",
+        "social_media",
+        "cooperator",
         "website_event",
     ],
     "external_dependencies": {
