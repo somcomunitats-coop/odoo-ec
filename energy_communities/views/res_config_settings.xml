@@ -25,9 +25,9 @@
     </field>
   </record>
 
-  <record id="energy_communities_res_config_settings_view_form" model="ir.ui.view">
-    <field name="name">res.config.settings.view.form.energy_communities</field>
-    <field name="model">res.config.settings</field>
+  <record id="energy_communities_res_config_settings_energy_communities_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.energy_communities.view.form.energy_communities</field>
+    <field name="model">res.config.settings.energy_communities</field>
     <field name="priority" eval="101" />
     <field name="arch" type="xml">
       <form
@@ -49,7 +49,7 @@
               <div class="row mt16 o_settings_container" id="email_settings">
                 <div class="col-12 col-lg-6 o_setting_box">
                   <div class="o_setting_right_pane">
-                    <span class="o_form_label">Contact Email</span>
+                    <label for="coop_email_contact" string="Contact Email" />
                     <span
                       class="fa fa-lg fa-building-o"
                       title="Values set here are company-specific."
@@ -318,24 +318,6 @@
                     <field name="ce_status" />
                   </div>
                 </div>
-                <div class="col-12 o_setting_box">
-                  <div class="o_setting_right_pane">
-                    <label for="community_energy_action_ids" string="Community energy actions" />
-                    <span
-                      class="fa fa-lg fa-building-o"
-                      title="Values set here are company-specific."
-                      aria-label="Values set here are company-specific."
-                      groups="base.group_multi_company"
-                      role="img"
-                    />
-                    <field name="community_energy_action_ids" widget="one2many">
-                      <tree editable="top">
-                        <field name="energy_action_id" />
-                        <field name="public_status" />
-                      </tree>
-                    </field>
-                  </div>
-                </div>
                 <div class="col-12 col-lg-6 o_setting_box">
                   <div class="o_setting_right_pane">
                     <label for="foundation_date" />
@@ -362,6 +344,39 @@
                       groups="base.group_multi_company"
                       role="img"
                     />
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="row mt16 o_settings_container"
+                id="community_energy_actions_settings"
+              >
+                <div class="col-12 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="community_energy_action_ids" string="Community energy actions" />
+                    <span
+                      class="fa fa-lg fa-building-o"
+                      title="Values set here are company-specific."
+                      aria-label="Values set here are company-specific."
+                      groups="base.group_multi_company"
+                      role="img"
+                    />
+                    <div class="text-muted">
+                      Configure which energy actions are available for this community and their public visibility.
+                    </div>
+                    <div class="content-group mt16">
+                      <field
+                        name="community_energy_action_ids"
+                        nolabel="1"
+                        colspan="2"
+                      >
+                        <tree editable="bottom" create="1" delete="1">
+                          <field name="energy_action_id" options="{'no_create': True}" />
+                          <field name="public_status" />
+                        </tree>
+                      </field>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -430,14 +445,14 @@
     </field>
   </record>
 
-  <record id="energy_communities_res_config_settings_action" model="ir.actions.act_window">
-    <field name="name">Energy Communities Settings</field>
+  <record id="energy_communities_res_config_settings_energy_communities_action" model="ir.actions.act_window">
+    <field name="name">Advanced Settings</field>
     <field name="type">ir.actions.act_window</field>
-    <field name="res_model">res.config.settings</field>
+    <field name="res_model">res.config.settings.energy_communities</field>
     <field name="view_mode">form</field>
     <field name="target">inline</field>
-    <field name="view_id" ref="energy_communities.energy_communities_res_config_settings_view_form" />
-    <field name="context">{'module': 'cooperator'}</field>
+    <field name="view_id" ref="energy_communities.energy_communities_res_config_settings_energy_communities_view_form" />
+    <field name="context">{'source_ir_action': 'energy_communities_res_config_settings_energy_communities_action'}</field>
   </record>
 
 </odoo>

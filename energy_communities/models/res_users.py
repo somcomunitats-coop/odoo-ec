@@ -765,3 +765,17 @@ class ResUsers(models.Model):
             "type": "ir.actions.act_window",
             "target": "self",
         }
+
+    def _is_admin(self):
+        self.ensure_one()
+        if (
+            self.env.context.get("source_ir_action")
+            == "energy_communities_res_config_settings_energy_communities_action"
+        ):
+            return (
+                self.has_group("energy_communities.role_platform_admin_res_groups")
+                or self.has_group("energy_communities.role_coord_admin_res_groups")
+                or self.has_group("energy_communities.role_ce_admin_res_groups")
+                or self.has_group("energy_communities.role_ce_manager_res_groups")
+            )
+        return super()._is_admin()

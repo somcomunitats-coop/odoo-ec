@@ -32,14 +32,14 @@
       name="Web Data/Map"
       sequence="200"
       action="energy_communities_web_data_map_action"
-      groups="role_platform_admin,role_coord_admin,role_ce_admin,role_ce_manager"
+      groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin_res_groups,role_ce_manager_res_groups"
     />
     <menuitem
       id="ce_my_community_advanced_settings"
       name="Advanced Settings"
       sequence="300"
-      action="energy_communities_res_config_settings_action"
-      groups="role_platform_admin,role_coord_admin,role_ce_admin,role_ce_manager"
+      action="energy_communities_res_config_settings_energy_communities_action"
+      groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin_res_groups,role_ce_manager_res_groups"
     />
   </menuitem>
 
