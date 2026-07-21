@@ -79,7 +79,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
     ) -> SubscriptionRequestCreationParams:
         creation_params = dict(vals.items())
         creation_params["company_id"] = self.env["res.company"].browse(
-            vals["company_id"]
+            vals.get("company_id", self.env.company.id)
         )
         creation_params["country_id"] = self.env["res.country"].browse(
             vals.get("country_id")
