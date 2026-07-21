@@ -53,7 +53,9 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         if ctx.subscription_mode == SubscriptionMode.voluntary:
             partner = self._get_partner_form(form_submission.vat, ctx.company)
             creation_params |= (
-                self._get_subscription_request_creation_params_from_partner(partner)
+                self._get_subscription_request_creation_params_from_partner(
+                    partner, ctx
+                )
             )
             creation_params["type"] = SubscriptionType.increase.value
         else:  # memeber or company_member or invited or company_invites
@@ -244,7 +246,8 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             )
         return partner
 
-    def _get_subscription_request_creation_params_from_partner(self, partner):
+    def _get_subscription_request_creation_params_from_partner(self, partner, ctx=None):
+        company = ctx and ctx.company or self.env.company
         return {
             "partner_id": partner,
             "already_cooperator": partner.member,
@@ -256,7 +259,9 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             "address": partner.street or _("Address not found"),
             "city": partner.city or _("City not found"),
             "zip_code": partner.zip or _("ZIP code not found"),
-            "country_id": (partner.country_id or ctx.company.default_country_id),
-            "lang": partner.lang or ctx.company.default_lang_id.id,
-            "birthdate": partner.birthdate_date.strftime("%d/%m/%Y") or False,
+            "country_id": (partner.country_id or company.default_country_id),
+            "lang": partner.lang or company.default_lang_id.id,
+            "birthdate": partner.birthdate_date
+            and partner.birthdate_date.strftime("%d/%m/%Y")
+            or False,
         }
