@@ -53,7 +53,9 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         if ctx.subscription_mode == SubscriptionMode.voluntary:
             partner = self._get_partner_form(form_submission.vat, ctx.company)
             creation_params |= (
-                self._get_subscription_request_creation_params_from_partner(partner)
+                self._get_subscription_request_creation_params_from_partner(
+                    partner, ctx
+                )
             )
             creation_params["type"] = SubscriptionType.increase.value
         else:  # memeber or company_member or invited or company_invites
@@ -79,7 +81,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
     ) -> SubscriptionRequestCreationParams:
         creation_params = dict(vals.items())
         creation_params["company_id"] = self.env["res.company"].browse(
-            vals["company_id"]
+            vals.get("company_id", self.env.company.id)
         )
         creation_params["country_id"] = self.env["res.country"].browse(
             vals.get("country_id")
@@ -244,8 +246,9 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             )
         return partner
 
-    def _get_subscription_request_creation_params_from_partner(self, partner):
-        return {
+    def _get_subscription_request_creation_params_from_partner(self, partner, ctx=None):
+        company = ctx and ctx.company or self.env.company
+        partner_params = {
             "partner_id": partner,
             "already_cooperator": partner.member,
             "email": partner.email or _("Email not found"),
@@ -256,7 +259,28 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             "address": partner.street or _("Address not found"),
             "city": partner.city or _("City not found"),
             "zip_code": partner.zip or _("ZIP code not found"),
-            "country_id": (partner.country_id or ctx.company.default_country_id),
-            "lang": partner.lang or ctx.company.default_lang_id.id,
-            "birthdate": partner.birthdate_date.strftime("%d/%m/%Y") or False,
+            "country_id": (partner.country_id or company.default_country_id),
+            "lang": partner.lang or company.default_lang_id.id,
+            "birthdate": partner.birthdate_date
+            and partner.birthdate_date.strftime("%d/%m/%Y")
+            or False,
         }
+
+        if partner.is_company:
+            representative_partner = partner.child_ids.filtered_domain(
+                [("type", "=", "representative")]
+            )
+            partner_params.update(
+                {
+                    "is_company": True,
+                    "company_name": partner.name,
+                    "company_email": partner.email,
+                    "firstname": representative_partner.firstname
+                    or representative_partner.name
+                    or ".",
+                    "lastname": representative_partner.lastname or ".",
+                    "email": representative_partner.email or ".",
+                }
+            )
+
+        return partner_params
