@@ -248,7 +248,7 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
 
     def _get_subscription_request_creation_params_from_partner(self, partner, ctx=None):
         company = ctx and ctx.company or self.env.company
-        return {
+        partner_params = {
             "partner_id": partner,
             "already_cooperator": partner.member,
             "email": partner.email or _("Email not found"),
@@ -265,3 +265,22 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
             and partner.birthdate_date.strftime("%d/%m/%Y")
             or False,
         }
+
+        if partner.is_company:
+            representative_partner = partner.child_ids.filtered_domain(
+                [("type", "=", "representative")]
+            )
+            partner_params.update(
+                {
+                    "is_company": True,
+                    "company_name": partner.name,
+                    "company_email": partner.email,
+                    "firstname": representative_partner.firstname
+                    or representative_partner.name
+                    or ".",
+                    "lastname": representative_partner.lastname or ".",
+                    "email": representative_partner.email or ".",
+                }
+            )
+
+        return partner_params
