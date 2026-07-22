@@ -4,6 +4,11 @@
 
 ## Changelog
 
+### 2026-07-22 (v16.0.0.7.3)
+
+- set environment company when is not present when creating a SR
+- set correct values in a voluntary share SR
+
 ### 2026-06-10 (v16.0.0.7.2)
 
 - Add and improve translations
