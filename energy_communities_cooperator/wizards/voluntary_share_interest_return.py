@@ -6,6 +6,8 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
+from ..config import COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF
+
 _DEFAULT_ANUAL_BULK_INTEREST_RATE = 1
 _DEFAULT_IRPF_CAPITAL_TAX_XMLID = "account_tax_template_p_irpf19"
 _DEFAULT_CREDIT_ACCOUNT_MOVE_XMLID = "account_common_4100"
@@ -108,10 +110,15 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
 
     def _get_voluntary_shares_invoice_line(self):
         voluntary_shares = {}
-        voluntary_share_product_template = self.company_id.voluntary_share_id
         # TODO: We're assuming there is only one product.product for it's product.template
+        categ_voluntary_share = self.env.ref(COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF)
+
         voluntary_share_product = self.env["product.product"].search(
-            [("product_tmpl_id", "=", voluntary_share_product_template.id)], limit=1
+            [
+                ("categ_id", "=", categ_voluntary_share.id),
+                ("company_id", "=", self.company_id.id),
+            ],
+            limit=1,
         )
         memberships = self.env["cooperative.membership"].search(
             [("company_id", "=", self.company_id.id)]
@@ -119,7 +126,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         for membership in memberships:
             membership_voluntary_shares = membership.share_ids.filtered(
                 lambda share_line: share_line.share_product_id.id
-                == voluntary_share_product.id
+                in voluntary_share_product.ids
             )
             if membership_voluntary_shares:
                 for membership_voluntary_share in membership_voluntary_shares:
@@ -198,8 +205,11 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
         # use any other existing banck account without mandate assigned
         else:
             rel_bank_acc = self.env["res.partner.bank"].search(
-                [("partner_id", "=", partner_id.id),("mandate_ids","=", False),
-                 ("company_id", "=", self.company_id.id)]
+                [
+                    ("partner_id", "=", partner_id.id),
+                    ("mandate_ids", "=", False),
+                    ("company_id", "=", self.company_id.id),
+                ]
             )
             if rel_bank_acc:
                 return rel_bank_acc[0].id
@@ -292,8 +302,15 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             raise ValidationError(
                 "The company on your context must be the same as the one you're executing the action for"
             )
+        categ_voluntary_share = self.env.ref(COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF)
 
-        voluntary_share_product = self.company_id.voluntary_share_id
+        voluntary_share_product = self.env["product.product"].search(
+            [
+                ("categ_id", "=", categ_voluntary_share.id),
+                ("company_id", "=", self.company_id.id),
+            ],
+            limit=1,
+        )
         # check if all shares comes from an invoice
         memberships = self.env["cooperative.membership"].search(
             [("company_id", "=", self.company_id.id)]
@@ -303,7 +320,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
             total_in_account_move = 0
             membership_voluntary_shares = membership.share_ids.filtered(
                 lambda share_line: share_line.share_product_id.id
-                == voluntary_share_product.id
+                in voluntary_share_product.ids
             )
             for membership_voluntary_share in membership_voluntary_shares:
                 total_in_membership += membership_voluntary_share.total_amount_line
@@ -360,7 +377,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                     for membership_invoice in related_membership_invoices:
                         for line in membership_invoice.invoice_line_ids.filtered(
                             lambda invoice_line: invoice_line.product_id.id
-                            == voluntary_share_product.id
+                            in voluntary_share_product.ids
                         ):
                             total_in_account_move += line.price_subtotal
                     if total_in_membership != total_in_account_move:
@@ -394,7 +411,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                 )
                 for line in partner_company_invoices.invoice_line_ids.filtered(
                     lambda invoice_line: invoice_line.product_id.id
-                    == voluntary_share_product.id
+                    in voluntary_share_product.ids
                 ):
                     if line.move_id.membership_id.company_id.id != self.company_id.id:
                         raise ValidationError(
@@ -430,7 +447,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
                 membership_voluntary_shares = (
                     related_partner_membership.share_ids.filtered(
                         lambda share_line: share_line.share_product_id.id
-                        == voluntary_share_product.id
+                        in voluntary_share_product.ids
                     )
                 )
                 for membership_voluntary_share in membership_voluntary_shares:
