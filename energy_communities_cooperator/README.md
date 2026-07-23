@@ -4,6 +4,13 @@
 
 ## Changelog
 
+### 2026-07-22 (v16.0.0.7.4)
+
+- New point of menu
+- New view resConfidsettings
+- Change view landing page
+- Fix HTML code
+
 ### 2026-07-22 (v16.0.0.7.3)
 
 - set environment company when is not present when creating a SR
