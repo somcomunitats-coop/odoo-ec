@@ -220,7 +220,7 @@ msgstr "Aggregació i flexibilitat de la demanda"
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__allow_new_members
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__allow_new_members
 msgid "Allow new members"
-msgstr "Autoritza nous membres"
+msgstr "Botons d'accés als formularis de sòcies visibles"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__allowed_companies
@@ -240,7 +240,7 @@ msgstr "Companyia permesa"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
-msgstr "Autoritza nous membres"
+msgstr "Botons d'accés als formularis de sòcies visibles"
 
 #. module: energy_communities
 #. odoo-python
@@ -4271,6 +4271,15 @@ msgstr "Aquesta és la nostra política de dades…"
 #: model_terms:ir.ui.view,arch_db:energy_communities.energy_communities_res_config_settings_energy_communities_view_form
 msgid "This is the financial risk…"
 msgstr "Aquest és el risc financer…"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.energy_communities_res_config_settings_energy_communities_view_form
+msgid ""
+"To change this setting, go to the Advanced Settings section of the CE: "
+"Authorize New Members field."
+msgstr ""
+"Per modificar aquesta opció, cal accedir al apartat de Configuració avançada "
+"de la CE: camp autoritza nous membres."
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.energy_communities_res_config_settings_energy_communities_view_form

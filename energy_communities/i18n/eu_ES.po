@@ -221,7 +221,7 @@ msgstr "Eskaria elkartzea eta malgutzea"
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__allow_new_members
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__allow_new_members
 msgid "Allow new members"
-msgstr "Baimendu kide berriak"
+msgstr "Ikus daitezkeen bazkideen formularioetara sartzeko botoiak"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__allowed_companies
@@ -241,7 +241,7 @@ msgstr "Baimendutako enpresa"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
-msgstr "Kide berriak onartzen ditu"
+msgstr "Ikus daitezkeen bazkideen formularioetara sartzeko botoiak"
 
 #. module: energy_communities
 #. odoo-python
@@ -4237,6 +4237,15 @@ msgstr "Hau da gure datuen politika…"
 #: model_terms:ir.ui.view,arch_db:energy_communities.energy_communities_res_config_settings_energy_communities_view_form
 msgid "This is the financial risk…"
 msgstr "Hau da arrisku finantzarioa…"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.energy_communities_res_config_settings_energy_communities_view_form
+msgid ""
+"To change this setting, go to the Advanced Settings section of the CE: "
+"Authorize New Members field."
+msgstr ""
+"Aukera hau aldatzeko, CE konfigurazio aurreratuaren atalera sartu behar da: "
+"Baimendu kide berriak."
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.energy_communities_res_config_settings_energy_communities_view_form

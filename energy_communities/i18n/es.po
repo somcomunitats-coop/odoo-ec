@@ -221,7 +221,7 @@ msgstr "Agregación y flexibilidad de la demanda"
 #: model:ir.model.fields,field_description:energy_communities.field_res_config_settings__allow_new_members
 #: model:ir.model.fields,field_description:energy_communities.field_res_company__allow_new_members
 msgid "Allow new members"
-msgstr "Autoriza nuevos miembros"
+msgstr "Botones de acceso a los formularios de socias visibles"
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_cm_place__allowed_companies
@@ -241,7 +241,7 @@ msgstr "Compañía permitida"
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_landing_page__allow_new_members
 msgid "Allows new members"
-msgstr "Usuarios autorizados"
+msgstr "Botones de acceso a los formularios de socias visibles"
 
 #. module: energy_communities
 #. odoo-python
@@ -4257,6 +4257,15 @@ msgstr "Esta es nuestra política de datos…"
 #: model_terms:ir.ui.view,arch_db:energy_communities.energy_communities_res_config_settings_energy_communities_view_form
 msgid "This is the financial risk…"
 msgstr "Este es el riesgo financiero…"
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.energy_communities_res_config_settings_energy_communities_view_form
+msgid ""
+"To change this setting, go to the Advanced Settings section of the CE: "
+"Authorize New Members field."
+msgstr ""
+"Para modificar esta opción, hay que acceder al apartado de Configuración "
+"avanzada de la CE: campo Autoriza nuevos miembros."
 
 #. module: energy_communities
 #: model_terms:ir.ui.view,arch_db:energy_communities.energy_communities_res_config_settings_energy_communities_view_form
