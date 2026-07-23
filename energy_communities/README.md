@@ -4,6 +4,13 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-07-08 (v16.0.0.7.19)
+
+- New point of menu
+- New view resConfidsettings
+- Change view landing page
+- Fix HTML code
+
 ### 2026-07-08 (v16.0.0.7.18)
 
 - Delete date type in form_field_date_past field

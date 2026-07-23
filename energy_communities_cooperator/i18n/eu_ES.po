@@ -669,12 +669,14 @@ msgstr "Goiburuko lerrokada sozietate-ekarpenen formularioetan"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__cooperator_association_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__cooperator_association_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__cooperator_association_share_form_header_text
 msgid "Cooperator share form header text (Associations)"
 msgstr "Sozietate ekarpenen formularioetako goiburuko paragrafoa (Ap.Obligatorias - Elkarteak)"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__cooperator_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__cooperator_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__cooperator_share_form_header_text
 msgid "Cooperator share form header text (Cooperatives)"
 msgstr "Sozietate ekarpenen formularioetako goiburuko paragrafoa ((0 URLa) - Kooperatibak)"
@@ -1196,6 +1198,7 @@ msgstr ""
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__mail_template
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_template__mail_template
 #: model:ir.model.fields,help:energy_communities_cooperator.field_res_company__voluntary_share_email_template
+#: model:ir.model.fields,help:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_email_template
 #: model:ir.model.fields,help:energy_communities_cooperator.field_res_config_settings__voluntary_share_email_template
 msgid "If left empty, the default global mail template will be used."
 msgstr ""
@@ -1239,12 +1242,14 @@ msgstr "IBAN formatu baliogabea"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__invitation_share_url_company
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__invitation_share_url_company
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__invitation_share_url_company
 msgid "Invitation share URL company"
 msgstr "Gonbidapena partekatzeko URLa enpresa"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__invitation_share_url_individual
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__invitation_share_url_individual
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__invitation_share_url_individual
 msgid "Invitation share URL individual"
 msgstr "Gonbidapena partekatzeko URLa banaka"
@@ -1270,6 +1275,7 @@ msgstr "Oraindik ordaintzeko dauden dokumentuak dituen gonbidatu baten esteka du
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__invited_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__invited_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__invited_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__invited_share_form_header_text
 msgid "Invited share form header text"
 msgstr "Sozietate-ekarpenen formularioetako goiburuko lerrokada (gonbidatuak)"
@@ -2340,6 +2346,7 @@ msgstr "Borondatezko Akzioak"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_url_individual
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_url_individual
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_url_individual
 msgid "Voluntary share URL individual"
 msgstr "Borondatezko partekatze URLa banakakoa"
@@ -2347,6 +2354,7 @@ msgstr "Borondatezko partekatze URLa banakakoa"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__voluntary_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_form_header_text
 msgid "Voluntary share form header text"
 msgstr "Sozietate-ekarpenen formularioetako goiburuko lerrokada (borondatezkoak)"
@@ -2367,6 +2375,7 @@ msgstr "Borondatezko akzioen interes-itzulera"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_email_template
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_email_template
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_email_template
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Voluntary share return email template"
@@ -2374,6 +2383,7 @@ msgstr "Borondatezko akzioen itzulketa elektronikoaren txantiloia"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_id
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Voluntary share to show on website"
@@ -2391,10 +2401,11 @@ msgstr "Borondatezko akzioen interesak itzultzeko mezu elektronikoa"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_journal_account
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_journal_account
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_journal_account
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Voluntary shares journal"
-msgstr "Borondatezko partekatzeen aldizkaria"
+msgstr "Borondatezko ekarpenen interesak itzultzeko fakturak egunero ikasten ditu"
 
 #. module: energy_communities_cooperator
 #: model:mail.template,subject:energy_communities_cooperator.email_template_conditions_voluntary_share

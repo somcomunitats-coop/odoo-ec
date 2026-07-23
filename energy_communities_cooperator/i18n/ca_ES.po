@@ -744,12 +744,14 @@ msgstr "Párrafo de cabecera en formularios aportaciones societarias"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__cooperator_association_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__cooperator_association_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__cooperator_association_share_form_header_text
 msgid "Cooperator share form header text (Associations)"
 msgstr "Paràgraf de capçalera en formularis aportacions societàries (Ap.Obligatòries - Associacions)"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__cooperator_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__cooperator_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__cooperator_share_form_header_text
 msgid "Cooperator share form header text (Cooperatives)"
 msgstr "Paràgraf de capçalera en formularis aportacions societàries (Ap.Obligatòries - Cooperatives)"
@@ -1274,6 +1276,7 @@ msgstr ""
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_product__mail_template
 #: model:ir.model.fields,help:energy_communities_cooperator.field_product_template__mail_template
 #: model:ir.model.fields,help:energy_communities_cooperator.field_res_company__voluntary_share_email_template
+#: model:ir.model.fields,help:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_email_template
 #: model:ir.model.fields,help:energy_communities_cooperator.field_res_config_settings__voluntary_share_email_template
 msgid "If left empty, the default global mail template will be used."
 msgstr ""
@@ -1316,12 +1319,14 @@ msgstr "Format d'IBAN no vàlid"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__invitation_share_url_company
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__invitation_share_url_company
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__invitation_share_url_company
 msgid "Invitation share URL company"
 msgstr "Empresa d'URL per compartir invitacions"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__invitation_share_url_individual
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__invitation_share_url_individual
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__invitation_share_url_individual
 msgid "Invitation share URL individual"
 msgstr "URL de compartició d'invitació individual"
@@ -1347,6 +1352,7 @@ msgstr "Hi ha un contacte amb vincle de convidada que encara té documents pende
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__invited_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__invited_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__invited_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__invited_share_form_header_text
 msgid "Invited share form header text"
 msgstr "Paràgraf de capçalera en formularis aportacions societàries (convidades)"
@@ -2423,6 +2429,7 @@ msgstr "Aportacions voluntàries"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_url_individual
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_url_individual
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_url_individual
 msgid "Voluntary share URL individual"
 msgstr "URL de compartició voluntària individual"
@@ -2430,6 +2437,7 @@ msgstr "URL de compartició voluntària individual"
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_modify_coop_generic_form_settings_wizard__voluntary_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_form_header_text
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_form_header_text
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_form_header_text
 msgid "Voluntary share form header text"
 msgstr "Paràgraf de capçalera en formularis aportacions societàries (Voluntàries)"
@@ -2450,6 +2458,7 @@ msgstr "Retorn d'interessos d'aportacions voluntàries"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_email_template
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_email_template
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_email_template
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Voluntary share return email template"
@@ -2457,6 +2466,7 @@ msgstr "Plantilla de email per a retorn d'interessos d'aportacions"
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_id
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_id
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_id
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Voluntary share to show on website"
@@ -2476,10 +2486,11 @@ msgstr ""
 
 #. module: energy_communities_cooperator
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_company__voluntary_share_journal_account
+#: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings_energy_communities__voluntary_share_journal_account
 #: model:ir.model.fields,field_description:energy_communities_cooperator.field_res_config_settings__voluntary_share_journal_account
 #: model_terms:ir.ui.view,arch_db:energy_communities_cooperator.res_config_settings_energy_communities_cooperator_view_form
 msgid "Voluntary shares journal"
-msgstr "Diari per a aportacions voluntàries"
+msgstr "Diari per a les factures de retorn d'interessos d'aportacions voluntàries"
 
 #. module: energy_communities_cooperator
 #: model:mail.template,subject:energy_communities_cooperator.email_template_conditions_voluntary_share

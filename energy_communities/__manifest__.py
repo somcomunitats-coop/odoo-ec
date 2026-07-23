@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.7.18",
+    "version": "16.0.0.7.19",
     "depends": [
         "account",
         "account_payment_partner",
@@ -34,6 +34,8 @@
         "queue_job",
         "sale_management",
         "sales_team",
+        "social_media",
+        "cooperator",
         "website_event",
     ],
     "external_dependencies": {

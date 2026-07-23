@@ -13,15 +13,449 @@
           string="Wordpress credentials"
           data-key="worpress_credentials"
         >
-            <div class="row mt16 o_settings_container">
-                <group>
-                    <field name="wordpress_base_url" />
-                    <field name="wordpress_db_username" />
-                    <field name="wordpress_db_password" />
-                </group>
-            </div>
+          <div class="row mt16 o_settings_container">
+            <group>
+              <field name="wordpress_base_url" />
+              <field name="wordpress_db_username" />
+              <field name="wordpress_db_password" />
+            </group>
+          </div>
         </div>
       </xpath>
     </field>
   </record>
+
+  <record id="energy_communities_res_config_settings_energy_communities_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.energy_communities.view.form.energy_communities</field>
+    <field name="model">res.config.settings.energy_communities</field>
+    <field name="priority" eval="101" />
+    <field name="arch" type="xml">
+      <form
+        string="Energy Communities Settings"
+        class="oe_form_configuration o_base_settings"
+        js_class="base_settings"
+      >
+        <field name="company_id" invisible="1" />
+        <field name="hierarchy_level" invisible="1" />
+        <div class="o_setting_container">
+          <div class="settings">
+            <div
+              class="app_settings_block"
+              data-string="Societal management"
+              string="Societal management"
+              data-key="cooperator"
+            >
+              <h2>Email</h2>
+              <div class="row mt16 o_settings_container" id="email_settings">
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="coop_email_contact" string="Contact Email" />
+                    <span
+                      class="fa fa-lg fa-building-o"
+                      title="Values set here are company-specific."
+                      aria-label="Values set here are company-specific."
+                      groups="base.group_multi_company"
+                      role="img"
+                    />
+                    <div class="text-muted">
+                      Contact email address for cooperators
+                    </div>
+                    <field name="coop_email_contact" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="send_certificate_email" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="send_certificate_email" string="Certificate Email Message" />
+                    <div class="text-muted">
+                      Send an email message containing the cooperator certificate after a successful payment
+                    </div>
+                    <div class="mt16" attrs="{'invisible': [('send_certificate_email', '=', False)]}">
+                      <div class="content-group">
+                        <div>
+                          <label for="cooperator_certificate_mail_template" string="Custom Email Template For New Cooperators" class="o_light_label mr8" />
+                          <field name="cooperator_certificate_mail_template" />
+                        </div>
+                        <div>
+                          <label for="cooperator_certificate_increase_mail_template" string="Custom Email Template For Share Increase" class="o_light_label mr8" />
+                          <field name="cooperator_certificate_increase_mail_template" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="send_confirmation_email" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="send_confirmation_email" string="Share Subscription Confirmation Email Message" />
+                    <div class="text-muted">
+                      Send a confirmation email message when a subscription is received
+                    </div>
+                    <div class="mt16" attrs="{'invisible': [('send_confirmation_email', '=', False)]}">
+                      <div class="content-group">
+                        <div>
+                          <label for="cooperator_confirmation_mail_template" string="Custom Email Template" class="o_light_label mr8" />
+                          <field name="cooperator_confirmation_mail_template" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="send_capital_release_email" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="send_capital_release_email" string="Capital Release Request Email Message" />
+                    <div class="text-muted">
+                      Send an email message containing the capital release request when a subscription is validated
+                    </div>
+                    <div class="mt16" attrs="{'invisible': [('send_capital_release_email', '=', False)]}">
+                      <div class="content-group">
+                        <div>
+                          <label for="cooperator_capital_release_mail_template" string="Custom Email Template" class="o_light_label mr8" />
+                          <field name="cooperator_capital_release_mail_template" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="send_waiting_list_email" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="send_waiting_list_email" string="Waiting List Email Message" />
+                    <div class="text-muted">
+                      Send an email message when a subscription is put on the waiting list
+                    </div>
+                    <div class="mt16" attrs="{'invisible': [('send_waiting_list_email', '=', False)]}">
+                      <div class="content-group">
+                        <div>
+                          <label for="cooperator_waiting_list_mail_template" string="Custom Email Template" class="o_light_label mr8" />
+                          <field name="cooperator_waiting_list_mail_template" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="send_share_transfer_email" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="send_share_transfer_email" string="Share Transfer Email Message" />
+                    <div class="text-muted">
+                      Send an email message containing the cooperator certificate after a share transfer
+                    </div>
+                    <div class="mt16" attrs="{'invisible': [('send_share_transfer_email', '=', False)]}">
+                      <div class="content-group">
+                        <div>
+                          <label for="cooperator_share_update_mail_template" string="Custom Email Template" class="o_light_label mr8" />
+                          <field name="cooperator_share_update_mail_template" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="send_share_update_email" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="send_share_update_email" string="Shares Update Email Message" />
+                    <div class="text-muted">
+                      Send an email message containing the cooperator certificate when shares of a cooperator are updated
+                    </div>
+                    <div class="mt16" attrs="{'invisible': [('send_share_update_email', '=', False)]}">
+                      <div class="content-group">
+                        <div>
+                          <label for="cooperator_share_update_mail_template" string="Custom Email Template" class="o_light_label mr8" />
+                          <field name="cooperator_share_update_mail_template" />
+                        </div>
+                        <div>
+                          <label for="cooperator_share_update_no_shares_mail_template" string="Custom Email Template With No Remaining Shares" class="o_light_label mr8" />
+                          <field name="cooperator_share_update_no_shares_mail_template" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h2>Website form</h2>
+              <div class="row mt16 o_settings_container" id="website_form_settings">
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="display_internal_rules_approval" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="display_internal_rules_approval" string="Internal Rules" />
+                    <div class="text-muted">
+                      Display the internal rules on the cooperator website form
+                    </div>
+                    <div class="mt16">
+                      <div class="content-group">
+                        <div attrs="{'invisible': [('display_internal_rules_approval', '=', False)]}">
+                          <label for="internal_rules_approval_text" string="Internal Rules Text" />
+                          <field name="internal_rules_approval_text" class="oe_account_terms w-100" placeholder="These are our internal rules…" />
+                        </div>
+                        <div attrs="{'invisible': [('display_internal_rules_approval', '=', False)]}">
+                          <field name="internal_rules_approval_required" />
+                          <label for="internal_rules_approval_required" string="Require Approval" class="o_light_label" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="display_data_policy_approval" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="display_data_policy_approval" string="Data Policy" />
+                    <div class="text-muted">
+                      Display the data policy on the cooperator website form
+                    </div>
+                    <div class="mt16">
+                      <div class="content-group">
+                        <div attrs="{'invisible': [('display_data_policy_approval', '=', False)]}">
+                          <label for="data_policy_approval_text" string="Data Policy Text" />
+                          <field name="data_policy_approval_text" class="oe_account_terms w-100" placeholder="This is our data policy…" />
+                        </div>
+                        <div attrs="{'invisible': [('display_data_policy_approval', '=', False)]}">
+                          <field name="data_policy_approval_required" />
+                          <label for="data_policy_approval_required" string="Require Approval" class="o_light_label" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="display_financial_risk_approval" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="display_financial_risk_approval" string="Financial Risk" />
+                    <div class="text-muted">
+                      Display information about the financial risk on the cooperator website form
+                    </div>
+                    <div class="mt16">
+                      <div class="content-group">
+                        <div attrs="{'invisible': [('display_financial_risk_approval', '=', False)]}">
+                          <label for="financial_risk_approval_text" string="Financial Risk Information Text" />
+                          <field name="financial_risk_approval_text" class="oe_account_terms w-100" placeholder="This is the financial risk…" />
+                        </div>
+                        <div attrs="{'invisible': [('display_financial_risk_approval', '=', False)]}">
+                          <field name="financial_risk_approval_required" />
+                          <label for="financial_risk_approval_required" string="Require Approval" class="o_light_label" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="display_generic_rules_approval" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="display_generic_rules_approval" string="Generic Rules" />
+                    <div class="text-muted">
+                      Display the generic rules on the cooperator website form
+                    </div>
+                    <div class="mt16">
+                      <div class="content-group">
+                        <div attrs="{'invisible': [('display_generic_rules_approval', '=', False)]}">
+                          <label for="generic_rules_approval_text" string="Generic Rules Text" />
+                          <field name="generic_rules_approval_text" class="oe_account_terms w-100" placeholder="These are our generic rules…" />
+                        </div>
+                        <div attrs="{'invisible': [('display_generic_rules_approval', '=', False)]}">
+                          <field name="generic_rules_approval_required" />
+                          <label for="generic_rules_approval_required" string="Require Approval" class="o_light_label" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="app_settings_block"
+              data-string="Community global parameters"
+              string="Community global parameters"
+              data-key="energy_communities"
+            >
+              <h2>Community global parameters</h2>
+              <div class="row mt16 o_settings_container" id="community_global_parameters_settings">
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="comercial_name" />
+                    <span
+                      class="fa fa-lg fa-building-o"
+                      title="Values set here are company-specific."
+                      aria-label="Values set here are company-specific."
+                      groups="base.group_multi_company"
+                      role="img"
+                    />
+                    <field name="comercial_name" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="ce_status" />
+                    <span
+                      class="fa fa-lg fa-building-o"
+                      title="Values set here are company-specific."
+                      aria-label="Values set here are company-specific."
+                      groups="base.group_multi_company"
+                      role="img"
+                    />
+                    <field name="ce_status" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="foundation_date" />
+                    <span
+                      class="fa fa-lg fa-building-o"
+                      title="Values set here are company-specific."
+                      aria-label="Values set here are company-specific."
+                      groups="base.group_multi_company"
+                      role="img"
+                    />
+                    <field name="foundation_date" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_left_pane">
+                    <field name="allow_new_members" />
+                  </div>
+                  <div class="o_setting_right_pane">
+                    <label for="allow_new_members" />
+                    <span
+                      class="fa fa-lg fa-building-o"
+                      title="Values set here are company-specific."
+                      aria-label="Values set here are company-specific."
+                      groups="base.group_multi_company"
+                      role="img"
+                    />
+                    <div class="text-muted">
+                      To change this setting, go to the Advanced Settings section of the CE: Authorize New Members field.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="row mt16 o_settings_container"
+                id="community_energy_actions_settings"
+              >
+                <div class="col-12 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="community_energy_action_ids" string="Community energy actions" />
+                    <span
+                      class="fa fa-lg fa-building-o"
+                      title="Values set here are company-specific."
+                      aria-label="Values set here are company-specific."
+                      groups="base.group_multi_company"
+                      role="img"
+                    />
+                    <div class="text-muted">
+                      Configure which energy actions are available for this community and their public visibility.
+                    </div>
+                    <div class="content-group mt16">
+                      <field
+                        name="community_energy_action_ids"
+                        nolabel="1"
+                        colspan="2"
+                      >
+                        <tree editable="bottom" create="1" delete="1">
+                          <field name="energy_action_id" options="{'no_create': True}" />
+                          <field name="public_status" />
+                        </tree>
+                      </field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h2>Social networks</h2>
+              <div class="row mt16 o_settings_container" id="social_networks_settings">
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="social_twitter" />
+                    <field name="social_twitter" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="social_facebook" />
+                    <field name="social_facebook" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="social_github" />
+                    <field name="social_github" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="social_linkedin" />
+                    <field name="social_linkedin" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="social_youtube" />
+                    <field name="social_youtube" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="social_instagram" />
+                    <field name="social_instagram" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="social_telegram" />
+                    <field name="social_telegram" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="social_mastodon" />
+                    <field name="social_mastodon" />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                  <div class="o_setting_right_pane">
+                    <label for="social_bluesky" />
+                    <field name="social_bluesky" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <record id="energy_communities_res_config_settings_energy_communities_action" model="ir.actions.act_window">
+    <field name="name">Advanced Settings</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.config.settings.energy_communities</field>
+    <field name="view_mode">form</field>
+    <field name="target">inline</field>
+    <field name="view_id" ref="energy_communities.energy_communities_res_config_settings_energy_communities_view_form" />
+    <field name="context">{'source_ir_action': 'energy_communities_res_config_settings_energy_communities_action'}</field>
+  </record>
+
 </odoo>
