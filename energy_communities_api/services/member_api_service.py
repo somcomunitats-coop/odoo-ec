@@ -205,11 +205,11 @@ class MemberApiService(Component):
         )
 
     @restapi.method(
-        [(["/community_services/<int:service_id>/production"], "GET")],
+        [(["/community_services/<int:service_id>/metrics/energy_production"], "GET")],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectProductionInfoListResponse),
     )
-    def community_service_production_info(
+    def community_service_energy_production(
         self, service_id: int, query_params: QueryParams
     ):
         self._validate_headers()
@@ -240,11 +240,16 @@ class MemberApiService(Component):
         )
 
     @restapi.method(
-        [(["/community_services/<int:service_id>/selfconsumption"], "GET")],
+        [
+            (
+                ["/community_services/<int:service_id>/metrics/energy_selfconsumption"],
+                "GET",
+            )
+        ],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectSelfconsumptionInfoListResponse),
     )
-    def community_service_selfconsumption_info(
+    def community_service_energy_selfconsumption(
         self, service_id: int, query_params: QueryParams
     ):
         self._validate_headers()
@@ -277,11 +282,11 @@ class MemberApiService(Component):
         )
 
     @restapi.method(
-        [(["/community_services/<int:service_id>/energy_exported"], "GET")],
+        [(["/community_services/<int:service_id>/metrics/energy_exported"], "GET")],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectEnergyExportedInfoListResponse),
     )
-    def community_service_energy_exported_info(
+    def community_service_energy_exported(
         self, service_id: int, query_params: QueryParams
     ):
         self._validate_headers()
@@ -314,11 +319,11 @@ class MemberApiService(Component):
         )
 
     @restapi.method(
-        [(["/community_services/<int:service_id>/energy_consumed"], "GET")],
+        [(["/community_services/<int:service_id>/metrics/energy_consumption"], "GET")],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectEnergyConsumedInfoListResponse),
     )
-    def community_service_energy_consumed_info(
+    def community_service_energy_consumption(
         self, service_id: int, query_params: QueryParams
     ):
         self._validate_headers()

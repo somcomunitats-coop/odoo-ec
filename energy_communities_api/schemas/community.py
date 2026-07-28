@@ -129,6 +129,9 @@ class MetricInfo(BaseModel):
     """
     value: float = Field(title="Value", description="Value of the metric")
     unit: str = Field(title="unit", description="unit for this metric, kWh, grCO2...")
+    consolidated: bool = Field(
+        title="consolidated", description="True if the value is a consolidated one"
+    )
 
 
 class CommunityServiceMetricsInfo(BaseModel):
@@ -174,16 +177,34 @@ class CommunityServiceMetricsInfo(BaseModel):
         description="Energy shares (distribution coefficient in kWh) that have a person for this project",
     )
 
+    energy_gridconsumption: MetricInfo = Field(
+        ...,
+        title="Energy gridconsumption",
+        description="Energy consumed from the grid for a person or project",
+    )
+
+    energy_gridinjection: MetricInfo = Field(
+        ...,
+        title="Energy gridinjection",
+        description="Exported energy to the grid for a person or project",
+    )
+
+    energy_selfconsumption: MetricInfo = Field(
+        ...,
+        title="Energy selfconsumption",
+        description="Selfconsumption energy for a person or project",
+    )
+
     energy_consumption: MetricInfo = Field(
         ...,
-        title="Eenergy consumption",
-        description="Energy consumed for a person",
+        title="Energy consumption",
+        description="Energy consumed for a person or project",
     )
 
     energy_production: MetricInfo = Field(
         ...,
-        title="Eenergy production",
-        description="Energy generated for a person",
+        title="Energy production",
+        description="Energy generated for a person or project",
     )
 
     selfproduction_ratio: MetricInfo = Field(
@@ -192,7 +213,7 @@ class CommunityServiceMetricsInfo(BaseModel):
         description="Ratio of selfproduced energy",
     )
 
-    surplus_ratio: MetricInfo = Field(
+    gridinjection_ratio: MetricInfo = Field(
         ...,
         title="Surplus ratio",
         description="Ratio of energy exported to de grid",
