@@ -134,6 +134,9 @@ class EnergyCommunityApiService(Component):
         output_param=PydanticModel(CommunityServiceMetricsInfoListResponse),
     )
     def community_services_metrics_info(self, query_params: QueryParams):
+        """
+        Set of metrics of all services of a energy community
+        """
         self._validate_headers()
         community_id = int(request.httprequest.headers.get("CommunityId"))
         paging = self._get_pagination_limits(query_params)
@@ -165,6 +168,9 @@ class EnergyCommunityApiService(Component):
     def community_service_metrics_info(
         self, service_id: int, query_params: QueryParams
     ):
+        """
+        Set of metrics of an especific community service
+        """
         self._validate_headers()
         community_id = int(request.httprequest.headers.get("CommunityId"))
         self.check_service(community_id, service_id)
@@ -189,9 +195,12 @@ class EnergyCommunityApiService(Component):
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectProductionInfoListResponse),
     )
-    def community_service_production_info(
+    def community_service_energy_production(
         self, service_id: int, query_params: QueryParams
     ):
+        """
+        Daily energy production of an installation between two dates
+        """
         self._validate_headers()
         community_id = request.httprequest.headers.get("CommunityId")
         paging = self._get_pagination_limits(query_params)
@@ -229,9 +238,12 @@ class EnergyCommunityApiService(Component):
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectSelfconsumptionInfoListResponse),
     )
-    def community_service_selfconsumption_info(
+    def community_service_energy_selfconsumption(
         self, service_id: int, query_params: QueryParams
     ):
+        """
+        Daily energy selfconsumption of an installation between two dates
+        """
         self._validate_headers()
         community_id = request.httprequest.headers.get("CommunityId")
         paging = self._get_pagination_limits(query_params)
@@ -264,9 +276,12 @@ class EnergyCommunityApiService(Component):
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectEnergyExportedInfoListResponse),
     )
-    def community_service_energy_exported_info(
+    def community_service_energy_exported(
         self, service_id: int, query_params: QueryParams
     ):
+        """
+        Daily energy exported to the grid of an installation between two dates
+        """
         self._validate_headers()
         community_id = request.httprequest.headers.get("CommunityId")
         paging = self._get_pagination_limits(query_params)
@@ -299,9 +314,12 @@ class EnergyCommunityApiService(Component):
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectEnergyConsumedInfoListResponse),
     )
-    def community_service_energy_consumed_info(
+    def community_service_energy_consumption(
         self, service_id: int, query_params: QueryParams
     ):
+        """
+        Daily energy comsuption to the grid of an installation between two dates
+        """
         self._validate_headers()
         community_id = request.httprequest.headers.get("CommunityId")
         paging = self._get_pagination_limits(query_params)
