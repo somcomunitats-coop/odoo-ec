@@ -34,10 +34,12 @@ class ProjectMetricsApiInfo(Component):
             type="fotovoltaic",
             shares=MetricInfo(
                 value=member_contract.supply_point_assignation_id.coefficient,
+                consolidated=True,
                 unit=UnitEnum.percentage,
             ),
             energy_shares=MetricInfo(
                 value=member_contract.supply_point_assignation_id.energy_shares,
+                consolidated=True,
                 unit=UnitEnum.kwn,
             ),
             energy_gridconsumption=MetricInfo(
@@ -85,7 +87,7 @@ class ProjectMetricsApiInfo(Component):
             gridconsumption_ratio=MetricInfo(
                 **monitoring_service.energy_usage_ratio_from_grid_by_member(
                     **service_parameters
-                ),
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
             selfconsumption_ratio=MetricInfo(
@@ -166,7 +168,7 @@ class ProjectMetricsApiInfo(Component):
             gridconsumption_ratio=MetricInfo(
                 **monitoring_service.energy_usage_ratio_from_grid_by_project(
                     **service_parameters
-                ),
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
             selfconsumption_ratio=MetricInfo(
