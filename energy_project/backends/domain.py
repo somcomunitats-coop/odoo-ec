@@ -1,5 +1,5 @@
 from collections import UserList, namedtuple
-from dataclasses import make_dataclass
+from dataclasses import field, make_dataclass
 from enum import Enum
 
 
@@ -18,7 +18,8 @@ class EnergyPointAttributes(Enum):
 
 
 BaseEnergyPoint = make_dataclass(
-    "BaseEnergyPoint", [attr.value for attr in EnergyPointAttributes]
+    "BaseEnergyPoint",
+    [(attr.value, "typing.Any", field(default=None)) for attr in EnergyPointAttributes],
 )
 
 MeasurePoint = namedtuple("MeasurePoint", ["date", "value", "consolidated"])
