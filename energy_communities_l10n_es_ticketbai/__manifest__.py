@@ -12,7 +12,11 @@
     "installable": True,
     "auto_install": False,
     "depends": [
+        "energy_communities",
         "l10n_es_ticketbai",
+        "l10n_es_ticketbai_api_batuz",
     ],
-    "data": [],
+    "data": [
+        "views/ticketbai_menu_views.xml",
+    ],
 }
