@@ -127,9 +127,9 @@ class MetricInfo(BaseModel):
     """
     Metric info representation
     """
-    value: float = Field(title="Value", description="Value of the metric")
+    value: Optional[float] = Field(title="Value", description="Value of the metric")
     unit: str = Field(title="unit", description="unit for this metric, kWh, grCO2...")
-    consolidated: bool = Field(
+    consolidated: Optional[bool] = Field(
         title="consolidated", description="True if the value is a consolidated one"
     )
 
