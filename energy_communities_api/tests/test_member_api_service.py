@@ -33,7 +33,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        self.community_id = "29"
+        self.community_id = "13"
         self.community_service_id = 64
         self.timeout = 600
         self.client = partial(self.url_open, timeout=self.timeout)
