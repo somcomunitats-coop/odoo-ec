@@ -1,9 +1,14 @@
+import logging
+
+import requests
 import werkzeug
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 from odoo.addons.auth_oauth.controllers.main import OAuthLogin as OAL
+
+logger = logging.getLogger(__name__)
 
 URL_ADMIN_USERS = "{root_endpoint}admin/realms/{realm_name}/users"
 URL_AUTH = "{root_endpoint}realms/{realm_name}/protocol/openid-connect/auth"
@@ -69,6 +74,95 @@ class OAuthProvider(models.Model):
                 odoo_url=self.redirect_admin_url,
                 cliend_id=self.client_id,
             )
+
+    def action_force_reconnect_users_with_keycloak(self):
+        """Force massive reconnection of all Odoo users linked to Keycloak.
+
+        Only allowed on non-productive databases (not_productive_database = True).
+        Only users with role platform_admin can execute this action.
+        Steps:
+          1. Check not_productive_database system parameter.
+          2. Reset oauth_uid for all users that have one.
+          3. Re-push all those users to KC (create or reuse by VAT).
+          4. Set email verified, remove required actions, set credentials (login as pwd).
+          5. Ensure odoo-allow group assignment.
+        """
+        self.ensure_one()
+        not_productive = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("not_productive_database", default="False")
+        )
+        if not_productive not in (True, "True", "true", "1"):
+            raise UserError(_("This action is not allowed on a production database."))
+        users = (
+            self.env["res.users"]
+            .sudo()
+            .search([("oauth_uid", "!=", False), ("active", "in", [True, False])])
+        )
+        logger.info(
+            "force_reconnect_users_with_keycloak: resetting oauth_uid for %d users",
+            len(users),
+        )
+        users.write({"oauth_uid": False})
+        users.create_users_on_keycloak()
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        provider_id.validate_admin_provider()
+        res_users_model = self.env["res.users"]
+        token = res_users_model._get_admin_token(provider_id)
+        for user in users:
+            if not user.oauth_uid:
+                logger.warning(
+                    "force_reconnect: user %s has no oauth_uid after push, skipping KC steps",
+                    user.login,
+                )
+                continue
+            kc_uid = user.oauth_uid
+            user_endpoint = provider_id.admin_user_endpoint + "/" + kc_uid
+            headers = {
+                "Authorization": "Bearer %s" % token,
+                "Content-Type": "application/json",
+            }
+            # Set emailVerified=True and remove requiredActions
+            update_resp = requests.put(
+                user_endpoint,
+                headers=headers,
+                json={"emailVerified": True, "requiredActions": []},
+            )
+            if not update_resp.ok:
+                logger.error(
+                    "force_reconnect: failed to update user %s in KC: %s",
+                    user.login,
+                    update_resp.text,
+                )
+            # Set or reset credentials (password = login lowercased, non-temporary)
+            credentials_endpoint = user_endpoint + "/reset-password"
+            cred_resp = requests.put(
+                credentials_endpoint,
+                headers=headers,
+                json={
+                    "type": "password",
+                    "value": user.login.lower(),
+                    "temporary": False,
+                },
+            )
+            if not cred_resp.ok:
+                logger.error(
+                    "force_reconnect: failed to set credentials for user %s in KC: %s",
+                    user.login,
+                    cred_resp.text,
+                )
+        users.sudo()._assign_kc_user_groups()
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": _("Keycloak reconnection completed"),
+                "message": _("Users have been reconnected to Keycloak successfully."),
+                "sticky": False,
+                "type": "success",
+            },
+        }
 
     def get_auth_link(self):
         self.ensure_one()

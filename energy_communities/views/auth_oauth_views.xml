@@ -5,6 +5,17 @@
         <field name="model">auth.oauth.provider</field>
         <field name="inherit_id" ref="auth_oauth.view_oauth_provider_form" />
         <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_toggle_enabled']" position="before">
+                <button
+                    name="action_force_reconnect_users_with_keycloak"
+                    type="object"
+                    string="Force users reconnection with KeyCloak"
+                    attrs="{'invisible': [('is_keycloak_provider','=',False)]}"
+                    groups="energy_communities.role_platform_admin_res_groups"
+                    class="btn-warning"
+                    confirm="This action will reset and re-push ALL users linked to Keycloak. Are you sure you want to continue?"
+                />
+            </xpath>
             <xpath expr="//field[@name='css_class']" position="after">
                 <field name="is_keycloak_provider" />
                 <field

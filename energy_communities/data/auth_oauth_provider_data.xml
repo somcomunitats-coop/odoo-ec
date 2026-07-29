@@ -1,5 +1,13 @@
 <?xml version="1.0" ?>
-<odoo noupdate="1">
+<odoo>
+    <!-- System parameter to mark non-productive databases (preprod, testing, etc.)
+         Set to True on destination databases via migration script. -->
+    <record id="param_not_productive_database" model="ir.config_parameter">
+        <field name="key">not_productive_database</field>
+        <field name="value">False</field>
+    </record>
+
+    <data noupdate="1">
     <record id="keycloak_login_provider" model="auth.oauth.provider">
         <field name="name">Keycloak Login Provider</field>
         <field name="body">Login with Keycloak</field>
@@ -39,4 +47,5 @@
         <field name="superuser">api_admin_0</field>
         <field name="superuser_pwd" />
     </record>
+    </data>
 </odoo>
