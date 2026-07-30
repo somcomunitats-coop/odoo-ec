@@ -3,6 +3,8 @@ import hashlib
 from odoo import api, fields, models
 from odoo.tools.translate import _
 
+from ..config import COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF
+
 
 class ResCompany(models.Model):
     _name = "res.company"
@@ -29,11 +31,6 @@ class ResCompany(models.Model):
                 f"{base_url}/subscription/company_invited/{record.company_external_id}"
             )
 
-    voluntary_share_id = fields.Many2one(
-        comodel_name="product.template",
-        domain=[("is_share", "=", True)],
-        string="Voluntary share to show on website",
-    )
     voluntary_share_journal_account = fields.Many2one(
         "account.journal",
         "Voluntary shares journal",
@@ -134,6 +131,25 @@ class ResCompany(models.Model):
             "target": "new",
             "res_id": wizard.id,
         }
+
+    def _get_default_voluntary_share_template(self):
+        self.ensure_one()
+        voluntary_share_category = self.env.ref(COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF)
+        return self.env["product.template"].search(
+            [
+                ("company_id", "=", self.id),
+                ("is_share", "=", True),
+                ("display_on_website", "=", True),
+                ("categ_id", "=", voluntary_share_category.id),
+            ],
+            order="default_share_product desc, id",
+            limit=1,
+        )
+
+    def _get_default_voluntary_share_product(self):
+        self.ensure_one()
+        voluntary_share_template = self._get_default_voluntary_share_template()
+        return voluntary_share_template.product_variant_id
 
     def get_voluntary_share_return_email_template(self):
         if self.voluntary_share_email_template:

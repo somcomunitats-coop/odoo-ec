@@ -15,8 +15,7 @@ class TestVoluntaryShareInterestReturn(common.TransactionCase):
     Tests for VoluntaryShareInterestReturnWizard.
 
     Verifies that both _get_voluntary_shares_invoice_line and
-    _consistency_validation identify products by category + company,
-    without depending on res.company.voluntary_share_id.
+    _consistency_validation identify products by category + company.
     """
 
     @classmethod
@@ -27,9 +26,6 @@ class TestVoluntaryShareInterestReturn(common.TransactionCase):
         ).new_company_id
         cls.voluntary_categ = cls.env.ref(COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF)
         cls.regular_categ = cls.env.ref(COOP_SHARE_PRODUCT_CATEG_REF)
-
-        # Ensure the wizard no longer depends on this company field.
-        cls.company.voluntary_share_id = False
 
         cls.voluntary_product_a = cls._create_share_product(
             "VSIR Test Voluntary Share A", cls.voluntary_categ, list_price=100.0
@@ -167,10 +163,8 @@ class TestVoluntaryShareInterestReturn(common.TransactionCase):
 
     # --- _get_voluntary_shares_invoice_line ---
 
-    def test_get_invoice_line_uses_category_not_company_field(self):
-        """_get_voluntary_shares_invoice_line works without voluntary_share_id."""
-        self.assertFalse(self.company.voluntary_share_id)
-
+    def test_get_invoice_line_uses_category_and_company(self):
+        """_get_voluntary_shares_invoice_line works by category and company."""
         voluntary_shares = self.wizard._get_voluntary_shares_invoice_line()
 
         self.assertIn(self.membership.id, voluntary_shares)

@@ -57,6 +57,7 @@ class WebsiteSubscriptionCCEE(
         self, kwargs, logged, values, post_file
     ):
         company_id = request.env["res.company"].browse(int(kwargs.get("company_id")))
+        voluntary_share_product = company_id._get_default_voluntary_share_product()
 
         user_obj = request.env["res.users"]
         sub_req_obj = request.env["subscription.request"]
@@ -93,7 +94,7 @@ class WebsiteSubscriptionCCEE(
                 values["error_msg"] = _(
                     "Email and confirmation email addresses don't match."
                 )
-                values.update({"share_product_id": company_id.voluntary_share_id.id})
+                values.update({"share_product_id": voluntary_share_product.id})
                 return request.render(redirect, values)
 
         # There's no issue with the email, so we can remember the confirmation email
@@ -112,7 +113,7 @@ class WebsiteSubscriptionCCEE(
         if not mandate_approved:
             values = self.fill_values(values, is_company, logged)
             values["error_msg"] = _("You must check the SEPA transference.")
-            values.update({"share_product_id": company_id.voluntary_share_id.id})
+            values.update({"share_product_id": voluntary_share_product.id})
             return request.render(redirect, values)
 
         if "iban" in required_fields:
@@ -123,9 +124,7 @@ class WebsiteSubscriptionCCEE(
                 if not valid:
                     values = self.fill_values(values, is_company, logged)
                     values["error_msg"] = _("Provided IBAN is not valid.")
-                    values.update(
-                        {"share_product_id": company_id.voluntary_share_id.id}
-                    )
+                    values.update({"share_product_id": voluntary_share_product.id})
                     return request.render(redirect, values)
 
         """
@@ -275,9 +274,7 @@ class WebsiteSubscriptionCCEE(
         if kwargs.get("generic_rules_approved", "off") == "on":
             values["generic_rules_approved"] = True
 
-        values["share_product_id"] = self.get_selected_share(
-            {"share_product_id": company.voluntary_share_id.id}
-        ).id
+        values["share_product_id"] = company._get_default_voluntary_share_product().id
         subscription_id = sub_req_obj.sudo().create(values)
 
         if partner:

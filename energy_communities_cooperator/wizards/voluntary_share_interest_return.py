@@ -111,8 +111,7 @@ class VoluntaryShareInterestReturnWizard(models.TransientModel):
     def _get_company_voluntary_share_products(self):
         """Return all voluntary-share product.product for the wizard company.
 
-        Products are identified by category + company, not by
-        res.company.voluntary_share_id.
+        Products are identified by category + company.
         """
         categ_voluntary_share = self.env.ref(COOP_VOLUNTARY_SHARE_PRODUCT_CATEG_REF)
         return self.env["product.product"].search(
