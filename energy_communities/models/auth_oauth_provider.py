@@ -127,7 +127,7 @@ class OAuthProvider(models.Model):
             update_resp = requests.put(
                 user_endpoint,
                 headers=headers,
-                json={"emailVerified": True, "requiredActions": []},
+                json={"emailVerified": True, "requiredActions": [], "enabled": True},
             )
             if not update_resp.ok:
                 logger.error(
