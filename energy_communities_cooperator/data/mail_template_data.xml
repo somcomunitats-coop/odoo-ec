@@ -5,7 +5,7 @@
             <field name="description">Sent to cooperators to confirm their voluntary share subscription request</field>
             <field name="email_from" >{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="subject" >Contribute to {{object.company_id.comercial_name or object.company_id.name}} Ref. ACSV{{object.id}}</field>
-            <field name="email_to">{{object.email}}</field>
+            <field name="email_to">{{(object.is_company and object.email and object.company_email+','+object.email) or (object.is_company and object.company_email) or object.email}}</field>
             <field name="email_cc">{{((object.company_id.parent_id and object.company_id.parent_id.hierarchy_level == 'coordinator' and object.company_id.parent_id.notify_to_coord_child_ccee_submissions and (object.company_id.parent_id.coop_email_contact or object.company_id.parent_id.email_formatted)) or '')}}</field>
             <field name="reply_to">{{(object.company_id.coop_email_contact or object.company_id.email_formatted)}}</field>
             <field name="model_id" ref="model_subscription_request" />
