@@ -4,6 +4,11 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-08-03 (v16.0.0.8.0)
+
+- now users that aren't admin can create map points
+- moved ticket bai menus to enegery_communities_l10n_ticket_bai module
+
 ### 2026-07-08 (v16.0.0.7.19)
 
 - New point of menu
