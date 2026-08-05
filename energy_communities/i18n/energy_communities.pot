@@ -3575,3 +3575,28 @@ msgstr ""
 #: model:ir.ui.menu,name:energy_communities.ce_my_community_web_data_map
 msgid "Web Data/Map"
 msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_oauth_provider_form_inherit
+msgid "Force users reconnection with KeyCloak"
+msgstr ""
+
+#. module: energy_communities
+#: model_terms:ir.ui.view,arch_db:energy_communities.view_oauth_provider_form_inherit
+msgid "This action will reset and re-push ALL users linked to Keycloak. Are you sure you want to continue?"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/auth_oauth_provider.py:0
+msgid "This action is not allowed on a production database."
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/auth_oauth_provider.py:0
+msgid "Keycloak reconnection completed"
+msgstr ""
+
+#. module: energy_communities
+#: code:addons/energy_communities/models/auth_oauth_provider.py:0
+msgid "Users have been reconnected to Keycloak successfully."
+msgstr ""
