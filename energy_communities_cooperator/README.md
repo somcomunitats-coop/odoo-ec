@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-08-05 (v16.0.0.8.1)
+
+- Add vat validation for subscription requests
+
 ### 2026-08-03 (v16.0.0.8.0)
 
 - Delete voluntary_share_id on res_company and res_config_settings
