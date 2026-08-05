@@ -4,13 +4,6 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
-    voluntary_share_id = fields.Many2one(
-        comodel_name="product.template",
-        domain=[("is_share", "=", True)],
-        string="Voluntary share to show on website",
-        related="company_id.voluntary_share_id",
-        readonly=False,
-    )
     voluntary_share_journal_account = fields.Many2one(
         "account.journal",
         "Voluntary shares journal",

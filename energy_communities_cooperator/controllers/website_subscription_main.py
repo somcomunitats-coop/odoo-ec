@@ -157,6 +157,7 @@ class WebsiteSubscriptionCCEE(
         else:
             company = request.website.company_id
         products = self.get_products_share(is_company)
+        voluntary_share_product = company._get_default_voluntary_share_product()
 
         product = False
         if target_product_external_id:
@@ -185,7 +186,7 @@ class WebsiteSubscriptionCCEE(
             for product in products:
                 if (
                     product.default_share_product is True
-                    and product.id != company.voluntary_share_id.id
+                    and product.id != voluntary_share_product.id
                 ):
                     values["share_product_id"] = product.id
                     values["share_payment_sepa_direct_debit"] = (

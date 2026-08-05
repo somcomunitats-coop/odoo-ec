@@ -168,9 +168,6 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
                         self._vol_coop_product_creation_params()
                     )
                     self._vol_coop_product_translations(vol_coop_product)
-                    self.new_company_id.write(
-                        {"voluntary_share_id": vol_coop_product.id}
-                    )
 
                 # nonprofit share recuring fee product
                 if (

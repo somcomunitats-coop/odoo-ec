@@ -4,6 +4,15 @@
 
 ## Changelog
 
+### 2026-08-03 (v16.0.0.8.0)
+
+- Delete voluntary_share_id on res_company and res_config_settings
+- New method for get_voluntary_share_id and change code to apply.
+
+### 2026-08-03 (v16.0.0.7.5)
+
+- fix email_to and body translations in email_template_confirmation_voluntary_share
+
 ### 2026-07-22 (v16.0.0.7.4)
 
 - New point of menu

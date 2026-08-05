@@ -3,3 +3,4 @@ from . import test_email_sending_assistant
 from . import test_website_share_subscription_controller
 from . import test_subscription_request
 from . import test_post_migration_invited
+from . import test_voluntary_share_interest_return

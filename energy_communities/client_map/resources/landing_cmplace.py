@@ -93,15 +93,15 @@ class LandingCmPlace:
         }
         # Permissions
         # TODO: Decide the permission level for this action
-        if self.landing.env.user.company_id.hierarchy_level not in [
-            "coordinator",
-            "instance",
-        ]:
-            ret_dict["errors"].append(
-                _(
-                    "Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
-                )
-            )
+        # if self.landing.env.user.company_id.hierarchy_level not in [
+        #     "coordinator",
+        #     "instance",
+        # ]:
+        #     ret_dict["errors"].append(
+        #         _(
+        #             "Only users that belongs to the 'Coordinator' or 'Instance' company can create new Map Places."
+        #         )
+        #     )
         # Map reference
         map = self.landing.env["cm.map"].search([("slug_id", "=", map_slug)])
         if map:

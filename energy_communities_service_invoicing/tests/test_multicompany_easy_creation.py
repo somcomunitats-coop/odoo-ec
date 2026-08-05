@@ -911,7 +911,6 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             [("company_id", "=", new_company.id), ("default_code", "=", "CSV")]
         )
         self.assertEqual(len(coop_product), 1)
-        self.assertEqual(coop_product, new_company.voluntary_share_id)
         self.assertEqual(coop_product.name, "Aportación voluntaria al capital social")
         self.assertEqual(
             coop_product.with_context(lang="ca_ES").name,

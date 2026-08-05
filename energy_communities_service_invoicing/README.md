@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-08-03 (v16.0.0.7.7)
+
+- field voluntary_share_id is not needed any more and we dont neet to fullfill it
+
 ### 2026-06-10 (v16.0.0.7.6)
 
 - Add and improve translations
