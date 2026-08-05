@@ -85,7 +85,7 @@ class WebsiteShareSubscriptionSubmissionBase(BaseModel):
     birthdate: str
     phone: str
     lang: int
-    vat: str
+    vat: str = Field(max_length=12)
     address: str
     city: str
     zip_code: str

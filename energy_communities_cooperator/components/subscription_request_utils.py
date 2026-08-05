@@ -142,6 +142,14 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
         )
         return subscription_request
 
+    def _validate_vat(self, creation_params: SubscriptionRequestCreationParams):
+        error_msg = _("Invalid vat format")
+        assert self.env["res.partner"]._run_vat_test(
+            creation_params.vat,
+            creation_params.country_id,
+            bool(creation_params.company_name),
+        ), error_msg
+
     def _validate_existing_partner(
         self, creation_params: SubscriptionRequestCreationParams
     ):
