@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-08-05 (v16.0.0.8.1)
+
+- reset keycloak token for all users
+
 ### 2026-08-03 (v16.0.0.8.0)
 
 - now users that aren't admin can create map points
