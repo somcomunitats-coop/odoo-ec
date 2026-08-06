@@ -4321,3 +4321,26 @@ msgstr "Los usuarios se han reconectado a Keycloak exitosamente."
 #: model_terms:ir.ui.view,arch_db:energy_communities.view_oauth_provider_form_inherit
 msgid "This action will reset and re-push ALL users linked to Keycloak. Are you sure you want to continue?"
 msgstr "Esta acción restablecerá y volverá a enviar TODOS los usuarios vinculados a Keycloak. ¿Estás seguro de que quieres continuar?"
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_ir_mail_server__smtp_pass_encrypted
+msgid "Encrypted Password"
+msgstr "Contraseña cifrada"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/ir_mail_server.py:0
+#, python-format
+msgid "Database secret is missing; cannot encrypt SMTP passwords."
+msgstr "Falta el secreto de la base de datos; no se pueden cifrar las contraseñas SMTP."
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/ir_mail_server.py:0
+#, python-format
+msgid ""
+"Could not decrypt SMTP password. "
+"The database secret may have changed."
+msgstr ""
+"No se pudo descifrar la contraseña SMTP. "
+"Es posible que el secreto de la base de datos haya cambiado."
