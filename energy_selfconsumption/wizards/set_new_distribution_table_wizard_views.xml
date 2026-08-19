@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Set New Distribution Table Wizard Views
+=======================================
+
+Wizard that asks for the distribution table change date before applying
+a new distribution table on an active self-consumption project.
+-->
+<odoo>
+    <data>
+
+        <record id="set_new_distribution_table_wizard_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.set_new_distribution_table.wizard.form</field>
+            <field name="model">energy_selfconsumption.set_new_distribution_table.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Set New Distribution Table">
+                    <sheet>
+                        <group>
+                            <field name="selfconsumption_id" invisible="1" />
+                            <field name="execution_date" />
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_confirm"
+                                string="Set new distribution table"
+                                type="object"
+                                class="btn-primary"
+                                confirm="Are you sure you want to set a new distribution table?" />
+                        <button special="cancel" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

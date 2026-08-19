@@ -447,7 +447,21 @@ class Selfconsumption(models.Model):
             "context": {"default_selfconsumption_id": self.id},
         }
 
-    def set_new_distribution_table(self):
+    def action_set_new_distribution_table(self):
+        """Open wizard to choose the distribution table change date."""
+        self.ensure_one()
+        return {
+            "name": _("Set New Distribution Table"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "energy_selfconsumption.set_new_distribution_table.wizard",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": {"default_selfconsumption_id": self.id},
+        }
+
+    def set_new_distribution_table(self, execution_date=None):
         distribution_table_active = self.distribution_table_ids.filtered(
             lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
         )
@@ -462,42 +476,8 @@ class Selfconsumption(models.Model):
         self.distribution_table_state(
             DISTRIBUTION_STATE_VALIDATED, DISTRIBUTION_STATE_ACTIVE
         )
-        contact_example = self.get_active_contracts()
-        execution_date = fields.Date.today()
-        if contact_example and contact_example[0].predecessor_contract_id:
-            execution_date = contact_example[
-                0
-            ].predecessor_contract_id.last_date_invoiced
-            if self.recurring_rule_type == "daily":
-                execution_date = fields.Date.today()
-            elif self.recurring_rule_type == "weekly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(days=-7)
-            elif self.recurring_rule_type == "monthly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-1)
-            elif self.recurring_rule_type == "monthlylastday":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-1)
-                execution_date = execution_date.replace(day=1) - timedelta(days=1)
-            elif self.recurring_rule_type == "quarterly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-3)
-            elif self.recurring_rule_type == "semesterly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-6)
-            elif self.recurring_rule_type == "yearly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(years=-1)
-
-            if self.recurring_rule_type != "daily":
-                execution_date = execution_date + timedelta(days=2)
+        if not execution_date:
+            execution_date = fields.Date.today()
 
         # TODO:
         # Generate new sale orders
