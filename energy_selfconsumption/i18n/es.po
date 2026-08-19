@@ -771,7 +771,7 @@ msgstr ""
 "distribución volverá al estado \"validado\"."
 
 #. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
 msgid "Are you sure you want to set a new distribution table?"
 msgstr "¿Estás seguro de que quieres establecer una nueva tabla de distribución?"
 
@@ -1085,6 +1085,7 @@ msgstr "Referencia catastral obligaroria"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_export_csv_inscritions_wizard
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_set_iban_inscriptions_form
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1671,6 +1672,39 @@ msgstr "Fecha en que esta tabla de distribución fue desactivada"
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__payment_mode_id
 msgid "Default payment mode for this project"
 msgstr "Modo de pago predeterminado para este proyecto"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__execution_date
+msgid "Date when the new distribution table will take effect"
+msgstr "Fecha en la que la nueva tabla de distribución entrará en vigor"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__execution_date
+msgid "Distribution table change date"
+msgstr "Fecha del cambio de tabla de reparto"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+msgid "Distribution table change date is required"
+msgstr "La fecha del cambio de tabla de reparto es obligatoria"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__selfconsumption_id
+msgid "Self-consumption project where the distribution table will be set"
+msgstr "Proyecto de autoconsumo donde se establecerá la tabla de distribución"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
+msgid "Set New Distribution Table"
+msgstr "Establecer nueva tabla de distribución"
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_set_new_distribution_table_wizard
+msgid "Set New Distribution Table Wizard"
+msgstr "Asistente para establecer nueva tabla de distribución"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -3988,6 +4022,7 @@ msgstr "Ninguno registro"
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/set_iban_inscriptions_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
 #, python-format
 msgid "No self-consumption project selected"
 msgstr "No se ha seleccionado proyecto de autoconsumo"
@@ -4902,6 +4937,7 @@ msgstr "Informe del Gestor de Autoconsumo"
 #. module: energy_selfconsumption
 #: model:ir.actions.act_window,name:energy_selfconsumption.selfconsumption_form_view_act_window
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__selfconsumption_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__selfconsumption_id
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_search_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Self-consumption Project"
@@ -5132,6 +5168,7 @@ msgstr "Establecer IBAN para las inscripciones"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
 msgid "Set new distribution table"
 msgstr "Establecer nueva tabla de distribución"
 
