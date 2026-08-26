@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.8.1",
+    "version": "16.0.0.8.2",
     "depends": [
         "account",
         "account_payment_partner",
@@ -47,6 +47,7 @@
             "python-slugify==8.0.1",
             "sentry-sdk==1.9.0",
             "email-validator==2.3.0",
+            "cryptography",
         ]
     },
     "author": "Coopdevs Treball SCCL & Som Energia SCCL",

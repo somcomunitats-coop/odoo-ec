@@ -4296,3 +4296,26 @@ msgstr "Keycloak-ekin berkonexioa osatu da"
 #: code:addons/energy_communities/models/auth_oauth_provider.py:0
 msgid "Users have been reconnected to Keycloak successfully."
 msgstr "Erabiltzaileak arrakastaz berkonektatu dira Keycloak-era."
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_ir_mail_server__smtp_pass_encrypted
+msgid "Encrypted Password"
+msgstr "Pasahitz zifratua"
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/ir_mail_server.py:0
+#, python-format
+msgid "Database secret is missing; cannot encrypt SMTP passwords."
+msgstr "Datu-basearen sekretua falta da; ezin dira SMTP pasahitzak zifratu."
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/models/ir_mail_server.py:0
+#, python-format
+msgid ""
+"Could not decrypt SMTP password. "
+"The database secret may have changed."
+msgstr ""
+"Ezin izan da SMTP pasahitza deszifratu. "
+"Baliteke datu-basearen sekretua aldatu izana."

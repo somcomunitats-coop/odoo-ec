@@ -3,4 +3,5 @@ from . import test_res_users
 from . import test_change_coordinator
 from . import test_landing_place
 from . import test_res_partner
+from . import test_ir_mail_server
 from .components import test_user_creator

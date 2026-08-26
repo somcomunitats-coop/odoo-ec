@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-08-26 (v16.0.0.8.2)
+
+- encrypt smpt_password
+
 ### 2026-08-05 (v16.0.0.8.1)
 
 - reset keycloak token for all users
