@@ -1,4 +1,6 @@
-from odoo.exceptions import MissingError
+from pydantic import ValidationError as PydanticValidationError
+
+from odoo.exceptions import MissingError, ValidationError
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
@@ -21,6 +23,7 @@ from ..schemas import (
     InvoicePDFInfo,
     InvoicePDFInfoResponse,
     MemberInfo,
+    MemberInfoBody,
     MemberInfoResponse,
     ProjectEnergyConsumedInfoListResponse,
     ProjectEnergyExportedInfoListResponse,
@@ -46,7 +49,7 @@ class MemberApiService(Component):
         super().__init__(*args)
 
     @restapi.method(
-        [(["/"], "GET")],
+        [(["/"], "GET"), (["/"], "POST")],
         output_param=PydanticModel(MemberInfoResponse),
     )
     def me(self):
@@ -61,7 +64,18 @@ class MemberApiService(Component):
             MemberInfo,
             community_id,
         ) as component:
-            member_info = component.get_member_info(component.env.user.partner_id)
+            if request.httprequest.method == "GET":
+                member_info = component.get_member_info(component.env.user.partner_id)
+            if request.httprequest.method == "POST":
+                try:
+                    info = MemberInfoBody(**request.httprequest.form)
+                except PydanticValidationError as e:
+                    raise ValidationError(e.errors()[0]["msg"]) from e
+                else:
+                    member_info = component.update_member_info(
+                        component.env.user.partner_id, info
+                    )
+
         return single_response(request, MemberInfoResponse, member_info)
 
     @restapi.method(
