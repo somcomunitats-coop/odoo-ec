@@ -710,6 +710,12 @@ class ResUsers(models.Model):
                 data = {
                     "attributes": {
                         "lang": [self.lang],
+                        "locale": [self.lang[:2]],
+                        "energy_community": [self.partner_id.company_id.name],
+                        "energy_community_email": [
+                            self.partner_id.company_id.email
+                            or "soporte@somcomunitats.coop"
+                        ],
                     },
                 }
                 response = requests.put(endpoint, headers=headers, json=data)
