@@ -367,6 +367,48 @@ class TestMemberApiService(HttpCase, RegistryMixin):
             },
         )
 
+    def test__me_update_endpoint__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # a member belonging to two energy communities
+        community_1_id = self.community_id
+        # when we call for update personal data info
+        request_body = {"lang": "ca_ES"}
+        response = self.client(
+            "/api/energy-communities/me",
+            data=request_body,
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the change is permanent
+        response = self.client(
+            "/api/energy-communities/me",
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        ).json()
+        for attr in request_body:
+            self.assertEqual(response["data"][attr], request_body[attr])
+
+    def test__me_update_endpoint__incorrect_body(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # a member belonging to two energy communities
+        community_1_id = self.community_id
+        # when we call for update personal data info
+        request_body = {"lang": "ca_EU"}
+        response = self.client(
+            "/api/energy-communities/me",
+            data=request_body,
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["name"], "Bad Request")
+
     def test__me_community_service_metrics__ok(self):
         # given http_client
         # self.url_open
