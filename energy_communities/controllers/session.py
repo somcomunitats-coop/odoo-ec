@@ -1,6 +1,3 @@
-# Copyright © 2025 XCG SAS
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
 from odoo import http
 
 from odoo.addons.web.controllers.session import Session
@@ -12,7 +9,9 @@ class SessionLogout(Session):
     # logout.
     @http.route("/web/session/logout", type="http", auth="none")
     def logout(self, redirect="/web"):  # pylint: disable=unused-argument
-        user = http.request.env.user
+        user = (
+            http.request.env["res.users"].sudo().browse(http.request.context.get("uid"))
+        )
         if user.oauth_provider_id and user.oauth_access_token:
             user._logout_from_keycloak()
             redirect = ""
