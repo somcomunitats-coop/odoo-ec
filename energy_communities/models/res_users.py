@@ -434,22 +434,16 @@ class ResUsers(models.Model):
         return resp.json()["access_token"]
 
     def _logout_from_keycloak(self):
-        provider_id = self.oauth_provider_id
-        token = self.oauth_access_token
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        provider_id.validate_admin_provider()
+        token = self._get_admin_token(provider_id)
         headers = {
             "Authorization": "Bearer %s" % token,
         }
-        data = {
-            "client_id": provider_id.client_id,
-            "client_secret": provider_id.client_secret,
-            "refresh_token": token,
-        }
+        logout_url = f"{provider_id.admin_user_endpoint}/{self.oauth_uid}/logout"
         logger.info("Logging out from Keycloak for user %s" % self.login)
-        resp = requests.post(
-            provider_id.end_session_endpoint, data=data, headers=headers
-        )
-        self._validate_response(resp)
-        return resp.json()
+        requests.post(logout_url, headers=headers)
+        return True
 
     def create_users_on_keycloak(self):
         """Create users on Keycloak.
