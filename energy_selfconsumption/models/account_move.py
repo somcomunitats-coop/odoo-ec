@@ -1,4 +1,4 @@
-from odoo import _, fields, models
+from odoo import Command, _, fields, models
 
 from ..config import (
     SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
@@ -120,6 +120,30 @@ class AccountMove(models.Model):
                 all_selfconsumptions |= line.selfconsumption_id
 
         return all_selfconsumptions
+
+    def add_distribution_table_replacement_section(self, name):
+        """Add a section line above the first product line of the invoice."""
+        for move in self:
+            product_lines = move.invoice_line_ids.filtered(
+                lambda line: not line.display_type
+            )
+            sequence = 1
+            if product_lines:
+                sequence = min(product_lines.mapped("sequence") or [2]) - 1
+            move.write(
+                {
+                    "invoice_line_ids": [
+                        Command.create(
+                            {
+                                "display_type": "line_section",
+                                "name": name,
+                                "sequence": sequence,
+                            }
+                        )
+                    ]
+                }
+            )
+        return True
 
     def is_selfconsumption_invoice(self):
         """

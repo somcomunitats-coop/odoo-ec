@@ -1675,13 +1675,13 @@ msgstr "Modo de pago predeterminado para este proyecto"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__execution_date
-msgid "Date when the new distribution table will take effect"
-msgstr "Fecha en la que la nueva tabla de distribución entrará en vigor"
+msgid "First day on which the new distribution table is operative"
+msgstr "Primer día en que la nueva tabla de distribución está operativa"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__execution_date
-msgid "Distribution table change date"
-msgstr "Fecha del cambio de tabla de reparto"
+msgid "Effective replacement execution date"
+msgstr "Fecha efectiva de ejecución del reemplazo"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -2095,6 +2095,7 @@ msgstr "Formato de codificación en el archivo CSV de importación"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_end
 msgid "End"
 msgstr "Final"
 
@@ -5256,6 +5257,7 @@ msgstr "Especifique si la factura debe generarse al principio (prepago) o al fin
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_start
 msgid "Start"
 msgstr "Inicio"
 
@@ -5771,6 +5773,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__power
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__power
 msgid "Total Energy Generated (kWh)"
 msgstr "Energía total generada (kWh)"
 
@@ -6166,3 +6169,230 @@ msgstr "a la plataforma tecnológica Som Comunitats."
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "y teléfono(s) de contacto"
 msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__invoice_until_date
+msgid "Invoice until"
+msgstr "Facturar hasta"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__invoicing_days
+msgid "Days to invoice"
+msgstr "Días a facturar"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
+msgid "ADVANCE INVOICING DUE TO DISTRIBUTION TABLE REPLACEMENT"
+msgstr "FACTURACIÓN ANTICIPADA POR REEMPLAZO TABLA DE REPARTO"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__invoice_until_date
+msgid "Last day invoiced with the outgoing table (day before the replacement)"
+msgstr ""
+"Último día facturado con la tabla saliente (el día anterior al reemplazo)"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__power
+msgid ""
+"Energy generated from the start of the period until the day before the "
+"replacement"
+msgstr ""
+"Energía generada desde el inicio del período hasta el día anterior al "
+"reemplazo"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_start
+msgid "Start date of the next invoicing period"
+msgstr "Fecha de inicio del próximo período de facturación"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_end
+msgid "End date of the next invoicing period"
+msgstr "Fecha de fin del próximo período de facturación"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__show_advance_invoicing
+msgid "Show Advance Invoicing"
+msgstr "Mostrar facturación anticipada"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__show_period_start_note
+msgid "Show Period Start Note"
+msgstr "Mostrar nota de inicio de período"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__advance_invoicing_notice
+msgid "Advance Invoicing Notice"
+msgstr "Aviso de facturación anticipada"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__period_start_note
+msgid "Period Start Note"
+msgstr "Nota de inicio de período"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__has_mid_period_table_change
+msgid "Has Mid Period Table Change"
+msgstr "Tiene cambio de tabla a mitad de período"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
+msgid "Table Change Date"
+msgstr "Fecha de cambio de tabla"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__remaining_period_note
+msgid "Remaining Period Note"
+msgstr "Nota del período restante"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"Replacing the current table on a given date implies invoicing the energy "
+"generated, until the day before that date, to its CUPS."
+msgstr ""
+"El reemplazo de la tabla actual, a una fecha determinada, implica la "
+"necesidad de facturar la energía generada, hasta el día anterior a esa "
+"fecha, a sus CUPS."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"You cannot run a distribution table replacement outside the last period "
+"already pre-invoiced on the contracts (%(period_start)s to %(period_end)s)"
+msgstr ""
+"No puedes ejecutar un reemplazo de la tabla de reparto fuera del último "
+"periodo ya pre-facturado en los contratos (%(period_start)s a %(period_end)s)"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"You cannot run a distribution table replacement outside the next invoicing "
+"period planned on the contracts (%(period_start)s to %(period_end)s)"
+msgstr ""
+"No puedes ejecutar un reemplazo de la tabla de reparto fuera del próximo "
+"periodo de facturación prevista en los contratos (%(period_start)s a "
+"%(period_end)s)"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"A post-paid invoicing cannot be executed when the selected contracts have "
+"different date profiles."
+msgstr ""
+"No se puede ejecutar una facturación de tipo post-pago cuando hay perfiles "
+"de fechas dispares en la configuración de los contratos seleccionados."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"Informative note: Since the effective replacement date coincides with the "
+"first day of the next period to invoice (%(period_start)s to "
+"%(period_end)s), when you use the post-paid invoicing wizard at the end of "
+"the period, the energy produced in that period will be invoiced only and "
+"entirely to the CUPS included in the new table."
+msgstr ""
+"Nota informativa: Dado que la fecha efectiva de ejecución del reemplazo "
+"coincide con el 1er día del próximo periodo a facturar (%(period_start)s a "
+"%(period_end)s), cuando a fin del periodo uséis el asistente de facturación "
+"post-pago, la energía producida en dicho periodo se facturará solo e "
+"íntegramente a los CUPS implicados en la nueva tabla."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"ATTENTION: due to a replacement of the project distribution table (with "
+"effective date of the new table on %(change_date)s), this invoice covers "
+"the energy produced from the start of the invoicing period "
+"(%(period_start)s) until the day before the replacement date "
+"(%(period_end)s), that is %(days)s days of production still using the "
+"coefficient of the initial distribution table (which will be replaced by "
+"the new one from %(change_date)s)."
+msgstr ""
+"ATENCIÓN: debido a un reemplazo en la tabla de reparto del proyecto (con "
+"fecha efectiva de vigencia de la nueva tabla a %(change_date)s), esta "
+"factura contempla la facturación de la energía producida desde el inicio "
+"del periodo a facturar (%(period_start)s) hasta el día anterior a la fecha "
+"del reemplazo (%(period_end)s), es decir %(days)s días de producción para "
+"los que aún aplica el coeficiente de la tabla de reparto inicial (que "
+"quedará sustituida por la nueva a partir del %(change_date)s)."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"ATTENTION: due to a replacement of the project distribution table (with "
+"effective date of the new table on %(change_date)s), this invoice covers "
+"the energy produced from the replacement date (%(change_date)s) until the "
+"end of the invoicing period (%(period_end)s), that is %(days)s days of "
+"production already using the coefficient of the current distribution table "
+"(which became effective from %(change_date)s)."
+msgstr ""
+"ATENCIÓN: debido a un reemplazo en la tabla de reparto del proyecto (con "
+"fecha efectiva de vigencia de la nueva tabla a %(change_date)s), esta "
+"factura contempla la facturación de la energía producida desde la fecha de "
+"reemplazo (%(change_date)s) hasta fin de periodo de facturación "
+"(%(period_end)s), es decir %(days)s días de producción para los que ya "
+"aplica el coeficiente de la nueva tabla de reparto actual (que entró en "
+"vigencia a partir del %(change_date)s)."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__range_info_notice
+msgid "Range Information Notice"
+msgstr "Aviso informativo del rango"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__out_of_range_notice
+msgid "Out of Range Notice"
+msgstr "Aviso de fecha fuera de rango"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__show_range_info_notice
+msgid "Show Range Info Notice"
+msgstr "Mostrar aviso informativo del rango"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__show_out_of_range_notice
+msgid "Show Out of Range Notice"
+msgstr "Mostrar aviso de fecha fuera de rango"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"The period already pre-invoiced on the contracts linked to the current "
+"distribution table is from %(period_start)s to %(period_end)s. The "
+"effective replacement date you select below must be within this range."
+msgstr ""
+"El periodo ya pre-facturado en los contratos vinculados a la tabla de "
+"reparto actual, es de %(period_start)s a %(period_end)s. La fecha efectiva "
+"de reemplazo que selecciones a continuación, debe estar comprendida dentro "
+"de este rango."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"The next invoicing period planned on the contracts linked to the current "
+"distribution table is from %(period_start)s to %(period_end)s. The "
+"effective replacement date you select below must be within this range."
+msgstr ""
+"El próximo periodo de facturación prevista en los contratos vinculados a la "
+"tabla de reparto actual, es de %(period_start)s a %(period_end)s. La fecha "
+"efectiva de reemplazo que selecciones a continuación, debe estar "
+"comprendida dentro de este rango."

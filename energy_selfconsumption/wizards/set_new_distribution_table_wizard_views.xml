@@ -17,7 +17,39 @@ a new distribution table on an active self-consumption project.
                     <sheet>
                         <group>
                             <field name="selfconsumption_id" invisible="1" />
+                            <field name="show_advance_invoicing" invisible="1" />
+                            <field name="show_period_start_note" invisible="1" />
+                            <field name="show_range_info_notice" invisible="1" />
+                            <field name="show_out_of_range_notice" invisible="1" />
+                            <field name="range_info_notice"
+                                   nolabel="1"
+                                   colspan="2"
+                                   widget="html"
+                                   class="font-weight-bold"
+                                   attrs="{'invisible': [('show_range_info_notice', '=', False)]}" />
                             <field name="execution_date" />
+                            <field name="out_of_range_notice"
+                                   nolabel="1"
+                                   colspan="2"
+                                   widget="html"
+                                   class="text-danger font-weight-bold"
+                                   attrs="{'invisible': [('show_out_of_range_notice', '=', False)]}" />
+                        </group>
+                        <group string="ADVANCE INVOICING DUE TO DISTRIBUTION TABLE REPLACEMENT"
+                               attrs="{'invisible': [('show_advance_invoicing', '=', False)]}">
+                            <field name="advance_invoicing_notice" nolabel="1" colspan="2" />
+                            <group>
+                                <field name="next_period_date_start" />
+                                <field name="invoice_until_date" />
+                            </group>
+                            <group>
+                                <field name="invoicing_days" />
+                                <field name="power"
+                                       attrs="{'required': [('show_advance_invoicing', '=', True)]}" />
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('show_period_start_note', '=', False)]}">
+                            <field name="period_start_note" nolabel="1" colspan="2" />
                         </group>
                     </sheet>
                     <footer>
@@ -25,7 +57,12 @@ a new distribution table on an active self-consumption project.
                                 string="Set new distribution table"
                                 type="object"
                                 class="btn-primary"
+                                attrs="{'invisible': [('show_out_of_range_notice', '=', True)]}"
                                 confirm="Are you sure you want to set a new distribution table?" />
+                        <button string="Set new distribution table"
+                                class="btn-primary"
+                                disabled="disabled"
+                                attrs="{'invisible': [('show_out_of_range_notice', '=', False)]}" />
                         <button special="cancel" string="Cancel" />
                     </footer>
                 </form>

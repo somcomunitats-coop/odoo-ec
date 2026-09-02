@@ -39,11 +39,14 @@ from ..config import (
     CUPS_LENGTH_20,
     CUPS_LENGTH_22,
     DISTRIBUTION_STATE_ACTIVE,
+    DISTRIBUTION_STATE_CANCELLED,
     DISTRIBUTION_STATE_PROCESS,
     DISTRIBUTION_STATE_VALIDATED,
     INSCRIPTION_STATE_ACTIVE,
     INSCRIPTION_STATE_CHANGE,
     LAST_DIGITS_COUNT,
+    RECURRING_INVOICING_TYPE_POSTPAID,
+    RECURRING_INVOICING_TYPE_PREPAID,
     SELFCONSUMPTION_CONF_STATE_ACTIVE,
     SELFCONSUMPTION_CONF_STATE_DEFAULT_VALUE,
     SELFCONSUMPTION_CONF_STATE_INACTIVE,
@@ -461,7 +464,9 @@ class Selfconsumption(models.Model):
             "context": {"default_selfconsumption_id": self.id},
         }
 
-    def set_new_distribution_table(self, execution_date=None):
+    def set_new_distribution_table(
+        self, execution_date=None, period_recurring_next_date=None
+    ):
         distribution_table_active = self.distribution_table_ids.filtered(
             lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
         )
@@ -473,11 +478,20 @@ class Selfconsumption(models.Model):
         if not distribution_table_validated:
             raise ValidationError(_("There is no validated distribution table."))
 
-        self.distribution_table_state(
-            DISTRIBUTION_STATE_VALIDATED, DISTRIBUTION_STATE_ACTIVE
-        )
         if not execution_date:
             execution_date = fields.Date.today()
+        if not period_recurring_next_date:
+            reference_contract = self.get_active_contracts()[:1]
+            period_recurring_next_date = (
+                reference_contract.recurring_next_date if reference_contract else False
+            )
+
+        self.distribution_table_state(
+            DISTRIBUTION_STATE_VALIDATED,
+            DISTRIBUTION_STATE_ACTIVE,
+            execution_date=execution_date,
+            period_recurring_next_date=period_recurring_next_date,
+        )
 
         # TODO:
         # Generate new sale orders
@@ -540,6 +554,8 @@ class Selfconsumption(models.Model):
                     if inscription_id.mandate_id
                     else None,
                 }
+                if period_recurring_next_date:
+                    so_metadata["recurring_next_date"] = period_recurring_next_date
 
                 # create service invoicing
                 with sale_order_utils(self.env) as component:
@@ -579,10 +595,14 @@ class Selfconsumption(models.Model):
                 # 3.- mark contract as active
                 with contract_utils(self.env, service_invoicing_id) as component:
                     component.activate(execution_date)
+                self._align_new_contract_period_end(
+                    service_invoicing_id, period_recurring_next_date
+                )
 
                 if (
                     not service_invoicing_id.predecessor_contract_id
                     and not service_invoicing_id.successor_contract_id
+                    and self.invoicing_mode == "power_acquired"
                 ):
                     accounts_invoice = service_invoicing_id.recurring_create_invoice()
                     days_invoiced = 0
@@ -802,60 +822,66 @@ class Selfconsumption(models.Model):
             "target": "current",
         }
 
-    def check_dates_contract(self):
-        if not self.get_active_contracts():
+    def check_dates_contract(self, contracts=None):
+        if contracts is None:
+            contracts = self.get_active_contracts()
+        if not contracts:
             return True
-        last_date_invoiced = self.get_active_contracts()[0].last_date_invoiced
-        if self.get_active_contracts().filtered(
+        last_date_invoiced = contracts[0].last_date_invoiced
+        if contracts.filtered(
             lambda contract: contract.last_date_invoiced != last_date_invoiced
         ):
             raise ValidationError(
                 _("The last date invoiced is not the same for all contracts.")
             )
-        next_period_date_start = self.get_active_contracts()[0].next_period_date_start
-        if self.get_active_contracts().filtered(
+        next_period_date_start = contracts[0].next_period_date_start
+        if contracts.filtered(
             lambda contract: contract.next_period_date_start != next_period_date_start
         ):
             raise ValidationError(
                 _("The next period date start is not the same for all contracts.")
             )
-        next_period_date_end = self.get_active_contracts()[0].next_period_date_end
-        if self.get_active_contracts().filtered(
+        next_period_date_end = contracts[0].next_period_date_end
+        if contracts.filtered(
             lambda contract: contract.next_period_date_end != next_period_date_end
         ):
             raise ValidationError(
                 _("The next period date end is not the same for all contracts.")
             )
-        recurring_next_date = self.get_active_contracts()[0].recurring_next_date
-        if self.get_active_contracts().filtered(
+        recurring_next_date = contracts[0].recurring_next_date
+        if contracts.filtered(
             lambda contract: contract.recurring_next_date != recurring_next_date
         ):
             raise ValidationError(
                 _("The recurring next date is not the same for all contracts.")
             )
 
-        recurring_invoicing_type = self.get_active_contracts()[
-            0
-        ].recurring_invoicing_type
-        if self.get_active_contracts().filtered(
+        recurring_invoicing_type = contracts[0].recurring_invoicing_type
+        if contracts.filtered(
             lambda contract: contract.recurring_invoicing_type
             != recurring_invoicing_type
         ):
             raise ValidationError(
                 _("The recurring invoicing type is not the same for all contracts.")
             )
-        if last_date_invoiced and recurring_invoicing_type == "postpaid":
-            if self.get_active_contracts().filtered(
-                lambda contract: contract.recurring_next_date == next_period_date_end
+        if (
+            last_date_invoiced
+            and recurring_invoicing_type == RECURRING_INVOICING_TYPE_POSTPAID
+        ):
+            if contracts.filtered(
+                lambda contract: contract.recurring_next_date != next_period_date_end
             ):
                 raise ValidationError(
                     _(
                         "The recurring next date is not the same as the next period date end for all contracts."
                     )
                 )
-        elif last_date_invoiced and recurring_invoicing_type == "prepaid":
-            if self.get_active_contracts().filtered(
-                lambda contract: contract.recurring_next_date == next_period_date_start
+        elif (
+            last_date_invoiced
+            and recurring_invoicing_type == RECURRING_INVOICING_TYPE_PREPAID
+        ):
+            if contracts.filtered(
+                lambda contract: contract.recurring_next_date != next_period_date_start
             ):
                 raise ValidationError(
                     _(
@@ -864,8 +890,17 @@ class Selfconsumption(models.Model):
                 )
         return True
 
-    def distribution_table_state(self, actual_state, new_state):
+    def distribution_table_state(
+        self,
+        actual_state,
+        new_state,
+        execution_date=None,
+        period_recurring_next_date=None,
+    ):
         self.check_dates_contract()
+        if not execution_date:
+            execution_date = fields.Date.today()
+        table_end_date = execution_date - relativedelta(days=1)
         distribution_table_to_activate = self.distribution_table_ids.filtered(
             lambda table: table.state == actual_state
         )
@@ -875,12 +910,12 @@ class Selfconsumption(models.Model):
         # If the new state is active, we need to cancel the active distribution table
         if new_state == DISTRIBUTION_STATE_ACTIVE and distribution_table_active:
             distribution_table_active.write(
-                {"date_end": fields.Date.today(), "state": "cancelled"}
+                {"date_end": table_end_date, "state": DISTRIBUTION_STATE_CANCELLED}
             )
         distribution_table_to_activate.write({"state": new_state})
         if new_state == DISTRIBUTION_STATE_ACTIVE:
             # We need to update the start date of the distribution table
-            distribution_table_to_activate.write({"date_start": fields.Date.today()})
+            distribution_table_to_activate.write({"date_start": execution_date})
             # If the new state is active, we need to update the inscriptions
             for supply_point_assignation in distribution_table_to_activate.mapped(
                 "supply_point_assignation_ids"
@@ -909,27 +944,42 @@ class Selfconsumption(models.Model):
                             )
                         ]
                     )
+                    modify_date = contract.last_date_invoiced
+                    activate_date = (
+                        modify_date + relativedelta(days=1)
+                        if modify_date
+                        else execution_date
+                    )
+                    modify_metadata = {
+                        "selfconsumption_id": self.id,
+                        "supply_point_id": supply_point_assignation.supply_point_id.id,
+                        "supply_point_assignation_id": supply_point_assignation.id,
+                        "recurring_interval": self.recurring_interval,
+                        "recurring_rule_type": self.recurring_rule_type,
+                        "recurring_invoicing_type": self.recurring_invoicing_type,
+                        "project_id": self.id,
+                        "company_id": self.company_id.id,
+                        "mandate_id": inscription_id.mandate_id.id
+                        if inscription_id.mandate_id
+                        else None,
+                    }
+                    if (
+                        period_recurring_next_date
+                        and contract.recurring_invoicing_type
+                        == RECURRING_INVOICING_TYPE_POSTPAID
+                    ):
+                        modify_metadata[
+                            "recurring_next_date"
+                        ] = period_recurring_next_date
                     with contract_utils(self.env, contract) as component:
                         new_contract = component.modify(
-                            execution_date=contract.last_date_invoiced,
+                            execution_date=modify_date,
                             executed_modification_action="modify",
                             pricelist_id=contract.pricelist_id,
                             pack_id=contract.pack_id,
                             discount=contract.discount,
                             payment_mode_id=contract.payment_mode_id,
-                            metadata={
-                                "selfconsumption_id": self.id,
-                                "supply_point_id": supply_point_assignation.supply_point_id.id,
-                                "supply_point_assignation_id": supply_point_assignation.id,
-                                "recurring_interval": self.recurring_interval,
-                                "recurring_rule_type": self.recurring_rule_type,
-                                "recurring_invoicing_type": self.recurring_invoicing_type,
-                                "project_id": self.id,
-                                "company_id": self.company_id.id,
-                                "mandate_id": inscription_id.mandate_id.id
-                                if inscription_id.mandate_id
-                                else None,
-                            },
+                            metadata=modify_metadata,
                         )
                     with contract_utils(self.env, new_contract) as component:
                         # 2.- setup contract line main_line
@@ -937,9 +987,10 @@ class Selfconsumption(models.Model):
                             {"main_line": True}
                         )
                         # 3.- mark contract as active
-                        component.activate(
-                            contract.last_date_invoiced + relativedelta(days=+1)
-                        )
+                        component.activate(activate_date)
+                    self._align_new_contract_period_end(
+                        new_contract, period_recurring_next_date
+                    )
             inscriptions = self.inscription_ids.filtered_domain(
                 [("state", "=", INSCRIPTION_STATE_CHANGE)]
             )
@@ -956,6 +1007,46 @@ class Selfconsumption(models.Model):
                     with contract_utils(self.env, contract) as component:
                         component.close(contract.last_date_invoiced)
             self.check_dates_contract()
+
+    def _align_new_contract_period_end(self, new_contract, period_recurring_next_date):
+        """Keep the original period end on a newly created post-paid contract.
+
+        contract.utils recreates recurrency from date_start. For a replacement
+        inside the current period we must keep recurring_next_date (and therefore
+        next_period_date_end) of the period that is still being invoiced.
+        """
+        if (
+            not new_contract
+            or not period_recurring_next_date
+            or new_contract.recurring_invoicing_type
+            != RECURRING_INVOICING_TYPE_POSTPAID
+        ):
+            return
+        new_contract.contract_line_ids.write(
+            {"recurring_next_date": period_recurring_next_date}
+        )
+        with contract_utils(self.env, new_contract) as component:
+            component.propagate_recurrency_values_to_contract()
+
+    def get_table_change_in_period(self, period_start, period_end):
+        """Return active and cancelled tables if a replacement happened in the period."""
+        self.ensure_one()
+        empty = self.env["energy_selfconsumption.distribution_table"]
+        if not period_start or not period_end:
+            return empty, empty
+        active_tables = self.distribution_table_ids.filtered(
+            lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
+            and table.date_start
+            and period_start <= table.date_start <= period_end
+        )
+        cancelled_tables = self.distribution_table_ids.filtered(
+            lambda table: table.state == DISTRIBUTION_STATE_CANCELLED
+            and table.date_end
+            and period_start <= table.date_end <= period_end
+        )
+        if active_tables and cancelled_tables:
+            return active_tables[:1], cancelled_tables[:1]
+        return empty, empty
 
     def validate_state(self, state):
         if state not in (PROJECT_STATE_ACTIVATION, PROJECT_STATE_ACTIVE):
