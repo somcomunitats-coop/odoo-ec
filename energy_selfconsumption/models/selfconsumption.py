@@ -832,7 +832,11 @@ class Selfconsumption(models.Model):
             lambda contract: contract.last_date_invoiced != last_date_invoiced
         ):
             raise ValidationError(
-                _("The last date invoiced is not the same for all contracts.")
+                self._format_inconsistent_contract_dates_message(
+                    "The last date invoiced is not the same for all contracts.",
+                    contracts,
+                    "last_date_invoiced",
+                )
             )
         next_period_date_start = contracts[0].next_period_date_start
         if contracts.filtered(
@@ -890,6 +894,22 @@ class Selfconsumption(models.Model):
                 )
         return True
 
+    def _format_inconsistent_contract_dates_message(
+        self, message, contracts, field_name
+    ):
+        """Build a validation message that lists each contract date value."""
+        details = [
+            "%s (id=%s): %s=%s"
+            % (
+                contract.display_name,
+                contract.id,
+                field_name,
+                getattr(contract, field_name) or False,
+            )
+            for contract in contracts
+        ]
+        return "{}\n{}".format(_(message), "\n".join(details))
+
     def distribution_table_state(
         self,
         actual_state,
@@ -944,12 +964,11 @@ class Selfconsumption(models.Model):
                             )
                         ]
                     )
-                    modify_date = contract.last_date_invoiced
-                    activate_date = (
-                        modify_date + relativedelta(days=1)
-                        if modify_date
-                        else execution_date
+                    modify_date = (
+                        contract.last_date_invoiced
+                        or execution_date - relativedelta(days=1)
                     )
+                    activate_date = execution_date
                     modify_metadata = {
                         "selfconsumption_id": self.id,
                         "supply_point_id": supply_point_assignation.supply_point_id.id,
@@ -1006,7 +1025,38 @@ class Selfconsumption(models.Model):
                 if contract:
                     with contract_utils(self.env, contract) as component:
                         component.close(contract.last_date_invoiced)
+            self._close_outgoing_contracts_not_in_new_table(
+                distribution_table_active, distribution_table_to_activate
+            )
             self.check_dates_contract()
+
+    def _close_outgoing_contracts_not_in_new_table(
+        self, outgoing_table, incoming_table
+    ):
+        """Close leftover in-progress contracts of CUPS that left the table.
+
+        Inscriptions in change state are closed above. CUPS whose inscription
+        was removed instead of marked as change still keep an open contract on
+        the outgoing table; those must be closed as well so date checks only
+        see the new table contracts.
+        """
+        incoming_supply_points = incoming_table.mapped(
+            "supply_point_assignation_ids.supply_point_id"
+        )
+        for assignation in outgoing_table.mapped("supply_point_assignation_ids"):
+            if assignation.supply_point_id in incoming_supply_points:
+                continue
+            contract = assignation.get_contract()
+            if contract and contract.status == "in_progress":
+                close_date = contract.last_date_invoiced or (
+                    incoming_table.date_start - relativedelta(days=1)
+                    if incoming_table.date_start
+                    else False
+                )
+                if not close_date:
+                    continue
+                with contract_utils(self.env, contract) as component:
+                    component.close(close_date)
 
     def _align_new_contract_period_end(self, new_contract, period_recurring_next_date):
         """Keep the original period end on a newly created post-paid contract.
