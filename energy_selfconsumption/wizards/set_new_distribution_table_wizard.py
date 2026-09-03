@@ -291,11 +291,39 @@ class SetNewDistributionTableWizard(models.TransientModel):
         if self._needs_advance_invoicing():
             self._invoice_outgoing_table_until_replacement()
 
-        self.selfconsumption_id.set_new_distribution_table(
+        closed_without_inscription = self.selfconsumption_id.set_new_distribution_table(
             execution_date=self.execution_date,
             period_recurring_next_date=original_recurring_next_date,
         )
-        return {"type": "ir.actions.act_window_close"}
+        return self._action_after_confirm(closed_without_inscription)
+
+    def _action_after_confirm(self, closed_without_inscription):
+        """Close the wizard and warn if leftover CUPS contracts were closed."""
+        close_action = {"type": "ir.actions.act_window_close"}
+        if not closed_without_inscription:
+            return close_action
+        cups_codes = closed_without_inscription.mapped(
+            "supply_point_assignation_id.supply_point_id.code"
+        )
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": _("Contracts closed without inscription change"),
+                "message": _(
+                    "%(count)s contract(s) were closed because their CUPS are "
+                    "not included in the new distribution table and had no "
+                    "inscription in change state: %(cups)s"
+                )
+                % {
+                    "count": len(closed_without_inscription),
+                    "cups": ", ".join(code for code in cups_codes if code),
+                },
+                "type": "warning",
+                "sticky": True,
+                "next": close_action,
+            },
+        }
 
     def _validate_execution_date(self):
         """Ensure the replacement date is inside the allowed invoicing period."""

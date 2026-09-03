@@ -5576,6 +5576,46 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid "Contracts closed without inscription change"
+msgstr "Contratos cerrados sin inscripción en cambio"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"%(count)s contract(s) were closed because their CUPS are "
+"not included in the new distribution table and had no "
+"inscription in change state: %(cups)s"
+msgstr ""
+"Se han cerrado %(count)s contrato(s) porque sus CUPS no están "
+"en la nueva tabla de distribución y no tenían inscripción en estado "
+"de cambio: %(cups)s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid ""
+"The following %(count)s contract(s) were closed because their "
+"CUPS are not included in the new distribution table and had no "
+"inscription in change state:\n%(details)s"
+msgstr ""
+"Se han cerrado los siguientes %(count)s contrato(s) porque sus CUPS "
+"no están en la nueva tabla de distribución y no tenían inscripción "
+"en estado de cambio:\n%(details)s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Unknown CUPS"
+msgstr "CUPS desconocido"
+
+#. module: energy_selfconsumption
+#. odoo-python
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid ""

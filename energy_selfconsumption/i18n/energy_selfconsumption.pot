@@ -5424,6 +5424,40 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid "Contracts closed without inscription change"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"%(count)s contract(s) were closed because their CUPS are "
+"not included in the new distribution table and had no "
+"inscription in change state: %(cups)s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid ""
+"The following %(count)s contract(s) were closed because their "
+"CUPS are not included in the new distribution table and had no "
+"inscription in change state:\n%(details)s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Unknown CUPS"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid ""

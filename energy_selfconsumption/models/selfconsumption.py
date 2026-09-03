@@ -486,7 +486,7 @@ class Selfconsumption(models.Model):
                 reference_contract.recurring_next_date if reference_contract else False
             )
 
-        self.distribution_table_state(
+        closed_without_inscription = self.distribution_table_state(
             DISTRIBUTION_STATE_VALIDATED,
             DISTRIBUTION_STATE_ACTIVE,
             execution_date=execution_date,
@@ -641,6 +641,8 @@ class Selfconsumption(models.Model):
                             ],
                         }
                     )
+
+        return closed_without_inscription
 
     def set_in_activation_state(self):
         for record in self:
@@ -1025,10 +1027,18 @@ class Selfconsumption(models.Model):
                 if contract:
                     with contract_utils(self.env, contract) as component:
                         component.close(contract.last_date_invoiced)
-            self._close_outgoing_contracts_not_in_new_table(
-                distribution_table_active, distribution_table_to_activate
+            closed_without_inscription = (
+                self._close_outgoing_contracts_not_in_new_table(
+                    distribution_table_active, distribution_table_to_activate
+                )
             )
+            if closed_without_inscription:
+                self._notify_contracts_closed_without_inscription(
+                    closed_without_inscription
+                )
             self.check_dates_contract()
+            return closed_without_inscription
+        return self.env["contract.contract"]
 
     def _close_outgoing_contracts_not_in_new_table(
         self, outgoing_table, incoming_table
@@ -1040,6 +1050,7 @@ class Selfconsumption(models.Model):
         the outgoing table; those must be closed as well so date checks only
         see the new table contracts.
         """
+        closed_contracts = self.env["contract.contract"]
         incoming_supply_points = incoming_table.mapped(
             "supply_point_assignation_ids.supply_point_id"
         )
@@ -1057,6 +1068,32 @@ class Selfconsumption(models.Model):
                     continue
                 with contract_utils(self.env, contract) as component:
                     component.close(close_date)
+                closed_contracts |= contract
+        return closed_contracts
+
+    def _notify_contracts_closed_without_inscription(self, contracts):
+        """Record leftover closures on the project chatter."""
+        self.ensure_one()
+        if not contracts:
+            return
+        details = "\n".join(
+            self._format_closed_contract_without_inscription(contract)
+            for contract in contracts
+        )
+        self.message_post(
+            body=_(
+                "The following %(count)s contract(s) were closed because their "
+                "CUPS are not included in the new distribution table and had no "
+                "inscription in change state:\n%(details)s"
+            )
+            % {"count": len(contracts), "details": details}
+        )
+
+    def _format_closed_contract_without_inscription(self, contract):
+        cups_code = contract.supply_point_assignation_id.supply_point_id.code or _(
+            "Unknown CUPS"
+        )
+        return "- {} ({}, id={})".format(cups_code, contract.display_name, contract.id)
 
     def _align_new_contract_period_end(self, new_contract, period_recurring_next_date):
         """Keep the original period end on a newly created post-paid contract.
