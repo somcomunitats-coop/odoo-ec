@@ -446,13 +446,13 @@ class InvoicingWizard(models.TransientModel):
         if not change_date:
             return
         for invoice in invoices:
-            move = invoice if hasattr(invoice, "invoice_line_ids") else False
-            if not move:
+            if getattr(invoice, "_name", None) != "account.move" or not invoice:
                 continue
-            note = self.with_context(
-                lang=move.partner_id.lang or self.env.lang
-            )._get_remaining_period_section_note(change_date)
-            move.add_distribution_table_replacement_section(note)
+            for move in invoice.exists():
+                note = self.with_context(
+                    lang=move.partner_id.lang or self.env.lang
+                )._get_remaining_period_section_note(change_date)
+                move.add_distribution_table_replacement_section(note)
 
     def _parse_csv_if_needed(self):
         """
@@ -482,9 +482,10 @@ class InvoicingWizard(models.TransientModel):
         Returns:
             account.move: Generated invoice
         """
+        date_ref = self.env.context.get("force_invoice_date_ref") or False
         return contract.with_context(
             {"energy_delivered": self.power}
-        )._recurring_create_invoice()
+        )._recurring_create_invoice(date_ref=date_ref)
 
     def _process_energy_custom_contract(self, df, contract):
         """

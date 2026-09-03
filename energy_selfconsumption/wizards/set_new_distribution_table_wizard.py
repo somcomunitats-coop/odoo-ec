@@ -8,6 +8,7 @@ from odoo.addons.energy_communities.config import DISPLAY_DATE_FORMAT
 from odoo.addons.energy_communities.utils import contract_utils
 
 from ..config import (
+    DISTRIBUTION_STATE_ACTIVE,
     MIN_POWER_VALUE,
     RECURRING_INVOICING_TYPE_POSTPAID,
     RECURRING_INVOICING_TYPE_PREPAID,
@@ -173,7 +174,24 @@ class SetNewDistributionTableWizard(models.TransientModel):
         self.ensure_one()
         if not self.selfconsumption_id:
             return self.env["contract.contract"]
-        return self.selfconsumption_id.get_active_contracts()[:1]
+        contracts = self._get_outgoing_table_contracts()
+        return (contracts.filtered("last_date_invoiced") or contracts)[:1]
+
+    def _get_outgoing_table_contracts(self):
+        """In-progress contracts linked to the currently active distribution table."""
+        self.ensure_one()
+        project = self.selfconsumption_id
+        if not project:
+            return self.env["contract.contract"]
+        active_table = project.distribution_table_ids.filtered(
+            lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
+        )[:1]
+        if not active_table:
+            return project.get_active_contracts()
+        contracts = self.env["contract.contract"]
+        for assignation in active_table.supply_point_assignation_ids:
+            contracts |= assignation.get_contract()
+        return contracts.filtered(lambda contract: contract.status == "in_progress")
 
     def _get_next_invoicing_period(self):
         self.ensure_one()
@@ -256,6 +274,12 @@ class SetNewDistributionTableWizard(models.TransientModel):
         if not self.execution_date:
             raise ValidationError(_("Distribution table change date is required"))
 
+        # The wizard is opened with default_selfconsumption_id in the context.
+        # That integer default must not leak into account.move.line creates.
+        confirm_context = dict(self.env.context)
+        confirm_context.pop("default_selfconsumption_id", None)
+        self = self.with_context(confirm_context)
+
         self.selfconsumption_id.check_dates_contract()
         self._validate_execution_date()
 
@@ -264,7 +288,7 @@ class SetNewDistributionTableWizard(models.TransientModel):
         if reference_contract:
             original_recurring_next_date = reference_contract.recurring_next_date
 
-        if self.show_advance_invoicing:
+        if self._needs_advance_invoicing():
             self._invoice_outgoing_table_until_replacement()
 
         self.selfconsumption_id.set_new_distribution_table(
@@ -319,6 +343,19 @@ class SetNewDistributionTableWizard(models.TransientModel):
             % dates
         )
 
+    def _needs_advance_invoicing(self):
+        """Whether the replacement falls inside the next post-paid invoicing period."""
+        self.ensure_one()
+        if not self._is_postpaid_energy_delivered():
+            return False
+        period_start, period_end = self._get_next_invoicing_period()
+        return bool(
+            self.execution_date
+            and period_start
+            and period_end
+            and period_start < self.execution_date <= period_end
+        )
+
     def _invoice_outgoing_table_until_replacement(self):
         """Invoice current contracts for the stub period using InvoicingWizard."""
         self.ensure_one()
@@ -328,9 +365,13 @@ class SetNewDistributionTableWizard(models.TransientModel):
                     min_value=MIN_POWER_VALUE
                 )
             )
-        contracts = self.selfconsumption_id.get_active_contracts()
+        contracts = self._get_outgoing_table_contracts()
         if not contracts:
-            return
+            raise ValidationError(
+                _(
+                    "No active contracts found on the current distribution table to invoice."
+                )
+            )
         period_end = self.execution_date - relativedelta(days=1)
         self._force_contracts_period_end(contracts, period_end)
         invoicing_wizard = self.env["energy_selfconsumption.invoicing.wizard"].create(
@@ -341,25 +382,62 @@ class SetNewDistributionTableWizard(models.TransientModel):
             }
         )
         invoices = invoicing_wizard.with_context(
-            skip_distribution_table_change_notes=True
+            skip_distribution_table_change_notes=True,
+            force_invoice_date_ref=period_end,
         ).generate_invoices()
-        invoice_records = self.env["account.move"].browse(
-            [invoice.id if hasattr(invoice, "id") else invoice for invoice in invoices]
-        )
+        invoice_records = self._as_account_moves(invoices)
+        if len(invoice_records) != len(contracts):
+            raise ValidationError(
+                _(
+                    "The replacement assistant could not generate the stub invoices "
+                    "for the period until %(period_end)s. Expected %(expected)s "
+                    "invoices and got %(generated)s."
+                )
+                % {
+                    "period_end": period_end.strftime(DISPLAY_DATE_FORMAT)
+                    if period_end
+                    else "",
+                    "expected": len(contracts),
+                    "generated": len(invoice_records),
+                }
+            )
         for invoice in invoice_records:
             note = self.with_context(
                 lang=invoice.partner_id.lang or self.env.lang
             )._get_advance_invoice_section_note()
             invoice.add_distribution_table_replacement_section(note)
 
+    def _as_account_moves(self, invoices):
+        """Normalize generate_invoices() output into saved account.move records."""
+        moves = self.env["account.move"]
+        for invoice in invoices or []:
+            if getattr(invoice, "_name", None) == "account.move":
+                moves |= invoice
+            elif invoice:
+                moves |= self.env["account.move"].browse(invoice)
+        return moves.exists()
+
     def _force_contracts_period_end(self, contracts, period_end):
-        """Limit the next invoicing period of contracts so it ends on period_end."""
+        """Limit the next invoicing period of contracts so it ends on period_end.
+
+        Writing only recurring_next_date is not enough: the recurrency compute
+        can restore the original next invoice date. date_end trims the period
+        (max_date_end) so the stub can actually be invoiced.
+        """
         for contract in contracts:
             offset = contract.recurring_invoicing_offset or 0
             forced_recurring_next_date = period_end + relativedelta(days=offset)
-            contract.contract_line_ids.write(
-                {"recurring_next_date": forced_recurring_next_date}
+            lines = contract.contract_line_ids.filtered(
+                lambda line: not line.is_canceled
             )
+            lines.write(
+                {
+                    "date_end": period_end,
+                    "recurring_next_date": forced_recurring_next_date,
+                }
+            )
+            lines._compute_recurring_next_date()
+            lines._compute_next_period_date_end()
             with contract_utils(self.env, contract) as component:
                 component.propagate_recurrency_values_to_contract()
 

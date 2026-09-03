@@ -5557,6 +5557,25 @@ msgstr "La energía generada debe ser mayor que {min_value} kWh"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid "No active contracts found on the current distribution table to invoice."
+msgstr "No hay contratos activos en la tabla de distribución actual para facturar."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"The replacement assistant could not generate the stub invoices "
+"for the period until %(period_end)s. Expected %(expected)s "
+"invoices and got %(generated)s."
+msgstr ""
+"El asistente de reemplazo no ha podido generar las facturas del tramo "
+"hasta %(period_end)s. Se esperaban %(expected)s facturas y se han generado %(generated)s."
+
+#. module: energy_selfconsumption
+#. odoo-python
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid ""
