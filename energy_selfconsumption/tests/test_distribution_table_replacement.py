@@ -117,3 +117,32 @@ class TestDistributionTableReplacement(TransactionCase):
             wizard.range_info_notice,
         )
         self.assertIn("<strong>", wizard.range_info_notice)
+
+    def test_advance_invoice_section_note_includes_period_dates(self):
+        wizard = self.env[
+            "energy_selfconsumption.set_new_distribution_table.wizard"
+        ].create(
+            {
+                "selfconsumption_id": self.selfconsumption.id,
+                "execution_date": date(2026, 5, 3),
+            }
+        )
+        note = wizard._get_advance_invoice_section_note(
+            period_start=date(2026, 4, 1),
+            period_end=date(2026, 5, 2),
+        )
+        self.assertIn("01/04/2026", note)
+        self.assertIn("02/05/2026", note)
+        self.assertIn("03/05/2026", note)
+        self.assertIn("32", note)
+        self.assertNotIn("()", note)
+
+    def test_remaining_period_section_note_includes_period_end(self):
+        wizard = self.env["energy_selfconsumption.invoicing.wizard"].create({})
+        note = wizard._get_remaining_period_section_note(
+            date(2026, 5, 3), period_end=date(2026, 6, 30)
+        )
+        self.assertIn("03/05/2026", note)
+        self.assertIn("30/06/2026", note)
+        self.assertIn("59", note)
+        self.assertNotIn("()", note)

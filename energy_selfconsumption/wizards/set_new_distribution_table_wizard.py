@@ -400,6 +400,10 @@ class SetNewDistributionTableWizard(models.TransientModel):
                     "No active contracts found on the current distribution table to invoice."
                 )
             )
+        # Capture stub dates before mutating contracts: after invoicing,
+        # next_period_date_start becomes False (last_date_invoiced >= date_end)
+        # and the wizard computed fields would render empty parentheses.
+        period_start, _full_period_end = self._get_next_invoicing_period()
         period_end = self.execution_date - relativedelta(days=1)
         self._force_contracts_period_end(contracts, period_end)
         invoicing_wizard = self.env["energy_selfconsumption.invoicing.wizard"].create(
@@ -432,7 +436,10 @@ class SetNewDistributionTableWizard(models.TransientModel):
         for invoice in invoice_records:
             note = self.with_context(
                 lang=invoice.partner_id.lang or self.env.lang
-            )._get_advance_invoice_section_note()
+            )._get_advance_invoice_section_note(
+                period_start=period_start,
+                period_end=period_end,
+            )
             invoice.add_distribution_table_replacement_section(note)
 
     def _as_account_moves(self, invoices):
@@ -469,11 +476,16 @@ class SetNewDistributionTableWizard(models.TransientModel):
             with contract_utils(self.env, contract) as component:
                 component.propagate_recurrency_values_to_contract()
 
-    def _get_advance_invoice_section_note(self):
-        """Build the advance-invoicing section text for a given invoice."""
+    def _get_advance_invoice_section_note(self, period_start, period_end):
+        """Build the advance-invoicing section text for a given invoice.
+
+        period_start/period_end must be the stub dates captured before contracts
+        are truncated and invoiced; wizard computed fields are empty afterwards.
+        """
         self.ensure_one()
-        period_start = self.next_period_date_start
-        period_end = self.invoice_until_date
+        days = 0
+        if period_start and period_end:
+            days = (period_end - period_start).days + 1
         return _(
             "ATTENTION: due to a replacement of the project distribution table "
             "(with effective date of the new table on %(change_date)s), this invoice "
@@ -483,12 +495,14 @@ class SetNewDistributionTableWizard(models.TransientModel):
             "coefficient of the initial distribution table (which will be replaced "
             "by the new one from %(change_date)s)."
         ) % {
-            "change_date": self.execution_date.strftime(DISPLAY_DATE_FORMAT),
+            "change_date": self.execution_date.strftime(DISPLAY_DATE_FORMAT)
+            if self.execution_date
+            else "",
             "period_start": period_start.strftime(DISPLAY_DATE_FORMAT)
             if period_start
             else "",
             "period_end": period_end.strftime(DISPLAY_DATE_FORMAT)
             if period_end
             else "",
-            "days": self.invoicing_days,
+            "days": days,
         }

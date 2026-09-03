@@ -188,7 +188,7 @@ class InvoicingWizard(models.TransientModel):
             record.has_mid_period_table_change = True
             record.table_change_date = change_date
             record.remaining_period_note = record._get_remaining_period_section_note(
-                change_date
+                change_date, period_end=record.next_period_date_end
             )
 
     def _get_mid_period_table_change_date(self):
@@ -213,9 +213,10 @@ class InvoicingWizard(models.TransientModel):
             return False
         return active_table.date_start
 
-    def _get_remaining_period_section_note(self, change_date):
+    def _get_remaining_period_section_note(self, change_date, period_end=None):
         self.ensure_one()
-        period_end = self.next_period_date_end
+        if period_end is None:
+            period_end = self.next_period_date_end
         days = 0
         if change_date and period_end:
             days = (period_end - change_date).days + 1
@@ -415,6 +416,12 @@ class InvoicingWizard(models.TransientModel):
         # Parse CSV file if needed
         df, csv_loaded = self._parse_csv_if_needed()
 
+        # Snapshot table-change dates before invoicing advances contract periods
+        remaining_period_end = self.next_period_date_end
+        remaining_change_date = False
+        if not self.env.context.get("skip_distribution_table_change_notes"):
+            remaining_change_date = self._get_mid_period_table_change_date()
+
         # Generate invoices
         generated_invoices = []
         for contract in self.contract_ids:
@@ -434,15 +441,20 @@ class InvoicingWizard(models.TransientModel):
                 invoice.write({"energy_delivered": contract_data["energy"]})
                 generated_invoices.append(invoice)
 
-        self._add_table_change_notes_to_invoices(generated_invoices)
+        self._add_table_change_notes_to_invoices(
+            generated_invoices,
+            change_date=remaining_change_date,
+            period_end=remaining_period_end,
+        )
         return generated_invoices
 
-    def _add_table_change_notes_to_invoices(self, invoices):
+    def _add_table_change_notes_to_invoices(
+        self, invoices, change_date=False, period_end=False
+    ):
         """Annotate invoices when a table replacement split the invoiced period."""
         self.ensure_one()
         if self.env.context.get("skip_distribution_table_change_notes"):
             return
-        change_date = self._get_mid_period_table_change_date()
         if not change_date:
             return
         for invoice in invoices:
@@ -451,7 +463,7 @@ class InvoicingWizard(models.TransientModel):
             for move in invoice.exists():
                 note = self.with_context(
                     lang=move.partner_id.lang or self.env.lang
-                )._get_remaining_period_section_note(change_date)
+                )._get_remaining_period_section_note(change_date, period_end=period_end)
                 move.add_distribution_table_replacement_section(note)
 
     def _parse_csv_if_needed(self):
