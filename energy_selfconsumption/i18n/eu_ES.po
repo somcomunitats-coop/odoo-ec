@@ -712,7 +712,7 @@ msgid ""
 msgstr "Ziur proiektuaren egoera aurreko urratsera aldatu nahi duzula? Hala bada, banaketa-taula 'balioztatuta' egoerara itzuliko da."
 
 #. module: energy_selfconsumption
-#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
 msgid "Are you sure you want to set a new distribution table?"
 msgstr "Ziur zaude banaketa-taula berria ezarri nahi duzula?"
 
@@ -1026,6 +1026,7 @@ msgstr "Derrigorrezko kadastro erreferentzia"
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_change_distribution_table_import_wizard_form
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_export_csv_inscritions_wizard
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.view_set_iban_inscriptions_form
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
 msgid "Cancel"
 msgstr "Indargabetu"
 
@@ -1612,6 +1613,39 @@ msgid "Default payment mode for this project"
 msgstr "Proiektu honetarako ordainketa modua lehenetsia"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__execution_date
+msgid "First day on which the new distribution table is operative"
+msgstr "Taula berria indarrean jartzen den lehen eguna"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__execution_date
+msgid "Effective replacement execution date"
+msgstr "Ordezkapenaren benetako gauzatze-data"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+msgid "Distribution table change date is required"
+msgstr "Banaketa-taularen aldaketa-data derrigorrezkoa da"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__selfconsumption_id
+msgid "Self-consumption project where the distribution table will be set"
+msgstr "Banaketa-taula ezarriko den auto-kontsumo proiektua"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
+msgid "Set New Distribution Table"
+msgstr "Banaketa-taula berria ezarri"
+
+#. module: energy_selfconsumption
+#: model:ir.model,name:energy_selfconsumption.model_energy_selfconsumption_set_new_distribution_table_wizard
+msgid "Set New Distribution Table Wizard"
+msgstr "Banaketa-taula berria ezartzeko laguntzailea"
+
+#. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -2000,6 +2034,7 @@ msgstr "Inportazio CSV fitxategiko kodeketa formatua"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_end
 msgid "End"
 msgstr "Amaiera"
 
@@ -3928,6 +3963,7 @@ msgstr "Erregistrorik ez"
 #. odoo-python
 #: code:addons/energy_selfconsumption/wizards/define_invoicing_mode_wizard.py:0
 #: code:addons/energy_selfconsumption/wizards/set_iban_inscriptions_wizard.py:0
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
 #, python-format
 msgid "No self-consumption project selected"
 msgstr "Ez da autokontsumoko proiekturik hautatu"
@@ -4839,6 +4875,7 @@ msgstr "Autokontsumoaren Kudeatzailearen Txostena"
 #. module: energy_selfconsumption
 #: model:ir.actions.act_window,name:energy_selfconsumption.selfconsumption_form_view_act_window
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_contract_generation_wizard__selfconsumption_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__selfconsumption_id
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.distribution_table_search_view
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Self-consumption Project"
@@ -5069,6 +5106,7 @@ msgstr "IBAN ezarri izen-emateentzat"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
 msgid "Set new distribution table"
 msgstr "Banaketa taula berria ezarri"
 
@@ -5155,6 +5193,7 @@ msgstr "Zehaztu faktura hasieran (aurrez ordaindutakoa) edo amaiera (ordaindutak
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_start
 msgid "Start"
 msgstr "Hasi"
 
@@ -5454,6 +5493,65 @@ msgstr "Sortutako energia {min_value} kWh baino handiagoa izan behar da"
 
 #. module: energy_selfconsumption
 #. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid "No active contracts found on the current distribution table to invoice."
+msgstr "Ez dago kontratu aktiborik uneko banaketa taulan fakturatzeko."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"The replacement assistant could not generate the stub invoices "
+"for the period until %(period_end)s. Expected %(expected)s "
+"invoices and got %(generated)s."
+msgstr ""
+"Ordezkapen laguntzaileak ezin izan ditu sortu %(period_end)s arteko "
+"tarteko fakturak. %(expected)s faktura espero ziren eta %(generated)s sortu dira."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid "Contracts closed without inscription change"
+msgstr "Inskripzio-aldaketarik gabe itxitako kontratuak"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"%(count)s contract(s) were closed because their CUPS are "
+"not included in the new distribution table and had no "
+"inscription in change state: %(cups)s"
+msgstr ""
+"%(count)s kontratu itxi dira, haien CUPS-ak ez daudelako "
+"banaketa-taula berrian eta ez zutelako aldaketa egoeran "
+"inskripziorik: %(cups)s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid ""
+"The following %(count)s contract(s) were closed because their "
+"CUPS are not included in the new distribution table and had no "
+"inscription in change state:\n%(details)s"
+msgstr ""
+"Honako %(count)s kontratu hauek itxi dira, haien CUPS-ak ez daudelako "
+"banaketa-taula berrian eta ez zutelako aldaketa egoeran "
+"inskripziorik:\n%(details)s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Unknown CUPS"
+msgstr "CUPS ezezaguna"
+
+#. module: energy_selfconsumption
+#. odoo-python
 #: code:addons/energy_selfconsumption/wizards/create_distribution_table_wizard.py:0
 #, python-format
 msgid ""
@@ -5670,6 +5768,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__power
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__power
 msgid "Total Energy Generated (kWh)"
 msgstr "Sortutako Energia Osoa (kWh)"
 
@@ -6065,3 +6164,227 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_manager_authorization_template
 msgid "y teléfono(s) de contacto"
 msgstr "eta harremanetarako telefono-zenbakia(k)"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__invoice_until_date
+msgid "Invoice until"
+msgstr "Fakturatu arte"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__invoicing_days
+msgid "Days to invoice"
+msgstr "Fakturatu beharreko egunak"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.set_new_distribution_table_wizard_form_view
+msgid "ADVANCE INVOICING DUE TO DISTRIBUTION TABLE REPLACEMENT"
+msgstr "BANAKETA-TAULA ORDEZTEAGATIKO FAKTURAZIO AURRERATUA"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__invoice_until_date
+msgid "Last day invoiced with the outgoing table (day before the replacement)"
+msgstr ""
+"Irteerako taularekin fakturatutako azken eguna (ordezkapena baino egun bat "
+"lehenago)"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__power
+msgid ""
+"Energy generated from the start of the period until the day before the "
+"replacement"
+msgstr ""
+"Aldiaren hasieratik ordezkapena baino egun bat lehenagora arte sortutako "
+"energia"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_start
+msgid "Start date of the next invoicing period"
+msgstr "Hurrengo fakturazio-aldiaren hasiera-data"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_end
+msgid "End date of the next invoicing period"
+msgstr "Hurrengo fakturazio-aldiaren amaiera-data"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__show_advance_invoicing
+msgid "Show Advance Invoicing"
+msgstr "Erakutsi fakturazio aurreratua"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__show_period_start_note
+msgid "Show Period Start Note"
+msgstr "Erakutsi aldiaren hasierako oharra"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__advance_invoicing_notice
+msgid "Advance Invoicing Notice"
+msgstr "Fakturazio aurreratuaren oharra"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__period_start_note
+msgid "Period Start Note"
+msgstr "Aldiaren hasierako oharra"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__has_mid_period_table_change
+msgid "Has Mid Period Table Change"
+msgstr "Aldiaren erdian taula-aldaketa du"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
+msgid "Table Change Date"
+msgstr "Taula-aldaketaren data"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__remaining_period_note
+msgid "Remaining Period Note"
+msgstr "Gainerako aldiaren oharra"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"Replacing the current table on a given date implies invoicing the energy "
+"generated, until the day before that date, to its CUPS."
+msgstr ""
+"Uneko taula data jakin batean ordezteak esan nahi du sortutako energia, "
+"data horren aurreko egunera arte, CUPSetan fakturatu behar dela."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"You cannot run a distribution table replacement outside the last period "
+"already pre-invoiced on the contracts (%(period_start)s to %(period_end)s)"
+msgstr ""
+"Ezin duzu banaketa-taula ordezkatu kontratuetan jada aurrez fakturatutako "
+"azken epetik kanpo (%(period_start)setik %(period_end)sera)"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"You cannot run a distribution table replacement outside the next invoicing "
+"period planned on the contracts (%(period_start)s to %(period_end)s)"
+msgstr ""
+"Ezin duzu banaketa-taula ordezkatu kontratuetan aurreikusitako hurrengo "
+"fakturazio-epetik kanpo (%(period_start)setik %(period_end)sera)"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"A post-paid invoicing cannot be executed when the selected contracts have "
+"different date profiles."
+msgstr ""
+"Ezin da ordaindu osteko fakturaziorik egin hautatutako kontratuen "
+"data-profilak desberdinak direnean."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"Informative note: Since the effective replacement date coincides with the "
+"first day of the next period to invoice (%(period_start)s to "
+"%(period_end)s), when you use the post-paid invoicing wizard at the end of "
+"the period, the energy produced in that period will be invoiced only and "
+"entirely to the CUPS included in the new table."
+msgstr ""
+"Ohar informatiboa: Ordezkapenaren benetako gauzatze-data bat datorrenez "
+"hurrengo fakturazio-aldiaren 1. egunarekin (%(period_start)setik "
+"%(period_end)sera), epearen amaieran ordaindu osteko "
+"fakturazio-laguntzailea erabiltzen duzuenean, aldi horretan ekoitzitako "
+"energia taula berrian inplikatutako CUPSei bakarrik fakturatuko zaie osorik."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"ATTENTION: due to a replacement of the project distribution table (with "
+"effective date of the new table on %(change_date)s), this invoice covers "
+"the energy produced from the start of the invoicing period "
+"(%(period_start)s) until the day before the replacement date "
+"(%(period_end)s), that is %(days)s days of production still using the "
+"coefficient of the initial distribution table (which will be replaced by "
+"the new one from %(change_date)s)."
+msgstr ""
+"KONTUZ: proiektuaren banaketa-taulan egindako aldaketa dela eta "
+"(%(change_date)san jarri zen indarrean taula berria), fakturazio-aldiaren "
+"hasieratik (%(period_start)s) ordezkapen-dataren aurreko egunera arte "
+"(%(period_end)s) ekoitzitako energia fakturatzea aurreikusten du faktura "
+"honek, hau da, %(days)s ekoizpen-egun, zeinei hasierako banaketa-taularen "
+"koefizientea aplikatzen baitzaie oraindik (%(change_date)stik aurrera taula "
+"berriak ordezkatuko du)."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/invoicing_wizard.py:0
+#, python-format
+msgid ""
+"ATTENTION: due to a replacement of the project distribution table (with "
+"effective date of the new table on %(change_date)s), this invoice covers "
+"the energy produced from the replacement date (%(change_date)s) until the "
+"end of the invoicing period (%(period_end)s), that is %(days)s days of "
+"production already using the coefficient of the current distribution table "
+"(which became effective from %(change_date)s)."
+msgstr ""
+"KONTUZ: proiektuaren banaketa-taulan egindako aldaketa dela eta "
+"(%(change_date)san jarri zen indarrean taula berria), ordezkapen-datatik "
+"(%(change_date)s) fakturazio-aldiaren amaierara arte (%(period_end)s) "
+"ekoitzitako energia fakturatzea aurreikusten du faktura honek, hau da, "
+"%(days)s ekoizpen-egun, zeinei egungo banaketa-taula berriaren koefizientea "
+"aplikatzen baitzaie (%(change_date)stik aurrera jarri zen indarrean)."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__range_info_notice
+msgid "Range Information Notice"
+msgstr "Tarteari buruzko ohar informatiboa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__out_of_range_notice
+msgid "Out of Range Notice"
+msgstr "Tartetik kanpoko dataren oharra"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__show_range_info_notice
+msgid "Show Range Info Notice"
+msgstr "Erakutsi tarteari buruzko ohar informatiboa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__show_out_of_range_notice
+msgid "Show Out of Range Notice"
+msgstr "Erakutsi tartetik kanpoko dataren oharra"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"The period already pre-invoiced on the contracts linked to the current "
+"distribution table is from %(period_start)s to %(period_end)s. The "
+"effective replacement date you select below must be within this range."
+msgstr ""
+"Uneko banaketa-taularekin lotutako kontratuetan jada aurrez fakturatutako "
+"aldia %(period_start)setik %(period_end)sera da. Jarraian hautatzen duzun "
+"ordezkapenaren benetako datak tarte horren barruan egon behar du."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/set_new_distribution_table_wizard.py:0
+#, python-format
+msgid ""
+"The next invoicing period planned on the contracts linked to the current "
+"distribution table is from %(period_start)s to %(period_end)s. The "
+"effective replacement date you select below must be within this range."
+msgstr ""
+"Uneko banaketa-taularekin lotutako kontratuetan aurreikusitako hurrengo "
+"fakturazio-aldia %(period_start)setik %(period_end)sera da. Jarraian "
+"hautatzen duzun ordezkapenaren benetako datak tarte horren barruan egon "
+"behar du."

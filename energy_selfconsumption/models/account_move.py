@@ -121,6 +121,33 @@ class AccountMove(models.Model):
 
         return all_selfconsumptions
 
+    def add_distribution_table_replacement_section(self, name):
+        """Add a section line above the first product line of the invoice."""
+        # The replacement wizard puts default_selfconsumption_id in the context.
+        # account.move.line.selfconsumption_id is a related One2many, so that
+        # integer default would crash default_get ("Wrong value ...: 25").
+        create_context = dict(self.env.context)
+        create_context.pop("default_selfconsumption_id", None)
+        create_context["check_move_validity"] = False
+        create_context["skip_invoice_sync"] = True
+        MoveLine = self.env["account.move.line"].with_context(create_context)
+        for move in self.exists():
+            product_lines = move.invoice_line_ids.filtered(
+                lambda line: not line.display_type
+            )
+            sequence = 1
+            if product_lines:
+                sequence = min(product_lines.mapped("sequence") or [2]) - 1
+            MoveLine.create(
+                {
+                    "move_id": move.id,
+                    "display_type": "line_section",
+                    "name": name,
+                    "sequence": sequence,
+                }
+            )
+        return True
+
     def is_selfconsumption_invoice(self):
         """
         Check if this invoice is related to self-consumption projects

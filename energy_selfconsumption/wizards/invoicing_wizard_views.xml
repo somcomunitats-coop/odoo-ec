@@ -32,6 +32,11 @@ Main functionalities:
                             <field name="next_period_date_start" />
                             <field name="next_period_date_end" />
                             <field name="invoicing_mode" readonly="1" invisible="1" />
+                            <field name="has_mid_period_table_change" invisible="1" />
+                            <field name="table_change_date" invisible="1" />
+                        </group>
+                        <group attrs="{'invisible': [('has_mid_period_table_change', '=', False)]}">
+                            <field name="remaining_period_note" nolabel="1" colspan="2" />
                         </group>
                         
                         <!-- Power and Contract Information -->
