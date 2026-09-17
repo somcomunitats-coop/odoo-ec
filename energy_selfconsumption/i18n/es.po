@@ -3006,6 +3006,13 @@ msgid "Inscription must have a valid supply point"
 msgstr "La inscripción debe tener un punto de suministro válido"
 
 #. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Inscription not found for CUPS {cups}"
+msgstr "No se ha encontrado la inscripción para el CUPS {cups}"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_change_distribution_table_import_line_wizard__inscription_id
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__inscription_id
 msgid "Inscription record being modified"
@@ -3544,8 +3551,8 @@ msgstr "Mandato Filtrado"
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
-msgid "Mandate not found for {partner}"
-msgstr "Mandato no encontrado para {partner}"
+msgid "Mandate not found for CUPS {cups} ({partner})"
+msgstr "No se ha encontrado el mandato para el CUPS {cups} ({partner})"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__max_distributed_power
@@ -5735,6 +5742,13 @@ msgid ""
 msgstr ""
 "La recomendación habitual para un uso eléctrico anual es de 0,5 kW de energía fotovoltaica.\n"
 "            de potencia por 1500 kWh de consumo eléctrico."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "There is already an active inscription for CUPS '{cups}' in this project"
+msgstr "Ya existe una inscripción activa para el CUPS '{cups}' en este proyecto"
 
 #. module: energy_selfconsumption
 #. odoo-python

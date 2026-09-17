@@ -2946,6 +2946,13 @@ msgid "Inscription must have a valid supply point"
 msgstr "Izen-emateak hornidura puntu baliagarria izan behar du"
 
 #. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Inscription not found for CUPS {cups}"
+msgstr "Ez da aurkitu inskripziorik CUPS {cups}entzat"
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_change_distribution_table_import_line_wizard__inscription_id
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__inscription_id
 msgid "Inscription record being modified"
@@ -3484,8 +3491,8 @@ msgstr "Mandatua iragazita"
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
-msgid "Mandate not found for {partner}"
-msgstr "Ez da aurkitu komandoa {partner}rentzat"
+msgid "Mandate not found for CUPS {cups} ({partner})"
+msgstr "Ez da aurkitu mandatua CUPS {cups}entzat ({partner})"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_create_distribution_table_wizard__max_distributed_power
@@ -5671,6 +5678,13 @@ msgid ""
 msgstr ""
 "Urteko erabilera elektrikorako ohiko gomendioa PV 0,5 kW da\n"
 "            potentzia kontsumo elektrikoko 1500 kWh bakoitzeko."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "There is already an active inscription for CUPS '{cups}' in this project"
+msgstr "Dagoeneko badago inskripzio aktibo bat '{cups}' CUPS-erako proiektu honetan"
 
 #. module: energy_selfconsumption
 #. odoo-python
