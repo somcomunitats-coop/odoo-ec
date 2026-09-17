@@ -2833,6 +2833,13 @@ msgid "Inscription must have a valid supply point"
 msgstr ""
 
 #. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "Inscription not found for CUPS {cups}"
+msgstr ""
+
+#. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_change_distribution_table_import_line_wizard__inscription_id
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_change_state_inscription_lines_wizard__inscription_id
 msgid "Inscription record being modified"
@@ -3391,7 +3398,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/energy_selfconsumption/models/selfconsumption.py:0
 #, python-format
-msgid "Mandate not found for {partner}"
+msgid "Mandate not found for CUPS {cups} ({partner})"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -5581,6 +5588,13 @@ msgstr ""
 msgid ""
 "The usual recommendation for an annual electrical use of is 0.5kW of PV\n"
 "                power per 1500 kWh of electrical consumption."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "There is already an active inscription for CUPS '{cups}' in this project"
 msgstr ""
 
 #. module: energy_selfconsumption
