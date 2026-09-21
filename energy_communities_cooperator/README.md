@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-09-21 (v16.0.0.8.2)
+
+- Fix transalations for account number owner advise
+
 ### 2026-08-05 (v16.0.0.8.1)
 
 - Add vat validation for subscription requests
