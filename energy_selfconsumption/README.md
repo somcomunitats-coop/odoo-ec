@@ -183,6 +183,10 @@ team or refer to the project documentation.
 
 ## Changelog
 
+### 2026-09-21(v16.0.0.6.3)
+
+- Fix transalations for account number owner advise
+
 ### 2026-06-4 (v16.0.0.6.2)
 
 - Workflow change distribution table
