@@ -716,14 +716,11 @@ class ResUsers(models.Model):
         provider_id.validate_admin_provider()
         headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
         headers["Content-Type"] = "application/json"
+        user = self
         if provider_id.admin_user_endpoint:
             if self.oauth_uid:
                 endpoint = provider_id.admin_user_endpoint + "/" + self.oauth_uid
-                data = {
-                    "attributes": {
-                        "lang": [self.lang],
-                    },
-                }
+                data = self._create_user_values(user)
                 response = requests.put(endpoint, headers=headers, json=data)
                 if response.status_code != 204:
                     raise exceptions.UserError(
