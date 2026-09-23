@@ -78,6 +78,14 @@ class ResUsers(models.Model):
         for record in self:
             record.equalize_user_partner_id_company_ids()
 
+    @api.ondelete(at_uninstall=False)
+    def _delete_from_kc(self):
+        self._delete_kc_user()
+
+    def action_archive(self):
+        self._delete_kc_user()
+        return super().action_archive()
+
     def equalize_user_partner_id_company_ids(self):
         self.partner_id.write({"company_ids": self.company_ids})
         return True
@@ -716,15 +724,32 @@ class ResUsers(models.Model):
         provider_id.validate_admin_provider()
         headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
         headers["Content-Type"] = "application/json"
+        user = self
         if provider_id.admin_user_endpoint:
             if self.oauth_uid:
                 endpoint = provider_id.admin_user_endpoint + "/" + self.oauth_uid
-                data = {
-                    "attributes": {
-                        "lang": [self.lang],
-                    },
-                }
+                data = self._create_user_values(user)
                 response = requests.put(endpoint, headers=headers, json=data)
+                if response.status_code != 204:
+                    raise exceptions.UserError(
+                        _("Something went wrong. More details: {}").format(
+                            response.json()
+                        )
+                    )
+        else:
+            raise exceptions.UserError(
+                _("Keycloack provider admin user endpoint not defined")
+            )
+
+    def _delete_kc_user(self):
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        provider_id.validate_admin_provider()
+        headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
+        headers["Content-Type"] = "application/json"
+        if provider_id.admin_user_endpoint:
+            if self.oauth_uid:
+                endpoint = provider_id.admin_user_endpoint + "/" + self.oauth_uid
+                response = requests.delete(endpoint, headers=headers)
                 if response.status_code != 204:
                     raise exceptions.UserError(
                         _("Something went wrong. More details: {}").format(
