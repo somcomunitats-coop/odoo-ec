@@ -265,7 +265,7 @@ class SubscriptionRequest(models.Model):
                 ]
             )
             if not rep_membership:
-                representative.create_cooperative_membership(self.company_id.id)
+                representative.create_cooperative_membership(self.company_id)
         # To be overridden
         return True
 

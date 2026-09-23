@@ -4,6 +4,11 @@
 
 ## Changelog
 
+### 2026-09-23 (v16.0.0.8.3)
+
+- create_cooperative_membership has to be called with a company object not with an
+  integer
+
 ### 2026-09-21 (v16.0.0.8.2)
 
 - Fix transalations for account number owner advise
