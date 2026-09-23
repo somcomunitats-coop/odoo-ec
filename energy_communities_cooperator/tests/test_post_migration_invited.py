@@ -1,6 +1,14 @@
-from odoo.upgrade.testing import UpgradeCase
+try:
+    from odoo.upgrade.testing import UpgradeCase
+except:
+    from typing import Any as UpgradeCase
+
+    skip_test = True
+
+from unittest import skipIf
 
 
+@skipIf(skip_test is True, "Not is necessary run this tests")
 class TestInvitedCooperatorMigration(UpgradeCase):
     def prepare(self):
         old_invited_partners = self.env["res.partner"].search(
