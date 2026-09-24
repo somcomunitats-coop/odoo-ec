@@ -419,11 +419,16 @@ class SetNewDistributionTableWizard(models.TransientModel):
                 "power": self.power,
             }
         )
+        # Do not force date_ref to period_end. Post-paid contracts invoice on
+        # period_end + recurring_invoicing_offset, and OCA skips any line whose
+        # recurring_next_date is after date_ref. Each contract uses its own
+        # recurring_next_date; the invoice date is then set to the stub end.
         invoices = invoicing_wizard.with_context(
             skip_distribution_table_change_notes=True,
-            force_invoice_date_ref=period_end,
         ).generate_invoices()
         invoice_records = self._as_account_moves(invoices)
+        if invoice_records:
+            invoice_records.write({"invoice_date": period_end})
         if len(invoice_records) != len(contracts_to_invoice):
             raise ValidationError(
                 _(
