@@ -405,10 +405,16 @@ class SetNewDistributionTableWizard(models.TransientModel):
         # and the wizard computed fields would render empty parentheses.
         period_start, _full_period_end = self._get_next_invoicing_period()
         period_end = self.execution_date - relativedelta(days=1)
+        # Contracts already invoiced through the stub do not get a new invoice.
+        contracts_to_invoice = contracts - self._contracts_invoiced_through(
+            contracts, period_end
+        )
         self._force_contracts_period_end(contracts, period_end)
+        if not contracts_to_invoice:
+            return
         invoicing_wizard = self.env["energy_selfconsumption.invoicing.wizard"].create(
             {
-                "contract_ids": [(6, 0, contracts.ids)],
+                "contract_ids": [(6, 0, contracts_to_invoice.ids)],
                 "invoicing_mode": SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
                 "power": self.power,
             }
@@ -418,7 +424,7 @@ class SetNewDistributionTableWizard(models.TransientModel):
             force_invoice_date_ref=period_end,
         ).generate_invoices()
         invoice_records = self._as_account_moves(invoices)
-        if len(invoice_records) != len(contracts):
+        if len(invoice_records) != len(contracts_to_invoice):
             raise ValidationError(
                 _(
                     "The replacement assistant could not generate the stub invoices "
@@ -429,7 +435,7 @@ class SetNewDistributionTableWizard(models.TransientModel):
                     "period_end": period_end.strftime(DISPLAY_DATE_FORMAT)
                     if period_end
                     else "",
-                    "expected": len(contracts),
+                    "expected": len(contracts_to_invoice),
                     "generated": len(invoice_records),
                 }
             )
@@ -441,6 +447,20 @@ class SetNewDistributionTableWizard(models.TransientModel):
                 period_end=period_end,
             )
             invoice.add_distribution_table_replacement_section(note)
+
+    def _contracts_invoiced_through(self, contracts, period_end):
+        """Contracts whose billable lines are already invoiced through period_end."""
+        covered = self.env["contract.contract"]
+        for contract in contracts:
+            lines = contract.contract_line_ids.filtered(
+                lambda line: not line.display_type and not line.is_canceled
+            )
+            if lines and all(
+                line.last_date_invoiced and line.last_date_invoiced >= period_end
+                for line in lines
+            ):
+                covered |= contract
+        return covered
 
     def _as_account_moves(self, invoices):
         """Normalize generate_invoices() output into saved account.move records."""
