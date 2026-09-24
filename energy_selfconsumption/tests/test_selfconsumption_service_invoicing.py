@@ -2,6 +2,7 @@ import logging
 from collections import namedtuple
 from datetime import datetime
 
+from odoo import fields
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
@@ -223,7 +224,18 @@ class TestSelfconsumptionServiceInvoicing(
             }
         self._workflow_change_distribution_table()
         self._assert_project_contract_data()
-        self.selfconsumption.set_new_distribution_table()
+        execution_date = fields.Date.today()
+        if contracts and contracts[0].next_period_date_start:
+            execution_date = contracts[0].next_period_date_start
+        wizard = self.env[
+            "energy_selfconsumption.set_new_distribution_table.wizard"
+        ].create(
+            {
+                "selfconsumption_id": self.selfconsumption.id,
+                "execution_date": execution_date,
+            }
+        )
+        wizard.action_confirm()
         self._assert_project_contracts_data_consistency_between_old_and_new(
             dict_contracts
         )

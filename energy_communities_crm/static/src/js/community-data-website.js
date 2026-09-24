@@ -54,6 +54,36 @@ var oe_community_data_website = {
                 $(this).hide();
             });
 
+            var originallyRequired = function (el) {
+                var raw = el.getAttribute("data-original-required");
+                return raw === "True" || raw === "true" || raw === "1";
+            };
+
+            var toggleConditionalControls = function ($field, visible) {
+                $field.find("input, select, textarea").each(function () {
+                    var $el = $(this);
+                    var hasOriginalRequired = this.hasAttribute(
+                        "data-original-required"
+                    );
+                    if (visible) {
+                        $el.prop("disabled", false);
+                        if (hasOriginalRequired) {
+                            $el.prop("required", originallyRequired(this));
+                        }
+                    } else {
+                        $el.prop("disabled", true);
+                        if (hasOriginalRequired) {
+                            $el.prop("required", false);
+                        }
+                    }
+                });
+                if (visible) {
+                    $field.fadeIn();
+                } else {
+                    $field.fadeOut();
+                }
+            };
+
             $(".data-trigger").each(function () {
                 $(this).on("change", function (e) {
                     var impacted_fields_array = $(this).data("trigger").split(",");
@@ -123,24 +153,9 @@ var oe_community_data_website = {
                                 }
                             }
                         }
-                        // if condition is satidified remove disabled attribute and display. Do the oppposite if not.
-                        if (condition_satisfied) {
-                            impacted_field.find("input").each(function () {
-                                $(this).removeAttr("disabled");
-                            });
-                            impacted_field.find("select").each(function () {
-                                $(this).removeAttr("disabled");
-                            });
-                            impacted_field.fadeIn();
-                        } else {
-                            impacted_field.find("input").each(function () {
-                                $(this).attr("disabled", true);
-                            });
-                            impacted_field.find("select").each(function () {
-                                $(this).removeAttr("disabled");
-                            });
-                            impacted_field.fadeOut();
-                        }
+                        // Show and enable when the condition matches; hide, disable and
+                        // drop required otherwise so hidden controls are not validated.
+                        toggleConditionalControls(impacted_field, condition_satisfied);
                     }
                 });
             });

@@ -23,3 +23,4 @@ from . import change_state_inscription_wizard
 from . import change_distribution_table_import_wizard
 from . import set_iban_inscriptions_wizard
 from . import export_csv_inscriptions_wizard
+from . import set_new_distribution_table_wizard

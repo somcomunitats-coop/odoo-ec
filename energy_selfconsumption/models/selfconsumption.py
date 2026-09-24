@@ -39,17 +39,21 @@ from ..config import (
     CUPS_LENGTH_20,
     CUPS_LENGTH_22,
     DISTRIBUTION_STATE_ACTIVE,
+    DISTRIBUTION_STATE_CANCELLED,
     DISTRIBUTION_STATE_PROCESS,
     DISTRIBUTION_STATE_VALIDATED,
     INSCRIPTION_STATE_ACTIVE,
     INSCRIPTION_STATE_CHANGE,
     LAST_DIGITS_COUNT,
+    RECURRING_INVOICING_TYPE_POSTPAID,
+    RECURRING_INVOICING_TYPE_PREPAID,
     SELFCONSUMPTION_CONF_STATE_ACTIVE,
     SELFCONSUMPTION_CONF_STATE_DEFAULT_VALUE,
     SELFCONSUMPTION_CONF_STATE_INACTIVE,
     SELFCONSUMPTION_CONF_STATE_VALUES,
     SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
     SELFCONSUMPTION_DEFAULT_PARTICIPATIONS,
+    SELFCONSUMPTION_INVOICING_MODE_POWER_ACQUIRED,
     SELFCONSUMPTION_INVOICING_MODE_VALUES,
 )
 
@@ -447,7 +451,23 @@ class Selfconsumption(models.Model):
             "context": {"default_selfconsumption_id": self.id},
         }
 
-    def set_new_distribution_table(self):
+    def action_set_new_distribution_table(self):
+        """Open wizard to choose the distribution table change date."""
+        self.ensure_one()
+        return {
+            "name": _("Set New Distribution Table"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "energy_selfconsumption.set_new_distribution_table.wizard",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": {"default_selfconsumption_id": self.id},
+        }
+
+    def set_new_distribution_table(
+        self, execution_date=None, period_recurring_next_date=None
+    ):
         distribution_table_active = self.distribution_table_ids.filtered(
             lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
         )
@@ -459,45 +479,25 @@ class Selfconsumption(models.Model):
         if not distribution_table_validated:
             raise ValidationError(_("There is no validated distribution table."))
 
-        self.distribution_table_state(
-            DISTRIBUTION_STATE_VALIDATED, DISTRIBUTION_STATE_ACTIVE
+        if not execution_date:
+            execution_date = fields.Date.today()
+        # Snapshot the project invoicing calendar before contracts are recreated.
+        # execution_date only starts the new table; new CUPS must join this period.
+        reference_contract = self.get_active_contracts()[:1]
+        if not period_recurring_next_date:
+            period_recurring_next_date = (
+                reference_contract.recurring_next_date if reference_contract else False
+            )
+        reference_last_date_invoiced = (
+            reference_contract.last_date_invoiced if reference_contract else False
         )
-        contact_example = self.get_active_contracts()
-        execution_date = fields.Date.today()
-        if contact_example and contact_example[0].predecessor_contract_id:
-            execution_date = contact_example[
-                0
-            ].predecessor_contract_id.last_date_invoiced
-            if self.recurring_rule_type == "daily":
-                execution_date = fields.Date.today()
-            elif self.recurring_rule_type == "weekly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(days=-7)
-            elif self.recurring_rule_type == "monthly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-1)
-            elif self.recurring_rule_type == "monthlylastday":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-1)
-                execution_date = execution_date.replace(day=1) - timedelta(days=1)
-            elif self.recurring_rule_type == "quarterly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-3)
-            elif self.recurring_rule_type == "semesterly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(months=-6)
-            elif self.recurring_rule_type == "yearly":
-                execution_date = contact_example[
-                    0
-                ].predecessor_contract_id.last_date_invoiced + relativedelta(years=-1)
 
-            if self.recurring_rule_type != "daily":
-                execution_date = execution_date + timedelta(days=2)
+        closed_without_inscription = self.distribution_table_state(
+            DISTRIBUTION_STATE_VALIDATED,
+            DISTRIBUTION_STATE_ACTIVE,
+            execution_date=execution_date,
+            period_recurring_next_date=period_recurring_next_date,
+        )
 
         # TODO:
         # Generate new sale orders
@@ -522,49 +522,37 @@ class Selfconsumption(models.Model):
         for (
             supply_point_assignation
         ) in distribution_table_validated.supply_point_assignation_ids:
-            inscription_id = self.selfconsumption_id.inscription_ids.filtered_domain(
-                [
-                    (
-                        "partner_id",
-                        "=",
-                        supply_point_assignation.supply_point_id.partner_id.id,
-                    )
-                ]
+            inscription = self._get_inscription_for_assignation(
+                supply_point_assignation
             )
-            if not inscription_id.mandate_id:
-                raise ValidationError(
-                    _("Mandate not found for {partner}").format(
-                        partner=supply_point_assignation.supply_point_id.partner_id.name
-                    )
-                )
+            supply_point = supply_point_assignation.supply_point_id
+            mandate_id = self._get_inscription_mandate_id(inscription, supply_point)
 
             service_invoicing_id = False
-            existing_contract = get_existing_pack_contract(
-                self.env,
-                inscription_id.partner_id,
-                "selfconsumption_pack",
+            existing_contract = self._get_existing_pack_contract_for_supply_point(
+                inscription.partner_id,
+                supply_point,
                 ["closed_planned", "in_progress", "paused", "closed"],
-                [("project_id", "=", self.id)],
             )
             if not existing_contract:
                 so_metadata = {
                     "selfconsumption_id": self.id,
-                    "supply_point_id": supply_point_assignation.supply_point_id.id,
+                    "supply_point_id": supply_point.id,
                     "supply_point_assignation_id": supply_point_assignation.id,
                     "recurring_interval": self.recurring_interval,
                     "recurring_rule_type": self.recurring_rule_type,
                     "recurring_invoicing_type": self.recurring_invoicing_type,
                     "project_id": self.id,
                     "company_id": self.company_id.id,
-                    "mandate_id": inscription_id.mandate_id.id
-                    if inscription_id.mandate_id
-                    else None,
+                    "mandate_id": mandate_id,
                 }
+                if period_recurring_next_date:
+                    so_metadata["recurring_next_date"] = period_recurring_next_date
 
                 # create service invoicing
                 with sale_order_utils(self.env) as component:
                     service_invoicing_id = component.create_service_invoicing_initial(
-                        inscription_id.partner_id,
+                        inscription.partner_id,
                         pack,
                         self.pricelist_id,
                         execution_date,
@@ -574,12 +562,12 @@ class Selfconsumption(models.Model):
                         so_metadata,
                     )
             if not service_invoicing_id:
-                existing_closed_contract = get_existing_pack_contract(
-                    self.env,
-                    inscription_id.partner_id,
-                    "selfconsumption_pack",
-                    ["closed_planned", "closed"],
-                    [("project_id", "=", self.id)],
+                existing_closed_contract = (
+                    self._get_existing_pack_contract_for_supply_point(
+                        inscription.partner_id,
+                        supply_point,
+                        ["closed_planned", "closed"],
+                    )
                 )
                 if existing_closed_contract:
                     with contract_utils(
@@ -597,50 +585,78 @@ class Selfconsumption(models.Model):
                 # 2.- setup contract line main_line
                 service_invoicing_id.contract_line_ids[0].write({"main_line": True})
                 # 3.- mark contract as active
+                self._drop_incompatible_last_date_invoiced(
+                    service_invoicing_id, execution_date
+                )
                 with contract_utils(self.env, service_invoicing_id) as component:
                     component.activate(execution_date)
+                self._activate_replacement_alta_contract(
+                    service_invoicing_id,
+                    supply_point_assignation,
+                    execution_date=execution_date,
+                    period_recurring_next_date=period_recurring_next_date,
+                    reference_last_date_invoiced=reference_last_date_invoiced,
+                )
 
-                if (
-                    not service_invoicing_id.predecessor_contract_id
-                    and not service_invoicing_id.successor_contract_id
-                ):
-                    accounts_invoice = service_invoicing_id.recurring_create_invoice()
-                    days_invoiced = 0
-                    days_timedelta = (
-                        service_invoicing_id.contract_line_ids[0].last_date_invoiced
-                        - fields.Date.today()
-                    )
-                    if days_timedelta:
-                        days_invoiced = days_timedelta.days + 1
-                    qty = (
-                        round(supply_point_assignation.coefficient, 6)
-                        * self.power
-                        * days_invoiced
-                    )
-                    invoice_product_line = accounts_invoice.invoice_line_ids[0]
-                    invoice_product_line.write({"quantity": qty, "sequence": 2})
-                    accounts_invoice.write(
-                        {
-                            "invoice_line_ids": [
-                                Command.create(
-                                    {
-                                        "display_type": "line_note",
-                                        "name": _(
-                                            "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this supply point. {coefficient} * {power} Kw * {days_invoiced} days = {qty} KwH"
-                                        ).format(
-                                            days_invoiced=days_invoiced,
-                                            coefficient=round(
-                                                supply_point_assignation.coefficient, 6
-                                            ),
-                                            power=self.power,
-                                            qty=qty,
-                                        ),
-                                        "sequence": 1,
-                                    }
-                                )
-                            ],
-                        }
-                    )
+        return closed_without_inscription
+
+    def _get_inscription_for_assignation(self, supply_point_assignation):
+        """Return the inscription of this CUPS, never every inscription of the partner."""
+        self.ensure_one()
+        inscription = supply_point_assignation.get_inscription()
+        if not inscription:
+            cups_code = (
+                supply_point_assignation.supply_point_id.code
+                or supply_point_assignation.supply_point_id.display_name
+            )
+            raise ValidationError(
+                _("Inscription not found for CUPS {cups}").format(cups=cups_code)
+            )
+        return inscription
+
+    def _get_inscription_mandate_id(self, inscription, supply_point, required=True):
+        """Use the mandate of this CUPS inscription. Do not merge partner mandates."""
+        cups_code = supply_point.code or supply_point.display_name
+        if (
+            inscription
+            and len(inscription) > 1
+            and "supply_point_id" in inscription._fields
+        ):
+            inscription = inscription.filtered(
+                lambda rec: rec.supply_point_id.id == supply_point.id
+            )
+        partner_name = inscription.partner_id.name if inscription else ""
+        if not inscription.mandate_id:
+            if not required:
+                return None
+            raise ValidationError(
+                _("Mandate not found for CUPS {cups} ({partner})").format(
+                    cups=cups_code, partner=partner_name
+                )
+            )
+        return inscription.mandate_id.id
+
+    def _get_existing_pack_contract_for_supply_point(
+        self, partner, supply_point, statuses
+    ):
+        """Find a project pack contract for this CUPS, not any CUPS of the partner."""
+        self.ensure_one()
+        if not partner or not supply_point:
+            return self.env["contract.contract"]
+        return get_existing_pack_contract(
+            self.env,
+            partner,
+            "selfconsumption_pack",
+            statuses,
+            [
+                ("project_id", "=", self.id),
+                (
+                    "supply_point_assignation_id.supply_point_id",
+                    "=",
+                    supply_point.id,
+                ),
+            ],
+        )
 
     def set_in_activation_state(self):
         for record in self:
@@ -822,70 +838,111 @@ class Selfconsumption(models.Model):
             "target": "current",
         }
 
-    def check_dates_contract(self):
-        if not self.get_active_contracts():
+    def check_dates_contract(self, contracts=None):
+        if contracts is None:
+            contracts = self.get_active_contracts()
+        if not contracts:
             return True
-        last_date_invoiced = self.get_active_contracts()[0].last_date_invoiced
-        if self.get_active_contracts().filtered(
+        last_date_invoiced = contracts[0].last_date_invoiced
+        if contracts.filtered(
             lambda contract: contract.last_date_invoiced != last_date_invoiced
         ):
             raise ValidationError(
-                _("The last date invoiced is not the same for all contracts.")
+                self._format_inconsistent_contract_dates_message(
+                    "The last date invoiced is not the same for all contracts.",
+                    contracts,
+                    "last_date_invoiced",
+                )
             )
-        next_period_date_start = self.get_active_contracts()[0].next_period_date_start
-        if self.get_active_contracts().filtered(
+        next_period_date_start = contracts[0].next_period_date_start
+        if contracts.filtered(
             lambda contract: contract.next_period_date_start != next_period_date_start
         ):
             raise ValidationError(
                 _("The next period date start is not the same for all contracts.")
             )
-        next_period_date_end = self.get_active_contracts()[0].next_period_date_end
-        if self.get_active_contracts().filtered(
+        next_period_date_end = contracts[0].next_period_date_end
+        if contracts.filtered(
             lambda contract: contract.next_period_date_end != next_period_date_end
         ):
             raise ValidationError(
                 _("The next period date end is not the same for all contracts.")
             )
-        recurring_next_date = self.get_active_contracts()[0].recurring_next_date
-        if self.get_active_contracts().filtered(
+        recurring_next_date = contracts[0].recurring_next_date
+        if contracts.filtered(
             lambda contract: contract.recurring_next_date != recurring_next_date
         ):
             raise ValidationError(
                 _("The recurring next date is not the same for all contracts.")
             )
 
-        recurring_invoicing_type = self.get_active_contracts()[
-            0
-        ].recurring_invoicing_type
-        if self.get_active_contracts().filtered(
+        recurring_invoicing_type = contracts[0].recurring_invoicing_type
+        if contracts.filtered(
             lambda contract: contract.recurring_invoicing_type
             != recurring_invoicing_type
         ):
             raise ValidationError(
                 _("The recurring invoicing type is not the same for all contracts.")
             )
-        if last_date_invoiced and recurring_invoicing_type == "postpaid":
-            if self.get_active_contracts().filtered(
-                lambda contract: contract.recurring_next_date == next_period_date_end
-            ):
+        if last_date_invoiced and recurring_invoicing_type in (
+            RECURRING_INVOICING_TYPE_POSTPAID,
+            RECURRING_INVOICING_TYPE_PREPAID,
+        ):
+            mismatched = contracts.filtered(
+                lambda contract: contract.recurring_next_date
+                != self._expected_recurring_next_date(contract)
+            )
+            if mismatched:
                 raise ValidationError(
-                    _(
-                        "The recurring next date is not the same as the next period date end for all contracts."
-                    )
-                )
-        elif last_date_invoiced and recurring_invoicing_type == "prepaid":
-            if self.get_active_contracts().filtered(
-                lambda contract: contract.recurring_next_date == next_period_date_start
-            ):
-                raise ValidationError(
-                    _(
-                        "The recurring next date is not the same as the next period date start for all contracts."
+                    self._format_inconsistent_contract_dates_message(
+                        "The recurring next date is not consistent with the next "
+                        "invoicing period and invoicing offset for all contracts.",
+                        mismatched,
+                        "recurring_next_date",
                     )
                 )
         return True
 
-    def distribution_table_state(self, actual_state, new_state):
+    def _expected_recurring_next_date(self, contract):
+        """Invoice date implied by period bounds and recurring_invoicing_offset."""
+        offset = contract.recurring_invoicing_offset or 0
+        if contract.recurring_invoicing_type == RECURRING_INVOICING_TYPE_POSTPAID:
+            period_ref = contract.next_period_date_end
+        elif contract.recurring_invoicing_type == RECURRING_INVOICING_TYPE_PREPAID:
+            period_ref = contract.next_period_date_start
+        else:
+            return False
+        if not period_ref:
+            return False
+        return period_ref + relativedelta(days=offset)
+
+    def _format_inconsistent_contract_dates_message(
+        self, message, contracts, field_name
+    ):
+        """Build a validation message that lists each contract date value."""
+        details = [
+            "%s (id=%s): %s=%s"
+            % (
+                contract.display_name,
+                contract.id,
+                field_name,
+                getattr(contract, field_name) or False,
+            )
+            for contract in contracts
+        ]
+        return "{}\n{}".format(_(message), "\n".join(details))
+
+    def distribution_table_state(
+        self,
+        actual_state,
+        new_state,
+        execution_date=None,
+        period_recurring_next_date=None,
+    ):
         self.check_dates_contract()
+        if not execution_date:
+            execution_date = fields.Date.today()
+        table_end_date = execution_date - relativedelta(days=1)
         distribution_table_to_activate = self.distribution_table_ids.filtered(
             lambda table: table.state == actual_state
         )
@@ -895,17 +952,19 @@ class Selfconsumption(models.Model):
         # If the new state is active, we need to cancel the active distribution table
         if new_state == DISTRIBUTION_STATE_ACTIVE and distribution_table_active:
             distribution_table_active.write(
-                {"date_end": fields.Date.today(), "state": "cancelled"}
+                {"date_end": table_end_date, "state": DISTRIBUTION_STATE_CANCELLED}
             )
         distribution_table_to_activate.write({"state": new_state})
         if new_state == DISTRIBUTION_STATE_ACTIVE:
             # We need to update the start date of the distribution table
-            distribution_table_to_activate.write({"date_start": fields.Date.today()})
+            distribution_table_to_activate.write({"date_start": execution_date})
             # If the new state is active, we need to update the inscriptions
             for supply_point_assignation in distribution_table_to_activate.mapped(
                 "supply_point_assignation_ids"
             ):
-                inscription = supply_point_assignation.get_inscription()
+                inscription = self._get_inscription_for_assignation(
+                    supply_point_assignation
+                )
                 inscription.write(
                     {
                         "participation_real_quantity": supply_point_assignation.energy_shares,
@@ -920,36 +979,60 @@ class Selfconsumption(models.Model):
                 )
                 for supply_point_assignation_id in supply_point_assignation_ids:
                     contract = supply_point_assignation_id.get_contract()
-                    inscription_id = self.selfconsumption_id.inscription_ids.filtered_domain(
-                        [
-                            (
-                                "partner_id",
-                                "=",
-                                supply_point_assignation_id.supply_point_id.partner_id.id,
-                            )
-                        ]
+                    if not contract:
+                        continue
+                    # Capture dates before modify(): close() sets date_end and
+                    # can clear next-period fields on the predecessor.
+                    predecessor_last_date_invoiced = contract.last_date_invoiced
+                    predecessor_recurring_next_date = contract.recurring_next_date
+                    modify_date = (
+                        predecessor_last_date_invoiced
+                        or execution_date - relativedelta(days=1)
                     )
+                    activate_date = execution_date
+                    # The stub last date belongs to the closed predecessor. OCA
+                    # forbids putting it on a successor whose date_start is later.
+                    successor_last_date_invoiced = (
+                        self._last_date_invoiced_for_new_contract(
+                            predecessor_last_date_invoiced, activate_date
+                        )
+                    )
+                    modify_metadata = {
+                        "selfconsumption_id": self.id,
+                        "supply_point_id": supply_point_assignation.supply_point_id.id,
+                        "supply_point_assignation_id": supply_point_assignation.id,
+                        "recurring_interval": self.recurring_interval,
+                        "recurring_rule_type": self.recurring_rule_type,
+                        "recurring_invoicing_type": self.recurring_invoicing_type,
+                        "project_id": self.id,
+                        "company_id": self.company_id.id,
+                        "mandate_id": self._get_inscription_mandate_id(
+                            inscription,
+                            supply_point_assignation.supply_point_id,
+                            required=False,
+                        ),
+                    }
+                    if successor_last_date_invoiced:
+                        modify_metadata[
+                            "last_date_invoiced"
+                        ] = successor_last_date_invoiced
+                    if predecessor_recurring_next_date:
+                        modify_metadata[
+                            "recurring_next_date"
+                        ] = predecessor_recurring_next_date
+                    elif period_recurring_next_date:
+                        modify_metadata[
+                            "recurring_next_date"
+                        ] = period_recurring_next_date
                     with contract_utils(self.env, contract) as component:
                         new_contract = component.modify(
-                            execution_date=contract.last_date_invoiced,
+                            execution_date=modify_date,
                             executed_modification_action="modify",
                             pricelist_id=contract.pricelist_id,
                             pack_id=contract.pack_id,
                             discount=contract.discount,
                             payment_mode_id=contract.payment_mode_id,
-                            metadata={
-                                "selfconsumption_id": self.id,
-                                "supply_point_id": supply_point_assignation.supply_point_id.id,
-                                "supply_point_assignation_id": supply_point_assignation.id,
-                                "recurring_interval": self.recurring_interval,
-                                "recurring_rule_type": self.recurring_rule_type,
-                                "recurring_invoicing_type": self.recurring_invoicing_type,
-                                "project_id": self.id,
-                                "company_id": self.company_id.id,
-                                "mandate_id": inscription_id.mandate_id.id
-                                if inscription_id.mandate_id
-                                else None,
-                            },
+                            metadata=modify_metadata,
                         )
                     with contract_utils(self.env, new_contract) as component:
                         # 2.- setup contract line main_line
@@ -957,9 +1040,17 @@ class Selfconsumption(models.Model):
                             {"main_line": True}
                         )
                         # 3.- mark contract as active
-                        component.activate(
-                            contract.last_date_invoiced + relativedelta(days=+1)
+                        self._drop_incompatible_last_date_invoiced(
+                            new_contract, activate_date
                         )
+                        component.activate(activate_date)
+                    self._align_new_contract_period_end(
+                        new_contract,
+                        period_recurring_next_date,
+                        last_date_invoiced=successor_last_date_invoiced,
+                        recurring_next_date=predecessor_recurring_next_date
+                        or period_recurring_next_date,
+                    )
             inscriptions = self.inscription_ids.filtered_domain(
                 [("state", "=", INSCRIPTION_STATE_CHANGE)]
             )
@@ -973,9 +1064,357 @@ class Selfconsumption(models.Model):
                 )
                 contract = supply_point_assignation_id.get_contract()
                 if contract:
-                    with contract_utils(self.env, contract) as component:
-                        component.close(contract.last_date_invoiced)
+                    self._leave_contract_on_replacement(
+                        contract,
+                        supply_point_assignation_id,
+                        execution_date,
+                    )
+            closed_without_inscription = (
+                self._close_outgoing_contracts_not_in_new_table(
+                    distribution_table_active, distribution_table_to_activate
+                )
+            )
+            if closed_without_inscription:
+                self._notify_contracts_closed_without_inscription(
+                    closed_without_inscription
+                )
             self.check_dates_contract()
+            return closed_without_inscription
+        return self.env["contract.contract"]
+
+    def _close_outgoing_contracts_not_in_new_table(
+        self, outgoing_table, incoming_table
+    ):
+        """Close leftover in-progress contracts of CUPS that left the table.
+
+        Inscriptions in change state are closed above. CUPS whose inscription
+        was removed instead of marked as change still keep an open contract on
+        the outgoing table; those must be closed as well so date checks only
+        see the new table contracts.
+        """
+        closed_contracts = self.env["contract.contract"]
+        incoming_supply_points = incoming_table.mapped(
+            "supply_point_assignation_ids.supply_point_id"
+        )
+        for assignation in outgoing_table.mapped("supply_point_assignation_ids"):
+            if assignation.supply_point_id in incoming_supply_points:
+                continue
+            contract = assignation.get_contract()
+            if contract and contract.status == "in_progress":
+                leave_date = incoming_table.date_start
+                if not leave_date:
+                    continue
+                self._leave_contract_on_replacement(contract, assignation, leave_date)
+                closed_contracts |= contract
+        return closed_contracts
+
+    def _notify_contracts_closed_without_inscription(self, contracts):
+        """Record leftover closures on the project chatter."""
+        self.ensure_one()
+        if not contracts:
+            return
+        details = "\n".join(
+            self._format_closed_contract_without_inscription(contract)
+            for contract in contracts
+        )
+        self.message_post(
+            body=_(
+                "The following %(count)s contract(s) were closed because their "
+                "CUPS are not included in the new distribution table and had no "
+                "inscription in change state:\n%(details)s"
+            )
+            % {"count": len(contracts), "details": details}
+        )
+
+    def _format_closed_contract_without_inscription(self, contract):
+        cups_code = contract.supply_point_assignation_id.supply_point_id.code or _(
+            "Unknown CUPS"
+        )
+        return "- {} ({}, id={})".format(cups_code, contract.display_name, contract.id)
+
+    def _prepaid_alta_stub_dates(self, execution_date, current_period_end):
+        """Invoice the new CUPS from the replacement date to the current period end."""
+        if (
+            not execution_date
+            or not current_period_end
+            or execution_date > current_period_end
+        ):
+            return False, False
+        return execution_date, current_period_end
+
+    def _prepaid_baja_stub_dates(
+        self, last_date_invoiced, execution_date, fallback_start=None
+    ):
+        """Invoice a leaving CUPS from the day after last invoice until the day before leave."""
+        stub_end = execution_date - relativedelta(days=1) if execution_date else False
+        stub_start = (
+            last_date_invoiced + relativedelta(days=1)
+            if last_date_invoiced
+            else fallback_start
+        )
+        if not stub_start or not stub_end or stub_start > stub_end:
+            return False, False
+        return stub_start, stub_end
+
+    def _clip_contract_next_invoice_period(self, contract, period_start, period_end):
+        """Force the next invoice to cover only [period_start, period_end]."""
+        lines = contract.contract_line_ids.filtered(lambda line: not line.is_canceled)
+        if not lines or not period_start or not period_end:
+            return
+        date_start = lines[0].date_start or contract.date_start
+        last_date = period_start - relativedelta(days=1)
+        offset = contract.recurring_invoicing_offset or 0
+        if contract.recurring_invoicing_type == RECURRING_INVOICING_TYPE_PREPAID:
+            pff = period_start + relativedelta(days=offset)
+        else:
+            pff = period_end + relativedelta(days=offset)
+        vals = {"recurring_next_date": pff}
+        # OCA forbids date_start > last_date_invoiced. A new CUPS starting on
+        # period_start must keep last empty so the stub starts at date_start.
+        if not (date_start and last_date and date_start > last_date):
+            vals["last_date_invoiced"] = last_date
+        # OCA forbids date_end < last_date_invoiced.
+        effective_last = vals.get("last_date_invoiced") or lines[0].last_date_invoiced
+        if not effective_last or period_end >= effective_last:
+            vals["date_end"] = period_end
+        lines.write(vals)
+        lines._compute_next_period_date_start()
+        lines._compute_next_period_date_end()
+        lines._compute_recurring_next_date()
+        with contract_utils(self.env, contract) as component:
+            component.propagate_recurrency_values_to_contract()
+
+    def _invoice_power_acquired_stub(
+        self, contract, assignation, period_start, period_end
+    ):
+        """Create the power-acquired stub invoice and set quantity from days in period."""
+        if not contract or not assignation or not period_start or not period_end:
+            return self.env["account.move"]
+        self._clip_contract_next_invoice_period(contract, period_start, period_end)
+        invoice = contract.recurring_create_invoice()
+        if not invoice:
+            return self.env["account.move"]
+        moves = invoice
+        if getattr(invoice, "_name", None) != "account.move":
+            moves = self.env["account.move"].browse(invoice)
+        moves = moves.exists()
+        days_invoiced = (period_end - period_start).days + 1
+        qty = round(assignation.coefficient, 6) * self.power * days_invoiced
+        note = _(
+            "NOTE: There are only {days_invoiced} active invoiceble days to take in consideration into the current invoiced period for this supply point. {coefficient} * {power} Kw * {days_invoiced} days = {qty} KwH"
+        ).format(
+            days_invoiced=days_invoiced,
+            coefficient=round(assignation.coefficient, 6),
+            power=self.power,
+            qty=qty,
+        )
+        for move in moves:
+            product_lines = move.invoice_line_ids.filtered(
+                lambda line: line.display_type not in ("line_section", "line_note")
+            )
+            if not product_lines:
+                continue
+            product_lines[0].write({"quantity": qty, "sequence": 2})
+            move.write(
+                {
+                    "invoice_line_ids": [
+                        Command.create(
+                            {
+                                "display_type": "line_note",
+                                "name": note,
+                                "sequence": 1,
+                            }
+                        )
+                    ],
+                }
+            )
+        return moves
+
+    def _activate_replacement_alta_contract(
+        self,
+        contract,
+        assignation,
+        execution_date=None,
+        period_recurring_next_date=None,
+        reference_last_date_invoiced=None,
+    ):
+        """Invoice the prepaid alta stub, then park every new CUPS on the project calendar.
+
+        Prepaid power-acquired altas bill execution_date -> current period end, then
+        last_date_invoiced/PFF match continuing CUPS. Postpaid altas only join the
+        remaining period; they are not invoiced here.
+        """
+        if not contract:
+            return
+        is_alta = (
+            not contract.predecessor_contract_id and not contract.successor_contract_id
+        )
+        stub_start, stub_end = self._prepaid_alta_stub_dates(
+            execution_date, reference_last_date_invoiced
+        )
+        if (
+            is_alta
+            and self.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_POWER_ACQUIRED
+            and self.recurring_invoicing_type == RECURRING_INVOICING_TYPE_PREPAID
+            and stub_start
+            and stub_end
+        ):
+            self._invoice_power_acquired_stub(
+                contract, assignation, stub_start, stub_end
+            )
+            next_pff = stub_end + relativedelta(days=1)
+            self._align_new_contract_period_end(
+                contract,
+                next_pff,
+                last_date_invoiced=stub_end,
+                recurring_next_date=next_pff,
+            )
+            return
+        self._align_new_contract_period_end(
+            contract,
+            period_recurring_next_date,
+            last_date_invoiced=self._last_date_invoiced_for_new_contract(
+                reference_last_date_invoiced,
+                execution_date or contract.date_start,
+            ),
+            recurring_next_date=period_recurring_next_date,
+        )
+
+    def _close_date_for_replacement(self, contract, proposed_end):
+        """Never end a line before last_date_invoiced (OCA contract constraint)."""
+        last = contract.last_date_invoiced if contract else False
+        if last and (not proposed_end or proposed_end < last):
+            return last
+        return proposed_end
+
+    def _leave_contract_on_replacement(self, contract, assignation, execution_date):
+        """Invoice the unbilled prepaid stub of a leaving CUPS, then close it."""
+        if not contract or not execution_date:
+            return
+        close_date = execution_date - relativedelta(days=1)
+        stub_start, stub_end = self._prepaid_baja_stub_dates(
+            contract.last_date_invoiced,
+            execution_date,
+            fallback_start=contract.next_period_date_start or contract.date_start,
+        )
+        if (
+            self.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_POWER_ACQUIRED
+            and self.recurring_invoicing_type == RECURRING_INVOICING_TYPE_PREPAID
+            and assignation
+            and stub_start
+            and stub_end
+        ):
+            self._invoice_power_acquired_stub(
+                contract, assignation, stub_start, stub_end
+            )
+            close_date = stub_end
+        close_date = self._close_date_for_replacement(contract, close_date)
+        with contract_utils(self.env, contract) as component:
+            component.close(close_date or contract.last_date_invoiced)
+
+    def _last_date_invoiced_for_new_contract(self, last_date_invoiced, date_start):
+        """Keep last_date_invoiced only when it does not precede the new line start.
+
+        OCA contract.line forbids date_start > last_date_invoiced. After a
+        post-paid stub the predecessor last date is the day before the
+        replacement; that date belongs to the closed contract, not the successor.
+        """
+        if not last_date_invoiced:
+            return False
+        if date_start and date_start > last_date_invoiced:
+            return False
+        return last_date_invoiced
+
+    def _drop_incompatible_last_date_invoiced(self, contract, date_start):
+        """Clear last_date_invoiced before moving date_start past it."""
+        if not contract or not date_start:
+            return
+        lines = contract.contract_line_ids.filtered(
+            lambda line: not line.is_canceled
+            and line.last_date_invoiced
+            and date_start > line.last_date_invoiced
+        )
+        if lines:
+            lines.write({"last_date_invoiced": False})
+
+    def _align_new_contract_period_end(
+        self,
+        new_contract,
+        period_recurring_next_date,
+        last_date_invoiced=None,
+        recurring_next_date=None,
+    ):
+        """Restore invoicing dates after contract.utils recreates recurrency.
+
+        Continuing CUPS keep the predecessor last invoiced date and PFF/PPC/PPF
+        when that last date is still valid on the new line. New CUPS join the
+        same project calendar; execution_date is not a new invoicing period start.
+        """
+        if not new_contract:
+            return
+        last_date_invoiced = self._last_date_invoiced_for_new_contract(
+            last_date_invoiced,
+            new_contract.date_start or new_contract.contract_line_ids[:1].date_start,
+        )
+        if last_date_invoiced or recurring_next_date:
+            self._write_invoicing_dates_on_contract(
+                new_contract,
+                last_date_invoiced=last_date_invoiced,
+                recurring_next_date=recurring_next_date,
+            )
+            return
+        if period_recurring_next_date:
+            self._write_invoicing_dates_on_contract(
+                new_contract, recurring_next_date=period_recurring_next_date
+            )
+
+    def _write_invoicing_dates_on_contract(
+        self, contract, last_date_invoiced=None, recurring_next_date=None
+    ):
+        lines = contract.contract_line_ids.filtered(lambda line: not line.is_canceled)
+        if not lines:
+            return
+        last_date_invoiced = self._last_date_invoiced_for_new_contract(
+            last_date_invoiced, lines[0].date_start or contract.date_start
+        )
+        # Stub invoicing clips date_end so the next invoice can end mid-period.
+        # After that invoice, the contract must stay open for the remaining
+        # calendar; otherwise the next period is capped at the stub end.
+        vals = {}
+        if any(lines.mapped("date_end")):
+            vals["date_end"] = False
+        if last_date_invoiced:
+            vals["last_date_invoiced"] = last_date_invoiced
+        if vals:
+            lines.write(vals)
+            lines._compute_next_period_date_start()
+        if recurring_next_date:
+            # Write after period-start compute so recurrency does not rebuild
+            # the invoice date from date_start / interval.
+            lines.write({"recurring_next_date": recurring_next_date})
+            lines._compute_next_period_date_end()
+        with contract_utils(self.env, contract) as component:
+            component.propagate_recurrency_values_to_contract()
+
+    def get_table_change_in_period(self, period_start, period_end):
+        """Return active and cancelled tables if a replacement happened in the period."""
+        self.ensure_one()
+        empty = self.env["energy_selfconsumption.distribution_table"]
+        if not period_start or not period_end:
+            return empty, empty
+        active_tables = self.distribution_table_ids.filtered(
+            lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
+            and table.date_start
+            and period_start <= table.date_start <= period_end
+        )
+        cancelled_tables = self.distribution_table_ids.filtered(
+            lambda table: table.state == DISTRIBUTION_STATE_CANCELLED
+            and table.date_end
+            and period_start <= table.date_end <= period_end
+        )
+        if active_tables and cancelled_tables:
+            return active_tables[:1], cancelled_tables[:1]
+        return empty, empty
 
     def validate_state(self, state):
         if state not in (PROJECT_STATE_ACTIVATION, PROJECT_STATE_ACTIVE):
