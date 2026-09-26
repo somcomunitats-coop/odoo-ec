@@ -34,50 +34,71 @@ class ProjectMetricsApiInfo(Component):
             type="fotovoltaic",
             shares=MetricInfo(
                 value=member_contract.supply_point_assignation_id.coefficient,
+                consolidated=True,
                 unit=UnitEnum.percentage,
             ),
             energy_shares=MetricInfo(
                 value=member_contract.supply_point_assignation_id.energy_shares,
+                consolidated=True,
                 unit=UnitEnum.kwn,
             ),
-            energy_production=MetricInfo(
-                value=monitoring_service.energy_production_by_member(
+            energy_gridconsumption=MetricInfo(
+                **monitoring_service.energy_gridconsumption_by_member(
                     **service_parameters
-                ),
+                )._asdict(),
+                unit=UnitEnum.kwh,
+            ),
+            energy_gridinjection=MetricInfo(
+                **monitoring_service.energy_gridinjection_by_member(
+                    **service_parameters
+                )._asdict(),
+                unit=UnitEnum.kwh,
+            ),
+            energy_selfconsumption=MetricInfo(
+                **monitoring_service.energy_selfconsumption_by_member(
+                    **service_parameters
+                )._asdict(),
                 unit=UnitEnum.kwh,
             ),
             energy_consumption=MetricInfo(
-                value=monitoring_service.energy_consumption_by_member(
+                **monitoring_service.energy_consumption_by_member(
                     **service_parameters
-                ),
+                )._asdict(),
+                unit=UnitEnum.kwh,
+            ),
+            energy_production=MetricInfo(
+                **monitoring_service.energy_production_by_member(
+                    **service_parameters
+                )._asdict(),
                 unit=UnitEnum.kwh,
             ),
             selfproduction_ratio=MetricInfo(
-                value=monitoring_service.energy_selfconsumption_ratio_by_member(
+                **monitoring_service.energy_selfconsumption_ratio_by_member(
                     **service_parameters
-                ),
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
-            surplus_ratio=MetricInfo(
-                value=monitoring_service.energy_surplus_ratio_by_member(
+            gridinjection_ratio=MetricInfo(
+                **monitoring_service.energy_gridinjection_ratio_by_member(
                     **service_parameters
-                ),
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
             gridconsumption_ratio=MetricInfo(
-                value=monitoring_service.energy_usage_ratio_from_grid_by_member(
+                **monitoring_service.energy_usage_ratio_from_grid_by_member(
                     **service_parameters
-                ),
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
             selfconsumption_ratio=MetricInfo(
-                value=monitoring_service.energy_usage_ratio_from_selfconsumption_by_member(
+                **monitoring_service.energy_usage_ratio_from_selfconsumption_by_member(
                     **service_parameters
-                ),
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
             environment_saves=MetricInfo(
                 value=monitoring_service.co2save_by_member(**service_parameters),
+                consolidated=True,
                 unit=UnitEnum.grco2,
             ),
         )
@@ -102,42 +123,63 @@ class ProjectMetricsApiInfo(Component):
                 value=project.selfconsumption_id.power,
                 unit=UnitEnum.kw,
             ),
-            energy_production=MetricInfo(
-                value=monitoring_service.energy_production_by_project(
+            energy_gridconsumption=MetricInfo(
+                **monitoring_service.energy_gridconsumption_by_project(
                     **service_parameters
-                ),
+                )._asdict(),
+                unit=UnitEnum.kwh,
+            ),
+            energy_gridinjection=MetricInfo(
+                **monitoring_service.energy_gridinjection_by_project(
+                    **service_parameters
+                )._asdict(),
+                unit=UnitEnum.kwh,
+            ),
+            energy_selfconsumption=MetricInfo(
+                **monitoring_service.energy_selfconsumption_by_project(
+                    **service_parameters
+                )._asdict(),
                 unit=UnitEnum.kwh,
             ),
             energy_consumption=MetricInfo(
-                value=monitoring_service.energy_consumption_by_project(
+                **monitoring_service.energy_consumption_by_project(
                     **service_parameters
-                ),
+                )._asdict(),
+                unit=UnitEnum.kwh,
+            ),
+            energy_production=MetricInfo(
+                **monitoring_service.energy_production_by_project(
+                    **service_parameters
+                )._asdict(),
                 unit=UnitEnum.kwh,
             ),
             selfproduction_ratio=MetricInfo(
-                value=monitoring_service.energy_selfconsumption_ratio(
+                **monitoring_service.energy_selfconsumption_ratio_by_project(
                     **service_parameters
-                ),
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
-            surplus_ratio=MetricInfo(
-                value=monitoring_service.energy_surplus_ratio(**service_parameters),
+            gridinjection_ratio=MetricInfo(
+                **monitoring_service.energy_gridinjection_ratio_by_project(
+                    **service_parameters
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
             gridconsumption_ratio=MetricInfo(
-                value=monitoring_service.energy_usage_ratio_from_grid(
+                **monitoring_service.energy_usage_ratio_from_grid_by_project(
                     **service_parameters
-                ),
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
             selfconsumption_ratio=MetricInfo(
-                value=monitoring_service.energy_usage_ratio_from_selfconsumption(
+                **monitoring_service.energy_usage_ratio_from_selfconsumption_by_project(
                     **service_parameters
-                ),
+                )._asdict(),
                 unit=UnitEnum.percentage,
             ),
             environment_saves=MetricInfo(
                 value=monitoring_service.co2save_by_project(**service_parameters),
+                consolidated=True,
                 unit=UnitEnum.grco2,
             ),
         )

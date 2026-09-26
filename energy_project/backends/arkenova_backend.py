@@ -1,20 +1,22 @@
 from .base import Backend
-from .domain import (
-    EnergyCurve,
-    EnergyPoint,
-    EnergyPointAttributes,
-    MeasurePoint,
-)
+from .domain import Curve, EnergyCurve, EnergyPoint, EnergyPointAttributes
 
 
 class ArkenovaEnergyPoint(EnergyPoint):
     @property
     def gridconsumption(self):
-        return self.consumption - self.selfconsumption
+        if self.consolidated:
+            return self._gridconsumption
 
     @property
-    def gridconsumption_measure(self) -> MeasurePoint:
-        return MeasurePoint(date=self.date, value=self.gridconsumption)
+    def consumption(self):
+        if self.consolidated:
+            return self._gridconsumption + self._selfconsumption
+        return self._gridconsumption
+
+    @property
+    def consolidated(self) -> bool:
+        return bool(self._selfconsumption)
 
 
 class ArkenovaBackend(Backend):
@@ -37,11 +39,11 @@ class ArkenovaBackend(Backend):
     ]
 
     _field_map = {
+        "energy_imported": EnergyPointAttributes.GRIDCONSUMPTION.value,
         "energy_consumption": EnergyPointAttributes.CONSUMPTION.value,
-        "energy_imported": EnergyPointAttributes.CONSUMPTION.value,
         "energy_exported": EnergyPointAttributes.GRIDINJECTION.value,
-        "energy_production": EnergyPointAttributes.PRODUCTION.value,
         "selfconsumption": EnergyPointAttributes.SELFCONSUMPTION.value,
+        "energy_production": EnergyPointAttributes.PRODUCTION.value,
         "timestamp": EnergyPointAttributes.TIMESTAMP.value,
     }
 
@@ -55,7 +57,7 @@ class ArkenovaBackend(Backend):
             url, headers=self._headers, from_date=from_date, to_date=to_date
         )
         raw_points = self._get_raw_points(response.content)
-        return [ArkenovaEnergyPoint(**point) for point in raw_points]
+        return Curve([ArkenovaEnergyPoint(**point) for point in raw_points])
 
     def project_daily_metrics_by_member(
         self, system_id, member_id, from_date, to_date
@@ -67,4 +69,4 @@ class ArkenovaBackend(Backend):
             url, headers=self._headers, from_date=from_date, to_date=to_date
         )
         raw_points = self._get_raw_points(response.content)
-        return [ArkenovaEnergyPoint(**point) for point in raw_points]
+        return Curve([ArkenovaEnergyPoint(**point) for point in raw_points])
