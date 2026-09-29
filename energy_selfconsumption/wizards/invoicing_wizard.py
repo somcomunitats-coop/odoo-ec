@@ -87,6 +87,21 @@ class InvoicingWizard(models.TransientModel):
         default="_get_invoicing_mode",
         help="Invoicing mode of the selected contracts",
     )
+    has_mid_period_table_change = fields.Boolean(
+        string="Has Mid Period Table Change",
+        compute="_compute_table_change_info",
+        readonly=True,
+    )
+    table_change_date = fields.Date(
+        string="Table Change Date",
+        compute="_compute_table_change_info",
+        readonly=True,
+    )
+    remaining_period_note = fields.Text(
+        string="Remaining Period Note",
+        compute="_compute_table_change_info",
+        readonly=True,
+    )
 
     # CSV import fields
     import_file = fields.Binary(
@@ -156,6 +171,72 @@ class InvoicingWizard(models.TransientModel):
             record.next_period_date_start = reference_line.next_period_date_start
             record.next_period_date_end = reference_line.next_period_date_end
 
+    @api.depends(
+        "contract_ids",
+        "next_period_date_start",
+        "next_period_date_end",
+        "invoicing_mode",
+    )
+    def _compute_table_change_info(self):
+        for record in self:
+            record.has_mid_period_table_change = False
+            record.table_change_date = False
+            record.remaining_period_note = False
+            change_date = record._get_mid_period_table_change_date()
+            if not change_date:
+                continue
+            record.has_mid_period_table_change = True
+            record.table_change_date = change_date
+            record.remaining_period_note = record._get_remaining_period_section_note(
+                change_date, period_end=record.next_period_date_end
+            )
+
+    def _get_mid_period_table_change_date(self):
+        """Return the table change date if it splits the selected invoicing period."""
+        self.ensure_one()
+        if self.invoicing_mode != SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED:
+            return False
+        period_start = self.next_period_date_start
+        period_end = self.next_period_date_end
+        if not period_start or not period_end or not self.contract_ids:
+            return False
+        project = self.contract_ids[0].project_id.selfconsumption_id
+        if not project:
+            return False
+        active_table, cancelled_table = project.get_table_change_in_period(
+            period_start, period_end
+        )
+        if not active_table or not cancelled_table:
+            return False
+        # Replacement on the first day of the period is a regular full-period invoice
+        if active_table.date_start == period_start:
+            return False
+        return active_table.date_start
+
+    def _get_remaining_period_section_note(self, change_date, period_end=None):
+        self.ensure_one()
+        if period_end is None:
+            period_end = self.next_period_date_end
+        days = 0
+        if change_date and period_end:
+            days = (period_end - change_date).days + 1
+        return _(
+            "ATTENTION: due to a replacement of the project distribution table "
+            "(with effective date of the new table on %(change_date)s), this invoice "
+            "covers the energy produced from the replacement date (%(change_date)s) "
+            "until the end of the invoicing period (%(period_end)s), that is %(days)s "
+            "days of production already using the coefficient of the current "
+            "distribution table (which became effective from %(change_date)s)."
+        ) % {
+            "change_date": change_date.strftime(DISPLAY_DATE_FORMAT)
+            if change_date
+            else "",
+            "period_end": period_end.strftime(DISPLAY_DATE_FORMAT)
+            if period_end
+            else "",
+            "days": days,
+        }
+
     # Validation constraints
     @api.constrains("import_file", "fname")
     def _check_import_file_format(self):
@@ -206,6 +287,10 @@ class InvoicingWizard(models.TransientModel):
             # Check same period
             if not self._validate_same_period(contract_list, first_contract):
                 return
+
+            project = first_contract.project_id.selfconsumption_id
+            if project:
+                project.check_dates_contract(contract_list)
 
     def _validate_same_project(self, contract_list, first_contract):
         """
@@ -290,13 +375,8 @@ class InvoicingWizard(models.TransientModel):
         if not all_same_period:
             raise ValidationError(
                 _(
-                    "Selected contracts have different invoicing periods. "
-                    "Please select contracts with the same period: {start} to {end}"
-                ).format(
-                    start=first_start.strftime(DISPLAY_DATE_FORMAT)
-                    if first_start
-                    else "N/A",
-                    end=first_end.strftime(DISPLAY_DATE_FORMAT) if first_end else "N/A",
+                    "A post-paid invoicing cannot be executed when the selected "
+                    "contracts have different date profiles."
                 )
             )
         return True
@@ -336,6 +416,12 @@ class InvoicingWizard(models.TransientModel):
         # Parse CSV file if needed
         df, csv_loaded = self._parse_csv_if_needed()
 
+        # Snapshot table-change dates before invoicing advances contract periods
+        remaining_period_end = self.next_period_date_end
+        remaining_change_date = False
+        if not self.env.context.get("skip_distribution_table_change_notes"):
+            remaining_change_date = self._get_mid_period_table_change_date()
+
         # Generate invoices
         generated_invoices = []
         for contract in self.contract_ids:
@@ -355,7 +441,30 @@ class InvoicingWizard(models.TransientModel):
                 invoice.write({"energy_delivered": contract_data["energy"]})
                 generated_invoices.append(invoice)
 
+        self._add_table_change_notes_to_invoices(
+            generated_invoices,
+            change_date=remaining_change_date,
+            period_end=remaining_period_end,
+        )
         return generated_invoices
+
+    def _add_table_change_notes_to_invoices(
+        self, invoices, change_date=False, period_end=False
+    ):
+        """Annotate invoices when a table replacement split the invoiced period."""
+        self.ensure_one()
+        if self.env.context.get("skip_distribution_table_change_notes"):
+            return
+        if not change_date:
+            return
+        for invoice in invoices:
+            if getattr(invoice, "_name", None) != "account.move" or not invoice:
+                continue
+            for move in invoice.exists():
+                note = self.with_context(
+                    lang=move.partner_id.lang or self.env.lang
+                )._get_remaining_period_section_note(change_date, period_end=period_end)
+                move.add_distribution_table_replacement_section(note)
 
     def _parse_csv_if_needed(self):
         """
@@ -385,9 +494,10 @@ class InvoicingWizard(models.TransientModel):
         Returns:
             account.move: Generated invoice
         """
+        date_ref = self.env.context.get("force_invoice_date_ref") or False
         return contract.with_context(
             {"energy_delivered": self.power}
-        )._recurring_create_invoice()
+        )._recurring_create_invoice(date_ref=date_ref)
 
     def _process_energy_custom_contract(self, df, contract):
         """
