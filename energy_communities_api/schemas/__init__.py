@@ -8,6 +8,7 @@ from .base import (
 )
 from .member import (
     MemberInfo,
+    MemberInfoBody,
     MemberInfoResponse,
 )
 from .community import (
