@@ -832,6 +832,7 @@ class ResUsers(models.Model):
         provider_id.validate_admin_provider()
         headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
         headers["Content-Type"] = "application/json"
+        user = self
         if provider_id.admin_user_endpoint:
             if self.oauth_uid:
                 endpoint = provider_id.admin_user_endpoint + "/" + self.oauth_uid
