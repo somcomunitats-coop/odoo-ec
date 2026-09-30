@@ -8,6 +8,16 @@
             <xpath expr="//sheet/group[1]" position="before">
                 <div attrs="{'invisible': [('is_keycloak_provider','=',False)]}">
                     <button
+                        name="action_clean_kc_orphan_users"
+                        type="object"
+                        string="Delete all users that are present in Keycloak but not in Odoo"
+                        groups="energy_communities.role_platform_admin_res_groups"
+                        class="btn-warning"
+                        confirm="Warning! This action will erase registers and will not be undone. Are you sure you want to continue?"
+                    />
+                </div>
+                <div attrs="{'invisible': [('is_keycloak_provider','=',False)]}">
+                    <button
                         name="action_force_reconnect_users_with_keycloak"
                         type="object"
                         string="Force users reconnection with KeyCloak"
