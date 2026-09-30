@@ -79,11 +79,25 @@ class ResUsers(models.Model):
             record.equalize_user_partner_id_company_ids()
 
     @api.ondelete(at_uninstall=False)
-    def _delete_from_kc(self):
-        self._delete_kc_user()
+    def _unlink_delete_from_kc(self):
+        try:
+            self._delete_kc_user()
+        except exceptions.UserError as e:
+            logger.warning(
+                _("User %s cannot be deleted from keyclaok, reason: %s"),
+                self.login,
+                str(e),
+            )
 
     def action_archive(self):
-        self._delete_kc_user()
+        try:
+            self._delete_kc_user()
+        except exceptions.UserError as e:
+            logger.warning(
+                _("User %s cannot be deleted from keyclaok, reason: %s"),
+                self.login,
+                str(e),
+            )
         return super().action_archive()
 
     def equalize_user_partner_id_company_ids(self):
