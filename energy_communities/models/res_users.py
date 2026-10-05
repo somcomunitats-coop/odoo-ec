@@ -46,11 +46,19 @@ class ResUsers(models.Model):
                     )
         return user
 
+    @api.onchange("email")
+    def _onchange_email(self):
+        for record in self:
+            if record.email and record.oauth_uid:
+                logger.info("Updating email attribute in kc for user %s", record.login)
+                record._update_kc_user_properties()
+
     @api.constrains("lang")
     def constrains_user_lang(self):
         for record in self:
             if record.lang and record.oauth_uid:
-                record._update_kc_user_lang()
+                logger.info("Updating lang attribute in kc for user %s", record.login)
+                record._update_kc_user_properties()
 
     @api.constrains("login")
     def constrains_user_login(self):
@@ -411,14 +419,14 @@ class ResUsers(models.Model):
         if not self._lang_validator(user_vals["lang"]):
             raise ValidationError(_("Lang is not valid"))
 
-    def _email_validator(email):
+    def _email_validator(self, email):
         regex = re.compile(
             r"([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+"
         )
         if re.fullmatch(regex, email):
             return True
 
-    def _lang_validator(lang):
+    def _lang_validator(self, lang):
         regex = re.compile(r"/[a-z]{2}_[A-Z]{2}/gm")
         if re.fullmatch(regex, lang):
             return True
@@ -733,7 +741,7 @@ class ResUsers(models.Model):
                 ).format(response.json())
             )
 
-    def _update_kc_user_lang(self):
+    def _update_kc_user_properties(self):
         provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
         provider_id.validate_admin_provider()
         headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
