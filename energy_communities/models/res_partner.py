@@ -57,6 +57,14 @@ class ResPartner(models.Model):
             else:
                 record.has_rel_user = False
 
+    @api.onchange("email")
+    def _onchange_email(self):
+        for record in self:
+            if record.has_rel_user:
+                user = record.user_ids[0]
+                user.email = record.email
+                user._onchange_email()
+
     def compute_company_hierarchy_level(self):
         for record in self:
             record.company_hierarchy_level = "none"
