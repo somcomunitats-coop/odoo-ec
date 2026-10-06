@@ -802,8 +802,21 @@ class ResUsers(models.Model):
                 % {"detail": detail}
             )
         if not resp.ok:
-            # TODO: do something better?
-            raise resp.raise_for_status()
+            if resp.status_code == 400:
+                errors = resp.json().get("errors", [resp.json()])
+                error_msg = "\n".join(
+                    [
+                        "\t * %s -> %s: %s"
+                        % (
+                            error["errorMessage"],
+                            error["params"][0],
+                            error["params"][-1],
+                        )
+                        for error in errors
+                    ]
+                )
+                msg = _("There was an error sending values to KC:\n %s")
+                raise exceptions.ValidationError(msg % error_msg)
         if no_json:
             return resp.content
         try:
