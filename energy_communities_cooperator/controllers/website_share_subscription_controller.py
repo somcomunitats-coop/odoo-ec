@@ -148,6 +148,7 @@ class WebsiteShareSubscriptionController(http.Controller):
         elif subscription_mode in [
             SubscriptionMode.company_member,
             SubscriptionMode.company_invited,
+            SubscriptionMode.company_member_associations,
         ]:
             form_submission = WebsiteShareSubscriptionSubmissionCompanyMember(
                 **request.httprequest.form
