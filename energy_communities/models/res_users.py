@@ -88,24 +88,32 @@ class ResUsers(models.Model):
 
     @api.ondelete(at_uninstall=False)
     def _unlink_delete_from_kc(self):
-        try:
-            self._delete_kc_user()
-        except exceptions.UserError as e:
-            logger.warning(
-                _("User %s cannot be deleted from keyclaok, reason: %s"),
-                self.login,
-                str(e),
-            )
+        for user in self:
+            try:
+                logger.info("Deleting user %s", user.login)
+                user._delete_kc_user()
+            except exceptions.UserError as e:
+                logger.warning(
+                    _("User %s cannot be deleted from keyclaok, reason: %s"),
+                    user.login,
+                    str(e),
+                )
+            else:
+                user.oauth_uid = None
 
     def action_archive(self):
-        try:
-            self._delete_kc_user()
-        except exceptions.UserError as e:
-            logger.warning(
-                _("User %s cannot be deleted from keyclaok, reason: %s"),
-                self.login,
-                str(e),
-            )
+        for user in self:
+            try:
+                logger.info("Archiving user %s", user.login)
+                user._delete_kc_user()
+            except exceptions.UserError as e:
+                logger.warning(
+                    _("User %s cannot be deleted from keyclaok, reason: %s"),
+                    user.login,
+                    str(e),
+                )
+            else:
+                user.oauth_uid = None
         return super().action_archive()
 
     def equalize_user_partner_id_company_ids(self):
@@ -764,6 +772,7 @@ class ResUsers(models.Model):
             )
 
     def _delete_kc_user(self):
+        self.ensure_one()
         provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
         provider_id.validate_admin_provider()
         headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
@@ -771,6 +780,7 @@ class ResUsers(models.Model):
         if provider_id.admin_user_endpoint:
             if self.oauth_uid:
                 endpoint = provider_id.admin_user_endpoint + "/" + self.oauth_uid
+                logger.info("DELETE Calling %s", endpoint)
                 response = requests.delete(endpoint, headers=headers)
                 if response.status_code != 204:
                     raise exceptions.UserError(
