@@ -17,6 +17,7 @@ from ..schemas import (
     EnergyPoint,
     ProjectEnergyConsumedInfoListResponse,
     ProjectEnergyExportedInfoListResponse,
+    ProjectGridconsumptionInfoListResponse,
     ProjectProductionInfoListResponse,
     ProjectSelfconsumptionInfoListResponse,
     QueryParams,
@@ -344,5 +345,48 @@ class EnergyCommunityApiService(Component):
             ProjectEnergyConsumedInfoListResponse,
             daily_selfconsumption,
             len(daily_selfconsumption),
+            paging,
+        )
+
+    @restapi.method(
+        [
+            (
+                ["/community_services/<int:service_id>/metrics/energy_gridconsumption"],
+                "GET",
+            )
+        ],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(ProjectGridconsumptionInfoListResponse),
+    )
+    def community_service_energy_gridconsumption(
+        self, service_id: int, query_params: QueryParams
+    ):
+        """
+        Daily energy comsuption from the grid of an installation between two dates
+        """
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        paging = self._get_pagination_limits(query_params)
+        date_from, date_to = self._get_dates_range(query_params)
+        with api_info(
+            self.env,
+            "energy_project.project",
+            EnergyPoint,
+            paging=paging,
+            community_id=community_id,
+        ) as component:
+            project = component.get_project_from_service(service_id)
+            if not project:
+                raise MissingError(
+                    f"Service with id {service_id} has not a project associated"
+                )
+            daily_gridconsumption = component.get_project_daily_energy_gridconsumption(
+                project, date_from, date_to
+            )
+        return list_response(
+            request,
+            ProjectGridconsumptionInfoListResponse,
+            daily_gridconsumption,
+            len(daily_gridconsumption),
             paging,
         )
