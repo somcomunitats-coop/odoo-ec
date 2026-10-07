@@ -257,6 +257,25 @@ class ProjectApiInfo(Component):
             return [EnergyPoint(**point._asdict()) for point in daily_consumed_energy]
         return []
 
+    def get_project_daily_energy_gridconsumption_by_member(
+        self, project, partner, date_from, date_to
+    ) -> List[EnergyPoint]:
+        monitoring_service = project.monitoring_service()
+        member_contract = project.get_member_contract(partner)
+        if monitoring_service and member_contract:
+            daily_gridconsumption_energy = (
+                monitoring_service.daily_gridconsumption_by_member(
+                    system_id=project.selfconsumption_id.code,
+                    member_id=member_contract.code,
+                    date_from=date_from,
+                    date_to=date_to,
+                )
+            )
+            return [
+                EnergyPoint(**point._asdict()) for point in daily_gridconsumption_energy
+            ]
+        return []
+
     def get_project_daily_production(
         self, project, date_from, date_to
     ) -> List[EnergyPoint]:

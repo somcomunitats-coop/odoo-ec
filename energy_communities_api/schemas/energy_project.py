@@ -63,3 +63,11 @@ class ProjectEnergyConsumedInfoListResponse(ProjectEnergyInfoListResponse):
     """
 
     ...
+
+
+class ProjectGridconsumptionInfoListResponse(ProjectEnergyInfoListResponse):
+    """
+    Body response for energy gridconsumption requests
+    """
+
+    ...
