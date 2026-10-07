@@ -327,3 +327,20 @@ class ProjectApiInfo(Component):
             )
             return [EnergyPoint(**point._asdict()) for point in daily_consumed_energy]
         return []
+
+    def get_project_daily_energy_gridconsumption(
+        self, project, date_from, date_to
+    ) -> List[EnergyPoint]:
+        monitoring_service = project.monitoring_service()
+        if monitoring_service:
+            daily_gridconsumption_energy = (
+                monitoring_service.daily_gridconsumption_by_project(
+                    system_id=project.selfconsumption_id.code,
+                    date_from=date_from,
+                    date_to=date_to,
+                )
+            )
+            return [
+                EnergyPoint(**point._asdict()) for point in daily_gridconsumption_energy
+            ]
+        return []
