@@ -31,6 +31,7 @@ from .energy_project import (
     ProjectSelfconsumptionInfoListResponse,
     ProjectEnergyConsumedInfoListResponse,
     ProjectEnergyExportedInfoListResponse,
+    ProjectGridconsumptionInfoListResponse,
 )
 from .selfconsumption_project import (
     SelfConsumptionProjectInfo,
