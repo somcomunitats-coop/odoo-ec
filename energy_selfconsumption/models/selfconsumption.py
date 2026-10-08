@@ -615,6 +615,23 @@ class Selfconsumption(models.Model):
                     period_recurring_next_date=period_recurring_next_date,
                     reference_last_date_invoiced=reference_last_date_invoiced,
                 )
+                if (
+                    self.invoicing_mode
+                    == SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED
+                    and self.recurring_invoicing_type
+                    == RECURRING_INVOICING_TYPE_POSTPAID
+                    and period_start
+                    and execution_date
+                    and period_start < execution_date
+                ):
+                    # A new CUPS starts on the wizard date. Its quarter is the
+                    # one already open on the project, not a new one from that date.
+                    self._apply_replacement_start_date(
+                        service_invoicing_id,
+                        execution_date,
+                        period_recurring_next_date,
+                        period_start=period_start,
+                    )
 
         return closed_without_inscription
 
@@ -1008,9 +1025,9 @@ class Selfconsumption(models.Model):
                         predecessor_last_date_invoiced
                         or execution_date - relativedelta(days=1)
                     )
-                    # Post-paid continuing contracts keep the open quarter.
-                    # date_start stays the quarter start, not the wizard date,
-                    # and the stub last date stays on the closed predecessor.
+                    # Post-paid continuing contracts are first activated on the
+                    # open quarter so the period stays put. The wizard date is
+                    # written afterwards as the contract start.
                     keep_open_period = (
                         self.invoicing_mode
                         == SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED
@@ -1086,6 +1103,12 @@ class Selfconsumption(models.Model):
                         last_date_invoiced=successor_last_date_invoiced,
                         recurring_next_date=successor_recurring_next_date,
                     )
+                    if keep_open_period:
+                        self._apply_replacement_start_date(
+                            new_contract,
+                            execution_date,
+                            successor_recurring_next_date,
+                        )
             inscriptions = self.inscription_ids.filtered_domain(
                 [("state", "=", INSCRIPTION_STATE_CHANGE)]
             )
@@ -1371,6 +1394,35 @@ class Selfconsumption(models.Model):
         )
         if lines:
             lines.write({"last_date_invoiced": False})
+
+    def _apply_replacement_start_date(
+        self, contract, date_start, recurring_next_date, period_start=None
+    ):
+        """Set the contract start to the table change date.
+
+        The open period is stored in fixed_period_date_start first. The period
+        compute reads that value, so moving date_start no longer opens a new
+        quarter. The captured invoice date is written back afterwards.
+        """
+        if not contract or not date_start:
+            return
+        lines = contract.contract_line_ids.filtered(lambda line: not line.is_canceled)
+        if not period_start:
+            period_start = (
+                lines[:1].next_period_date_start or contract.next_period_date_start
+            )
+        start_vals = {
+            "date_start": date_start,
+            "fixed_period_date_start": period_start,
+        }
+        if lines:
+            lines.write(start_vals)
+        contract.write(start_vals)
+        if lines and recurring_next_date:
+            lines.write({"recurring_next_date": recurring_next_date})
+            lines._compute_next_period_date_end()
+        with contract_utils(self.env, contract) as component:
+            component.propagate_recurrency_values_to_contract()
 
     def _align_new_contract_period_end(
         self,
