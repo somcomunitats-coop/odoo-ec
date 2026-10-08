@@ -1914,9 +1914,13 @@ msgid "Encoding format in import CSV file"
 msgstr ""
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_end
 msgid "End"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
+msgid "Period end"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -5114,9 +5118,14 @@ msgid ""
 msgstr ""
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_start
 msgid "Start"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
+msgid "Period start"
 msgstr ""
 
 #. module: energy_selfconsumption
@@ -5133,6 +5142,7 @@ msgstr ""
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
 msgid "Start date of the invoicing period"
 msgstr ""
 
@@ -6140,11 +6150,6 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__has_mid_period_table_change
 msgid "Has Mid Period Table Change"
-msgstr ""
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
-msgid "Table Change Date"
 msgstr ""
 
 #. module: energy_selfconsumption

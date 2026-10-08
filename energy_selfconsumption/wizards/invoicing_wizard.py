@@ -64,13 +64,13 @@ class InvoicingWizard(models.TransientModel):
 
     # Period fields (computed)
     next_period_date_start = fields.Date(
-        string="Start",
+        string="Period start",
         compute="_compute_next_period_date_start_and_end",
         readonly=True,
         help="Start date of the invoicing period",
     )
     next_period_date_end = fields.Date(
-        string="End",
+        string="Period end",
         compute="_compute_next_period_date_start_and_end",
         readonly=True,
         help="End date of the invoicing period",
@@ -94,9 +94,10 @@ class InvoicingWizard(models.TransientModel):
         readonly=True,
     )
     table_change_date = fields.Date(
-        string="Table Change Date",
+        string="Period start",
         compute="_compute_table_change_info",
         readonly=True,
+        help="Start date of the invoicing period",
     )
     remaining_period_note = fields.Text(
         string="Remaining Period Note",

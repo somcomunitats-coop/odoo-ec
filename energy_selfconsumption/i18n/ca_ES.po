@@ -2037,10 +2037,14 @@ msgid "Encoding format in import CSV file"
 msgstr "Format de codificació al fitxer CSV d'importació"
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_end
 msgid "End"
 msgstr "Final"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
+msgid "Period end"
+msgstr "Fi del període"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__date_end
@@ -5206,10 +5210,15 @@ msgid "Specify if the invoice must be generated at the beginning (pre-paid) or e
 msgstr "Especifiqueu si la factura s’ha de generar al principi (pre-pagada) o final (post-pagat) del període."
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_start
 msgid "Start"
 msgstr "Començar"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
+msgid "Period start"
+msgstr "Inici del període"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__date_start
@@ -5225,6 +5234,7 @@ msgstr "La data d'inici és obligatòria per a la generació del contracte"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
 msgid "Start date of the invoicing period"
 msgstr "Data d'inici del període de facturació"
 
@@ -6250,11 +6260,6 @@ msgstr "Nota d'inici de període"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__has_mid_period_table_change
 msgid "Has Mid Period Table Change"
 msgstr "Té canvi de taula a meitat de període"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
-msgid "Table Change Date"
-msgstr "Data de canvi de taula"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__remaining_period_note

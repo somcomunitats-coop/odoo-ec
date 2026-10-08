@@ -2034,10 +2034,14 @@ msgid "Encoding format in import CSV file"
 msgstr "Inportazio CSV fitxategiko kodeketa formatua"
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_end
 msgid "End"
 msgstr "Amaiera"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_end
+msgid "Period end"
+msgstr "Aldiaren amaiera"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__date_end
@@ -5200,10 +5204,15 @@ msgid "Specify if the invoice must be generated at the beginning (pre-paid) or e
 msgstr "Zehaztu faktura hasieran (aurrez ordaindutakoa) edo amaiera (ordaindutakoa) (post-ordaindutakoa) sortu behar den."
 
 #. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_set_new_distribution_table_wizard__next_period_date_start
 msgid "Start"
 msgstr "Hasi"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
+msgid "Period start"
+msgstr "Aldiaren hasiera"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_distribution_table__date_start
@@ -5219,6 +5228,7 @@ msgstr "Hasiera data derrigorrezkoa da kontratua sortzeko"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__next_period_date_start
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
 msgid "Start date of the invoicing period"
 msgstr "Fakturazio aldiaren hasiera data"
 
@@ -6245,11 +6255,6 @@ msgstr "Aldiaren hasierako oharra"
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__has_mid_period_table_change
 msgid "Has Mid Period Table Change"
 msgstr "Aldiaren erdian taula-aldaketa du"
-
-#. module: energy_selfconsumption
-#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__table_change_date
-msgid "Table Change Date"
-msgstr "Taula-aldaketaren data"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_invoicing_wizard__remaining_period_note
