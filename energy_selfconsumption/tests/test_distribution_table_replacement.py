@@ -64,6 +64,34 @@ class TestDistributionTableReplacement(TransactionCase):
         self.assertEqual(active.date_start, change_date)
         self.assertEqual(cancelled.date_end, date(2026, 7, 19))
 
+    def test_distribution_table_name_skips_deleted_numbers(self):
+        project = self.selfconsumption
+        Table = self.env["energy_selfconsumption.distribution_table"]
+        first = Table.create(
+            {
+                "selfconsumption_project_id": project.id,
+                "type": "fixed",
+            }
+        )
+        second = Table.create(
+            {
+                "selfconsumption_project_id": project.id,
+                "type": "fixed",
+            }
+        )
+        first_number = int(first.name[2:])
+        self.assertEqual(second.name, "DT%s" % str(first_number + 1).zfill(3))
+        second.unlink()
+        third = Table.create(
+            {
+                "selfconsumption_project_id": project.id,
+                "type": "fixed",
+            }
+        )
+        self.assertEqual(third.name, "DT%s" % str(first_number + 2).zfill(3))
+        first.unlink()
+        third.unlink()
+
     def test_table_change_on_first_day_is_not_a_mid_period_split(self):
         period_start = date(2026, 7, 1)
         period_end = date(2026, 9, 30)

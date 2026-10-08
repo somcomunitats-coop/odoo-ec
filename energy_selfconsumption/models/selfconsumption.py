@@ -145,6 +145,15 @@ class Selfconsumption(models.Model):
         readonly=True,
         help="Distribution tables associated with this project",
     )
+    distribution_table_name_sequence = fields.Integer(
+        string="Distribution table name sequence",
+        default=0,
+        copy=False,
+        help=(
+            "Highest DT number already issued for this project. "
+            "Deleting a table does not rewind it."
+        ),
+    )
     report_distribution_table = fields.Many2one(
         "energy_selfconsumption.distribution_table",
         help="Distribution table used for report generation",
