@@ -1,3 +1,5 @@
+import re
+
 import pandas as pd
 
 from odoo import _, api, fields, models
@@ -17,6 +19,7 @@ from ..config import (
 # Constants for coefficient validation
 COEFFICIENT_PRECISION = 0.000001
 VALID_COEFFICIENT_SUM = 1.000000
+_TABLE_NAME_PATTERN = re.compile(r"^DT(\d+)$")
 
 
 class DistributionTable(models.Model):
@@ -183,13 +186,30 @@ class DistributionTable(models.Model):
         """
         for val in vals:
             if "selfconsumption_project_id" in val:
-                project_id = val["selfconsumption_project_id"]
-                count = (
-                    self.search_count([("selfconsumption_project_id", "=", project_id)])
-                    + 1
+                project = self.env["energy_selfconsumption.selfconsumption"].browse(
+                    val["selfconsumption_project_id"]
                 )
-                val["name"] = f"DT{str(count).zfill(3)}"
+                val["name"] = self._next_distribution_table_name(project)
         return super().create(vals)
+
+    def _next_distribution_table_name(self, project):
+        """Return the next DT name for a project.
+
+        The number is the highest one already used on the project, plus one.
+        Counting the tables that still exist reuses a number after a deletion.
+        """
+        project.ensure_one()
+        tables = self.with_context(active_test=False).search(
+            [("selfconsumption_project_id", "=", project.id)]
+        )
+        used_numbers = [project.distribution_table_name_sequence or 0]
+        for name in tables.mapped("name"):
+            match = _TABLE_NAME_PATTERN.match(name or "")
+            if match:
+                used_numbers.append(int(match.group(1)))
+        next_number = max(used_numbers) + 1
+        project.distribution_table_name_sequence = next_number
+        return f"DT{str(next_number).zfill(3)}"
 
     def write(self, vals):
         """
