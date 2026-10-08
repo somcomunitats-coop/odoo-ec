@@ -284,9 +284,12 @@ class SetNewDistributionTableWizard(models.TransientModel):
         self._validate_execution_date()
 
         original_recurring_next_date = False
+        period_start = False
         reference_contract = self._get_reference_contract()
         if reference_contract:
+            # Captured before the stub invoice clears the open quarter.
             original_recurring_next_date = reference_contract.recurring_next_date
+            period_start = reference_contract.next_period_date_start
 
         if self._needs_advance_invoicing():
             self._invoice_outgoing_table_until_replacement()
@@ -294,6 +297,7 @@ class SetNewDistributionTableWizard(models.TransientModel):
         closed_without_inscription = self.selfconsumption_id.set_new_distribution_table(
             execution_date=self.execution_date,
             period_recurring_next_date=original_recurring_next_date,
+            period_start=period_start,
         )
         return self._action_after_confirm(closed_without_inscription)
 

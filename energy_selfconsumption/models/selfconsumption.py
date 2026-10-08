@@ -53,6 +53,7 @@ from ..config import (
     SELFCONSUMPTION_CONF_STATE_VALUES,
     SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
     SELFCONSUMPTION_DEFAULT_PARTICIPATIONS,
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
     SELFCONSUMPTION_INVOICING_MODE_POWER_ACQUIRED,
     SELFCONSUMPTION_INVOICING_MODE_VALUES,
 )
@@ -475,7 +476,10 @@ class Selfconsumption(models.Model):
         }
 
     def set_new_distribution_table(
-        self, execution_date=None, period_recurring_next_date=None
+        self,
+        execution_date=None,
+        period_recurring_next_date=None,
+        period_start=None,
     ):
         distribution_table_active = self.distribution_table_ids.filtered(
             lambda table: table.state == DISTRIBUTION_STATE_ACTIVE
@@ -500,12 +504,17 @@ class Selfconsumption(models.Model):
         reference_last_date_invoiced = (
             reference_contract.last_date_invoiced if reference_contract else False
         )
+        # The wizard passes the quarter start captured before the stub invoice.
+        # After that invoice the predecessor no longer shows the open period.
+        if not period_start and reference_contract:
+            period_start = reference_contract.next_period_date_start
 
         closed_without_inscription = self.distribution_table_state(
             DISTRIBUTION_STATE_VALIDATED,
             DISTRIBUTION_STATE_ACTIVE,
             execution_date=execution_date,
             period_recurring_next_date=period_recurring_next_date,
+            period_start=period_start,
         )
 
         # TODO:
@@ -947,6 +956,7 @@ class Selfconsumption(models.Model):
         new_state,
         execution_date=None,
         period_recurring_next_date=None,
+        period_start=None,
     ):
         self.check_dates_contract()
         if not execution_date:
@@ -998,14 +1008,35 @@ class Selfconsumption(models.Model):
                         predecessor_last_date_invoiced
                         or execution_date - relativedelta(days=1)
                     )
-                    activate_date = execution_date
-                    # The stub last date belongs to the closed predecessor. OCA
-                    # forbids putting it on a successor whose date_start is later.
-                    successor_last_date_invoiced = (
-                        self._last_date_invoiced_for_new_contract(
-                            predecessor_last_date_invoiced, activate_date
-                        )
+                    # Post-paid continuing contracts keep the open quarter.
+                    # date_start stays the quarter start, not the wizard date,
+                    # and the stub last date stays on the closed predecessor.
+                    keep_open_period = (
+                        self.invoicing_mode
+                        == SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED
+                        and contract.recurring_invoicing_type
+                        == RECURRING_INVOICING_TYPE_POSTPAID
+                        and period_start
+                        and period_start < execution_date
                     )
+                    if keep_open_period:
+                        activate_date = period_start
+                        successor_last_date_invoiced = False
+                        successor_recurring_next_date = (
+                            period_recurring_next_date
+                            or predecessor_recurring_next_date
+                        )
+                    else:
+                        activate_date = execution_date
+                        successor_last_date_invoiced = (
+                            self._last_date_invoiced_for_new_contract(
+                                predecessor_last_date_invoiced, activate_date
+                            )
+                        )
+                        successor_recurring_next_date = (
+                            predecessor_recurring_next_date
+                            or period_recurring_next_date
+                        )
                     modify_metadata = {
                         "selfconsumption_id": self.id,
                         "supply_point_id": supply_point_assignation.supply_point_id.id,
@@ -1025,14 +1056,10 @@ class Selfconsumption(models.Model):
                         modify_metadata[
                             "last_date_invoiced"
                         ] = successor_last_date_invoiced
-                    if predecessor_recurring_next_date:
+                    if successor_recurring_next_date:
                         modify_metadata[
                             "recurring_next_date"
-                        ] = predecessor_recurring_next_date
-                    elif period_recurring_next_date:
-                        modify_metadata[
-                            "recurring_next_date"
-                        ] = period_recurring_next_date
+                        ] = successor_recurring_next_date
                     with contract_utils(self.env, contract) as component:
                         new_contract = component.modify(
                             execution_date=modify_date,
@@ -1057,8 +1084,7 @@ class Selfconsumption(models.Model):
                         new_contract,
                         period_recurring_next_date,
                         last_date_invoiced=successor_last_date_invoiced,
-                        recurring_next_date=predecessor_recurring_next_date
-                        or period_recurring_next_date,
+                        recurring_next_date=successor_recurring_next_date,
                     )
             inscriptions = self.inscription_ids.filtered_domain(
                 [("state", "=", INSCRIPTION_STATE_CHANGE)]
@@ -1355,9 +1381,9 @@ class Selfconsumption(models.Model):
     ):
         """Restore invoicing dates after contract.utils recreates recurrency.
 
-        Continuing CUPS keep the predecessor last invoiced date and PFF/PPC/PPF
-        when that last date is still valid on the new line. New CUPS join the
-        same project calendar; execution_date is not a new invoicing period start.
+        Post-paid continuing CUPS keep the open quarter: no stub last date, and
+        the invoice date captured before that stub. New CUPS join on the wizard
+        date and share the same quarter end.
         """
         if not new_contract:
             return
@@ -1396,7 +1422,8 @@ class Selfconsumption(models.Model):
             vals["last_date_invoiced"] = last_date_invoiced
         if vals:
             lines.write(vals)
-            lines._compute_next_period_date_start()
+        # Start follows date_start when the stub last date was not copied.
+        lines._compute_next_period_date_start()
         if recurring_next_date:
             # Write after period-start compute so recurrency does not rebuild
             # the invoice date from date_start / interval.

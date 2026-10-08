@@ -1,5 +1,6 @@
 import base64
 import logging
+from datetime import timedelta
 from io import StringIO
 
 import chardet
@@ -428,6 +429,10 @@ class InvoicingWizard(models.TransientModel):
             invoicing_mode = contract.project_id.selfconsumption_id.invoicing_mode
 
             if invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED:
+                if remaining_change_date and not self.env.context.get(
+                    "skip_distribution_table_change_notes"
+                ):
+                    self._invoice_from_table_change(contract, remaining_change_date)
                 invoice = self._process_energy_delivered_contract(contract)
                 invoice.write({"energy_delivered": self.power})
                 generated_invoices.append(invoice)
@@ -438,7 +443,6 @@ class InvoicingWizard(models.TransientModel):
                         _("CSV file is required for energy custom mode")
                     )
                 invoice = self._process_energy_custom_contract(df, contract)
-                invoice.write({"energy_delivered": contract_data["energy"]})
                 generated_invoices.append(invoice)
 
         self._add_table_change_notes_to_invoices(
@@ -484,6 +488,36 @@ class InvoicingWizard(models.TransientModel):
             return self.parse_csv_file()
         return None, True
 
+    def _invoice_from_table_change(self, contract, change_date):
+        """Bill only from the active table date until the open period end.
+
+        Continuing contracts start the quarter on the original period start, so
+        their last invoiced date is moved to the day before the table change.
+        A new CUPS already starts on its join date, which is that same day or
+        later, so its period is left as it is.
+        """
+        slice_start = change_date
+        if contract.date_start and contract.date_start > change_date:
+            slice_start = contract.date_start
+        period_start = contract.next_period_date_start or contract.date_start
+        if not slice_start or (period_start and slice_start <= period_start):
+            return
+        last_date = slice_start - timedelta(days=1)
+        lines = contract.contract_line_ids.filtered(
+            lambda line: not line.is_canceled and not line.display_type
+        )
+        if not lines:
+            return
+        if any(line.date_start and line.date_start > last_date for line in lines):
+            return
+        kept_next_date = lines[0].recurring_next_date
+        lines.write({"last_date_invoiced": last_date})
+        if kept_next_date:
+            # Writing last_date recomputes the next invoice date from the
+            # shortened start. Put the original quarter end back first.
+            lines.write({"recurring_next_date": kept_next_date})
+            lines._compute_next_period_date_end()
+
     def _process_energy_delivered_contract(self, contract):
         """
         Process contract with energy delivered mode
@@ -526,9 +560,11 @@ class InvoicingWizard(models.TransientModel):
         self._update_contract_lines_with_custom_energy(contract, contract_data)
 
         # Generate invoice
-        return contract.with_context(
+        invoice = contract.with_context(
             {"energy_delivered": contract_data["energy"]}
         )._recurring_create_invoice()
+        invoice.write({"energy_delivered": contract_data["energy"]})
+        return invoice
 
     def _extract_contract_data_from_csv(self, df, contract):
         """
