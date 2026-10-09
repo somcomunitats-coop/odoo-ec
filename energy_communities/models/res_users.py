@@ -46,11 +46,19 @@ class ResUsers(models.Model):
                     )
         return user
 
+    @api.onchange("email")
+    def _onchange_email(self):
+        for record in self:
+            if record.email and record.oauth_uid:
+                logger.info("Updating email attribute in kc for user %s", record.login)
+                record._update_kc_user_properties()
+
     @api.constrains("lang")
     def constrains_user_lang(self):
         for record in self:
             if record.lang and record.oauth_uid:
-                record._update_kc_user_lang()
+                logger.info("Updating lang attribute in kc for user %s", record.login)
+                record._update_kc_user_properties()
 
     @api.constrains("login")
     def constrains_user_login(self):
@@ -77,6 +85,36 @@ class ResUsers(models.Model):
     def constrains_user_partner_id_company_ids(self):
         for record in self:
             record.equalize_user_partner_id_company_ids()
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_delete_from_kc(self):
+        for user in self:
+            try:
+                logger.info("Deleting user %s", user.login)
+                user._delete_kc_user()
+            except exceptions.UserError as e:
+                logger.warning(
+                    _("User %s cannot be deleted from keyclaok, reason: %s"),
+                    user.login,
+                    str(e),
+                )
+            else:
+                user.oauth_uid = None
+
+    def action_archive(self):
+        for user in self:
+            try:
+                logger.info("Archiving user %s", user.login)
+                user._delete_kc_user()
+            except exceptions.UserError as e:
+                logger.warning(
+                    _("User %s cannot be deleted from keyclaok, reason: %s"),
+                    user.login,
+                    str(e),
+                )
+            else:
+                user.oauth_uid = None
+        return super().action_archive()
 
     def equalize_user_partner_id_company_ids(self):
         self.partner_id.write({"company_ids": self.company_ids})
@@ -389,14 +427,14 @@ class ResUsers(models.Model):
         if not self._lang_validator(user_vals["lang"]):
             raise ValidationError(_("Lang is not valid"))
 
-    def _email_validator(email):
+    def _email_validator(self, email):
         regex = re.compile(
             r"([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+"
         )
         if re.fullmatch(regex, email):
             return True
 
-    def _lang_validator(lang):
+    def _lang_validator(self, lang):
         regex = re.compile(r"/[a-z]{2}_[A-Z]{2}/gm")
         if re.fullmatch(regex, lang):
             return True
@@ -711,7 +749,30 @@ class ResUsers(models.Model):
                 ).format(response.json())
             )
 
-    def _update_kc_user_lang(self):
+    def _update_kc_user_properties(self):
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        provider_id.validate_admin_provider()
+        headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
+        headers["Content-Type"] = "application/json"
+        user = self
+        if provider_id.admin_user_endpoint:
+            if self.oauth_uid:
+                endpoint = provider_id.admin_user_endpoint + "/" + self.oauth_uid
+                data = self._create_user_values(user)
+                response = requests.put(endpoint, headers=headers, json=data)
+                if response.status_code != 204:
+                    raise exceptions.UserError(
+                        _("Something went wrong. More details: {}").format(
+                            response.json()
+                        )
+                    )
+        else:
+            raise exceptions.UserError(
+                _("Keycloack provider admin user endpoint not defined")
+            )
+
+    def _delete_kc_user(self):
+        self.ensure_one()
         provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
         provider_id.validate_admin_provider()
         headers = {"Authorization": "Bearer %s" % self._get_admin_token(provider_id)}
@@ -719,12 +780,8 @@ class ResUsers(models.Model):
         if provider_id.admin_user_endpoint:
             if self.oauth_uid:
                 endpoint = provider_id.admin_user_endpoint + "/" + self.oauth_uid
-                data = {
-                    "attributes": {
-                        "lang": [self.lang],
-                    },
-                }
-                response = requests.put(endpoint, headers=headers, json=data)
+                logger.info("DELETE Calling %s", endpoint)
+                response = requests.delete(endpoint, headers=headers)
                 if response.status_code != 204:
                     raise exceptions.UserError(
                         _("Something went wrong. More details: {}").format(
@@ -755,8 +812,21 @@ class ResUsers(models.Model):
                 % {"detail": detail}
             )
         if not resp.ok:
-            # TODO: do something better?
-            raise resp.raise_for_status()
+            if resp.status_code == 400:
+                errors = resp.json().get("errors", [resp.json()])
+                error_msg = "\n".join(
+                    [
+                        "\t * %s -> %s: %s"
+                        % (
+                            error["errorMessage"],
+                            error["params"][0],
+                            error["params"][-1],
+                        )
+                        for error in errors
+                    ]
+                )
+                msg = _("There was an error sending values to KC:\n %s")
+                raise exceptions.ValidationError(msg % error_msg)
         if no_json:
             return resp.content
         try:
