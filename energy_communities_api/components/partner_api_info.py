@@ -12,6 +12,7 @@ from ..schemas import (
     InvoiceInfo,
     InvoicePDFInfo,
     MemberInfo,
+    MemberInfoBody,
 )
 
 
@@ -46,6 +47,14 @@ class PartnerApiInfo(Component):
     ]
 
     def get_member_info(self, partner: Partner) -> MemberInfo:
+        return self.get(partner)
+
+    def update_member_info(
+        self, partner: Partner, partner_info: MemberInfoBody
+    ) -> MemberInfo:
+        partner.write(partner_info.model_dump())
+        self.env.user.write(partner_info.model_dump())
+        self.env.user._update_kc_user_lang()
         return self.get(partner)
 
     def total_member_communities(self, partner: Partner) -> int:
