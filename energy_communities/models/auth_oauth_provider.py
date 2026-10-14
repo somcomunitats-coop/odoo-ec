@@ -275,7 +275,7 @@ class OAuthProvider(models.Model):
         assert len(orphan_users) == len(
             users_to_delete
         ), "Error!! orphan users and users to delete must have the same length!!"
-        for user in users_to_delete[:2]:
+        for user in users_to_delete:
             try:
                 logger.info(
                     "Deleting orphan user (%s, %s) in KC", user["id"], user["username"]
