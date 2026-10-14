@@ -502,8 +502,8 @@ class ResUsers(models.Model):
             if user.oauth_uid:
                 # already sync'ed somewhere else
                 continue
-            keycloak_user = self._get_or_create_kc_user(token, provider_id, user)
-            keycloak_key = self._LOGIN_MATCH_KEY.split(":")[0]
+            keycloak_user = user._get_or_create_kc_user(token, provider_id, user)
+            keycloak_key = user._LOGIN_MATCH_KEY.split(":")[0]
             keycloak_login_provider = self.env.ref(
                 "energy_communities.keycloak_login_provider"
             )
@@ -513,9 +513,64 @@ class ResUsers(models.Model):
                     "oauth_provider_id": keycloak_login_provider.id,
                 }
             )
-        # action = self.env.ref('base.action_res_users').read()[0]
-        # action['domain'] = [('id', 'in', self.user_ids.ids)]
+            logger.info("Post creation actions")
+            user._post_creation_actions(token, provider_id, keycloak_user[keycloak_key])
         logger.debug("Create keycloak users STOP")
+        return True
+
+    def _get_kc_user(self, provider_id, token, keycloak_user_id):
+        url = f"{provider_id.admin_user_endpoint}/{keycloak_user_id}"
+        headers = {
+            "Authorization": "Bearer %s" % token,
+        }
+        resp = requests.get(url, headers=headers)
+        self._validate_response(resp)
+        return resp.json()
+
+    def _update_kc_user(self, provider_id, token, keycloak_user_id, data):
+        url = f"{provider_id.admin_user_endpoint}/{keycloak_user_id}"
+        headers = {
+            "Authorization": "Bearer %s" % token,
+            "Content-Type": "application/json",
+        }
+        resp = requests.put(url, headers=headers, json=data)
+        self._validate_response(resp, no_json=True)
+        return True
+
+    def _kc_verify_email(self, provider_id, token, keycloak_user_id):
+        logger.info("Email is verified for %s", keycloak_user_id)
+        kc_user = self._get_kc_user(provider_id, token, keycloak_user_id)
+        kc_user["emailVerified"] = True
+        kc_user["requiredActions"] = []
+        self._update_kc_user(provider_id, token, keycloak_user_id, kc_user)
+        return True
+
+    def _kc_set_temp_credentials(self, provider_id, token, keycloak_user_id):
+        logger.info("Setting temporal credentials for %s", keycloak_user_id)
+        url = f"{provider_id.admin_user_endpoint}/{keycloak_user_id}/reset-password"
+        headers = {
+            "Authorization": "Bearer %s" % token,
+            "Content-Type": "application/json",
+        }
+        data = {"temporary": True, "type": "password", "value": self.login}
+        resp = requests.put(url, headers=headers, json=data)
+        self._validate_response(resp, no_json=True)
+        return True
+
+    def _post_creation_actions(self, token, provider_id, keycloak_user_id):
+        """
+        This method do the following actions:
+          *  email-verified check as true
+          *  verify-email action is NOT necessary
+          *  set temp credentials
+          *  add member to AllowOdoo group
+        """
+        self.ensure_one()
+        self._kc_verify_email(provider_id, token, keycloak_user_id)
+        self._kc_set_temp_credentials(provider_id, token, keycloak_user_id)
+        role_member = self.env.ref("energy_communities.role_ce_member")
+        if not role_member in self.role_ids:
+            self._assign_kc_user_groups()
         return True
 
     def _get_kc_users(self, token, provider_id, **params):

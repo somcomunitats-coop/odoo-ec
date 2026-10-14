@@ -21,6 +21,9 @@ class TestResUsers(common.TransactionCase):
         self.maxDiff = None
         self.role_id = self.env.ref("energy_communities.role_ce_member")
         self.partner_vat = "26309903L"
+        self.provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        self.provider_id.validate_admin_provider()
+        self.token = self.env["res.users"]._get_admin_token(self.provider_id)
 
     def test_build_platform_user__create_kc_user_ok(self):
         # given a partner that is a effective cooperator
@@ -83,6 +86,13 @@ class TestResUsers(common.TransactionCase):
         )[0]
         self.assertEqual(new_user.login, user.login)
         self.assertEqual(new_user.company_id, user.company_id)
+
+    def test__post_creation_actions_ok(self):
+        # given a user
+        user = self.env["res.users"].browse(430)
+        # when we create a user, the following post_creation actions are called
+        res = user._post_creation_actions(self.token, self.provider_id, user.oauth_uid)
+        self.assertTrue(res)
 
     def _create_platform_user(self):
         partner = self.env["res.partner"].search(
