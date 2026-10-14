@@ -19,7 +19,7 @@ URL_RESET_PASSWORD = "{root_endpoint}admin/realms/{realm_name}/users/{kc_uid}/ex
 
 
 class OAuthProvider(models.Model):
-    _inherit = "auth.oauth.provider"
+    _inherit = ["auth.oauth.provider"]
 
     is_admin_provider = fields.Boolean(string="Admin provider")
     is_keycloak_provider = fields.Boolean(string="Keycloak provider")
@@ -174,3 +174,121 @@ class OAuthProvider(models.Model):
         return (
             provider_dict and provider_dict[0] and provider_dict[0]["auth_link"] or ""
         )
+
+    def _log_message(self, msg):
+        warning_channel = self.env.ref("energy_communities.warning_channel")
+        warning_channel.message_post(
+            subject="[Delete orphan users in keycloak]",
+            body=msg,
+            message_type="comment",
+        )
+
+    def action_clean_kc_orphan_users(self):
+        provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        provider_id.validate_admin_provider()
+        token = self.env["res.users"]._get_admin_token(provider_id)
+        headers = {"Authorization": f"Bearer {token}"}
+        headers["Content-Type"] = "application/json"
+        deleted_users = []
+
+        def count_kc_users():
+            endpoint = f"{provider_id.admin_user_endpoint}/count"
+            response = requests.get(endpoint, headers=headers)
+            response.raise_for_status()
+            count = response.json()
+            return count
+
+        def get_all_kc_users():
+            endpoint = f"{provider_id.admin_user_endpoint}"
+            parameters = {"max": count_kc_users()}
+            logger.info("Calling GET %s" % endpoint)
+            response = requests.get(endpoint, headers=headers, params=parameters)
+            response.raise_for_status()
+            all_users = response.json()
+            users = [
+                user for user in all_users if user["username"] != provider_id.superuser
+            ]
+            return users
+
+        def get_kc_users_in_odoo(login_list):
+            odoo_users = (
+                self.env["res.users"].sudo().search([("login", "in", login_list)])
+            )
+            return odoo_users
+
+        def delete_kc_user(oauth_uid):
+            endpoint = f"{provider_id.admin_user_endpoint}/{oauth_uid}"
+            logger.info("Calling DELETE %s" % endpoint)
+            response = requests.delete(endpoint, headers=headers)
+            response.raise_for_status()
+
+        def users_to_delete_msg(users_list):
+            users_list_str = "\n".join(
+                [
+                    "<li> {}: {}, {}</li>".format(
+                        user.get("firstName", "-"),
+                        user["username"],
+                        user.get("email", "-"),
+                    )
+                    for user in users_list
+                ]
+            )
+            msg = (
+                f"The following users are candidate to delete from keycloak: <br>"
+                f"<ul>"
+                f"{users_list_str}"
+                f"</ul>"
+            )
+            return msg
+
+        def users_deleted_msg(users_list):
+            users_list_str = "\n".join(
+                [
+                    "<li> {}: {}, {}</li>".format(
+                        user.get("firstName", "-"),
+                        user["username"],
+                        user.get("email", "-"),
+                    )
+                    for user in users_list
+                ]
+            )
+            msg = (
+                f"The following users has been deleted from keycloak: <br>"
+                f"<ul>"
+                f"{users_list_str}"
+                f"</ul>"
+            )
+            return msg
+
+        kc_users = get_all_kc_users()
+        odoo_users = get_kc_users_in_odoo(
+            [user["username"].upper() for user in kc_users]
+        )
+        orphan_users = {user["username"].upper() for user in kc_users} - {
+            user["login"].upper() for user in odoo_users
+        }
+        users_to_delete = [
+            user for user in kc_users if user["username"].upper() in orphan_users
+        ]
+        msg = users_to_delete_msg(users_to_delete)
+        self._log_message(msg)
+        assert len(orphan_users) == len(
+            users_to_delete
+        ), "Error!! orphan users and users to delete must have the same length!!"
+        for user in users_to_delete[:2]:
+            try:
+                logger.info(
+                    "Deleting orphan user (%s, %s) in KC", user["id"], user["username"]
+                )
+                delete_kc_user(user["id"])
+            except Exception as e:
+                logger.warning(
+                    "There was a problem deleting user (%s, %s) from KC, reason: %s",
+                    user["id"],
+                    user["username"],
+                    str(e),
+                )
+            else:
+                deleted_users.append(user)
+        msg = users_deleted_msg(deleted_users)
+        self._log_message(msg)

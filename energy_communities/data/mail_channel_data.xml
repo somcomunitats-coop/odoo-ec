@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="mail.channel" id="warning_channel">
+            <field name="name">warning</field>
+            <field name="description">Warning channel to notify warning situations in the app.</field>
+            <field name="group_ids" eval="[Command.link(ref('energy_communities.role_platform_admin'))]"/>
+            <field name="group_public_id" ref="energy_communities.role_platform_admin"/>
+        </record>
+    </data>
+</odoo>
