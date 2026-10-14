@@ -4,6 +4,18 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-10-14 (v16.0.0.10.0)
+
+- Added the following synchronizations between Odoo and KC:
+
+  - email
+  - user deletion when archived or deleted in odoo
+  - and following post actions when user creation in KC:
+    - email-verified check as true
+    - verify-email action is NOT necessary
+    - set temp credentials
+    - add member to AllowOdoo group
+
 ### 2026-10-14 (v16.0.0.9.1)
 
 - Fix required on template fields
