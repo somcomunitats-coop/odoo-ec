@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-10-14 (v16.0.0.10.1)
+
+- Delete limit deleting KC users
+
 ### 2026-10-14 (v16.0.0.10.0)
 
 - Added the following synchronizations between Odoo and KC:
