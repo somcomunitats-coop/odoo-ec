@@ -161,6 +161,36 @@ class Inscription(models.Model):
                     )
                 )
 
+    @api.constrains("selfconsumption_project_id", "supply_point_id", "state")
+    def _check_unique_active_inscription_per_cups(self):
+        """Allow only one active inscription per project and CUPS."""
+        for record in self:
+            if record.state != INSCRIPTION_STATE_ACTIVE:
+                continue
+            if not record.selfconsumption_project_id or not record.supply_point_id:
+                continue
+            duplicate = self.search(
+                [
+                    ("id", "!=", record.id),
+                    (
+                        "selfconsumption_project_id",
+                        "=",
+                        record.selfconsumption_project_id.id,
+                    ),
+                    ("supply_point_id", "=", record.supply_point_id.id),
+                    ("state", "=", INSCRIPTION_STATE_ACTIVE),
+                ],
+                limit=1,
+            )
+            if duplicate:
+                raise ValidationError(
+                    _(
+                        "There is already an active inscription for CUPS '{cups}' in this project"
+                    ).format(
+                        cups=record.supply_point_id.code or record.supply_point_id.name,
+                    )
+                )
+
     @api.constrains("participation_assigned_quantity", "participation_real_quantity")
     def _check_participation_quantities(self):
         """

@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-10-14 (v16.0.0.9.1)
+
+- Fix required on template fields
+
 ### 2026-09-23 (v16.0.0.9.0)
 
 - End KC session when a user logout in odoo

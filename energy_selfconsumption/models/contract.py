@@ -1,8 +1,11 @@
 from collections import namedtuple
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 
-from ..config import SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED
+from ..config import (
+    RECURRING_INVOICING_TYPE_POSTPAID,
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
+)
 
 # Constants for contract management
 ARKENOVA_PROVIDER_PATTERN = "%Arkenova%"
@@ -349,3 +352,60 @@ class ContractRecurrencyMixin(models.AbstractModel):
     next_period_date_end = fields.Date(
         store=True, help="End date of the next period to be invoiced"
     )
+    fixed_period_date_start = fields.Date(
+        string="Fixed next period start",
+        copy=False,
+        help=(
+            "Open period kept only for a post-paid energy-delivered contract "
+            "after a distribution table change inside that period."
+        ),
+    )
+
+    def _keeps_open_period_after_table_change(self):
+        """True only for a mid-period table change on post-paid energy delivered."""
+        self.ensure_one()
+        if (
+            not self.fixed_period_date_start
+            or self.last_date_invoiced
+            or self.recurring_invoicing_type != RECURRING_INVOICING_TYPE_POSTPAID
+            or not self.date_start
+            or self.fixed_period_date_start >= self.date_start
+        ):
+            return False
+        contract = self if self._name == "contract.contract" else self.contract_id
+        selfconsumption = (
+            contract.project_id.selfconsumption_id
+            if contract and contract.project_id
+            else False
+        )
+        if (
+            not selfconsumption
+            or selfconsumption.invoicing_mode
+            != SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED
+        ):
+            return False
+        active_table = selfconsumption.distribution_table_ids.filtered(
+            lambda table: table.state == DISTRIBUTION_TABLE_STATE_ACTIVE
+        )[:1]
+        return bool(
+            active_table
+            and active_table.date_start == self.date_start
+            and self.fixed_period_date_start < active_table.date_start
+        )
+
+    @api.depends(
+        "last_date_invoiced",
+        "date_start",
+        "date_end",
+        "fixed_period_date_start",
+        "recurring_invoicing_type",
+        "recurring_rule_mode",
+    )
+    def _compute_next_period_date_start(self):
+        """Use the saved period only for a mid-period distribution table change."""
+        kept = self.filtered(
+            lambda record: record._keeps_open_period_after_table_change()
+        )
+        for record in kept:
+            record.next_period_date_start = record.fixed_period_date_start
+        super(ContractRecurrencyMixin, self - kept)._compute_next_period_date_start()

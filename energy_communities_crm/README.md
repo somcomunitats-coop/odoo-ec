@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### 2026-10-14 (v16.0.0.3.8)
+
+- Fix required on show or hide fields at website forms
+
 ### 2026-07-08 (v16.0.0.3.7)
 
 - fix get locale for datetime picker

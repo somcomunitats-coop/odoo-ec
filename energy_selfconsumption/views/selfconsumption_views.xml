@@ -90,9 +90,8 @@ Main functionalities:
                         
                         <button type="object"
                                 string="Set new distribution table"
-                                name="set_new_distribution_table"
-                                attrs="{'invisible':[('state', '!=', 'active')]}"
-                                confirm="Are you sure you want to set a new distribution table?" />
+                                name="action_set_new_distribution_table"
+                                attrs="{'invisible':[('state', '!=', 'active')]}" />
 
                         <!-- Workflow status bar -->
                         <field name="state"

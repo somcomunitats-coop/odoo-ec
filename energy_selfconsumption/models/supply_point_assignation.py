@@ -1,7 +1,11 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..config import DISTRIBUTION_STATE_ACTIVE
+from ..config import (
+    DISTRIBUTION_STATE_ACTIVE,
+    INSCRIPTION_STATE_ACTIVE,
+    INSCRIPTION_STATE_CANCELLED,
+)
 
 # Constants for coefficient validation
 MIN_COEFFICIENT_VALUE = 0.0
@@ -321,19 +325,29 @@ class SupplyPointAssignation(models.Model):
         """
         Get the inscription record associated with this assignation
 
+        Prefer the active inscription of this CUPS so a leftover cancelled
+        record cannot hide the current one.
+
         Returns:
             inscription: The inscription record linking the partner and supply point to the project
         """
         self.ensure_one()
-        return self.env["energy_selfconsumption.inscription_selfconsumption"].search(
-            [
-                (
-                    "selfconsumption_project_id",
-                    "=",
-                    self.distribution_table_id.selfconsumption_project_id.id,
-                ),
-                ("supply_point_id", "=", self.supply_point_id.id),
-            ],
+        domain = [
+            (
+                "selfconsumption_project_id",
+                "=",
+                self.distribution_table_id.selfconsumption_project_id.id,
+            ),
+            ("supply_point_id", "=", self.supply_point_id.id),
+        ]
+        Inscription = self.env["energy_selfconsumption.inscription_selfconsumption"]
+        inscription = Inscription.search(
+            domain + [("state", "=", INSCRIPTION_STATE_ACTIVE)], limit=1
+        )
+        if inscription:
+            return inscription
+        return Inscription.search(
+            domain + [("state", "!=", INSCRIPTION_STATE_CANCELLED)],
             limit=1,
         )
 

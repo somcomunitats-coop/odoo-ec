@@ -3,6 +3,9 @@ from datetime import datetime
 from stdnum.es import iban
 
 from odoo import _, models
+from odoo.exceptions import ValidationError
+
+from ..utils.validation_utils import validate_cups_code
 
 
 class CreateInscription(models.AbstractModel):
@@ -190,6 +193,10 @@ class CreateInscription(models.AbstractModel):
         # Get partner with proper type context
         partner = partner.sudo().get_partner_with_type()
 
+        cups_error = self._cups_validation_error(values.get("supplypoint_cups"))
+        if cups_error:
+            return True, cups_error
+
         # Search for existing supply point
         supply_point = (
             self.env["energy_selfconsumption.supply_point"]
@@ -268,6 +275,12 @@ class CreateInscription(models.AbstractModel):
         # Set default date format if not provided
         values.setdefault("date_format", "%Y-%m-%d")
 
+        # Reject an invalid CUPS before any write. A later retry must not
+        # accept it just because the supply point already exists.
+        cups_error = self._cups_validation_error(values.get("supplypoint_cups"))
+        if cups_error:
+            return True, cups_error
+
         # Check for duplicate registration
         if self._is_partner_already_registered(
             project, partner, values["supplypoint_cups"]
@@ -276,19 +289,39 @@ class CreateInscription(models.AbstractModel):
                 "Partner with VAT {vat} is already registered in project {code}"
             ).format(vat=partner.vat, code=project.code)
 
-        # Get or create owner
-        owner = self._get_owner(values, project, partner)
-        if not owner:
-            return True, _("Owner could not be created or found.")
+        # Writes stay inside a savepoint. Returning an error from a nested
+        # try/except would otherwise commit the supply point and the parent
+        # energy_project.inscription without the self-consumption inscription.
+        try:
+            with self.env.cr.savepoint():
+                owner = self._get_owner(values, project, partner)
+                if not owner:
+                    raise ValidationError(_("Owner could not be created or found."))
 
-        # Determine tariff based on contracted power
-        contracted_power = float(
-            str(values.get("supplypoint_contracted_power", "0")).replace(",", ".")
-        )
-        tariff = self._determine_tariff(contracted_power, values)
+                contracted_power = float(
+                    str(values.get("supplypoint_contracted_power", "0")).replace(
+                        ",", "."
+                    )
+                )
+                tariff = self._determine_tariff(contracted_power, values)
+                error, message = self._create_supply_point(
+                    values, project, partner, owner, tariff
+                )
+                if error:
+                    raise ValidationError(message)
+                return False, message
+        except ValidationError as error:
+            return True, error.args[0]
 
-        # Create supply point and complete inscription
-        return self._create_supply_point(values, project, partner, owner, tariff)
+    def _cups_validation_error(self, code):
+        """Return an error message when the CUPS checksum or format is invalid."""
+        if not code:
+            return _("Invalid CUPS code for supply point: {code}").format(code="")
+        try:
+            validate_cups_code(code, "CUPS", len(code))
+        except ValidationError:
+            return _("Invalid CUPS code for supply point: {code}").format(code=code)
+        return False
 
     def _get_partner(self, vat, company_id):
         """
