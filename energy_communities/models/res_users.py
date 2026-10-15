@@ -11,6 +11,14 @@ from odoo.exceptions import ValidationError
 logger = logging.getLogger(__name__)
 
 _DEFAULT_COOPERATIVE_MEMBERSHIP_USER_ROLE = "role_ce_member"
+_PREFERENCES_HIDDEN_ROLE_CODES = frozenset(
+    {
+        "role_ce_member",
+        "role_ce_admin",
+        "role_ce_manager",
+        "role_coord_admin",
+    }
+)
 
 
 class ResUsers(models.Model):
@@ -25,6 +33,10 @@ class ResUsers(models.Model):
 
     last_user_invitation_through_kc = fields.Datetime(
         string=_("Last user invitation through Keycloak")
+    )
+    hide_advanced_user_preferences = fields.Boolean(
+        compute="_compute_hide_advanced_user_preferences",
+        compute_sudo=True,
     )
 
     # TODO: Delete this field because it's included on the current_company_mixin
@@ -169,6 +181,26 @@ class ResUsers(models.Model):
     #########################
     # ROLES
     #########################
+    @api.depends("role_line_ids.role_id.code", "role_line_ids.company_id", "company_id")
+    @api.depends_context("active_company_ids", "allowed_company_ids")
+    def _compute_hide_advanced_user_preferences(self):
+        for user in self:
+            user.hide_advanced_user_preferences = user._has_hidden_preferences_role()
+
+    def _has_hidden_preferences_role(self):
+        """True when the active company context enables a restricted role.
+
+        Community members cannot read role lines, so the caller computes as sudo.
+        Company selection still comes from the original context.
+        """
+        self.ensure_one()
+        enabled_codes = set(self._get_enabled_roles().mapped("role_id.code"))
+        return bool(enabled_codes & _PREFERENCES_HIDDEN_ROLE_CODES)
+
+    @property
+    def SELF_READABLE_FIELDS(self):
+        return super().SELF_READABLE_FIELDS + ["hide_advanced_user_preferences"]
+
     def _get_enabled_roles(self):
         active_roles = self.env["res.users.role.line"]
         global_role_lines = active_roles.search(
