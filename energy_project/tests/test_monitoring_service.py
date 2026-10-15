@@ -1,3 +1,4 @@
+import unittest
 from datetime import date
 
 from odoo.tests.common import TransactionCase
@@ -6,12 +7,19 @@ from ..backends import ArkenovaBackend
 from ..backends.domain import MeasurePoint
 from ..services import MonitoringService
 
+_HAS_ARKENOVA_CREDENTIALS = False
 try:
     from .backends_data import arkenova_data, member_code, project_code
+
+    _HAS_ARKENOVA_CREDENTIALS = True
 except ImportError:
     pass
 
 
+@unittest.skipUnless(
+    _HAS_ARKENOVA_CREDENTIALS,
+    "Arkenova credentials file backends_data.py is not available",
+)
 class TestMonitoringService(TransactionCase):
     def setUp(self):
         self.maxDiff = None

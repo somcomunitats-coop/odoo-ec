@@ -2,6 +2,7 @@ from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import TransactionComponentCase
 
 from ...components import UserCreator
+from ..helpers import skip_without_keycloak_admin_credentials
 
 
 class TestUserCreator(TransactionComponentCase):
@@ -25,6 +26,7 @@ class TestUserCreator(TransactionComponentCase):
         # self.vat = "26309903L"
 
     def test_create_users_from_cooperator_partners__ok(self):
+        skip_without_keycloak_admin_credentials(self)
         # given a partner that is an efective cooperator
         partner = self.env["res.partner"].search([("vat", "=", self.vat)], limit=1)[0]
 
