@@ -4,6 +4,12 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-10-15 (v16.0.10.2)
+
+- Hide notification, OdooBot status, technical features, two-factor authentication and
+  API keys in Change My Preferences when the active company role is role_ce_member,
+  role_ce_admin, role_ce_manager or role_coord_admin.
+
 ### 2026-10-14 (v16.0.0.10.1)
 
 - Delete limit deleting KC users
