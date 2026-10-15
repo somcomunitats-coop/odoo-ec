@@ -6,6 +6,7 @@ from odoo import _
 from odoo.tests import common, tagged
 
 from ..client_map.config import LandingClientConfig
+from ..models.res_company import _LEGAL_FORM_VALUES_NON_PROFIT
 
 TESTED_LANGS = ["ca_ES", "es_ES", "eu_ES"]
 
@@ -111,6 +112,35 @@ class TestLandingPlace(common.TransactionCase):
         )
         self.assertEqual(len(button), 1)
         self._assert_button_data(button, "map")
+
+    @patch(
+        "odoo.addons.energy_communities.models.landing_page.LandingPage._update_wordpress"
+    )
+    @patch(
+        "odoo.addons.energy_communities.client_map.resources.landing_cmplace.LandingCmPlace._get_wp_landing_data"
+    )
+    def test__map_place_cooperator_button_urls_follow_non_profit_legal_form(
+        self, wordpress_landing_data_patcher, wordpress_update_patcher
+    ):
+        wordpress_landing_data_patcher.return_value = self.wp_landing_page_response
+        wordpress_update_patcher.return_value = None
+        for legal_form in _LEGAL_FORM_VALUES_NON_PROFIT:
+            self.landing.company_id.write(
+                {"legal_form": legal_form, "allow_new_members": True}
+            )
+            if not self.landing.map_place_ids:
+                self.landing.action_create_landing_place()
+            else:
+                self.landing.action_update_public_data()
+            for mode in ("become_cooperator", "become_company_cooperator"):
+                button = self.env["landing.cooperator.button"].search(
+                    [
+                        ("mode", "=", mode),
+                        ("landing_page_id", "=", self.landing.id),
+                    ]
+                )
+                self.assertEqual(len(button), 1)
+                self._assert_button_data(button, "map_landing")
 
     @patch(
         "odoo.addons.energy_communities.client_map.resources.landing_cmplace.LandingCmPlace._get_wp_landing_data"
@@ -353,6 +383,19 @@ class TestLandingPlace(common.TransactionCase):
                         .url,
                     )
 
+    def _expected_cooperator_button_url(self, mode, lang):
+        url_key = mode
+        if (
+            mode in ("become_cooperator", "become_company_cooperator")
+            and self.landing.company_id.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT
+        ):
+            url_key = "%s_association" % mode
+        return LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[url_key].format(
+            base_url=self.env["ir.config_parameter"].get_param("web.base.url"),
+            lang=lang,
+            company_external_id=self.landing.company_id.company_external_id,
+        )
+
     def _assert_button_data(self, button, expected_visibility):
         # visibility
         self.assertEqual(button.visibility, expected_visibility)
@@ -371,27 +414,11 @@ class TestLandingPlace(common.TransactionCase):
             if button.mode in ["become_cooperator", "become_company_cooperator"]:
                 self.assertEqual(
                     button.url,
-                    LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[
-                        button.mode
-                    ].format(
-                        base_url=self.env["ir.config_parameter"].get_param(
-                            "web.base.url"
-                        ),
-                        lang="en_US",
-                        company_external_id=self.landing.company_id.company_external_id,
-                    ),
+                    self._expected_cooperator_button_url(button.mode, "en_US"),
                 )
                 self.assertEqual(
                     button.with_context(lang=lang).url,
-                    LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[
-                        button.mode
-                    ].format(
-                        base_url=self.env["ir.config_parameter"].get_param(
-                            "web.base.url"
-                        ),
-                        lang=lang,
-                        company_external_id=self.landing.company_id.company_external_id,
-                    ),
+                    self._expected_cooperator_button_url(button.mode, lang),
                 )
             if button.mode == "landing_page":
                 self.assertEqual(button.url, self.wp_landing_page_response["link"])
