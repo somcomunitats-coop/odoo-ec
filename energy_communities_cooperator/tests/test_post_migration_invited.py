@@ -1,6 +1,7 @@
+skip_test = False
 try:
     from odoo.upgrade.testing import UpgradeCase
-except:
+except Exception:
     from typing import Any as UpgradeCase
 
     skip_test = True

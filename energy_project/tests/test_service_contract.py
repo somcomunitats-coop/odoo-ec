@@ -17,9 +17,21 @@ class TestServiceContract(common.TransactionCase):
         self.service_3 = self.env["energy_project.service"].create(
             {"name": "Service 3"}
         )
+        self.provider_user = (
+            self.env["res.users"]
+            .with_context(no_reset_password=True)
+            .create(
+                {
+                    "name": "Provider API user",
+                    "login": "provider.api.user.test",
+                    "groups_id": [(6, 0, [self.env.ref("base.group_user").id])],
+                }
+            )
+        )
         self.provider_1 = self.env["energy_project.provider"].create(
             {
                 "name": "Provider 1",
+                "user_id": self.provider_user.id,
                 "service_available_ids": [
                     (0, 0, {"service_id": self.service_1.id}),
                     (0, 0, {"service_id": self.service_2.id}),
@@ -29,12 +41,14 @@ class TestServiceContract(common.TransactionCase):
         self.provider_2 = self.env["energy_project.provider"].create(
             {
                 "name": "Provider 2",
+                "user_id": self.provider_user.id,
                 "service_available_ids": [(0, 0, {"service_id": self.service_2.id})],
             }
         )
         self.provider_3 = self.env["energy_project.provider"].create(
             {
                 "name": "Provider 3",
+                "user_id": self.provider_user.id,
                 "service_available_ids": [
                     (0, 0, {"service_id": self.service_1.id}),
                     (0, 0, {"service_id": self.service_2.id}),

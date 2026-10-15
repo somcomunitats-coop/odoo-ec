@@ -27,4 +27,4 @@ class TestSessionLogout(HttpCase):
     def test_logout(self):
         self.login("42281799W", "1234")
         res = self.url_open("/web/session/logout", timeout=500)
-        self.assertEqual(res.request.url, 200)
+        self.assertEqual(res.status_code, 200)
