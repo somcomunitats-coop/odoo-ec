@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.10.1",
+    "version": "16.0.0.10.2",
     "depends": [
         "account",
         "account_payment_partner",
@@ -11,6 +11,7 @@
         "auth_api_key",
         "auth_oidc",
         "auth_signup",
+        "auth_totp",
         "base",
         "base_rest",
         "base_technical_features",
@@ -24,6 +25,7 @@
         "l10n_es_aeat",
         "l10n_es_aeat_sii_oca",
         "mail",
+        "mail_bot",
         "mail_multicompany",
         "mail_template_multi_company",
         "metadata",
@@ -96,6 +98,7 @@
         "views/view_users_form.xml",
         "views/product_views.xml",
         "views/res_users_view.xml",
+        "views/res_users_preferences_views.xml",
         "views/res_users_role_view.xml",
         "views/menus.xml",
         "views/website_form_submit_confirmation.xml",
