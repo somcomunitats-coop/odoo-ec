@@ -121,6 +121,7 @@ class ProjectMetricsApiInfo(Component):
             type="fotovoltaic",
             power=MetricInfo(
                 value=project.selfconsumption_id.power,
+                consolidated=True,
                 unit=UnitEnum.kw,
             ),
             energy_gridconsumption=MetricInfo(
