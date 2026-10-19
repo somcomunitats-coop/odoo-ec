@@ -477,7 +477,7 @@ class MonitoringService:
             )
         return NULL_POINT
 
-    def energy_selfconsumption_ratio(
+    def energy_selfconsumption_ratio_by_project(
         self, system_id, date_from, date_to
     ) -> MetricPoint:
         """
@@ -503,7 +503,9 @@ class MonitoringService:
             capture_exception(e)
             return NULL_POINT
 
-    def energy_gridinjection_ratio(self, system_id, date_from, date_to) -> MetricPoint:
+    def energy_gridinjection_ratio_by_project(
+        self, system_id, date_from, date_to
+    ) -> MetricPoint:
         """
         Ratio between energy injected to the grid and produced energy of a shared
         selfconsumption project between two dates
@@ -527,7 +529,7 @@ class MonitoringService:
             capture_exception(e)
             return NULL_POINT
 
-    def energy_usage_ratio_from_grid(
+    def energy_usage_ratio_from_grid_by_project(
         self, system_id, date_from, date_to
     ) -> MetricPoint:
         """
@@ -555,7 +557,7 @@ class MonitoringService:
             capture_exception(e)
             return NULL_POINT
 
-    def energy_usage_ratio_from_selfconsumption(
+    def energy_usage_ratio_from_selfconsumption_by_project(
         self, system_id, date_from, date_to
     ) -> MetricPoint:
         """
