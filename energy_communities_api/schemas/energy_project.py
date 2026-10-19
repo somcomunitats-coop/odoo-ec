@@ -17,6 +17,11 @@ class EnergyPoint(BaseModel):
         title="Date",
         description="Date (ex. 2024-06-01) of the value",
     )
+    consolidated: bool = Field(
+        ...,
+        title="Consolidated",
+        description="True if the value is consolidated for this date",
+    )
 
 
 class ProjectEnergyInfoListResponse(BaseListResponse):
@@ -55,6 +60,14 @@ class ProjectEnergyExportedInfoListResponse(ProjectEnergyInfoListResponse):
 class ProjectEnergyConsumedInfoListResponse(ProjectEnergyInfoListResponse):
     """
     Body response for energy consumed requests
+    """
+
+    ...
+
+
+class ProjectGridconsumptionInfoListResponse(ProjectEnergyInfoListResponse):
+    """
+    Body response for energy gridconsumption requests
     """
 
     ...
