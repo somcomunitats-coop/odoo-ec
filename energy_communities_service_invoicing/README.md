@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-10-21 (v16.0.0.7.8)
+
+- Fix tests
+
 ### 2026-08-03 (v16.0.0.7.7)
 
 - field voluntary_share_id is not needed any more and we dont neet to fullfill it
