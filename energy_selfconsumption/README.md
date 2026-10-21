@@ -183,6 +183,10 @@ team or refer to the project documentation.
 
 ## Changelog
 
+### 2026-10-21 (v16.0.0.7.1)
+
+- Fix tests
+
 ### 2026-10-14(v16.0.0.7.0)
 
 - Now can change active datetable on project of selfconsumption (post-paid

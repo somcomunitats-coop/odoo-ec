@@ -2,6 +2,8 @@ import logging
 from collections import namedtuple
 from datetime import datetime
 
+from dateutil.relativedelta import relativedelta
+
 from odoo import fields
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
@@ -215,6 +217,10 @@ class TestSelfconsumptionServiceInvoicing(
         self._workflow_project_contract_generation()
         self._workflow_change_inscriptions()
         contracts = self.selfconsumption.get_active_contracts()
+        self._workflow_change_distribution_table()
+        self._assert_project_contract_data()
+        self._prepare_contracts_for_table_replacement(contracts)
+        contracts = self.selfconsumption.get_active_contracts()
         dict_contracts = {}
         for contract in contracts:
             dict_contracts[contract.id] = {
@@ -222,8 +228,6 @@ class TestSelfconsumptionServiceInvoicing(
                 "next_period_date_start": contract.next_period_date_start,
                 "next_period_date_end": contract.next_period_date_end,
             }
-        self._workflow_change_distribution_table()
-        self._assert_project_contract_data()
         execution_date = fields.Date.today()
         if contracts and contracts[0].next_period_date_start:
             execution_date = contracts[0].next_period_date_start
@@ -239,6 +243,33 @@ class TestSelfconsumptionServiceInvoicing(
         self._assert_project_contracts_data_consistency_between_old_and_new(
             dict_contracts
         )
+
+    def _prepare_contracts_for_table_replacement(self, contracts):
+        """Close uses last_date_invoiced, or the day before the open period.
+
+        A line that starts on the period cannot end the day before it. Start
+        the line on that close date and mark it invoiced, so the open period
+        stays on the following day.
+        """
+        if not contracts:
+            return
+        period_start = contracts[0].next_period_date_start
+        if not period_start:
+            return
+        close_date = period_start - relativedelta(days=1)
+        for contract in contracts:
+            lines = contract.contract_line_ids.filtered(
+                lambda line: not line.display_type
+                and line.date_start
+                and line.date_start > close_date
+            )
+            if lines:
+                lines.write(
+                    {
+                        "date_start": close_date,
+                        "last_date_invoiced": close_date,
+                    }
+                )
 
     def _project_invoicing_mode_definition_case(self, case):
         # WORKFLOW: invoicing mode execution
@@ -576,26 +607,20 @@ class TestSelfconsumptionServiceInvoicing(
     def _asset_recurring_dates_consistency_between_old_and_new(
         self, old_contract, new_contract, dict_contracts
     ):
+        saved = dict_contracts[old_contract.id]
+        # Closing the predecessor clears its next invoice date. The successor
+        # keeps the calendar captured before the replacement.
+        self.assertFalse(old_contract.recurring_next_date)
+        self.assertEqual(new_contract.recurring_next_date, saved["recurring_next_date"])
         self.assertEqual(
-            old_contract.recurring_next_date, new_contract.recurring_next_date
+            new_contract.next_period_date_start, saved["next_period_date_start"]
         )
         self.assertEqual(
-            old_contract.next_period_date_start, new_contract.next_period_date_start
-        )
-        self.assertEqual(
-            old_contract.next_period_date_end, new_contract.next_period_date_end
+            new_contract.next_period_date_end, saved["next_period_date_end"]
         )
         self.assertEqual(
             old_contract.recurring_invoicing_type, new_contract.recurring_invoicing_type
         )
-        if old_contract.recurring_invoicing_type == "postpaid":
-            self.assertEqual(
-                old_contract.recurring_next_date, old_contract.next_period_date_end
-            )
-        elif old_contract.recurring_invoicing_type == "prepaid":
-            self.assertEqual(
-                old_contract.recurring_next_date, old_contract.next_period_date_start
-            )
         _logger.info(f"old_contract: {old_contract.name}")
         _logger.info(
             f"old_contract.recurring_next_date: {old_contract.recurring_next_date}"

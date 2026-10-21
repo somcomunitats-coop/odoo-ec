@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### 2026-10-21 (v16.0.0.2.7)
+
+- Fix tests
+
 ### 2026-05-21 (v16.0.0.2.6)
 
 - New translate for default of conf_header_description field

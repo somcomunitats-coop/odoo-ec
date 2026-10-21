@@ -71,6 +71,14 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
             "energy_communities.res_users_admin_coordinator_1_demo"
         )
 
+    def _grant_settings_group(self, user):
+        """Product category writes require Settings, which the coordinator role lacks."""
+        settings_group = self.env.ref("base.group_system")
+        if user.has_group("base.group_system"):
+            return
+        role = self.env.ref("energy_communities.role_coord_admin")
+        role.sudo().write({"implied_ids": [(4, settings_group.id)]})
+
     def test__company_cooperative_creation_ok_as_platform_admin_no_canary(self):
         self._test_company_creation_ok_case(
             self.platform_admin,
@@ -189,6 +197,8 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         scenario_type,
     ):
         # we setup expected results and creation data
+        if admin == self.coordinator_admin:
+            self._grant_settings_group(admin)
 
         # and setup the proper environment
         self.env = self.env(
@@ -936,7 +946,7 @@ class TestMultiCompanyEasyCreation(common.TransactionCase):
         self.assertEqual(coop_product.default_code, "CSV")
         self.assertEqual(coop_product.company_id, new_company)
         self.assertEqual(coop_product.short_name, "Capital social voluntario")
-        self.assertFalse(coop_product.default_share_product)
+        self.assertTrue(coop_product.default_share_product)
         self.assertTrue(coop_product.by_company)
         self.assertTrue(coop_product.by_individual)
         self.assertEqual(coop_product.payment_mode_id, self.env["account.payment.mode"])

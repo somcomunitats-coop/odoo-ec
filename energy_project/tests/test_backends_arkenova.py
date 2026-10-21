@@ -1,3 +1,4 @@
+import unittest
 from datetime import date
 from unittest.mock import patch
 
@@ -6,6 +7,7 @@ from odoo.tests.common import TransactionCase
 from ..backends.arkenova_backend import ArkenovaBackend, ArkenovaEnergyPoint
 from ..backends.exceptions import RequestError
 
+_HAS_ARKENOVA_CREDENTIALS = False
 try:
     from .backends_data import (
         arkenova_data,
@@ -13,10 +15,16 @@ try:
         project_code,
         unknown_project_code,
     )
+
+    _HAS_ARKENOVA_CREDENTIALS = True
 except ImportError:
     pass
 
 
+@unittest.skipUnless(
+    _HAS_ARKENOVA_CREDENTIALS,
+    "Arkenova credentials file backends_data.py is not available",
+)
 class TestArkenovaBackend(TransactionCase):
     def setUp(self):
         self.maxDiff = None

@@ -6,7 +6,11 @@ from faker import Faker
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import common
 
-from .helpers import CompanySetupMixin, UserSetupMixin
+from .helpers import (
+    CompanySetupMixin,
+    UserSetupMixin,
+    skip_without_keycloak_admin_credentials,
+)
 
 faker = Faker(locale="es_ES")
 
@@ -22,6 +26,7 @@ class TestResUsers(common.TransactionCase):
         self.role_id = self.env.ref("energy_communities.role_ce_member")
         self.partner_vat = "26309903L"
         self.provider_id = self.env.ref("energy_communities.keycloak_admin_provider")
+        skip_without_keycloak_admin_credentials(self)
         self.provider_id.validate_admin_provider()
         self.token = self.env["res.users"]._get_admin_token(self.provider_id)
 

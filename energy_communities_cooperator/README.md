@@ -4,6 +4,10 @@
 
 ## Changelog
 
+### 2026-10-21 (v16.0.0.8.5)
+
+- Fix tests
+
 ### 2026-10-14 (v16.0.0.8.4)
 
 - add case SubscriptionMode.company_member_associations in subscription requests

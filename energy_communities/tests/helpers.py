@@ -3,6 +3,13 @@ from faker import Faker
 faker = Faker(locale="es_ES")
 
 
+def skip_without_keycloak_admin_credentials(test_case):
+    """Skip when the Keycloak admin provider has no API credentials."""
+    provider = test_case.env.ref("energy_communities.keycloak_admin_provider")
+    if not provider.client_secret or not provider.superuser_pwd:
+        test_case.skipTest("Keycloak admin provider has no client secret")
+
+
 class CompanySetupMixin:
     def create_company(self, name, hierarchy_level, parent_id):
         return self.company_model.create(
