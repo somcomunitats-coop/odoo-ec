@@ -1,0 +1,92 @@
+name: Pull request branch and assignee
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: pr-branch-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  branch-and-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create the pull request branch and assign the author
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const { owner, repo } = context.repo;
+            const action = context.payload.action;
+            const branch = `pr/${pr.number}`;
+            const ref = `heads/${branch}`;
+
+            async function refExists() {
+              try {
+                await github.rest.git.getRef({ owner, repo, ref });
+                return true;
+              } catch (error) {
+                if (error.status === 404) {
+                  return false;
+                }
+                throw error;
+              }
+            }
+
+            if (action === "closed") {
+              if (!(await refExists())) {
+                core.info(`Branch ${branch} is already absent.`);
+                return;
+              }
+              await github.rest.git.deleteRef({ owner, repo, ref });
+              core.info(`Deleted branch ${branch}.`);
+              return;
+            }
+
+            if (action === "opened" || action === "reopened") {
+              const author = pr.user.login;
+              const alreadyAssigned = (pr.assignees || []).some(
+                (assignee) => assignee.login === author
+              );
+              if (pr.user.type === "Bot" || alreadyAssigned) {
+                core.info(`Skipped assignment for ${author}.`);
+              } else {
+                try {
+                  await github.rest.issues.addAssignees({
+                    owner,
+                    repo,
+                    issue_number: pr.number,
+                    assignees: [author],
+                  });
+                  core.info(`Assigned ${author} to pull request #${pr.number}.`);
+                } catch (error) {
+                  core.warning(`Could not assign ${author}: ${error.message}`);
+                }
+              }
+            }
+
+            const sha = pr.head.sha;
+            if (await refExists()) {
+              await github.rest.git.updateRef({
+                owner,
+                repo,
+                ref,
+                sha,
+                force: true,
+              });
+              core.info(`Updated ${branch} to ${sha}.`);
+              return;
+            }
+
+            await github.rest.git.createRef({
+              owner,
+              repo,
+              ref: `refs/${ref}`,
+              sha,
+            });
+            core.info(`Created ${branch} at ${sha}.`);
