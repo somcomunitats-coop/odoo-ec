@@ -269,7 +269,13 @@ class ResCompany(models.Model):
         return LandingClientConfig.COOPERATOR_BUTTON_LABEL_CONFIG[mode][lang]
 
     def get_become_cooperator_button_link(self, mode, lang):
-        return LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[mode].format(
+        url_key = mode
+        if (
+            mode in ("become_cooperator", "become_company_cooperator")
+            and self.legal_form in _LEGAL_FORM_VALUES_NON_PROFIT
+        ):
+            url_key = "%s_association" % mode
+        return LandingClientConfig.COOPERATOR_BUTTON_URL_CONFIG[url_key].format(
             base_url=self.env["ir.config_parameter"].get_param("web.base.url"),
             lang=lang,
             company_external_id=self.company_external_id,

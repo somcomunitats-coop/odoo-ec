@@ -4,6 +4,13 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-10-22 (v16.0.0.10.4)
+
+- Landing cooperator buttons for non-profit associations and neighborhood communities
+  were using the cooperative subscription paths. Choose member_associations and
+  company_member_associations on creation and on public data update, keeping base URL
+  and language in the link.
+
 ### 2026-10-21 (v16.0.0.10.2)
 
 - Fix tests
