@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.10.2",
+    "version": "16.0.0.10.3",
     "depends": [
         "account",
         "account_payment_partner",
