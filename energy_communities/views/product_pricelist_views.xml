@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_pricelist_form_company" model="ir.ui.view">
+        <field name="name">product.pricelist.form.company</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view" />
+        <field name="arch" type="xml">
+            <field name="company_id" position="before">
+                <field name="user_current_role" invisible="1" />
+            </field>
+            <field name="company_id" position="attributes">
+                <attribute name="attrs">{'readonly': [('user_current_role', '!=', 'role_platform_admin')]}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

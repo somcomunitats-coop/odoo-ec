@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.10.2",
+    "version": "16.0.0.10.5",
     "depends": [
         "account",
         "account_payment_partner",
@@ -74,6 +74,7 @@
         "security/ir_rule_data_mail.xml",
         "security/ir_rule_data_partner.xml",
         "security/ir_rule_data_maps.xml",
+        "security/ir_rule_data_pricelist.xml",
         "data/product_data.xml",
         "data/auth_oauth_provider_data.xml",
         "data/ir_cron.xml",
@@ -95,6 +96,7 @@
         "views/auth_oauth_views.xml",
         "views/view_users_form.xml",
         "views/product_views.xml",
+        "views/product_pricelist_views.xml",
         "views/res_users_view.xml",
         "views/res_users_role_view.xml",
         "views/menus.xml",

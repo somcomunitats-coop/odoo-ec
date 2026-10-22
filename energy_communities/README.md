@@ -4,6 +4,13 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-10-22 (v16.0.0.10.5)
+
+- Coordinator admins, community admins and community managers can open Tariffs from
+  Configuration. Only the active platform admin role can write or delete global
+  pricelists. New and duplicated pricelists take the current company, and that field
+  stays readonly for the other roles.
+
 ### 2026-10-21 (v16.0.0.10.2)
 
 - Fix tests
