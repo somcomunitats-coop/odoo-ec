@@ -69,7 +69,7 @@
       name="Tariffs"
       id="view_service_tariffs_menu"
       action="product.product_pricelist_action2"
-      groups="role_platform_admin_res_groups"
+      groups="role_platform_admin_res_groups,role_coord_admin_res_groups,role_ce_admin_res_groups,role_ce_manager_res_groups"
       sequence="300"
     />
     <menuitem

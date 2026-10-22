@@ -1,0 +1,18 @@
+<odoo>
+
+    <!--
+        ir.rule evaluates the domain with an empty user context, so the active
+        role is resolved again with the company currently in the environment.
+        The resulting domain is cached per allowed companies.
+    -->
+    <record id="product_pricelist_global_write_rule" model="ir.rule">
+        <field name="name">Global pricelists: write and delete for platform admin role</field>
+        <field name="model_id" ref="product.model_product_pricelist"/>
+        <field name="domain_force">[(1, '=', 1)] if user.with_context(allowed_company_ids=[company_id]).get_current_role() == 'role_platform_admin' else [('company_id', '!=', False)]</field>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>
