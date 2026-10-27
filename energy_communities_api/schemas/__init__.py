@@ -8,6 +8,7 @@ from .base import (
 )
 from .member import (
     MemberInfo,
+    MemberInfoBody,
     MemberInfoResponse,
 )
 from .community import (
@@ -30,6 +31,7 @@ from .energy_project import (
     ProjectSelfconsumptionInfoListResponse,
     ProjectEnergyConsumedInfoListResponse,
     ProjectEnergyExportedInfoListResponse,
+    ProjectGridconsumptionInfoListResponse,
 )
 from .selfconsumption_project import (
     SelfConsumptionProjectInfo,
