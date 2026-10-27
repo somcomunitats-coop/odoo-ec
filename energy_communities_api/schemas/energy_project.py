@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -10,7 +10,9 @@ class EnergyPoint(BaseModel):
     """
     Schema for representing a energy value (production, selfconsumption...)
     """
-    value: float = Field(..., title="Value", description="Value in kWh of the point")
+    value: Optional[float] = Field(
+        ..., title="Value", description="Value in kWh of the point"
+    )
     date_: str = Field(
         ...,
         alias="date",
