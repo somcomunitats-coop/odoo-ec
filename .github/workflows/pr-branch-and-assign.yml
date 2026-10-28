@@ -32,15 +32,12 @@ jobs:
   create-pull-request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event_name }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8.1.1
         with:
           draft: true
-          commit-message: OP\#Task
           title: New pull request from ${{ github.event_name }} to 16.0
+          base: "16.0"
           branch: ${{ github.event_name }}
   branch-and-assign:
     runs-on: ubuntu-latest
