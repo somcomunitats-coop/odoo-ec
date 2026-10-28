@@ -74,7 +74,7 @@ jobs:
               context.eventName === "pull_request" ||
               context.eventName === "pull_request_target";
 
-            async function baseRunsTargetWorkflow() {
+            async function baseHasCurrentLogic() {
               try {
                 const { data } = await github.rest.repos.getContent({
                   owner,
@@ -86,7 +86,7 @@ jobs:
                   return false;
                 }
                 const text = Buffer.from(data.content, "base64").toString("utf8");
-                return text.includes("pull_request_target:");
+                return text.includes("const LABEL_RULES");
               } catch (error) {
                 if (error.status === 404) {
                   return false;
@@ -95,9 +95,9 @@ jobs:
               }
             }
 
-            if (context.eventName === "pull_request" && (await baseRunsTargetWorkflow())) {
+            if (context.eventName === "pull_request" && (await baseHasCurrentLogic())) {
               core.info(
-                "Skipping pull_request run because the base branch runs pull_request_target."
+                "Skipping pull_request run because the base branch already has this workflow."
               );
               return;
             }
@@ -170,20 +170,6 @@ jobs:
               }
             }
 
-            function coAuthorLogins(message) {
-              const logins = [];
-              for (const line of message.match(/^Co-authored-by:.+$/gim) || []) {
-                const email = (line.match(/<([^>]+)>/) || [])[1] || "";
-                const noreply = email.match(
-                  /(?:^|\+)([^@+]+)@users\.noreply\.github\.com$/i
-                );
-                if (noreply) {
-                  logins.push(noreply[1]);
-                }
-              }
-              return logins;
-            }
-
             const sender = context.payload.sender;
             if (!sender || sender.type === "Bot") {
               core.info("Skipped assignment for a bot sender.");
@@ -191,25 +177,56 @@ jobs:
               await assignLogin(sender.login);
             }
 
+            async function listCommits() {
+              const commits = [];
+              let cursor = null;
+              do {
+                const data = await github.graphql(
+                  `
+                    query($owner: String!, $repo: String!, $number: Int!, $cursor: String) {
+                      repository(owner: $owner, name: $repo) {
+                        pullRequest(number: $number) {
+                          commits(first: 100, after: $cursor) {
+                            pageInfo { hasNextPage endCursor }
+                            nodes {
+                              commit {
+                                messageHeadline
+                                authors(first: 20) {
+                                  nodes { user { login } }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  `,
+                  { owner, repo, number: pr.number, cursor }
+                );
+                const connection = data.repository.pullRequest.commits;
+                for (const node of connection.nodes) {
+                  commits.push(node.commit);
+                }
+                cursor = connection.pageInfo.hasNextPage
+                  ? connection.pageInfo.endCursor
+                  : null;
+              } while (cursor);
+              return commits;
+            }
+
             if (managesBranch) {
-              const commits = await github.paginate(github.rest.pulls.listCommits, {
-                owner,
-                repo,
-                pull_number: pr.number,
-                per_page: 100,
-              });
+              const commits = await listCommits();
               const subjects = [pr.title || ""];
 
               for (const commit of commits) {
-                const message = commit.commit.message || "";
-                if ((commit.parents || []).length < 2) {
-                  subjects.push(message.split("\n")[0]);
+                const headline = commit.messageHeadline || "";
+                if (!headline.startsWith("Merge ")) {
+                  subjects.push(headline);
                 }
-                if (commit.author && commit.author.type !== "Bot") {
-                  await assignLogin(commit.author.login);
-                }
-                for (const login of coAuthorLogins(message)) {
-                  await assignLogin(login);
+                for (const author of commit.authors.nodes) {
+                  if (author.user) {
+                    await assignLogin(author.user.login);
+                  }
                 }
               }
 
