@@ -32,16 +32,19 @@ jobs:
             const { owner, repo } = context.repo;
             const LABEL_RULES = [
               { label: "bug", pattern: /^\[FIX\]|^fix(\(|:)/i },
+              { label: "bugsolution", pattern: /^\[FIX\]|^fix(\(|:)/i },
               { label: "i18n", pattern: /^\[I18N\]|^i18n(\(|:)/i },
               { label: "wip", pattern: /^\[WIP\]|^wip(\(|:)|^wip\b/i },
             ];
             const LABEL_COLORS = {
               bug: "d73a4a",
+              bugsolution: "0e8a16",
               i18n: "0075ca",
               wip: "fbca04",
             };
             const LABEL_DESCRIPTIONS = {
               bug: "Pull request includes a fix",
+              bugsolution: "Pull request solves a bug",
               i18n: "Pull request includes a translation",
               wip: "Work in progress",
             };
