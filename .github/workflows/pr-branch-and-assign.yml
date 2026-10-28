@@ -36,7 +36,7 @@ jobs:
       - name: Checkout the pull request base
         uses: actions/checkout@v7.0.1
         with:
-          ref: 16.0
+          ref: "16.0"
           fetch-depth: 0
       - name: Fast-forward the base to the pushed branch
         run: |
