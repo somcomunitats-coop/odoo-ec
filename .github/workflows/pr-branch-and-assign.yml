@@ -1,31 +1,106 @@
-name: Pull request branch and assignee
+name: Pull request branch, assignee and labels
 
 on:
   pull_request:
+    types: [opened, reopened, synchronize, closed]
   pull_request_target:
     types: [opened, reopened, synchronize, closed]
+  pull_request_review:
+    types: [submitted]
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: write
+  issues: write
   pull-requests: write
 
 concurrency:
-  group: pr-branch-${{ github.event.pull_request.number }}
+  group:
+    pr-branch-${{ github.event.pull_request.number || github.event.issue.number }}-${{
+    github.event_name }}
   cancel-in-progress: true
 
 jobs:
   branch-and-assign:
     runs-on: ubuntu-latest
     steps:
-      - name: Create the pull request branch and assign the author
+      - name: Sync the pull request branch, assignees and labels
         uses: actions/github-script@v9.0.0
         with:
           script: |
-            const pr = context.payload.pull_request;
             const { owner, repo } = context.repo;
-            const action = context.payload.action;
+            const LABEL_RULES = [
+              { label: "bug", pattern: /^\[FIX\]|^fix(\(|:)/i },
+              { label: "i18n", pattern: /^\[I18N\]|^i18n(\(|:)/i },
+              { label: "wip", pattern: /^\[WIP\]|^wip(\(|:)|^wip\b/i },
+            ];
+            const LABEL_COLORS = {
+              bug: "d73a4a",
+              i18n: "0075ca",
+              wip: "fbca04",
+            };
+            const LABEL_DESCRIPTIONS = {
+              bug: "Pull request includes a fix",
+              i18n: "Pull request includes a translation",
+              wip: "Work in progress",
+            };
+
+            async function loadPullRequest() {
+              if (context.payload.pull_request) {
+                return context.payload.pull_request;
+              }
+              const issue = context.payload.issue;
+              if (!issue || !issue.pull_request) {
+                return null;
+              }
+              const { data } = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: issue.number,
+              });
+              return data;
+            }
+
+            const pr = await loadPullRequest();
+            if (!pr) {
+              core.info("The event is not a pull request.");
+              return;
+            }
+
             const branch = `pr/${pr.number}`;
             const ref = `heads/${branch}`;
+            const managesBranch =
+              context.eventName === "pull_request" ||
+              context.eventName === "pull_request_target";
+
+            async function baseRunsTargetWorkflow() {
+              try {
+                const { data } = await github.rest.repos.getContent({
+                  owner,
+                  repo,
+                  path: ".github/workflows/pr-branch-and-assign.yml",
+                  ref: pr.base.ref,
+                });
+                if (!data.content) {
+                  return false;
+                }
+                const text = Buffer.from(data.content, "base64").toString("utf8");
+                return text.includes("pull_request_target:");
+              } catch (error) {
+                if (error.status === 404) {
+                  return false;
+                }
+                throw error;
+              }
+            }
+
+            if (context.eventName === "pull_request" && (await baseRunsTargetWorkflow())) {
+              core.info(
+                "Skipping pull_request run because the base branch runs pull_request_target."
+              );
+              return;
+            }
 
             async function refExists() {
               try {
@@ -39,55 +114,195 @@ jobs:
               }
             }
 
-            if (action === "closed") {
+            if (managesBranch && context.payload.action === "closed") {
               if (!(await refExists())) {
                 core.info(`Branch ${branch} is already absent.`);
                 return;
               }
-              await github.rest.git.deleteRef({ owner, repo, ref });
-              core.info(`Deleted branch ${branch}.`);
+              try {
+                await github.rest.git.deleteRef({ owner, repo, ref });
+                core.info(`Deleted branch ${branch}.`);
+              } catch (error) {
+                if (error.status === 404 || error.status === 422) {
+                  core.info(`Branch ${branch} is already absent.`);
+                  return;
+                }
+                throw error;
+              }
               return;
             }
 
-            if (action === "opened" || action === "reopened") {
-              const author = pr.user.login;
-              const alreadyAssigned = (pr.assignees || []).some(
-                (assignee) => assignee.login === author
-              );
-              if (pr.user.type === "Bot" || alreadyAssigned) {
-                core.info(`Skipped assignment for ${author}.`);
-              } else {
-                try {
-                  await github.rest.issues.addAssignees({
-                    owner,
-                    repo,
-                    issue_number: pr.number,
-                    assignees: [author],
-                  });
-                  core.info(`Assigned ${author} to pull request #${pr.number}.`);
-                } catch (error) {
-                  core.warning(`Could not assign ${author}: ${error.message}`);
-                }
+            function rememberAssignee(login) {
+              pr.assignees = pr.assignees || [];
+              if (!pr.assignees.some((assignee) => assignee.login === login)) {
+                pr.assignees.push({ login });
               }
             }
 
-            const sha = pr.head.sha;
-            if (await refExists()) {
-              await github.rest.git.updateRef({
-                owner,
-                repo,
-                ref,
-                sha,
-                force: true,
-              });
-              core.info(`Updated ${branch} to ${sha}.`);
-              return;
+            async function assignLogin(login) {
+              if (!login || login.endsWith("[bot]")) {
+                return;
+              }
+              const alreadyAssigned = (pr.assignees || []).some(
+                (assignee) => assignee.login === login
+              );
+              if (alreadyAssigned) {
+                core.info(`Skipped assignment for ${login}.`);
+                return;
+              }
+              if ((pr.assignees || []).length >= 10) {
+                core.warning(
+                  `Could not assign ${login}: a pull request allows 10 assignees.`
+                );
+                return;
+              }
+              try {
+                await github.rest.issues.addAssignees({
+                  owner,
+                  repo,
+                  issue_number: pr.number,
+                  assignees: [login],
+                });
+                rememberAssignee(login);
+                core.info(`Assigned ${login} to pull request #${pr.number}.`);
+              } catch (error) {
+                core.warning(`Could not assign ${login}: ${error.message}`);
+              }
             }
 
-            await github.rest.git.createRef({
-              owner,
-              repo,
-              ref: `refs/${ref}`,
-              sha,
-            });
-            core.info(`Created ${branch} at ${sha}.`);
+            function coAuthorLogins(message) {
+              const logins = [];
+              for (const line of message.match(/^Co-authored-by:.+$/gim) || []) {
+                const email = (line.match(/<([^>]+)>/) || [])[1] || "";
+                const noreply = email.match(
+                  /(?:^|\+)([^@+]+)@users\.noreply\.github\.com$/i
+                );
+                if (noreply) {
+                  logins.push(noreply[1]);
+                }
+              }
+              return logins;
+            }
+
+            const sender = context.payload.sender;
+            if (!sender || sender.type === "Bot") {
+              core.info("Skipped assignment for a bot sender.");
+            } else {
+              await assignLogin(sender.login);
+            }
+
+            if (managesBranch) {
+              const commits = await github.paginate(github.rest.pulls.listCommits, {
+                owner,
+                repo,
+                pull_number: pr.number,
+                per_page: 100,
+              });
+              const subjects = [pr.title || ""];
+
+              for (const commit of commits) {
+                const message = commit.commit.message || "";
+                if ((commit.parents || []).length < 2) {
+                  subjects.push(message.split("\n")[0]);
+                }
+                if (commit.author && commit.author.type !== "Bot") {
+                  await assignLogin(commit.author.login);
+                }
+                for (const login of coAuthorLogins(message)) {
+                  await assignLogin(login);
+                }
+              }
+
+              const wanted = new Set();
+              for (const subject of subjects) {
+                for (const rule of LABEL_RULES) {
+                  if (rule.pattern.test(subject.trim())) {
+                    wanted.add(rule.label);
+                  }
+                }
+              }
+
+              const existing = new Set((pr.labels || []).map((label) => label.name));
+              for (const label of wanted) {
+                if (existing.has(label)) {
+                  continue;
+                }
+                try {
+                  await github.rest.issues.getLabel({ owner, repo, name: label });
+                } catch (error) {
+                  if (error.status !== 404) {
+                    core.warning(`Could not read label ${label}: ${error.message}`);
+                    continue;
+                  }
+                  await github.rest.issues.createLabel({
+                    owner,
+                    repo,
+                    name: label,
+                    color: LABEL_COLORS[label],
+                    description: LABEL_DESCRIPTIONS[label],
+                  });
+                }
+                try {
+                  await github.rest.issues.addLabels({
+                    owner,
+                    repo,
+                    issue_number: pr.number,
+                    labels: [label],
+                  });
+                  core.info(`Added label ${label} to pull request #${pr.number}.`);
+                } catch (error) {
+                  core.warning(`Could not add label ${label}: ${error.message}`);
+                }
+              }
+
+              if (existing.has("wip") && !wanted.has("wip")) {
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner,
+                    repo,
+                    issue_number: pr.number,
+                    name: "wip",
+                  });
+                  core.info(`Removed label wip from pull request #${pr.number}.`);
+                } catch (error) {
+                  if (error.status !== 404) {
+                    core.warning(`Could not remove label wip: ${error.message}`);
+                  }
+                }
+              }
+
+              const sha = pr.head.sha;
+              if (await refExists()) {
+                await github.rest.git.updateRef({
+                  owner,
+                  repo,
+                  ref,
+                  sha,
+                  force: true,
+                });
+                core.info(`Updated ${branch} to ${sha}.`);
+                return;
+              }
+
+              try {
+                await github.rest.git.createRef({
+                  owner,
+                  repo,
+                  ref: `refs/${ref}`,
+                  sha,
+                });
+                core.info(`Created ${branch} at ${sha}.`);
+              } catch (error) {
+                if (error.status !== 422) {
+                  throw error;
+                }
+                await github.rest.git.updateRef({
+                  owner,
+                  repo,
+                  ref,
+                  sha,
+                  force: true,
+                });
+                core.info(`Updated ${branch} to ${sha}.`);
+              }
+            }
