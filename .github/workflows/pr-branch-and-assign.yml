@@ -32,6 +32,9 @@ jobs:
   create-pull-request:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.event_name }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8.1.1
         with:
