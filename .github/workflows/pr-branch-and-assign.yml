@@ -35,23 +35,47 @@ jobs:
               { label: "bugsolution", pattern: /^\[FIX\]|^fix(\(|:)/i },
               { label: "i18n", pattern: /^\[I18N\]|^i18n(\(|:)/i },
               { label: "feature", pattern: /^\[FEAT\]|^feat(\(|:)|^feat\b/i },
-              { label: "enhancement", pattern: /^\[FEAT\]|^feat(\(|:)|^feat\b/i },
-              { label: "release", pattern: /^\[REL\]|^rel(\(|:)|^rel\b/i },
-              { label: "refactor", pattern: /^\[REF\]|^ref(\(|:)|^ref\b/i },
-              { label: "ci/cd", pattern: /^\[CI/CD\]|^ci/cd(\(|:)|^ci/cd\b/i },
-              { label: "documentation", pattern: /^\[DOC\]|^doc(\(|:)|^doc\b/i },
+              {
+                label: "enhancement",
+                pattern: /^\[FEAT\]|^\[IMP\]|^feat(\(|:)|^feat\b|^imp(\(|:)/i,
+              },
+              { label: "release", pattern: /^\[REL\]|^rel(\(|:)|^release(\(|:)/i },
+              {
+                label: "refactor",
+                pattern: /^\[REF\]|^refactor(\(|:)|^ref(\(|:)/i,
+              },
+              {
+                label: "ci/cd",
+                pattern: /^\[CI\/CD\]|^\[CI\]|^ci\/cd(\(|:)|^ci(\(|:)/i,
+              },
+              {
+                label: "documentation",
+                pattern: /^\[DOC\]|^docs?(\(|:)/i,
+              },
               { label: "wip", pattern: /^\[WIP\]|^wip(\(|:)|^wip\b/i },
             ];
             const LABEL_COLORS = {
               bug: "d73a4a",
               bugsolution: "0e8a16",
               i18n: "0075ca",
+              feature: "1d76db",
+              enhancement: "a2eeef",
+              release: "f9d0c4",
+              refactor: "d4c5f9",
+              "ci/cd": "5319e7",
+              documentation: "c5def5",
               wip: "fbca04",
             };
             const LABEL_DESCRIPTIONS = {
               bug: "Pull request includes a fix",
               bugsolution: "Pull request solves a bug",
               i18n: "Pull request includes a translation",
+              feature: "Pull request adds a feature",
+              enhancement: "Pull request improves existing behavior",
+              release: "Pull request is a release",
+              refactor: "Pull request refactors existing code",
+              "ci/cd": "Pull request changes continuous integration",
+              documentation: "Pull request updates documentation",
               wip: "Work in progress",
             };
 
