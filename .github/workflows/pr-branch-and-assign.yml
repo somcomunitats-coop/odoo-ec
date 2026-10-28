@@ -1,6 +1,13 @@
 name: Pull request branch, assignee and labels
 
 on:
+  push:
+    branches:
+      - "feature/**"
+      - "improvement/**"
+      - "fix/**"
+      - "bugfix/**"
+      - "refactor/**"
   pull_request:
     types: [opened, reopened, synchronize, closed]
   pull_request_target:
@@ -22,6 +29,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          draft: true
+          commit-message: OP\#Task
+          title: New pull request from ${{ github.event_name }} to 16.0
+          branch: ${{ github.event_name }}
   branch-and-assign:
     runs-on: ubuntu-latest
     steps:
