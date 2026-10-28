@@ -1,6 +1,8 @@
 name: Pull request branch and assignee
 
 on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
   pull_request_target:
     types: [opened, reopened, synchronize, closed]
 
@@ -17,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create the pull request branch and assign the author
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@v9.0.0 # v7.0.1
         with:
           script: |
             const pr = context.payload.pull_request;
