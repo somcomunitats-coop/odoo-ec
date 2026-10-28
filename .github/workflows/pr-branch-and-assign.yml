@@ -44,7 +44,8 @@ jobs:
         with:
           draft: true
           title: New pull request from ${{ github.ref_name }} to 16.0
-          branch: ${{ github.ref_name }}
+          branch: "16.0"
+          base: ${{ github.ref_name }}
   branch-and-assign:
     runs-on: ubuntu-latest
     steps:
