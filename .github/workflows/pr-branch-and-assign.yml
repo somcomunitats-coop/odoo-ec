@@ -1,4 +1,4 @@
-name: Pull request branch, assignee and labels # Prueba de wip
+name: Pull request branch, assignee and labels
 
 on:
   pull_request:
@@ -34,6 +34,12 @@ jobs:
               { label: "bug", pattern: /^\[FIX\]|^fix(\(|:)/i },
               { label: "bugsolution", pattern: /^\[FIX\]|^fix(\(|:)/i },
               { label: "i18n", pattern: /^\[I18N\]|^i18n(\(|:)/i },
+              { label: "feature", pattern: /^\[FEAT\]|^feat(\(|:)|^feat\b/i },
+              { label: "enhancement", pattern: /^\[FEAT\]|^feat(\(|:)|^feat\b/i },
+              { label: "release", pattern: /^\[REL\]|^rel(\(|:)|^rel\b/i },
+              { label: "refactor", pattern: /^\[REF\]|^ref(\(|:)|^ref\b/i },
+              { label: "ci/cd", pattern: /^\[CI/CD\]|^ci/cd(\(|:)|^ci/cd\b/i },
+              { label: "documentation", pattern: /^\[DOC\]|^doc(\(|:)|^doc\b/i },
               { label: "wip", pattern: /^\[WIP\]|^wip(\(|:)|^wip\b/i },
             ];
             const LABEL_COLORS = {
