@@ -170,11 +170,63 @@ jobs:
               }
             }
 
+            async function requestFirstReviewer() {
+              const assignees = pr.assignees || [];
+              if (assignees.length < 2) {
+                core.info(
+                  "Skipped review request because the pull request has fewer than 2 assignees."
+                );
+                return;
+              }
+              const author = pr.user && pr.user.login;
+              const reviewer = assignees.find(
+                (assignee) =>
+                  assignee.login &&
+                  assignee.login !== author &&
+                  !assignee.login.endsWith("[bot]")
+              );
+              if (!reviewer) {
+                core.info(
+                  "Skipped review request because every assignee is the pull request author."
+                );
+                return;
+              }
+              const alreadyRequested = (pr.requested_reviewers || []).some(
+                (user) => user.login === reviewer.login
+              );
+              if (alreadyRequested) {
+                core.info(`Skipped review request for ${reviewer.login}.`);
+                return;
+              }
+              try {
+                await github.rest.pulls.requestReviewers({
+                  owner,
+                  repo,
+                  pull_number: pr.number,
+                  reviewers: [reviewer.login],
+                });
+                pr.requested_reviewers = pr.requested_reviewers || [];
+                pr.requested_reviewers.push({ login: reviewer.login });
+                core.info(
+                  `Requested a review from ${reviewer.login} on pull request #${pr.number}.`
+                );
+              } catch (error) {
+                core.warning(
+                  `Could not request a review from ${reviewer.login}: ${error.message}`
+                );
+              }
+            }
+
             const sender = context.payload.sender;
             if (!sender || sender.type === "Bot") {
               core.info("Skipped assignment for a bot sender.");
             } else {
               await assignLogin(sender.login);
+            }
+
+            if (!managesBranch) {
+              await requestFirstReviewer();
+              return;
             }
 
             async function listCommits() {
@@ -229,6 +281,8 @@ jobs:
                   }
                 }
               }
+
+              await requestFirstReviewer();
 
               const wanted = new Set();
               for (const subject of subjects) {
