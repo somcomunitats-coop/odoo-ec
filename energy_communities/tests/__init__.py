@@ -8,3 +8,4 @@ from . import test_ir_mail_server
 from .components import test_user_creator
 from . import test_session_logout
 from . import test_oauth_provider
+from . import test_product_pricelist
