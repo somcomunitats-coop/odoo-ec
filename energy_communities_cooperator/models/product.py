@@ -206,15 +206,18 @@ class ProductTemplate(models.Model):
 
     @api.returns("self", lambda value: value.id)
     def copy(self, default=None):
-        """Keep a duplicated contribution without a short name.
+        """Suffix a duplicated contribution the same way as its name.
 
-        The short name is mandatory on the form, so leaving it empty forces a
-        new value instead of reusing the source contribution's name.
+        ``name`` becomes ``"%s (copy)"``. The short name and the internal
+        reference follow that same pattern so the copy does not reuse them.
         """
         self.ensure_one()
         default = dict(default or {})
         if self.is_share:
-            default.setdefault("short_name", False)
+            if "short_name" not in default and self.short_name:
+                default["short_name"] = _("%s (copy)", self.short_name)
+            if "default_code" not in default and self.default_code:
+                default["default_code"] = _("%s (copy)", self.default_code)
         return super().copy(default)
 
     @api.onchange("short_name")
