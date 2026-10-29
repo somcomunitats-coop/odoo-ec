@@ -2687,3 +2687,54 @@ msgstr ""
 "{{(object.name or "
 "\"devolucio_interessos_aportacions_voluntaries\").replace(\"/\", "
 "\"_\")}}{{object.state == \"draft\" and \"_draft\" or \"\"}}"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+msgid "Note:"
+msgstr "Nota:"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+#, python-format
+msgid "The short name '%s' already exists."
+msgstr "El nom curt '%s' ja existeix."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+#, python-format
+msgid "The short name '%s' already exists on an archived contribution."
+msgstr "El nom curt '%s' ja existeix en una aportació arxivada."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+#, python-format
+msgid ""
+"The short name '%s' already exists, including on an archived contribution."
+msgstr "El nom curt '%s' ja existeix, també en una aportació arxivada."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+msgid ""
+"ATTENTION: There are already subscription requests linked to this contribution that have been validated/paid using the preexisting price.\n"
+"\n"
+"We do not recommend changing this price, as doing so will automatically recalculate/update the values of the fields that depend on this price (linked contribution price and total requested amount) in the request list view, including for requests that were already validated/paid under the preexisting price.\n"
+"\n"
+"If the change responds to a formal decision by the energy community to modify the price to be charged from now on for this contribution, we recommend DUPLICATING the contribution and, in this way, generating a NEW contribution that carries the new price and that will from now on be linked to the forms and to new requests (if the preexisting contribution should no longer be used, unlink it from the forms and ARCHIVE it so that it is no longer available)."
+msgstr ""
+"ATENCIÓ: Ja hi ha sol·licituds de subscripció vinculades a aquesta aportació que han estat validades/pagades usant el preu preexistent.\n"
+"\n"
+"No recomanem canviar aquest preu, ja que això implicarà que, automàticament, a la vista/llistat de sol·licituds es recalculin/actualitzin els valors dels camps que depenen d'aquest preu (preu de l'aportació vinculada i import total sol·licitat), inclús per a les sol·licituds que ja van ser validades/pagades sota el preu preexistent.\n"
+"\n"
+"Si el canvi respon a una decisió formal de la CE de modificar el preu a cobrar a partir d'ara per a aquesta aportació, es recomana DUPLICAR l'aportació i, per aquesta via, generar una NOVA aportació que reculli el nou preu i que sigui la que a partir d'ara es vinculi als formularis i a les noves sol·licituds (si l'aportació preexistent no es vol seguir usant, la podeu desvincular dels formularis i ARXIVAR-LA per que ja no estigui disponible)."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+#, python-format
+msgid "%s (copy)"
+msgstr "%s (còpia)"

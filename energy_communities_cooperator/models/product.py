@@ -1,9 +1,14 @@
 import hashlib
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.http import request
+from odoo.tools import float_compare
 
 from ..config import MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF
+
+# Subscription requests in these states have not been validated or paid, so
+# changing the linked contribution price does not rewrite a committed amount.
+SHARE_PRICE_SAFE_REQUEST_STATES = ("draft", "cancelled")
 
 
 class ProductTemplate(models.Model):
@@ -172,3 +177,155 @@ class ProductTemplate(models.Model):
                 ]
             )
         return product_templates
+
+    @api.model
+    def get_company_share_type_selection(self, company, category_ids=None):
+        """Share types of one energy community, for the cooperator type filter.
+
+        ``default_code`` is the stored selection key. Codes are unique in the
+        returned list because a selection cannot offer the same key twice.
+        Archived contributions are excluded so the filter only offers types
+        that can still be used.
+        """
+        domain = [
+            ("is_share", "=", True),
+            ("company_id", "=", company.id),
+        ]
+        if category_ids:
+            domain.append(("categ_id", "in", list(category_ids)))
+        shares = self.env["product.product"].sudo().search(domain)
+        selection = []
+        seen_codes = set()
+        for share in shares:
+            code = share.default_code
+            if not code or code in seen_codes:
+                continue
+            seen_codes.add(code)
+            selection.append((code, share.short_name or code))
+        return selection
+
+    @api.returns("self", lambda value: value.id)
+    def copy(self, default=None):
+        """Suffix a duplicated contribution the same way as its name.
+
+        ``name`` becomes ``"%s (copy)"``. The short name and the internal
+        reference follow that same pattern so the copy does not reuse them.
+        """
+        self.ensure_one()
+        default = dict(default or {})
+        if self.is_share:
+            if "short_name" not in default and self.short_name:
+                default["short_name"] = _("%s (copy)", self.short_name)
+            if "default_code" not in default and self.default_code:
+                default["default_code"] = _("%s (copy)", self.default_code)
+        return super().copy(default)
+
+    @api.onchange("short_name")
+    def _onchange_short_name(self):
+        for product in self:
+            warning = product._get_short_name_duplicate_warning()
+            if warning:
+                return warning
+
+    def _get_short_name_duplicate_warning(self):
+        """Warn when another contribution of the same community uses this name.
+
+        The warning does not block the save. Archived matches are called out
+        explicitly so they are not confused with a contribution still in use.
+        """
+        self.ensure_one()
+        if not self.is_share or not self.short_name:
+            return
+        company = self.company_id or self.env.company
+        domain = [
+            ("short_name", "=", self.short_name),
+            ("is_share", "=", True),
+            ("company_id", "=", company.id),
+        ]
+        if self._origin:
+            domain.append(("id", "!=", self._origin.id))
+        duplicates = (
+            self.env["product.template"].with_context(active_test=False).search(domain)
+        )
+        if not duplicates:
+            return
+        has_active = bool(duplicates.filtered("active"))
+        has_archived = bool(duplicates.filtered(lambda product: not product.active))
+        if has_active and has_archived:
+            message = _(
+                "The short name '%s' already exists, including on an archived "
+                "contribution.",
+                self.short_name,
+            )
+        elif has_archived:
+            message = _(
+                "The short name '%s' already exists on an archived contribution.",
+                self.short_name,
+            )
+        else:
+            message = _("The short name '%s' already exists.", self.short_name)
+        return {"warning": {"title": _("Note:"), "message": message}}
+
+    @api.onchange("list_price")
+    def _onchange_list_price(self):
+        for product in self:
+            warning = product._get_share_list_price_change_warning()
+            if warning:
+                return warning
+
+    def _get_share_list_price_change_warning(self):
+        """Warn before changing the price of a contribution already in use.
+
+        Only subscription requests outside draft and cancelled count. The
+        warning does not block the save.
+        """
+        self.ensure_one()
+        if not self.is_share or not self._origin:
+            return
+        precision = self.env["decimal.precision"].precision_get("Product Price")
+        if (
+            float_compare(
+                self.list_price,
+                self._origin.list_price,
+                precision_digits=precision,
+            )
+            == 0
+        ):
+            return
+        variant_ids = self._origin.product_variant_ids.ids
+        if not variant_ids:
+            return
+        company = self.company_id or self.env.company
+        linked_request = self.env["subscription.request"].search(
+            [
+                ("share_product_id", "in", variant_ids),
+                ("company_id", "=", company.id),
+                ("state", "not in", list(SHARE_PRICE_SAFE_REQUEST_STATES)),
+            ],
+            limit=1,
+        )
+        if not linked_request:
+            return
+        return {
+            "warning": {
+                "title": _("Note:"),
+                "message": _(
+                    "ATTENTION: There are already subscription requests linked to this "
+                    "contribution that have been validated/paid using the preexisting price.\n"
+                    "\n"
+                    "We do not recommend changing this price, as doing so will automatically "
+                    "recalculate/update the values of the fields that depend on this price "
+                    "(linked contribution price and total requested amount) in the request "
+                    "list view, including for requests that were already validated/paid under "
+                    "the preexisting price.\n"
+                    "\n"
+                    "If the change responds to a formal decision by the energy community to "
+                    "modify the price to be charged from now on for this contribution, we "
+                    "recommend DUPLICATING the contribution and, in this way, generating a "
+                    "NEW contribution that carries the new price and that will from now on "
+                    "be linked to the forms and to new requests (if the preexisting "
+                    "contribution should no longer be used, unlink it from the forms and "
+                    "ARCHIVE it so that it is no longer available)."
+                ),
+            }
+        }
