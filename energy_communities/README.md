@@ -4,12 +4,18 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
-### 2026-10-22 (v16.0.0.10.5)
+### 2026-10-29 (v16.0.0.10.4)
 
 - Coordinator admins, community admins and community managers can open Tariffs from
   Configuration. Only the active platform admin role can write or delete global
   pricelists. New and duplicated pricelists take the current company, and that field
   stays readonly for the other roles.
+
+### 2026-10-29 (v16.0.10.3)
+
+- Hide notification, OdooBot status, technical features, two-factor authentication and
+  API keys in Change My Preferences when the active company role is role_ce_member,
+  role_ce_admin, role_ce_manager or role_coord_admin.
 
 ### 2026-10-21 (v16.0.0.10.2)
 
