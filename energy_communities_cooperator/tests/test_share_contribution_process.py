@@ -143,25 +143,34 @@ class TestShareContributionProcess(common.TransactionCase):
         empty = self._draft(self.share_a, {"short_name": False})
         self.assertFalse(empty._onchange_short_name())
 
-    def test_copy_clears_short_name_only_for_shares(self):
+    def test_copy_suffixes_short_name_and_default_code_for_shares(self):
         duplicated = self.share_a.copy()
-        self.assertFalse(duplicated.short_name)
+        self.assertEqual(duplicated.short_name, "%s (copy)" % self.share_a.short_name)
+        self.assertEqual(
+            duplicated.default_code, "%s (copy)" % self.share_a.default_code
+        )
         self.assertTrue(duplicated.is_share)
         self.assertEqual(duplicated.company_id, self.company_a)
 
-        kept = self.share_a.copy(default={"short_name": "Explicit short name"})
+        kept = self.share_a.copy(
+            default={"short_name": "Explicit short name", "default_code": "EXPLICIT"}
+        )
         self.assertEqual(kept.short_name, "Explicit short name")
+        self.assertEqual(kept.default_code, "EXPLICIT")
 
         service = self.env["product.template"].create(
             {
                 "name": "Task 2175 service copy",
                 "short_name": "Keep me",
+                "default_code": "KEEP",
                 "detailed_type": "service",
                 "is_share": False,
                 "company_id": self.company_a.id,
             }
         )
-        self.assertEqual(service.copy().short_name, "Keep me")
+        copied_service = service.copy()
+        self.assertEqual(copied_service.short_name, "Keep me")
+        self.assertEqual(copied_service.default_code, "KEEP")
 
     def test_list_price_warning_follows_subscription_request_state(self):
         self.assertEqual(SHARE_PRICE_SAFE_REQUEST_STATES, ("draft", "cancelled"))

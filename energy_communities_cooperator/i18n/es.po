@@ -2723,3 +2723,10 @@ msgstr ""
 "No recomendamos cambiar este precio, ya que ello implicará que, automáticamente, en la vista/listado de solicitudes se recalcularan/actualizaran los valores de los campos que dependen de este precio (precio de la aportación vinculada e importe total solicitado), inclusive para las solicitudes que ya fueron validadas/pagadas bajo el precio preexistente.\n"
 "\n"
 "Si el cambio responde a una decisión formal de la CE de modificar el precio a cobrar a partir de ahora para esta aportación, se recomienda DUPLICAR la aportación, y por esta vía generar una NUEVA aportación que recoja el nuevo precio y que sea la que a partir de ahora se vincule a los formularios y a las nuevas solicitudes (si la aportación preexistente no se quiere seguir usando, simplemente la podéis desvincular de los formularios y ARCHIVARLA para ya no esté disponible)."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+#, python-format
+msgid "%s (copy)"
+msgstr "%s (copia)"
