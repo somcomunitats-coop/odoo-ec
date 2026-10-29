@@ -2620,3 +2620,50 @@ msgid ""
 "{{(object.name or \"voluntary_share_interest_return\").replace(\"/\", "
 "\"_\")}}{{object.state == \"draft\" and \"_draft\" or \"\"}}"
 msgstr ""
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+msgid "Note:"
+msgstr "Oharra:"
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+#, python-format
+msgid "The short name '%s' already exists."
+msgstr "'%s' izen laburra dagoeneko existitzen da."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+#, python-format
+msgid "The short name '%s' already exists on an archived contribution."
+msgstr ""
+"'%s' izen laburra dagoeneko existitzen da artxibatutako ekarpen batean."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+#, python-format
+msgid ""
+"The short name '%s' already exists, including on an archived contribution."
+msgstr ""
+"'%s' izen laburra dagoeneko existitzen da, baita artxibatutako ekarpen "
+"batean ere."
+
+#. module: energy_communities_cooperator
+#. odoo-python
+#: code:addons/energy_communities_cooperator/models/product.py:0
+msgid ""
+"ATTENTION: There are already subscription requests linked to this contribution that have been validated/paid using the preexisting price.\n"
+"\n"
+"We do not recommend changing this price, as doing so will automatically recalculate/update the values of the fields that depend on this price (linked contribution price and total requested amount) in the request list view, including for requests that were already validated/paid under the preexisting price.\n"
+"\n"
+"If the change responds to a formal decision by the energy community to modify the price to be charged from now on for this contribution, we recommend DUPLICATING the contribution and, in this way, generating a NEW contribution that carries the new price and that will from now on be linked to the forms and to new requests (if the preexisting contribution should no longer be used, unlink it from the forms and ARCHIVE it so that it is no longer available)."
+msgstr ""
+"KONTUZ: Ekarpen honi lotutako harpidetza-eskaera batzuk lehendik zegoen prezioa erabiliz baliozkotu/ordaindu dira.\n"
+"\n"
+"Ez dugu gomendatzen prezio hori aldatzea, horrek automatikoki eragingo baitu eskaeren ikuspegian/zerrendan prezio horren mende dauden eremuen balioak birkalkulatzea/eguneratzea (lotutako ekarpenaren prezioa eta eskatutako guztizko zenbatekoa), lehendik zegoen prezioan baliozkotu/ordaindu ziren eskaerenak barne.\n"
+"\n"
+"Aldaketa Europako Batzordeak ekarpen horrengatik kobratu beharreko prezioa aldatzeko hartutako erabaki formal baten ondorio bada, ekarpena BIKOIZTEA gomendatzen da, eta, bide horretatik, ekarpen BERRI bat sortzea, prezio berria jasoko duena eta hemendik aurrera formularioei eta eskaera berriei lotuko zaiena (lehendik zegoen ekarpena erabiltzen jarraitu nahi ez bada, formularioetatik deslotu eta ARTXIBATU besterik ezin duzue egin, erabilgarri egon ez dadin)."
