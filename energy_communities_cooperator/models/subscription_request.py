@@ -14,6 +14,36 @@ class SubscriptionRequest(models.Model):
     _inherit = "subscription.request"
     _description = "Subscription request"
 
+    gender = fields.Selection(
+        selection_add=[
+            ("not_binary", "Not binary"),
+            ("not_share", "I prefer to not share it"),
+        ]
+    )
+    vat = fields.Char(
+        required=True, readonly=True, states={"draft": [("readonly", False)]}
+    )
+    subscription_mode = fields.Selection(
+        string="Subscription mode",
+        selection=lambda self: self.get_subscription_mode_selection(),
+        compute="_compute_subscription_mode",
+        default="generic",
+        store=True,
+        readonly=True,
+    )
+    share_product_categ_id = fields.Many2one(
+        "product.category",
+        string="Share type category",
+        compute="_compute_share_product_categ_id",
+        store=True,
+    )
+
+    massive_import_id = fields.Integer(
+        requiered=False,
+        string="Massive Import Id",
+        help="Acutal member number. We use this filed for sort subscription requests in a massive imporation",
+    )
+
     def get_mapping_product_category_id_subscription_mode(self):
         mapping = {}
         for mode, xmlid in MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF.items():
@@ -59,30 +89,6 @@ class SubscriptionRequest(models.Model):
             ("invited", "Invited"),
             ("voluntary", "Voluntary"),
         ]
-
-    gender = fields.Selection(
-        selection_add=[
-            ("not_binary", "Not binary"),
-            ("not_share", "I prefer to not share it"),
-        ]
-    )
-    vat = fields.Char(
-        required=True, readonly=True, states={"draft": [("readonly", False)]}
-    )
-    subscription_mode = fields.Selection(
-        string="Subscription mode",
-        selection=lambda self: self.get_subscription_mode_selection(),
-        compute="_compute_subscription_mode",
-        default="generic",
-        store=True,
-        readonly=True,
-    )
-    share_product_categ_id = fields.Many2one(
-        "product.category",
-        string="Share type category",
-        compute="_compute_share_product_categ_id",
-        store=True,
-    )
 
     @api.depends("share_product_id")
     def _compute_share_product_categ_id(self):
