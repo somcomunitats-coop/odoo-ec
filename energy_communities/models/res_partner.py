@@ -138,7 +138,7 @@ class ResPartner(models.Model):
             return self.browse()
         domain = [("vat", "ilike", vat)]
         if company_id:
-            domain.append(("company_ids", "in", int(company_id)))
+            domain.append((int(company_id), "in", "company_ids"))
         partner = self.search(domain, limit=1)
         return partner
 
