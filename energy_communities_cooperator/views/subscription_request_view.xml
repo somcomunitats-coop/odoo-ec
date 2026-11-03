@@ -9,6 +9,9 @@
         <field name="share_product_categ_id" />
         <field name="subscription_mode" invisible="1"/>
       </field>
+      <field name="company_id" position="after">
+        <field name="massive_import_id" optional="hide" />
+      </field>
     </field>
   </record>
 
@@ -20,6 +23,9 @@
       <field name="country_id" position="after">
         <field name="share_product_categ_id" />
         <field name="subscription_mode" />
+      </field>
+      <field name="company_id" position="after">
+        <field name="massive_import_id" />
       </field>
     </field>
   </record>
