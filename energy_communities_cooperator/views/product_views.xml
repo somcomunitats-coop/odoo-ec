@@ -6,6 +6,9 @@
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_only_form_view" />
             <field name="arch" type="xml">
+                <field name="list_price" position="attributes">
+                    <attribute name="widget">share_price_monetary</attribute>
+                </field>
                 <field name="display_on_website" position="attributes">
                     <attribute name="string">Activate for the BASE form</attribute>
                     <attribute name="help">By checking this box, this product will be considered for display on the BASE form for its category.</attribute>
