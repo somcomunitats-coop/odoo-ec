@@ -4,12 +4,12 @@ from .domain import Curve, EnergyCurve, EnergyPoint, EnergyPointAttributes
 
 class ArkenovaEnergyPoint(EnergyPoint):
     @property
-    def gridconsumption(self):
+    def gridconsumption(self) -> float:
         if self.consolidated:
             return self._gridconsumption
 
     @property
-    def consumption(self):
+    def consumption(self) -> float:
         if self.consolidated:
             return self._gridconsumption + self._selfconsumption
         return self._gridconsumption

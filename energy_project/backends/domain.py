@@ -27,7 +27,9 @@ MeasurePoint = namedtuple("MeasurePoint", ["date", "value", "consolidated"])
 
 class EnergyPoint(BaseEnergyPoint):
     @property
-    def gridconsumption(self):
+    def gridconsumption(self) -> float:
+        if self._gridconsumption is None:
+            return 0.0
         return self._gridconsumption
 
     @property
@@ -37,7 +39,9 @@ class EnergyPoint(BaseEnergyPoint):
         )
 
     @property
-    def gridinjection(self):
+    def gridinjection(self) -> float:
+        if self._gridinjection is None:
+            return 0.0
         return self._gridinjection
 
     @property
@@ -47,7 +51,9 @@ class EnergyPoint(BaseEnergyPoint):
         )
 
     @property
-    def selfconsumption(self):
+    def selfconsumption(self) -> float:
+        if self._selfconsumption is None:
+            return 0.0
         return self._selfconsumption
 
     @property
@@ -57,7 +63,9 @@ class EnergyPoint(BaseEnergyPoint):
         )
 
     @property
-    def consumption(self):
+    def consumption(self) -> float:
+        if self._consumption is None:
+            return 0.0
         return self._consumption
 
     @property
@@ -67,7 +75,9 @@ class EnergyPoint(BaseEnergyPoint):
         )
 
     @property
-    def production(self):
+    def production(self) -> float:
+        if self._production is None:
+            return 0.0
         return self._production
 
     @property
