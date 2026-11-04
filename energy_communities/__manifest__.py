@@ -111,6 +111,7 @@
         "wizards/multicompany_easy_creation.xml",
         "wizards/create_users_wizard.xml",
         "wizards/change_coordinator_wizard.xml",
+        "wizards/account_payment_register_views.xml",
     ],
     "assets": {
         "web.assets_backend": [
