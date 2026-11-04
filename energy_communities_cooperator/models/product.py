@@ -266,50 +266,20 @@ class ProductTemplate(models.Model):
             message = _("The short name '%s' already exists.", self.short_name)
         return {"warning": {"title": _("Note:"), "message": message}}
 
-    @api.onchange("list_price")
-    def _onchange_list_price(self):
-        for product in self:
-            warning = product._get_share_list_price_change_warning()
-            if warning:
-                return warning
+    def get_share_price_change_confirmation(self, new_price):
+        """Return the dialog payload when this price change must be confirmed.
 
-    def _get_share_list_price_change_warning(self):
-        """Warn before changing the price of a contribution already in use.
-
-        Only subscription requests outside draft and cancelled count. The
-        warning does not block the save.
+        Draft and cancelled subscription requests do not count. An empty
+        result means the form can keep the new price without asking.
         """
         self.ensure_one()
-        if not self.is_share or not self._origin:
-            return
-        precision = self.env["decimal.precision"].precision_get("Product Price")
-        if (
-            float_compare(
-                self.list_price,
-                self._origin.list_price,
-                precision_digits=precision,
-            )
-            == 0
-        ):
-            return
-        variant_ids = self._origin.product_variant_ids.ids
-        if not variant_ids:
-            return
-        company = self.company_id or self.env.company
-        linked_request = self.env["subscription.request"].search(
-            [
-                ("share_product_id", "in", variant_ids),
-                ("company_id", "=", company.id),
-                ("state", "not in", list(SHARE_PRICE_SAFE_REQUEST_STATES)),
-            ],
-            limit=1,
-        )
-        if not linked_request:
-            return
+        if not self._share_price_change_needs_confirmation(new_price):
+            return False
         return {
-            "warning": {
-                "title": _("Note:"),
-                "message": _(
+            "title": _("Confirmation"),
+            "message": "%s\n\n%s"
+            % (
+                _(
                     "ATTENTION: There are already subscription requests linked to this "
                     "contribution that have been validated/paid using the preexisting price.\n"
                     "\n"
@@ -327,5 +297,27 @@ class ProductTemplate(models.Model):
                     "contribution should no longer be used, unlink it from the forms and "
                     "ARCHIVE it so that it is no longer available)."
                 ),
-            }
+                _("Do you confirm that you want to change the contribution value?"),
+            ),
+            "confirm_label": _("Yes"),
+            "cancel_label": _("Cancel"),
         }
+
+    def _share_price_change_needs_confirmation(self, new_price):
+        self.ensure_one()
+        if not self.is_share or not self.product_variant_ids:
+            return False
+        precision = self.env["decimal.precision"].precision_get("Product Price")
+        if float_compare(new_price, self.list_price, precision_digits=precision) == 0:
+            return False
+        company = self.company_id or self.env.company
+        return bool(
+            self.env["subscription.request"].search(
+                [
+                    ("share_product_id", "in", self.product_variant_ids.ids),
+                    ("company_id", "=", company.id),
+                    ("state", "not in", list(SHARE_PRICE_SAFE_REQUEST_STATES)),
+                ],
+                limit=1,
+            )
+        )

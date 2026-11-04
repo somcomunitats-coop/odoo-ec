@@ -172,28 +172,29 @@ class TestShareContributionProcess(common.TransactionCase):
         self.assertEqual(copied_service.short_name, "Keep me")
         self.assertEqual(copied_service.default_code, "KEEP")
 
-    def test_list_price_warning_follows_subscription_request_state(self):
+    def test_list_price_confirmation_follows_subscription_request_state(self):
         self.assertEqual(SHARE_PRICE_SAFE_REQUEST_STATES, ("draft", "cancelled"))
         request = self._create_subscription_request(self.share_a, "draft")
-        draft = self._draft(self.share_a, {"list_price": 150.0})
-        self.assertFalse(draft._onchange_list_price())
+        self.assertFalse(self.share_a.get_share_price_change_confirmation(150.0))
 
         request.state = "cancelled"
-        self.assertFalse(draft._onchange_list_price())
+        self.assertFalse(self.share_a.get_share_price_change_confirmation(150.0))
 
+        question = "Do you confirm that you want to change the contribution value?"
         for state in ("blocked", "done", "waiting", "transfer", "paid"):
             request.state = state
-            warning = draft._onchange_list_price()
-            message = warning["warning"]["message"]
-            self.assertIn("ATTENTION:", message)
-            self.assertIn("DUPLICATING the contribution", message)
-            self.assertIn("ARCHIVE it", message)
+            payload = self.share_a.get_share_price_change_confirmation(150.0)
+            self.assertIn("ATTENTION:", payload["message"])
+            self.assertIn("DUPLICATING the contribution", payload["message"])
+            self.assertIn("ARCHIVE it", payload["message"])
+            self.assertIn(question, payload["message"])
+            self.assertEqual(payload["confirm_label"], "Yes")
+            self.assertEqual(payload["cancel_label"], "Cancel")
 
-        same_price = self._draft(self.share_a, {"list_price": self.share_a.list_price})
-        self.assertFalse(same_price._onchange_list_price())
-
-        other_company = self._draft(self.share_b, {"list_price": 150.0})
-        self.assertFalse(other_company._onchange_list_price())
+        self.assertFalse(
+            self.share_a.get_share_price_change_confirmation(self.share_a.list_price)
+        )
+        self.assertFalse(self.share_b.get_share_price_change_confirmation(150.0))
 
         service = self.env["product.template"].create(
             {
@@ -204,9 +205,7 @@ class TestShareContributionProcess(common.TransactionCase):
                 "company_id": self.company_a.id,
             }
         )
-        self.assertFalse(
-            self._draft(service, {"list_price": 20.0})._onchange_list_price()
-        )
+        self.assertFalse(service.get_share_price_change_confirmation(20.0))
 
     def test_cooperator_type_selection_is_limited_to_the_current_company(self):
         archived = self._create_share(
