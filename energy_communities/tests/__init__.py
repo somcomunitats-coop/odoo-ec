@@ -9,3 +9,4 @@ from .components import test_user_creator
 from . import test_session_logout
 from . import test_oauth_provider
 from . import test_product_pricelist
+from . import test_account_payment_register

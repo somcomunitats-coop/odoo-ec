@@ -4344,3 +4344,28 @@ msgid ""
 msgstr ""
 "No se pudo descifrar la contraseña SMTP. "
 "Es posible que el secreto de la base de datos haya cambiado."
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_payment_register__payment_date_equals_invoice_date
+msgid "Payment Date = Invoice Date"
+msgstr "Fecha pago = Fecha factura"
+
+#. module: energy_communities
+#: model:ir.model.fields,help:energy_communities.field_account_payment_register__payment_date_equals_invoice_date
+msgid ""
+"When enabled, each selected invoice is paid using its own invoice date and "
+"payments are created separately."
+msgstr ""
+"Si está activo, cada factura se paga con su propia fecha de factura y los "
+"pagos se crean por separado."
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/wizards/account_payment_register.py:0
+#, python-format
+msgid ""
+"Each payment needs one invoice date. These entries have a missing or mixed "
+"invoice date: %s"
+msgstr ""
+"Cada pago necesita una única fecha de factura. Estos asientos no tienen "
+"fecha de factura o mezclan varias: %s"
