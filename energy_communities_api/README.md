@@ -4,6 +4,18 @@ HTTP API to request information about energy communities, members and projects
 
 ## Changelog
 
+### 2026-11-04 (v16.0.0.5.0)
+
+- Added endpoint: [POST] /api/energy-communities/me to update language settings
+
+- Added new metrics:
+
+  - energy_gridconsumption
+  - energy_gridinjection
+  - energy_selfconsumption
+
+- Add `consolidated` flag for values that are trustable
+
 ### 2026-04-27 (v16.0.0.4.4)
 
 - bump email_validator to 2.3.0
