@@ -33,7 +33,7 @@ class TestMemberApiService(HttpCase, RegistryMixin):
     def setUp(self):
         super().setUp()
         self.maxDiff = None
-        self.community_id = "29"
+        self.community_id = "13"
         self.community_service_id = 64
         self.timeout = 600
         self.client = partial(self.url_open, timeout=self.timeout)
@@ -366,6 +366,48 @@ class TestMemberApiService(HttpCase, RegistryMixin):
                 "description": "<p>BadRequest [<br>{<br>&quot;type&quot;: &quot;int_parsing&quot;,<br>&quot;loc&quot;: [<br>&quot;page&quot;<br>],<br>&quot;msg&quot;: &quot;Input should be a valid integer, unable to parse string as an integer&quot;,<br>&quot;input&quot;: &quot;fgdhjkl&quot;,<br>&quot;url&quot;: &quot;https://errors.pydantic.dev/2.9/v/int_parsing&quot;<br>}<br>]</p>",
             },
         )
+
+    def test__me_update_endpoint__ok(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # a member belonging to two energy communities
+        community_1_id = self.community_id
+        # when we call for update personal data info
+        request_body = {"lang": "ca_ES"}
+        response = self.client(
+            "/api/energy-communities/me",
+            data=request_body,
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 200)
+        # and the change is permanent
+        response = self.client(
+            "/api/energy-communities/me",
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        ).json()
+        for attr in request_body:
+            self.assertEqual(response["data"][attr], request_body[attr])
+
+    def test__me_update_endpoint__incorrect_body(self):
+        # given http_client
+        # self.url_open
+        # and a valid token
+        # self.token
+        # a member belonging to two energy communities
+        community_1_id = self.community_id
+        # when we call for update personal data info
+        request_body = {"lang": "ca_EU"}
+        response = self.client(
+            "/api/energy-communities/me",
+            data=request_body,
+            headers={"Authorization": self.token, "CommunityId": community_1_id},
+        )
+        # then we obtain a 200 response code
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["name"], "Bad Request")
 
     def test__me_community_service_metrics__ok(self):
         # given http_client

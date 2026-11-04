@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -10,12 +10,19 @@ class EnergyPoint(BaseModel):
     """
     Schema for representing a energy value (production, selfconsumption...)
     """
-    value: float = Field(..., title="Value", description="Value in kWh of the point")
+    value: Optional[float] = Field(
+        ..., title="Value", description="Value in kWh of the point"
+    )
     date_: str = Field(
         ...,
         alias="date",
         title="Date",
         description="Date (ex. 2024-06-01) of the value",
+    )
+    consolidated: bool = Field(
+        ...,
+        title="Consolidated",
+        description="True if the value is consolidated for this date",
     )
 
 
@@ -55,6 +62,14 @@ class ProjectEnergyExportedInfoListResponse(ProjectEnergyInfoListResponse):
 class ProjectEnergyConsumedInfoListResponse(ProjectEnergyInfoListResponse):
     """
     Body response for energy consumed requests
+    """
+
+    ...
+
+
+class ProjectGridconsumptionInfoListResponse(ProjectEnergyInfoListResponse):
+    """
+    Body response for energy gridconsumption requests
     """
 
     ...

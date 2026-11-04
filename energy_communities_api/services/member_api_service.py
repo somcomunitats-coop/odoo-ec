@@ -1,4 +1,6 @@
-from odoo.exceptions import MissingError
+from pydantic import ValidationError as PydanticValidationError
+
+from odoo.exceptions import MissingError, ValidationError
 from odoo.http import request
 
 from odoo.addons.base_rest import restapi
@@ -21,9 +23,11 @@ from ..schemas import (
     InvoicePDFInfo,
     InvoicePDFInfoResponse,
     MemberInfo,
+    MemberInfoBody,
     MemberInfoResponse,
     ProjectEnergyConsumedInfoListResponse,
     ProjectEnergyExportedInfoListResponse,
+    ProjectGridconsumptionInfoListResponse,
     ProjectProductionInfoListResponse,
     ProjectSelfconsumptionInfoListResponse,
 )
@@ -46,7 +50,7 @@ class MemberApiService(Component):
         super().__init__(*args)
 
     @restapi.method(
-        [(["/"], "GET")],
+        [(["/"], "GET"), (["/"], "POST")],
         output_param=PydanticModel(MemberInfoResponse),
     )
     def me(self):
@@ -61,7 +65,18 @@ class MemberApiService(Component):
             MemberInfo,
             community_id,
         ) as component:
-            member_info = component.get_member_info(component.env.user.partner_id)
+            if request.httprequest.method == "GET":
+                member_info = component.get_member_info(component.env.user.partner_id)
+            if request.httprequest.method == "POST":
+                try:
+                    info = MemberInfoBody(**request.httprequest.form)
+                except PydanticValidationError as e:
+                    raise ValidationError(e.errors()[0]["msg"]) from e
+                else:
+                    member_info = component.update_member_info(
+                        component.env.user.partner_id, info
+                    )
+
         return single_response(request, MemberInfoResponse, member_info)
 
     @restapi.method(
@@ -205,11 +220,11 @@ class MemberApiService(Component):
         )
 
     @restapi.method(
-        [(["/community_services/<int:service_id>/production"], "GET")],
+        [(["/community_services/<int:service_id>/metrics/energy_production"], "GET")],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectProductionInfoListResponse),
     )
-    def community_service_production_info(
+    def community_service_energy_production(
         self, service_id: int, query_params: QueryParams
     ):
         self._validate_headers()
@@ -240,11 +255,16 @@ class MemberApiService(Component):
         )
 
     @restapi.method(
-        [(["/community_services/<int:service_id>/selfconsumption"], "GET")],
+        [
+            (
+                ["/community_services/<int:service_id>/metrics/energy_selfconsumption"],
+                "GET",
+            )
+        ],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectSelfconsumptionInfoListResponse),
     )
-    def community_service_selfconsumption_info(
+    def community_service_energy_selfconsumption(
         self, service_id: int, query_params: QueryParams
     ):
         self._validate_headers()
@@ -277,11 +297,11 @@ class MemberApiService(Component):
         )
 
     @restapi.method(
-        [(["/community_services/<int:service_id>/energy_exported"], "GET")],
+        [(["/community_services/<int:service_id>/metrics/energy_exported"], "GET")],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectEnergyExportedInfoListResponse),
     )
-    def community_service_energy_exported_info(
+    def community_service_energy_exported(
         self, service_id: int, query_params: QueryParams
     ):
         self._validate_headers()
@@ -314,11 +334,11 @@ class MemberApiService(Component):
         )
 
     @restapi.method(
-        [(["/community_services/<int:service_id>/energy_consumed"], "GET")],
+        [(["/community_services/<int:service_id>/metrics/energy_consumption"], "GET")],
         input_param=PydanticModel(QueryParams),
         output_param=PydanticModel(ProjectEnergyConsumedInfoListResponse),
     )
-    def community_service_energy_consumed_info(
+    def community_service_energy_consumption(
         self, service_id: int, query_params: QueryParams
     ):
         self._validate_headers()
@@ -347,6 +367,48 @@ class MemberApiService(Component):
             ProjectEnergyConsumedInfoListResponse,
             daily_selfconsumption,
             len(daily_selfconsumption),
+            paging,
+        )
+
+    @restapi.method(
+        [
+            (
+                ["/community_services/<int:service_id>/metrics/energy_gridconsumption"],
+                "GET",
+            )
+        ],
+        input_param=PydanticModel(QueryParams),
+        output_param=PydanticModel(ProjectGridconsumptionInfoListResponse),
+    )
+    def community_service_energy_gridconsumption(
+        self, service_id: int, query_params: QueryParams
+    ):
+        self._validate_headers()
+        community_id = request.httprequest.headers.get("CommunityId")
+        paging = self._get_pagination_limits(query_params)
+        date_from, date_to = self._get_dates_range(query_params)
+        with api_info(
+            self.env,
+            "energy_project.project",
+            EnergyPoint,
+            paging=paging,
+            community_id=community_id,
+        ) as component:
+            project = component.get_project_from_service(service_id)
+            if not project:
+                raise MissingError(
+                    f"Service with id {service_id} has not a project associated"
+                )
+            daily_gridconsumption = (
+                component.get_project_daily_energy_gridconsumption_by_member(
+                    project, self.env.user.partner_id, date_from, date_to
+                )
+            )
+        return list_response(
+            request,
+            ProjectGridconsumptionInfoListResponse,
+            daily_gridconsumption,
+            len(daily_gridconsumption),
             paging,
         )
 
