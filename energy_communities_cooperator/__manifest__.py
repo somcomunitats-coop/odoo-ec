@@ -12,7 +12,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     "category": "Cooperative management",
-    "version": "16.0.0.8.6",
+    "version": "16.0.0.8.7",
     "license": "AGPL-3",
     # any module necessary for this one to work correctly
     "depends": [
@@ -65,10 +65,13 @@
         "demo/res_company_demo.xml",
     ],
     "assets": {
+        "web.assets_backend": [
+            "energy_communities_cooperator/static/src/js/share_price_confirmation_field.js",
+        ],
         "web.assets_frontend": [
             # "energy_communities_cooperator/static/src/js/cooperator.js",
             "energy_communities_cooperator/static/src/js/share-subscription-website.js",
-        ]
+        ],
     },
 }
 # "demo/account_payment_mode_demo.xml",
