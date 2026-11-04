@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### 2026-11-04 (v16.0.0.3.0)
+
+- Add `consolidated` flag to energy points to trust or not the value of that point. Can
+  be temporal values
+- Fix point behaviour for null values. Now all points will return 0
+
 ### 2026-10-21 (v16.0.0.2.7)
 
 - Fix tests
