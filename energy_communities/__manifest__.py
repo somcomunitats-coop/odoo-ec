@@ -1,6 +1,6 @@
 {
     "name": "Energy Community",
-    "version": "16.0.0.10.4",
+    "version": "16.0.0.10.5",
     "depends": [
         "account",
         "account_payment_partner",
@@ -111,6 +111,7 @@
         "wizards/multicompany_easy_creation.xml",
         "wizards/create_users_wizard.xml",
         "wizards/change_coordinator_wizard.xml",
+        "wizards/account_payment_register_views.xml",
     ],
     "assets": {
         "web.assets_backend": [
