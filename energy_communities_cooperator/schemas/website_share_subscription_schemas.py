@@ -149,6 +149,7 @@ class WebsiteShareSubscriptionSubmissionVoluntary(BaseModel):
 
 class SubscriptionRequestCreationParams(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
+    massive_import_id: Optional[int]
     source: str
     email: EmailStr
     firstname: str
