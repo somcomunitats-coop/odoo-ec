@@ -5,6 +5,19 @@ class ResPartner(models.Model):
     _name = "res.partner"
     _inherit = "res.partner"
 
+    # validate=False keeps stored types of other communities writable while the
+    # dropdown of the contact filter only lists the active company's shares.
+    cooperator_type = fields.Selection(
+        selection="_get_share_type",
+        validate=False,
+    )
+
+    @api.depends_context("company")
+    def _get_share_type(self):
+        return self.env["product.template"].get_company_share_type_selection(
+            self.env.company
+        )
+
     gender = fields.Selection(
         selection_add=[
             ("not_binary", "Not binary"),
