@@ -174,6 +174,8 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             dict: Validation result or validated values
         """
         try:
+            self._normalize_submitted_vats(values)
+
             # Validate privacy policy acceptance for different owners
             privacy_validation = self._validate_privacy_policy(values)
             if privacy_validation:
@@ -248,18 +250,17 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         """
         try:
             project = self._get_project_from_values(values)
-            partner = self._get_partner_from_values(values, project)
+            partner = self._inscription_service().resolve_inscription_partner(
+                values.get("inscription_partner_id_vat"), project
+            )
 
             if not partner:
                 return {
-                    "error_msgs": [_("Partner does not exist.")],
+                    "error_msgs": [
+                        self._inscription_service().partner_registration_error_message()
+                    ],
                     "global_error": True,
                 }
-
-            # Check membership requirements
-            membership_validation = self._validate_partner_membership(partner, project)
-            if membership_validation:
-                return membership_validation
 
             return None
 
@@ -269,41 +270,6 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 "error_msgs": [_("Error validating partner information.")],
                 "global_error": True,
             }
-
-    def _validate_partner_membership(self, partner, project):
-        """
-        Validate partner membership requirements
-
-        Args:
-            partner: Partner record
-            project: Project record
-
-        Returns:
-            dict: Error dict if validation fails, None if valid
-        """
-        partner_with_type = partner.get_partner_with_type()
-
-        cooperator = (  # TODO: Move this to generic function on energy_communities_cooperator
-            request.env["cooperative.membership"]
-            .sudo()
-            .search(
-                [
-                    ("company_id", "=", project.company_id.id),
-                    ("partner_id", "=", partner_with_type.id),
-                    "|",
-                    ("member", "=", True),
-                    ("effective_invited", "=", True),
-                ]
-            )
-        )
-
-        if not cooperator:
-            return {
-                "error_msgs": [_("Partner is not a cooperator.")],
-                "global_error": True,
-            }
-
-        return None
 
     def _validate_existing_inscription(self, values):
         """
@@ -383,8 +349,11 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             dict: Error dict if participation invalid, None if valid
         """
         try:
+            project = self._get_project_from_values(values)
+            if not project.conf_show_participation:
+                return None
             participation_quantity = float(
-                values["inscriptionselfconsumption_participation"]
+                values.get("inscriptionselfconsumption_participation")
             )
             participation = (
                 request.env["energy_selfconsumptions.participation"]
@@ -541,17 +510,22 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         Returns:
             partner: Partner record or None
         """
-        return (
-            request.env["res.partner"]
-            .sudo()
-            .search(
-                [
-                    ("vat", "=", values["inscription_partner_id_vat"]),
-                    ("parent_id", "=", False),
-                    ("company_ids", "in", (project.company_id.id)),
-                ]
-            )
+        return self._inscription_service()._get_partner(
+            values.get("inscription_partner_id_vat"), project.company_id.id
         )
+
+    def _inscription_service(self):
+        """Shared inscription service used by the public form."""
+        return request.env[
+            "energy_selfconsumption.create_inscription_selfconsumption"
+        ].sudo()
+
+    def _normalize_submitted_vats(self, values):
+        """Compare VAT numbers after converting letters to uppercase."""
+        service = self._inscription_service()
+        for key in ("inscription_partner_id_vat", "supplypoint_owner_id_vat"):
+            if values.get(key):
+                values[key] = service.normalize_vat(values[key])
 
     # Form field definitions and configuration
     def get_data_main_fields(self):
@@ -567,13 +541,20 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             "project_conf_used_in_selfconsumption": False,
             "project_conf_vulnerability_situation": False,
             "project_conf_bank_details": False,
+            "project_conf_show_contracted_power": True,
+            "project_conf_show_access_tariff": True,
+            "project_conf_show_annual_consumption": True,
+            "project_conf_show_participation": True,
             "project_header_description": _("Header description on website form"),
             "inscription_partner_id_vat": _("VAT of the partner"),
             "supplypoint_cups": _("CUPS"),
             "supplypoint_street": _("Address"),
             "supplypoint_city": _("City"),
             "supplypoint_zip": _("Zip"),
-            "supplypoint_contracted_power": _("Maximum contracted power"),
+            "supplypoint_contracted_power": _(
+                "Current contracted power at the supply point"
+            ),
+            "supplypoint_tariff": _("Access tariff"),
             "supplypoint_cadastral_reference": _("Cadastral reference of the property"),
             "supplypoint_used_in_selfconsumption": _(
                 "Do you currently have self-consumption?"
@@ -627,6 +608,11 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                     "project_conf_used_in_selfconsumption": model.conf_used_in_selfconsumption,
                     "project_conf_vulnerability_situation": model.conf_vulnerability_situation,
                     "project_conf_bank_details": model.conf_bank_details,
+                    "project_conf_show_contracted_power": model.conf_show_contracted_power,
+                    "project_conf_show_access_tariff": model.conf_show_access_tariff,
+                    "project_conf_show_annual_consumption": model.conf_show_annual_consumption,
+                    "project_conf_show_participation": model.conf_show_participation,
+                    "project_conf_participation_help": model.conf_participation_help,
                     "project_conf_policy_privacy_text": model.company_id.data_policy_approval_text,
                 }
             )
@@ -732,6 +718,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             values[
                 "inscriptionselfconsumption_participation_options"
             ] = self._get_participation_options(values)
+            values["supplypoint_tariff_options"] = self._get_tariff_options()
 
             # Add language options
             values["supplypoint_owner_id_lang_options"] = self._get_language_options()
@@ -801,6 +788,17 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             {"id": GENDER_NOT_SHARE, "name": _("I prefer not to share")},
         ]
 
+    def _get_tariff_options(self):
+        """Access tariffs available on the supply point, in selection order."""
+        selection = (
+            request.env["energy_selfconsumption.supply_point"]
+            ._fields["tariff"]
+            .selection
+        )
+        if callable(selection):
+            selection = selection(request.env["energy_selfconsumption.supply_point"])
+        return [{"id": key, "name": label} for key, label in selection]
+
     def _get_participation_options(self, values):
         """
         Get participation options for the project
@@ -850,6 +848,14 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             dict: Help texts
         """
         return {
+            "supplypoint_contracted_power_title": _(
+                "You can find the current contracted power on the electricity bill. "
+                "Enter it in kW."
+            ),
+            "supplypoint_tariff_title": _(
+                "Electricity access tariff applied to the supply point. "
+                "You can find it on your electricity bill."
+            ),
             "supplypoint_cups_title": _(
                 "CUPS is the Unified Code of the Point of Supply. "
                 "You can find it on electricity bills."

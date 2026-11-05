@@ -529,7 +529,10 @@ msgid "Accept terms"
 msgstr "Acceptar termes"
 
 #. module: energy_selfconsumption
+#. odoo-python
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__tariff
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
 msgid "Access tariff"
 msgstr "Tarifa d'accés"
 
@@ -770,7 +773,7 @@ msgstr "DADES BANCÀRIES"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_error_message_template
 msgid "Back to form"
-msgstr "Tornar a la forma"
+msgstr "Tornar al formulari"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__mandate_id
@@ -6417,3 +6420,160 @@ msgstr ""
 "taula de repartiment actual és del %(period_start)s al %(period_end)s. La "
 "data efectiva de reemplaçament que seleccioneu a continuació ha d'estar "
 "compresa dins d'aquest rang."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_contracted_power
+msgid "Show contracted power"
+msgstr "Mostrar potència contractada"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_contracted_power
+msgid "Display the contracted power field on the inscription form"
+msgstr "Mostra el camp de potència contractada al formulari d'inscripció"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_access_tariff
+msgid "Show access tariff"
+msgstr "Mostrar tarifa d'accés"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_access_tariff
+msgid "Display the access tariff field on the inscription form"
+msgstr "Mostra el camp de tarifa d'accés al formulari d'inscripció"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_annual_consumption
+msgid "Show annual consumption"
+msgstr "Mostrar consum anual"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_annual_consumption
+msgid "Display the annual electricity consumption field on the inscription form"
+msgstr "Mostra el camp de consum anual d'electricitat al formulari d'inscripció"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
+msgid "Show contribution selector"
+msgstr "Mostrar selector d'aportació"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
+msgid "Display the participation selector on the inscription form"
+msgstr "Mostra el selector de participació al formulari d'inscripció"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
+msgid "Help paragraph for the contribution selection"
+msgstr "Paràgraf ajuda a la selecció de l'Aportació"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
+msgid "Text shown under the participation selector on the inscription form"
+msgstr "Text que es mostra sota el selector de participació al formulari d'inscripció"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_accept_pending_subscription
+msgid "Accept inscriptions while member or invited registration is in progress"
+msgstr "Aceptar inscripcions en procés d'alta sòcia/convidada"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_accept_pending_subscription
+msgid "When enabled, a person who is not yet an effective member or invited participant can register if they have an open subscription request in this community that is not a voluntary contribution."
+msgstr "Si està actiu, una persona que encara no és sòcia efectiva ni convidada pot inscriure's si té una sol·licitud d'alta oberta en aquesta comunitat que no sigui una aportació voluntària."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "At least one of these 2 fields must be visible on the form: contracted power and/or access tariff"
+msgstr "Com a mínim un d'aquests 2 camps ha de ser visible al formulari: Potència contractada i/o Tarifa d'accés"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "<span>WARNING: If the person or entity should not be able to choose a participation on the form, Odoo will assign the inscription a default participation, which will be the first of the participations available in the 'Participation' list.</span>"
+msgstr "<span>ATENCIÓ: Si no es desitja que la persona/entitat pugui escollir una participació al formulari, internament Odoo assignarà a la inscripció un valor per defecte de participació que serà el corresponent a la 1a de les participacions disponibles a la llista 'Participació'</span>"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid "Current contracted power at the supply point"
+msgstr "Potència actual contractada en el punt de subministrament"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid "You can find the current contracted power on the electricity bill. Enter it in kW."
+msgstr "Pots trobar la potència actual contractada a la factura elèctrica. Indica-ho en kW"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid "Electricity access tariff applied to the supply point. You can find it on your electricity bill."
+msgstr "Tarifa d'accés a l'electricitat aplicada al punt de subministrament. La pots veure indicada a la factura elèctrica."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "The indicated power is incompatible with the selected tariff."
+msgstr "La potència indicada és incompatible amb la tarifa seleccionada"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Current contracted power at the supply point is required."
+msgstr "La potència actual contractada en el punt de subministrament és obligatòria."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Annual electricity consumption is required."
+msgstr "El consum anual d'electricitat és obligatori."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Access tariff is required."
+msgstr "La tarifa d'accés és obligatòria."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "The selected access tariff is not valid."
+msgstr "La tarifa d'accés seleccionada no és vàlida."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "No person or entity with this VAT number is registered in the energy community to take part in the community projects (you must be an effective member or an invited participant to submit the inscription). If you are already a member or an invited participant, check the VAT number you entered. Otherwise, contact the community to register formally as a member or invited person or entity so you can proceed with your project inscription."
+msgstr "A la Comunitat Energètica no consta cap persona/entitat amb aquest NIF/CIF registrada per poder participar dels projectes de la Comunitat (es requereix ser Sòcia efectiva o Convidada a participar per poder cursar la inscripció). Si ja ets Sòcia o Convidada, revisa el NIF/CIF introduït, i en cas contrari, contacta amb la Comunitat per registrar-te formalment com a persona/entitat sòcia o convidada a participar-hi i així poder procedir amb la teva inscripció al projecte."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__3_0tdve
+msgid "3.0TDVE"
+msgstr "3.0TDVE"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_1tdve
+msgid "6.1TDVE"
+msgstr "6.1TDVE"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_2tdve
+msgid "6.2TDVE"
+msgstr "6.2TDVE"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "<p>The usual recommendation for an annual electrical use of is 0.5kW of PV power per 1500 kWh of electrical consumption.</p><p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p><p>1500 - 3000 kWh between 0.5 and 1 kW</p><p>3000 - 5000 kWh between 1.5 - 2 kW</p>"
+msgstr "<p>La recomanació habitual per a un ús elèctric anual de 0,5 kW de FV potència per 1500 kWh de consum elèctric.</p><p>1000 - 1500 kWh es recomana un màxim de 0,5 kW de participació</p><p>1500 - 3000 kWh entre 0,5 i 1 kW</p><p>3000 - 5000 kWh entre 1,5 - 2 kW</p>"

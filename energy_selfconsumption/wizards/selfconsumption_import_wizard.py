@@ -373,10 +373,10 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 "inscription_partner_id_vat": line_data.get(headers[0], False),
                 "effective_date": line_data.get(headers[1], False),
                 "supplypoint_cups": line_data.get(headers[2], False),
-                "supplypoint_contracted_power": self._parse_float_value(
-                    line_data.get(headers[3], "0.0")
+                "supplypoint_contracted_power": self._blank_or_float(
+                    line_data.get(headers[3])
                 ),
-                "tariff": line_data.get(headers[4], False),
+                "tariff": (line_data.get(headers[4]) or "").strip() or False,
                 "supplypoint_street": line_data.get(headers[5], False),
                 "street2": line_data.get(headers[6], False),
                 "supplypoint_city": line_data.get(headers[7], False),
@@ -405,11 +405,11 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 "supplypoint_used_in_selfconsumption": line_data.get(
                     headers[24], False
                 ),
-                "inscriptionselfconsumption_annual_electricity_use": self._parse_float_value(
-                    line_data.get(headers[25], "0.0")
+                "inscriptionselfconsumption_annual_electricity_use": self._blank_or_float(
+                    line_data.get(headers[25])
                 ),
-                "inscriptionselfconsumption_participation": self._parse_float_value(
-                    line_data.get(headers[26], "0.0")
+                "inscriptionselfconsumption_participation": self._blank_or_float(
+                    line_data.get(headers[26])
                 ),
                 "inscriptionselfconsumption_accept": line_data.get(headers[27], False),
             }
@@ -438,6 +438,12 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 return "no"
 
         return "yes"
+
+    def _blank_or_float(self, value_str):
+        """Keep an empty CSV cell empty so hidden fields can be ignored."""
+        if value_str is None or str(value_str).strip() == "":
+            return False
+        return self._parse_float_value(value_str)
 
     def _parse_float_value(self, value_str):
         """

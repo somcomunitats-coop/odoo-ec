@@ -121,12 +121,25 @@ Template structure:
             </div>
             
             <!-- Technical Information -->
-            <div class="col-md-12">
+            <div class="col-md-12" t-if="project_conf_show_contracted_power">
                 <t t-call="energy_communities.form_field_text">
                     <t t-set="value" t-value="supplypoint_contracted_power" />
                     <t t-set="key" t-value="supplypoint_contracted_power_key" />
                     <t t-set="label" t-value="supplypoint_contracted_power_label" />
                     <t t-set="required" t-value="True" />
+                    <t t-set="help" t-value="True" />
+                    <t t-set="title" t-value="supplypoint_contracted_power_title" />
+                </t>
+            </div>
+            <div class="col-md-12" t-if="project_conf_show_access_tariff">
+                <t t-call="energy_communities.form_field_selection">
+                    <t t-set="value" t-value="supplypoint_tariff" />
+                    <t t-set="key" t-value="supplypoint_tariff_key" />
+                    <t t-set="label" t-value="supplypoint_tariff_label" />
+                    <t t-set="options" t-value="supplypoint_tariff_options" />
+                    <t t-set="required" t-value="True" />
+                    <t t-set="help" t-value="True" />
+                    <t t-set="title" t-value="supplypoint_tariff_title" />
                 </t>
             </div>
             <div class="col-md-12">
@@ -304,10 +317,10 @@ Template structure:
         </div>
         
         <!-- Other Necessary Data Section -->
-        <h2>OTHER NECESSARY DATA</h2>
-        <div class="row">
+        <h2 t-if="project_conf_show_annual_consumption or project_conf_show_participation">OTHER NECESSARY DATA</h2>
+        <div class="row" t-if="project_conf_show_annual_consumption or project_conf_show_participation">
             <!-- Annual Electricity Use -->
-            <div class="col-md-12">
+            <div class="col-md-12" t-if="project_conf_show_annual_consumption">
                 <t t-call="energy_communities.form_field_number">
                     <t t-set="value" t-value="inscriptionselfconsumption_annual_electricity_use" />
                     <t t-set="key" t-value="inscriptionselfconsumption_annual_electricity_use_key" />
@@ -319,7 +332,7 @@ Template structure:
             </div>
             
             <!-- Participation Level -->
-            <div class="col-md-12">
+            <div class="col-md-12" t-if="project_conf_show_participation">
                 <t t-call="energy_communities.form_field_selection">
                     <t t-set="value" t-value="inscriptionselfconsumption_participation" />
                     <t t-set="key" t-value="inscriptionselfconsumption_participation_key" />
@@ -332,13 +345,8 @@ Template structure:
             </div>
             
             <!-- Participation Recommendations -->
-            <div class="col-md-12">
-                <p>The usual recommendation for an annual electrical use of is 0.5kW of PV
-                power per 1500 kWh of electrical consumption.</p>
-                <br />
-                <p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p>
-                <p>1500 - 3000 kWh between 0.5 and 1 kW</p>
-                <p>3000 - 5000 kWh between 1.5 - 2 kW</p>
+            <div class="col-md-12" t-if="project_conf_show_participation and project_conf_participation_help">
+                <t t-raw="project_conf_participation_help" />
             </div>
         </div>
         

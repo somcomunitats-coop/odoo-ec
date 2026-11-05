@@ -45,6 +45,7 @@ from ..config import (
     INSCRIPTION_STATE_ACTIVE,
     INSCRIPTION_STATE_CHANGE,
     LAST_DIGITS_COUNT,
+    PARTICIPATION_HELP_HTML_BY_LANG,
     RECURRING_INVOICING_TYPE_POSTPAID,
     RECURRING_INVOICING_TYPE_PREPAID,
     SELFCONSUMPTION_CONF_STATE_ACTIVE,
@@ -241,7 +242,94 @@ class Selfconsumption(models.Model):
         default=True,
         help="Select when you want to make the payment by bank transfer. If not requested, the payment must be made by bank transfer by the member.",
     )
+    conf_show_contracted_power = fields.Boolean(
+        "Show contracted power",
+        default=True,
+        help="Display the contracted power field on the inscription form",
+    )
+    conf_show_access_tariff = fields.Boolean(
+        "Show access tariff",
+        default=True,
+        help="Display the access tariff field on the inscription form",
+    )
+    conf_show_annual_consumption = fields.Boolean(
+        "Show annual consumption",
+        default=True,
+        help="Display the annual electricity consumption field on the inscription form",
+    )
+    conf_show_participation = fields.Boolean(
+        "Show contribution selector",
+        default=True,
+        help="Display the participation selector on the inscription form",
+    )
+    conf_participation_help = fields.Html(
+        string="Help paragraph for the contribution selection",
+        translate=True,
+        default=lambda self: PARTICIPATION_HELP_HTML_BY_LANG["en_US"],
+        help="Text shown under the participation selector on the inscription form",
+    )
+    conf_accept_pending_subscription = fields.Boolean(
+        "Accept inscriptions while member or invited registration is in progress",
+        default=False,
+        help=(
+            "When enabled, a person who is not yet an effective member or invited "
+            "participant can register if they have an open subscription request in "
+            "this community that is not a voluntary contribution."
+        ),
+    )
     conf_url_form = fields.Char(string="URL", help="URL for the registration form")
+
+    @api.constrains("conf_show_contracted_power", "conf_show_access_tariff")
+    def _check_power_or_tariff_visible(self):
+        """Keep at least contracted power or access tariff on the public form."""
+        for record in self:
+            if (
+                not record.conf_show_contracted_power
+                and not record.conf_show_access_tariff
+            ):
+                raise ValidationError(
+                    _(
+                        "At least one of these 2 fields must be visible on the form: "
+                        "contracted power and/or access tariff"
+                    )
+                )
+
+    def _participation_help_html(self):
+        """Standard participation help in the language of the current context.
+
+        The catalog translation is preferred. The language map is used when
+        that language has no catalog entry yet.
+        """
+        translated = _(
+            "<p>The usual recommendation for an annual electrical use of is 0.5kW "
+            "of PV power per 1500 kWh of electrical consumption.</p>"
+            "<p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p>"
+            "<p>1500 - 3000 kWh between 0.5 and 1 kW</p>"
+            "<p>3000 - 5000 kWh between 1.5 - 2 kW</p>"
+        )
+        source = PARTICIPATION_HELP_HTML_BY_LANG["en_US"]
+        lang = self.env.lang or "en_US"
+        if translated != source or lang in ("en_US", "en"):
+            return translated
+        return PARTICIPATION_HELP_HTML_BY_LANG.get(lang, source)
+
+    def _fill_default_participation_help(self):
+        """Store the standard participation help in every installed language.
+
+        A project that already has a custom English text is left unchanged.
+        """
+        default_en = PARTICIPATION_HELP_HTML_BY_LANG["en_US"].strip()
+        for record in self:
+            current = (
+                record.with_context(lang="en_US").conf_participation_help or ""
+            ).strip()
+            if current and current != default_en:
+                continue
+            for lang in PARTICIPATION_HELP_HTML_BY_LANG:
+                localized = record.with_context(lang=lang)
+                localized.write(
+                    {"conf_participation_help": localized._participation_help_html()}
+                )
 
     # Validation methods
     def _validate_cups_code(self, code, code_type, cups_length, total_length):
@@ -401,8 +489,10 @@ class Selfconsumption(models.Model):
         """
         res = super().create(values)
         # Create default participation options for each new project
-        for record in res:
+        for record, vals in zip(res, values):
             record._create_default_participations()
+            if not vals.get("conf_participation_help"):
+                record._fill_default_participation_help()
         return res
 
     def unlink(self):
