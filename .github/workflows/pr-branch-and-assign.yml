@@ -1,6 +1,13 @@
 name: Pull request branch, assignee and labels
 
 on:
+  push:
+    branches:
+      - "feature/**"
+      - "improvement/**"
+      - "fix/**"
+      - "bugfix/**"
+      - "refactor/**"
   pull_request:
     types: [opened, reopened, synchronize, closed]
   pull_request_target:
@@ -17,12 +24,46 @@ permissions:
 
 concurrency:
   group:
-    pr-branch-${{ github.event.pull_request.number || github.event.issue.number }}-${{
-    github.event_name }}
+    pr-branch-${{ github.event.pull_request.number || github.event.issue.number ||
+    github.ref_name }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
+  create-pull-request:
+    if: github.event_name == 'push' && github.event.deleted == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the pull request base
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: "16.0"
+          fetch-depth: 0
+      - name: Fast-forward the base to the pushed branch
+        run: |
+          git fetch origin "${{ github.ref_name }}"
+          git merge --ff-only "origin/${{ github.ref_name }}"
+      - name: Read the pushed branch subject
+        id: subject
+        run: |
+          delimiter="$(openssl rand -hex 16)"
+          {
+            echo "title<<${delimiter}"
+            git log -1 --format=%s "origin/${{ github.ref_name }}"
+            echo "${delimiter}"
+          } >> "$GITHUB_OUTPUT"
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          draft: true
+          base: "16.0"
+          branch: ${{ github.ref_name }}
+          title: ${{ steps.subject.outputs.title }}
+          body: Opened automatically for branch `${{ github.ref_name }}`.
   branch-and-assign:
+    needs: create-pull-request
+    if:
+      always() && !cancelled() && (needs.create-pull-request.result == 'success' ||
+      needs.create-pull-request.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Sync the pull request branch, assignees and labels
@@ -95,6 +136,28 @@ jobs:
               return data;
             }
 
+            if (context.eventName === "push" && !context.payload.deleted) {
+              const branchName = (context.payload.ref || "").replace(/^refs\/heads\//, "");
+              const found = await github.rest.pulls.list({
+                owner,
+                repo,
+                head: `${owner}:${branchName}`,
+                state: "open",
+                per_page: 1,
+              });
+              if (!found.data.length) {
+                core.info(`Branch ${branchName} has no open pull request.`);
+                return;
+              }
+              const { data } = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: found.data[0].number,
+              });
+              context.payload.pull_request = data;
+              context.payload.action = "synchronize";
+            }
+
             const pr = await loadPullRequest();
             if (!pr) {
               core.info("The event is not a pull request.");
@@ -104,6 +167,7 @@ jobs:
             const branch = `pr/${pr.number}`;
             const ref = `heads/${branch}`;
             const managesBranch =
+              context.eventName === "push" ||
               context.eventName === "pull_request" ||
               context.eventName === "pull_request_target";
 
