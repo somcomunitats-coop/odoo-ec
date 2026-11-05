@@ -6,6 +6,9 @@
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_only_form_view" />
             <field name="arch" type="xml">
+                <field name="list_price" position="attributes">
+                    <attribute name="widget">share_price_monetary</attribute>
+                </field>
                 <field name="display_on_website" position="attributes">
                     <attribute name="string">Activate for the BASE form</attribute>
                     <attribute name="help">By checking this box, this product will be considered for display on the BASE form for its category.</attribute>
@@ -40,6 +43,38 @@
                         </group>
                     </page>
                 </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_share_search_view" model="ir.ui.view">
+            <field name="name">product.template.search.share</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view" />
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <filter name="categ_id" position="attributes">
+                    <attribute name="name">share_contribution_categ</attribute>
+                    <attribute name="string">Contribution category</attribute>
+                </filter>
+            </field>
+        </record>
+
+        <record id="cooperator.product_template_action" model="ir.actions.act_window">
+            <field name="search_view_id" ref="product_template_share_search_view" />
+            <field name="context">{
+                "default_is_share": True,
+                "default_company_id": allowed_company_ids[0],
+                "search_default_share_contribution_categ": 1
+            }</field>
+        </record>
+        <record id="product_template_short_name_required" model="ir.ui.view">
+            <field name="name">product.template.short.name.required</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="cooperator.product_template_form_view" />
+            <field name="arch" type="xml">
+                <field name="short_name" position="attributes">
+                    <attribute name="attrs">{'required': [('is_share', '=', True)]}</attribute>
+                </field>
             </field>
         </record>
     </data>
