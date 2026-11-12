@@ -38,10 +38,31 @@ jobs:
         with:
           ref: "16.0"
           fetch-depth: 0
-      - name: Fast-forward the base to the pushed branch
+      - name: Fast-forward or rebase the pushed branch onto the base
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
+          BASE_BRANCH: "16.0"
+          GIT_EDITOR: "true"
+          GIT_SEQUENCE_EDITOR: "true"
         run: |
-          git fetch origin "${{ github.ref_name }}"
-          git merge --ff-only "origin/${{ github.ref_name }}"
+          git fetch origin "${BASE_BRANCH}" "${BRANCH_NAME}"
+          if git merge-base --is-ancestor HEAD "origin/${BRANCH_NAME}"; then
+            git merge --ff-only "origin/${BRANCH_NAME}"
+            exit 0
+          fi
+
+          echo "Branch ${BRANCH_NAME} has diverged from ${BASE_BRANCH}. Rebasing."
+          expected="$(git rev-parse "refs/remotes/origin/${BRANCH_NAME}")"
+          git switch -C "${BRANCH_NAME}" "origin/${BRANCH_NAME}"
+          if ! git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase "origin/${BASE_BRANCH}"; then
+            git rebase --abort || true
+            echo "::error::Rebase of ${BRANCH_NAME} onto ${BASE_BRANCH} stopped because of conflicts. Resolve them locally and push the branch again."
+            exit 1
+          fi
+          git push --force-with-lease="refs/heads/${BRANCH_NAME}:${expected}" origin "HEAD:refs/heads/${BRANCH_NAME}"
+          git switch "${BASE_BRANCH}"
+          git merge --ff-only "origin/${BASE_BRANCH}"
+          git merge --ff-only "${BRANCH_NAME}"
       - name: Read the pushed branch subject
         id: subject
         run: |
