@@ -1,61 +1,51 @@
 import base64
 import logging
-import random
 from csv import DictReader
 from io import StringIO
 
 import chardet
+from markupsafe import Markup, escape
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 
-from odoo.addons.energy_communities.config import DISPLAY_DATE_FORMAT
-from odoo.addons.energy_communities.utils import product_utils
-from odoo.addons.energy_communities_cooperator.schemas import (
-    MemberTypeMode,
-    SubscriptionRequestCreationParams,
-)
-from odoo.addons.energy_communities_cooperator.utils import (
-    subscription_request_utils,
-)
-from odoo.addons.energy_communities_service_invoicing.schemas import (
-    ServiceProductCreationData,
+from odoo.addons.energy_communities.config import (
+    DISPLAY_DATE_FORMAT,
+    PLATFORM_ADMIN,
 )
 
 from ..config import (
-    CSV_DELIMITER,
     CSV_FILE_EXTENSION,
     CSV_QUOTE_CHAR,
     DEFAULT_ENCODING,
     TARIFF_2_0TD,
-    TARIFF_3_0TD,
-    TARIFF_6_1TD,
-    TARIFF_6_2TD,
-    TARIFF_6_3TD,
-    TARIFF_6_4TD,
-    TARIFF_POWER_LIMITS,
 )
 
 # Constants for import wizard
 EXPECTED_CSV_COLUMNS = 28
+INSCRIPTION_IMPORT_DELIMITER = ";"
 SPANISH_COUNTRY_CODE = "ES"
-MADRID_STATE_CODE = "MA"
 SPANISH_NIF_LETTERS = "TRWAGMYFPDXBNJZSQVHLCKE"
 CUPS_ALPHABET = "TRWAGMYFPDXBNJZSQVHLCKE"
-IBAN_CHECK_MODULO = 97
-IBAN_DIGITS_COUNT = 20
 CUPS_DISTRIBUTOR_CODE = "1234"
 CUPS_SUPPLY_NUMBER_LENGTH = 12
 CUPS_CONTROL_MODULO = 529
 CUPS_CONTROL_DIVISOR = 23
-
-# Tariff selection for auto-generation
-HIGH_POWER_TARIFFS = [
-    (TARIFF_6_1TD, TARIFF_6_1TD),
-    (TARIFF_6_2TD, TARIFF_6_2TD),
-    (TARIFF_6_3TD, TARIFF_6_3TD),
-    (TARIFF_6_4TD, TARIFF_6_4TD),
-]
+SAMPLE_PARTNER_REF_PREFIX = "sample-inscription-"
+SAMPLE_VAT_BASE = 90000000
+SAMPLE_COUNT_DEFAULT = 5
+SAMPLE_COUNT_MAX = 50
+SAMPLE_CONTRACTED_POWER = 3.0
+HIDDEN_INSCRIPTION_FORM_FIELDS = (
+    "conf_show_contracted_power",
+    "conf_show_access_tariff",
+    "conf_used_in_selfconsumption",
+    "conf_vulnerability_situation",
+    "conf_bank_details",
+    "conf_cadastral_reference_readonly",
+    "conf_show_annual_consumption",
+    "conf_show_participation",
+)
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +82,7 @@ class SelfconsumptionImportWizard(models.TransientModel):
 
     # CSV format configuration
     delimiter = fields.Char(
-        default=CSV_DELIMITER,
+        default=INSCRIPTION_IMPORT_DELIMITER,
         required=True,
         string="File Delimiter",
         help="Delimiter character used in the CSV file",
@@ -123,6 +113,19 @@ class SelfconsumptionImportWizard(models.TransientModel):
     conf_bank_details = fields.Boolean(
         help="Configuration flag for bank details handling"
     )
+    project_id = fields.Many2one(
+        "energy_selfconsumption.selfconsumption",
+        string="Self-consumption project",
+    )
+    hidden_fields_alert = fields.Html(
+        compute="_compute_hidden_fields_alert",
+        help="Warning listing inscription form fields that are not requested",
+    )
+    sample_count = fields.Integer(
+        string="Sample count",
+        default=SAMPLE_COUNT_DEFAULT,
+        help="How many numbered sample inscriptions to ensure on this project",
+    )
 
     # Default value methods
     @api.model
@@ -150,9 +153,68 @@ class SelfconsumptionImportWizard(models.TransientModel):
                 project_id
             )
             if project.exists():
+                defaults["project_id"] = project.id
                 defaults["conf_bank_details"] = project.conf_bank_details
 
         return defaults
+
+    @api.depends("project_id")
+    def _compute_hidden_fields_alert(self):
+        """List form fields that this project does not request."""
+        for wizard in self:
+            project = wizard.project_id
+            wizard.hidden_fields_alert = (
+                wizard._hidden_fields_alert_html(project) if project else False
+            )
+
+    def _hidden_fields_alert_html(self, project):
+        """Build the alert shown above the template download.
+
+        Cadastral reference is included when it is not mandatory. Import still
+        keeps that column, because the flag controls obligation, not visibility.
+        """
+        labels = self._hidden_form_field_labels(project)
+        if not labels:
+            return False
+        items = Markup("").join(
+            Markup("<li>{}</li>").format(escape(label)) for label in labels
+        )
+        return Markup("<p>{}</p><ul>{}</ul>").format(
+            escape(
+                _(
+                    "ALERT: On the 'Inscription form configuration' tab of this "
+                    "project, the fields listed below are set not to be shown on "
+                    "the form (and therefore they are not requested). You do not "
+                    "need to fill in the corresponding columns of the template, "
+                    "because they will not be considered or imported. If you want "
+                    "to import values in bulk for any of these fields, change the "
+                    "form configuration so that they are shown (requested):"
+                )
+            ),
+            items,
+        )
+
+    def _hidden_form_field_labels(self, project):
+        """Return 'No <translated field name>' for every hidden form flag."""
+        descriptions = project.fields_get(list(HIDDEN_INSCRIPTION_FORM_FIELDS))
+        labels = []
+        for field_name in HIDDEN_INSCRIPTION_FORM_FIELDS:
+            if project[field_name]:
+                continue
+            label = descriptions[field_name]["string"]
+            labels.append(_("No %s") % label)
+        return labels
+
+    @api.constrains("sample_count")
+    def _check_sample_count(self):
+        """Keep the sample batch small enough to identify by index."""
+        for wizard in self:
+            if wizard.sample_count and not 1 <= wizard.sample_count <= SAMPLE_COUNT_MAX:
+                raise ValidationError(
+                    _("Sample count must be between 1 and {maximum}.").format(
+                        maximum=SAMPLE_COUNT_MAX
+                    )
+                )
 
     # Validation constraints
     @api.constrains("import_file", "fname")
@@ -287,39 +349,16 @@ class SelfconsumptionImportWizard(models.TransientModel):
             dict: Action to download template file
         """
         self.ensure_one()
-
-        try:
-            template_attachment = self.env.ref(
-                "energy_selfconsumption.selfconsumption_table_example_attachment"
-            )
-            return {
-                "type": "ir.actions.act_url",
-                "url": f"/web/content/{template_attachment.id}/?download=true",
-                "target": "new",
-            }
-        except Exception:
+        template_attachment = self.env[
+            "res.config.settings"
+        ]._inscription_import_template_attachment()
+        if not template_attachment:
             raise ValidationError(_("Template file not found"))
-
-    def download_list_button(self):
-        """
-        Download state list documentation
-
-        Returns:
-            dict: Action to download state list file
-        """
-        self.ensure_one()
-
-        try:
-            list_attachment = self.env.ref(
-                "energy_selfconsumption.list_state_attachment"
-            )
-            return {
-                "type": "ir.actions.act_url",
-                "url": f"/web/content/{list_attachment.id}/?download=true",
-                "target": "new",
-            }
-        except Exception:
-            raise ValidationError(_("State list file not found"))
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/web/content/{template_attachment.id}/?download=true",
+            "target": "new",
+        }
 
     # Data parsing and processing methods
     def _get_state_code(self, state_name):
@@ -530,335 +569,268 @@ class SelfconsumptionImportWizard(models.TransientModel):
             logger.error(f"Error importing line: {e}")
             return True, str(e)
 
-    # Test data generation methods (for development/testing)
-    def generate_spanish_iban(self):
-        """
-        Generate a valid Spanish IBAN for testing
+    # Sample inscription generation
+    def action_generate_sample_inscriptions(self):
+        """Create missing numbered sample inscriptions for this project.
 
-        Returns:
-            str: Valid Spanish IBAN
-        """
-        country_code = SPANISH_COUNTRY_CODE
-        check_digits = "00"  # Temporary, will be calculated
-
-        # Generate 20 random digits
-        random_digits = "".join(
-            [str(random.randint(0, 9)) for _ in range(IBAN_DIGITS_COUNT)]
-        )
-
-        # Form temporary IBAN
-        temp_iban = country_code + check_digits + random_digits
-
-        # Calculate check digits
-        check_digit = str(98 - int(temp_iban[2:]) % IBAN_CHECK_MODULO)
-        check_digit = check_digit.zfill(2)  # Pad with zero if needed
-
-        # Return final IBAN
-        return country_code + check_digit + random_digits
-
-    def generate_spanish_vat(self):
-        """
-        Generate a valid Spanish VAT (NIF) for testing
-
-        Returns:
-            str: Valid Spanish NIF
-        """
-        # Generate 8-digit number
-        number = str(random.randint(0, 99999999)).zfill(8)
-
-        # Calculate control letter
-        letter_index = int(number) % 23
-        control_letter = SPANISH_NIF_LETTERS[letter_index]
-
-        return number + control_letter
-
-    def generate_cups_code(self):
-        """
-        Generate a valid CUPS code for testing
-
-        Returns:
-            str: Valid CUPS code
-        """
-
-        def generate_numeric_part():
-            """Generate the numeric part of CUPS"""
-            supply_number = str(
-                random.randint(0, 10**CUPS_SUPPLY_NUMBER_LENGTH - 1)
-            ).zfill(CUPS_SUPPLY_NUMBER_LENGTH)
-            return CUPS_DISTRIBUTOR_CODE + supply_number
-
-        def calculate_control_characters(numeric_part):
-            """Calculate CUPS control characters"""
-            integer_number = int(numeric_part)
-            remainder = integer_number % CUPS_CONTROL_MODULO
-
-            first_char_index = remainder // CUPS_CONTROL_DIVISOR
-            second_char_index = remainder % CUPS_CONTROL_DIVISOR
-
-            return CUPS_ALPHABET[first_char_index] + CUPS_ALPHABET[second_char_index]
-
-        numeric_part = generate_numeric_part()
-        control_chars = calculate_control_characters(numeric_part)
-
-        return f"{SPANISH_COUNTRY_CODE}{numeric_part}{control_chars}"
-
-    def _determine_tariff_by_power(self, contracted_power):
-        """
-        Determine appropriate tariff based on contracted power
-
-        Args:
-            contracted_power (float): Contracted power in kW
-
-        Returns:
-            str: Appropriate tariff code
-        """
-        if contracted_power <= TARIFF_POWER_LIMITS.get(TARIFF_2_0TD, 15):
-            return TARIFF_2_0TD
-        elif contracted_power <= TARIFF_POWER_LIMITS.get(TARIFF_3_0TD, 300):
-            return TARIFF_3_0TD
-        else:
-            return random.choice(HIGH_POWER_TARIFFS)[0]
-
-    def set_autogenerate_inscriptions_mandataris_supply_points(self):
-        """
-        Auto-generate test inscriptions with mandataris and supply points
-
-        This method creates test data for development and testing purposes.
-        It generates partners, supply points, and inscriptions automatically.
+        Indexes that already exist are left untouched, so running the action
+        again does not duplicate test data.
         """
         self.ensure_one()
-
-        project_id = self.env.context.get("active_id")
-        if not project_id:
-            raise ValidationError(_("No project context found"))
-
-        logger.info("Starting auto-generation of test inscriptions")
-
-        # Get Spanish country
-        country = (
-            self.env["res.country"]
-            .sudo()
-            .search([("code", "=", SPANISH_COUNTRY_CODE)], limit=1)
-        )
-        if not country:
-            raise ValidationError(_("Spanish country not found in system"))
-
-        # Get Madrid state
-        madrid_state = self.env["res.country.state"].search(
-            [("code", "=", MADRID_STATE_CODE), ("country_id", "=", country.id)], limit=1
-        )
-        if not madrid_state:
-            raise ValidationError(_("Madrid state not found in system"))
-
-        # Get available participations
-        participations = (
-            self.env["energy_selfconsumptions.participation"]
-            .sudo()
-            .search([("project_id", "=", project_id)])
-        )
-        if not participations:
-            raise ValidationError(_("No participations found for this project"))
-
-        # Generate test data
-        for i in range(500):
-            try:
-                logger.info(f"Creating test client number {i}")
-                self._create_test_partner_and_supply_point(
-                    i, country, madrid_state, participations, project_id
+        self._check_platform_admin()
+        project = self._import_project()
+        if not 1 <= self.sample_count <= SAMPLE_COUNT_MAX:
+            raise ValidationError(
+                _("Sample count must be between 1 and {maximum}.").format(
+                    maximum=SAMPLE_COUNT_MAX
                 )
-            except Exception as e:
-                logger.error(f"Error creating test client {i}: {e}")
-
-        logger.info("Completed auto-generation of test inscriptions")
-
-    def _create_test_partner_and_supply_point(
-        self, index, country, state, participations, project_id
-    ):
-        """
-        Create a single test partner and supply point
-
-        Args:
-            index (int): Index for unique naming
-            country: Country record
-            state: State record
-            participations: Available participation records
-            project_id (int): Project ID
-        """
-        invited_category = self.env.ref(
-            "energy_communities_cooperator.product_category_company_invited_share"
+            )
+        participation = self._sample_participation(project)
+        created = 0
+        existing = 0
+        for index in range(1, self.sample_count + 1):
+            if self._ensure_sample_inscription(project, participation, index):
+                created += 1
+            else:
+                existing += 1
+        return self._sample_notification(
+            _(
+                "Created {created} sample inscriptions. {existing} already existed."
+            ).format(created=created, existing=existing)
         )
 
-        def _invited_product_creation_params(company):
-            return ServiceProductCreationData(
-                company_id=company.id,
-                categ_id=invited_category.id,
-                name="Registro persona/entidad invitada",
-                description_sale=None,
-                default_code="RI",
-                list_price=0,
-                taxes_id=[],
-                short_name="Registro/e invitada/convidada",
-                sale_ok=False,
-                display_on_website=True,
-                default_share_product=True,
+    def action_delete_sample_inscriptions(self):
+        """Remove every sample inscription generated by this wizard."""
+        self.ensure_one()
+        self._check_platform_admin()
+        deleted = self._delete_sample_inscriptions()
+        return self._sample_notification(
+            _("Deleted {count} sample inscriptions.").format(count=deleted)
+        )
+
+    def _check_platform_admin(self):
+        """Restrict sample data actions to the active platform administrator role."""
+        if self.env.user.get_current_role() != PLATFORM_ADMIN:
+            raise AccessError(
+                _("Only a platform administrator can manage sample inscriptions.")
             )
 
-        def _invited_product_translations(invited_product):
-            invited_product.with_context(lang="ca_ES").write(
-                {"name": "Registre persona/entitat convidada"}
+    def _import_project(self):
+        """Return the self-consumption project that opened the wizard."""
+        self.ensure_one()
+        project = self.project_id
+        if not project:
+            project = (
+                self.env["energy_selfconsumption.selfconsumption"]
+                .browse(self.env.context.get("active_id"))
+                .exists()
             )
-            invited_product.with_context(lang="es_ES").write(
-                {"name": "Registro persona/entidad invitada"}
-            )
-            invited_product.with_context(lang="eu_ES").write(
-                {"name": "Parte hartzen duen pertsonaren/erakundearen erregistroa"}
-            )
+        if not project:
+            raise UserError(_("No project context found"))
+        return project
 
-        # Generate test data
-        vat = self.generate_spanish_vat()
-        contracted_power = round(random.uniform(1, 100), 2)
-        tariff = self._determine_tariff_by_power(contracted_power)
+    def _sample_participation(self, project):
+        """Use the first participation of the project as the sample value."""
+        participation = self.env["energy_selfconsumptions.participation"].search(
+            [("project_id", "=", project.id)],
+            order="quantity asc, id asc",
+            limit=1,
+        )
+        if not participation:
+            raise UserError(_("No participations found for this project"))
+        return participation
 
-        # Create partner
-        partner = (
+    def _sample_partner_ref(self, index):
+        """Stable reference used to find a sample partner again."""
+        return f"{SAMPLE_PARTNER_REF_PREFIX}{index:04d}"
+
+    def _sample_partner_name(self, index):
+        """Stable name that shows the sample index."""
+        return f"Sample Inscription {index:04d}"
+
+    def _sample_vat(self, index):
+        """Build a valid Spanish VAT that stays the same for this index."""
+        number = f"{SAMPLE_VAT_BASE + index:08d}"
+        letter = SPANISH_NIF_LETTERS[int(number) % 23]
+        return f"{SPANISH_COUNTRY_CODE}{number}{letter}"
+
+    def _sample_cups(self, index):
+        """Build a valid CUPS that stays the same for this index."""
+        supply_number = str(index).zfill(CUPS_SUPPLY_NUMBER_LENGTH)
+        numeric_part = f"{CUPS_DISTRIBUTOR_CODE}{supply_number}"
+        remainder = int(numeric_part) % CUPS_CONTROL_MODULO
+        control = (
+            CUPS_ALPHABET[remainder // CUPS_CONTROL_DIVISOR]
+            + CUPS_ALPHABET[remainder % CUPS_CONTROL_DIVISOR]
+        )
+        return f"{SPANISH_COUNTRY_CODE}{numeric_part}{control}"
+
+    def _ensure_sample_inscription(self, project, participation, index):
+        """Create the sample records for one index when they are missing.
+
+        Returns True when a new inscription was created.
+        """
+        partner = self._ensure_sample_partner(project, index)
+        supply_point = self._ensure_sample_supply_point(project, partner, index)
+        inscription = (
+            self.env["energy_selfconsumption.inscription_selfconsumption"]
+            .sudo()
+            .search(
+                [
+                    ("selfconsumption_project_id", "=", project.id),
+                    ("partner_id", "=", partner.id),
+                    ("supply_point_id", "=", supply_point.id),
+                ],
+                limit=1,
+            )
+        )
+        if inscription:
+            return False
+        self.env["energy_selfconsumption.inscription_selfconsumption"].with_company(
+            project.company_id
+        ).sudo().create(
+            {
+                "project_id": project.project_id.id,
+                "selfconsumption_project_id": project.id,
+                "partner_id": partner.id,
+                "supply_point_id": supply_point.id,
+                "participation_id": participation.id,
+                "participation_assigned_quantity": participation.quantity,
+                "participation_real_quantity": participation.quantity,
+                "annual_electricity_use": 0.0,
+                "effective_date": fields.Date.context_today(self),
+                "accept": True,
+                "member": True,
+            }
+        )
+        return True
+
+    def _ensure_sample_partner(self, project, index):
+        """Return the sample partner for this index, creating it once."""
+        ref = self._sample_partner_ref(index)
+        partner = self.env["res.partner"].sudo().search([("ref", "=", ref)], limit=1)
+        if partner:
+            return partner
+        vat = self._sample_vat(index)
+        taken = self.env["res.partner"].sudo().search([("vat", "=", vat)], limit=1)
+        if taken:
+            raise UserError(
+                _(
+                    "VAT {vat} already belongs to {name}, so sample index "
+                    "{index} cannot be created."
+                ).format(vat=vat, name=taken.display_name, index=index)
+            )
+        return (
             self.env["res.partner"]
+            .with_company(project.company_id)
             .sudo()
             .create(
                 {
-                    "name": f"Test Partner {vat} {index}",
+                    "name": self._sample_partner_name(index),
+                    "ref": ref,
                     "vat": vat,
-                    "country_id": country.id,
-                    "state_id": state.id,
-                    "street": f"Test Street {index}",
-                    "city": "Madrid",
-                    "zip": "28221",
-                    "type": "contact",
-                    "company_id": self.env.company.id,
+                    "company_id": project.company_id.id,
+                    "street": project.street,
+                    "city": project.city,
+                    "zip": project.zip,
+                    "state_id": project.state_id.id,
+                    "country_id": project.country_id.id,
                     "company_type": "person",
-                    "cooperative_membership_id": self.env.company.partner_id.id,
-                    "no_member_autorized_in_energy_actions": True,  # TODO: Same as script post-migration-invited.py
                 }
             )
         )
-        # Get invited product
-        invited_product = self.env["product.template"].search(
-            [
-                ("categ_id", "=", invited_category.id),
-                ("company_id", "=", self.env.company.id),
-            ],
-            limit=1,
-        )
-        if not invited_product:
-            with product_utils(env, use_sudo=True) as product_component:
-                # create company pricelist
-                product_component.create_company_pricelist(self.env.company)
-                product_component.setup_company_product_categs(self.env.company)
-                # invited product
-                invited_product = product_component.create_product(
-                    _invited_product_creation_params(self.env.company)
-                )
-                _invited_product_translations(invited_product)
 
-        # Create subscription request params
-        try:
-            creation_params = partner.read(
-                [
-                    "email",
-                    "firstname",
-                    "lastname",
-                    "gender",
-                    "birthdate",
-                    "phone",
-                    "lang",
-                    "vat",
-                    "city",
-                    "country_id",
-                    "birthdate",
-                    "company_id",
-                ]
-            )
-            creation_params.update(
-                {
-                    "address": partner.street,
-                    "zip_code": partner.zip,
-                    "ordered_parts": 1,
-                    "iban": "ES2030043137684971748683",
-                    "conditions_payment": True,
-                    "share_product_id": invited_product,
-                    "product_categ": invited_category,
-                    "membertype_mode": MemberTypeMode.individual,
-                    "lang": partner.lang.iso_code,
-                }
-            )
-            subscription_request_creation_params = SubscriptionRequestCreationParams(
-                **creation_params
-            )
-        except Exception as e:
-            msg = "Error creating subscription request params with <Company={}, Partner={}>: {}"
-            logger.error(
-                "Company: %s, Partner: %s", self.env.company.name, partner.name
-            )
-            raise ValueError(msg.format(self.env.company.name, partner.name, str(e)))
-        # Create subscription request
-        # Validate subscription request
-        try:
-            # Use component to validate and create subscription request
-            with subscription_request_utils(self.env) as component:
-                subscription_request = component.create_subscription_request(
-                    subscription_request_creation_params
-                )
-                subscription_request.validate_subscription_request()
-        except Exception as e:
-            msg = (
-                "Error creating subscription request with <Company={}, Partner={}>: {}"
-            )
-            logger.error(
-                "Company: %s, Partner: %s", self.env.company.name, partner.name
-            )
-            raise ValueError(msg.format(self.env.company.name, partner.name, str(e)))
-
-        # Create supply point
+    def _ensure_sample_supply_point(self, project, partner, index):
+        """Return the sample supply point for this index, creating it once."""
+        code = self._sample_cups(index)
         supply_point = (
             self.env["energy_selfconsumption.supply_point"]
             .sudo()
+            .search(
+                [("code", "=", code), ("company_id", "=", project.company_id.id)],
+                limit=1,
+            )
+        )
+        if supply_point:
+            if supply_point.partner_id != partner:
+                raise UserError(
+                    _(
+                        "CUPS {cups} already belongs to another partner, so "
+                        "sample index {index} cannot be created."
+                    ).format(cups=code, index=index)
+                )
+            return supply_point
+        return (
+            self.env["energy_selfconsumption.supply_point"]
+            .with_company(project.company_id)
+            .sudo()
             .create(
                 {
-                    "code": self.generate_cups_code(),
-                    "name": partner.street,
-                    "street": partner.street,
-                    "city": partner.city,
-                    "zip": partner.zip,
-                    "state_id": state.id,
-                    "country_id": country.id,
-                    "contracted_power": contracted_power,
-                    "tariff": tariff,
+                    "code": code,
+                    "partner_id": partner.id,
                     "owner_id": partner.id,
+                    "street": project.street,
+                    "city": project.city,
+                    "zip": project.zip,
+                    "state_id": project.state_id.id,
+                    "country_id": project.country_id.id,
+                    "company_id": project.company_id.id,
+                    "contracted_power": SAMPLE_CONTRACTED_POWER,
+                    "tariff": TARIFF_2_0TD,
                 }
             )
         )
 
-        # Create inscription
-        selected_participation = random.choice(participations)
-        self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
-            {
-                "partner_id": partner.id,
-                "supply_point_id": supply_point.id,
-                "participation_id": selected_participation.id,
-                "project_id": project_id,
-                "annual_electricity_use": round(random.uniform(1000, 5000), 2),
-                "participation_real_quantity": selected_participation.quantity,
-                "accept": True,
-            }
+    def _sample_partners(self):
+        """All partners created by the sample inscription action."""
+        return (
+            self.env["res.partner"]
+            .sudo()
+            .search([("ref", "=like", f"{SAMPLE_PARTNER_REF_PREFIX}%")])
         )
 
-    def set_autogenerate_inscriptions(self):
-        """
-        Auto-generate simple test inscriptions
+    def _delete_sample_inscriptions(self):
+        """Delete sample partners together with their supply points and inscriptions."""
+        partners = self._sample_partners()
+        if not partners:
+            return 0
+        inscriptions = (
+            self.env["energy_selfconsumption.inscription_selfconsumption"]
+            .sudo()
+            .search([("partner_id", "in", partners.ids)])
+        )
+        deleted = len(inscriptions)
+        parent_inscriptions = inscriptions.mapped("inscription_id")
+        supply_points = (
+            self.env["energy_selfconsumption.supply_point"]
+            .sudo()
+            .search(
+                [
+                    "|",
+                    ("partner_id", "in", partners.ids),
+                    ("owner_id", "in", partners.ids),
+                ]
+            )
+        )
+        inscriptions.unlink()
+        if parent_inscriptions:
+            parent_inscriptions.exists().unlink()
+        supply_points.exists().unlink()
+        partners.exists().unlink()
+        return deleted
 
-        Simplified version of test data generation for basic testing.
-        """
-        # Implementation would be similar to the above but simpler
-        # This is a placeholder for the existing method
+    def _sample_notification(self, message):
+        """Show the result without closing the import wizard."""
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": _("Sample inscriptions"),
+                "message": message,
+                "type": "success",
+                "sticky": False,
+            },
+        }
 
     # Utility methods
     def get_wizard_summary(self):
