@@ -89,6 +89,25 @@ class TestAccountPaymentRegisterInvoiceDate(TransactionCase):
         invoice.action_post()
         return invoice
 
+    def _prepare_partner(self, name):
+        partner = self.partner.copy({"name": name})
+        partner.with_company(self.company).write(
+            {
+                "property_account_receivable_id": self.receivable.id,
+                "customer_payment_mode_id": False,
+                "supplier_payment_mode_id": False,
+            }
+        )
+        return partner
+
+    def _invoices_in_payment_order(self, payments, invoices):
+        invoice_by_payment = {}
+        for invoice in invoices:
+            payment = invoice._get_reconciled_payments()
+            self.assertEqual(len(payment), 1)
+            invoice_by_payment[payment.id] = invoice
+        return [invoice_by_payment[payment.id] for payment in payments]
+
     def _register(self, invoices, **vals):
         wizard = (
             self.env["account.payment.register"]
@@ -158,6 +177,58 @@ class TestAccountPaymentRegisterInvoiceDate(TransactionCase):
         self.assertEqual(len(payments), 2)
         self.assertEqual(first._get_reconciled_payments().date, date(2026, 2, 1))
         self.assertEqual(second._get_reconciled_payments().date, date(2026, 4, 1))
+        self.assertEqual(
+            self._invoices_in_payment_order(payments, first + second),
+            [first, second],
+        )
+
+    def test_payments_follow_invoice_number_not_selection_order(self):
+        partner_b = self._prepare_partner("Invoice order partner B")
+        partner_c = self._prepare_partner("Invoice order partner C")
+        first = self._create_invoice(self.partner, date(2026, 1, 10), amount=10.0)
+        second = self._create_invoice(partner_b, date(2026, 2, 10), amount=20.0)
+        third = self._create_invoice(partner_c, date(2026, 3, 10), amount=30.0)
+        invoices = first + second + third
+
+        payments = self._register(
+            third + first + second,
+            payment_date_equals_invoice_date=True,
+            group_payment=True,
+        )
+
+        self.assertEqual(len(payments), 3)
+        self.assertEqual(
+            self._invoices_in_payment_order(payments, invoices),
+            list(invoices.sorted(key=lambda move: (move.name or "", move.id))),
+        )
+        for invoice in invoices:
+            self.assertEqual(
+                invoice._get_reconciled_payments().date, invoice.invoice_date
+            )
+
+    def test_interleaved_partner_invoices_are_ordered_inside_each_batch(self):
+        partner_b = self._prepare_partner("Interleaved partner")
+        first = self._create_invoice(self.partner, date(2026, 1, 5), amount=10.0)
+        middle = self._create_invoice(partner_b, date(2026, 2, 5), amount=20.0)
+        last = self._create_invoice(self.partner, date(2026, 3, 5), amount=30.0)
+
+        payments = self._register(
+            last + middle + first,
+            payment_date_equals_invoice_date=True,
+            group_payment=True,
+        )
+
+        # Batches stay grouped by partner. Lines and batches are sorted by
+        # invoice number, so both invoices of the first partner are paid
+        # before the invoice that sits between them.
+        self.assertEqual(
+            self._invoices_in_payment_order(payments, first + middle + last),
+            [first, last, middle],
+        )
+        for invoice in first + middle + last:
+            self.assertEqual(
+                invoice._get_reconciled_payments().date, invoice.invoice_date
+            )
 
     def test_missing_invoice_date_raises(self):
         misc_journal = self.env["account.journal"].search(

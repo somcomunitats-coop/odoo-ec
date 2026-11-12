@@ -6,11 +6,12 @@ class AccountPaymentRegister(models.TransientModel):
     _inherit = "account.payment.register"
 
     payment_date_equals_invoice_date = fields.Boolean(
-        string="Payment Date = Invoice Date",
+        string="Payment Date = Invoice Date and pay ordered by ascending invoice number",
         default=False,
         help=(
             "When enabled, each selected invoice is paid using its own "
-            "invoice date and payments are created separately."
+            "invoice date. Payments are created separately and ordered by "
+            "ascending invoice number."
         ),
     )
 
@@ -20,6 +21,32 @@ class AccountPaymentRegister(models.TransientModel):
             # A payment has a single accounting date, so invoices cannot be grouped.
             self.group_payment = False
         return super()._create_payments()
+
+    # OP#2187
+    # This is because the invoices are grouped by partner and the partner invoices are sorted by invoice number.
+    # If we don't sort the invoices by invoice number, the invoices will be paid in the wrong order.
+    # This is because the invoices are grouped by partner and the partner invoices are sorted by invoice number.
+    def _get_batches(self):
+        batches = super()._get_batches()
+        if not self.payment_date_equals_invoice_date:
+            return batches
+        if self.env.context.get("active_model") != "account.move":
+            return batches
+
+        def move_sort_key(line):
+            return line.move_id.name or "", line.move_id.id
+
+        def batch_sort_key(batch):
+            return min(move_sort_key(line) for line in batch["lines"])
+
+        # With separate payments, _create_payments() iterates each line. Restore
+        # the invoice number order before it expands every batch into one payment
+        # per move.
+        if not self.group_payment:
+            for batch in batches:
+                batch["lines"] = batch["lines"].sorted(key=move_sort_key)
+
+        return sorted(batches, key=batch_sort_key)
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)

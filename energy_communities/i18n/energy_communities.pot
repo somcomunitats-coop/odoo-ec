@@ -3624,14 +3624,14 @@ msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,field_description:energy_communities.field_account_payment_register__payment_date_equals_invoice_date
-msgid "Payment Date = Invoice Date"
+msgid "Payment Date = Invoice Date and pay ordered by ascending invoice number"
 msgstr ""
 
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_account_payment_register__payment_date_equals_invoice_date
 msgid ""
-"When enabled, each selected invoice is paid using its own invoice date and "
-"payments are created separately."
+"When enabled, each selected invoice is paid using its own invoice date. "
+"Payments are created separately and ordered by ascending invoice number."
 msgstr ""
 
 #. module: energy_communities
