@@ -6568,3 +6568,116 @@ msgstr "6.2TDVE"
 #, python-format
 msgid "<p>The usual recommendation for an annual electrical use of is 0.5kW of PV power per 1500 kWh of electrical consumption.</p><p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p><p>1500 - 3000 kWh between 0.5 and 1 kW</p><p>3000 - 5000 kWh between 1.5 - 2 kW</p>"
 msgstr "<p>Urteko erabilera elektrikorako ohiko gomendioa PV 0,5 kW da potentzia kontsumo elektrikoko 1500 kWh bakoitzeko.</p><p>1000 - 1500 kWh gehienez 0,5 kW parte hartzea gomendatzen da</p><p>1500 - 3000 kWh 0,5 eta 1 kW artean</p><p>3000 - 5000 kWh 1,5 - 2 kW artean</p>"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "ALERT: On the 'Inscription form configuration' tab of this project, the fields listed below are set not to be shown on the form (and therefore they are not requested). You do not need to fill in the corresponding columns of the template, because they will not be considered or imported. If you want to import values in bulk for any of these fields, change the form configuration so that they are shown (requested):"
+msgstr "ALERTA: proiektu honetako 'Izen-emate formularioaren konfigurazioa' fitxan, formularioan EZ erakutsi (eta, beraz, ez eskatu) definitu dira ondoren zerrendatzen diren eremuak. Beraz, ez da beharrezkoa txantiloian eremu horiei dagozkien zutabeetarako balioak betetzea, ez baitira kontuan hartuko/inportatuko. Eremu horietako edozeinetarako balio masiboak inportatu nahi badituzu, formularioaren konfigurazioa aldatu behar duzu, BAI bistaratzeko (eskatzeko):"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "No %s"
+msgstr "No %s"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.res_config_settings_energy_communities_selfconsumption
+msgid "Inscription import"
+msgstr "Izen-emateen inportazioa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_config_settings__inscription_import_template
+msgid "Inscription import template"
+msgstr "Izen-emateen inportazio-txantiloia"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_config_settings__inscription_import_template_filename
+msgid "Inscription import template filename"
+msgstr "Izen-emateen inportazio-txantiloiaren fitxategi-izena"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_res_config_settings__inscription_import_template
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.res_config_settings_energy_communities_selfconsumption
+msgid "File downloaded from the inscription import wizard."
+msgstr "Izen-emateen inportazio-laguntzaileak deskargatzen duen fitxategia."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Generate sample inscriptions"
+msgstr "Sortu lagin-izenemateak"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Delete sample inscriptions"
+msgstr "Ezabatu lagin-izenemateak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__sample_count
+msgid "Sample count"
+msgstr "Lagin kopurua"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Sample inscriptions"
+msgstr "Lagin-izenemateak"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__sample_count
+msgid "How many numbered sample inscriptions to ensure on this project"
+msgstr "Zenbat lagin-izenemate zenbakitu bermatu behar diren proiektu honetan"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+msgid "Only a platform administrator can manage sample inscriptions."
+msgstr "Plataformako administratzaile batek soilik kudeatu ditzake lagin-izenemateak."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Created {created} sample inscriptions. {existing} already existed."
+msgstr "{created} lagin-izenemate sortu dira. {existing} lehendik zeuden."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Deleted {count} sample inscriptions."
+msgstr "{count} lagin-izenemate ezabatu dira."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Sample count must be between 1 and {maximum}."
+msgstr "Lagin kopurua 1 eta {maximum} artean egon behar da."
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__project_id
+msgid "Self-consumption project"
+msgstr "Autokontsumo-proiektua"
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__hidden_fields_alert
+msgid "Hidden Fields Alert"
+msgstr "Ezkutuko eremuen abisua"
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__hidden_fields_alert
+msgid "Warning listing inscription form fields that are not requested"
+msgstr "Izen-emateko formularioan eskatzen ez diren eremuen abisua"
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "VAT {vat} already belongs to {name}, so sample index {index} cannot be created."
+msgstr "{vat} IFZ dagoeneko {name} kontaktuarena da, beraz ezin da {index} indizeko lagina sortu."
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "CUPS {cups} already belongs to another partner, so sample index {index} cannot be created."
+msgstr "{cups} CUPS dagoeneko beste kontaktu batena da, beraz ezin da {index} indizeko lagina sortu."

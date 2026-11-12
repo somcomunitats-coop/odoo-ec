@@ -6431,3 +6431,101 @@ msgstr ""
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_2tdve
 msgid "6.2TDVE"
 msgstr ""
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.res_config_settings_energy_communities_selfconsumption
+msgid "Inscription import"
+msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_config_settings__inscription_import_template
+msgid "Inscription import template"
+msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_config_settings__inscription_import_template_filename
+msgid "Inscription import template filename"
+msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_res_config_settings__inscription_import_template
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.res_config_settings_energy_communities_selfconsumption
+msgid "File downloaded from the inscription import wizard."
+msgstr ""
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Generate sample inscriptions"
+msgstr ""
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Delete sample inscriptions"
+msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__sample_count
+msgid "Sample count"
+msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__sample_count
+msgid "How many numbered sample inscriptions to ensure on this project"
+msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__project_id
+msgid "Self-consumption project"
+msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__hidden_fields_alert
+msgid "Hidden Fields Alert"
+msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__hidden_fields_alert
+msgid "Warning listing inscription form fields that are not requested"
+msgstr ""
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "ALERT: On the 'Inscription form configuration' tab of this project, the fields listed below are set not to be shown on the form (and therefore they are not requested). You do not need to fill in the corresponding columns of the template, because they will not be considered or imported. If you want to import values in bulk for any of these fields, change the form configuration so that they are shown (requested):"
+msgstr ""
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "No %s"
+msgstr ""
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Sample inscriptions"
+msgstr ""
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+msgid "Only a platform administrator can manage sample inscriptions."
+msgstr ""
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Created {created} sample inscriptions. {existing} already existed."
+msgstr ""
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Deleted {count} sample inscriptions."
+msgstr ""
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Sample count must be between 1 and {maximum}."
+msgstr ""
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "VAT {vat} already belongs to {name}, so sample index {index} cannot be created."
+msgstr ""
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "CUPS {cups} already belongs to another partner, so sample index {index} cannot be created."
+msgstr ""

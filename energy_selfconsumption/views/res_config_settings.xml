@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_energy_communities_selfconsumption" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inscription.import</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="energy_project.view_res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='energy_project']" position="inside">
+                <h2>Inscription import</h2>
+                <div class="row mt16 o_settings_container" name="inscription_import_setting_container">
+                    <div class="col-12 col-lg-6 o_setting_box" id="inscription_import_template_setting">
+                        <div class="o_setting_right_pane">
+                            <label for="inscription_import_template"/>
+                            <div class="text-muted">
+                                File downloaded from the inscription import wizard.
+                            </div>
+                            <field name="inscription_import_template"
+                                   filename="inscription_import_template_filename"/>
+                            <field name="inscription_import_template_filename" invisible="1"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

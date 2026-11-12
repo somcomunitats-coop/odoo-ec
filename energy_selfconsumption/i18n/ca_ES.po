@@ -6577,3 +6577,116 @@ msgstr "6.2TDVE"
 #, python-format
 msgid "<p>The usual recommendation for an annual electrical use of is 0.5kW of PV power per 1500 kWh of electrical consumption.</p><p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p><p>1500 - 3000 kWh between 0.5 and 1 kW</p><p>3000 - 5000 kWh between 1.5 - 2 kW</p>"
 msgstr "<p>La recomanació habitual per a un ús elèctric anual de 0,5 kW de FV potència per 1500 kWh de consum elèctric.</p><p>1000 - 1500 kWh es recomana un màxim de 0,5 kW de participació</p><p>1500 - 3000 kWh entre 0,5 i 1 kW</p><p>3000 - 5000 kWh entre 1,5 - 2 kW</p>"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "ALERT: On the 'Inscription form configuration' tab of this project, the fields listed below are set not to be shown on the form (and therefore they are not requested). You do not need to fill in the corresponding columns of the template, because they will not be considered or imported. If you want to import values in bulk for any of these fields, change the form configuration so that they are shown (requested):"
+msgstr "ALERTA: a la pestanya 'Configuració del formulari d'inscripció' d'aquest projecte, s'ha definit NO mostrar (i per tant, no sol·licitar) al formulari els camps que es llisten a continuació. Per tant, no cal que a la plantilla empleneu valors per a les columnes corresponents a aquests camps, ja que no es consideraran/importaran. Si vols poder importar massivament valors per a qualsevol d'aquests camps, has de canviar la configuració del formulari per SÍ mostrar-los (sol·licitar-los):"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "No %s"
+msgstr "No %s"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.res_config_settings_energy_communities_selfconsumption
+msgid "Inscription import"
+msgstr "Importació d'inscripcions"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_config_settings__inscription_import_template
+msgid "Inscription import template"
+msgstr "Plantilla d'importació d'inscripcions"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_res_config_settings__inscription_import_template_filename
+msgid "Inscription import template filename"
+msgstr "Nom del fitxer de la plantilla d'importació d'inscripcions"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_res_config_settings__inscription_import_template
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.res_config_settings_energy_communities_selfconsumption
+msgid "File downloaded from the inscription import wizard."
+msgstr "Fitxer que descarrega l'assistent d'importació d'inscripcions."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Generate sample inscriptions"
+msgstr "Generar inscripcions de mostra"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Delete sample inscriptions"
+msgstr "Eliminar inscripcions de mostra"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__sample_count
+msgid "Sample count"
+msgstr "Nombre d'exemples"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_import_wizard_form_view
+msgid "Sample inscriptions"
+msgstr "Inscripcions de mostra"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__sample_count
+msgid "How many numbered sample inscriptions to ensure on this project"
+msgstr "Quantes inscripcions de mostra numerades cal assegurar en aquest projecte"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+msgid "Only a platform administrator can manage sample inscriptions."
+msgstr "Només un administrador de plataforma pot gestionar les inscripcions de mostra."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Created {created} sample inscriptions. {existing} already existed."
+msgstr "S'han creat {created} inscripcions de mostra. {existing} ja existien."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Deleted {count} sample inscriptions."
+msgstr "S'han eliminat {count} inscripcions de mostra."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "Sample count must be between 1 and {maximum}."
+msgstr "El nombre d'exemples ha d'estar entre 1 i {maximum}."
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__project_id
+msgid "Self-consumption project"
+msgstr "Projecte d'autoconsum"
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__hidden_fields_alert
+msgid "Hidden Fields Alert"
+msgstr "Avís de camps ocults"
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption_import_wizard__hidden_fields_alert
+msgid "Warning listing inscription form fields that are not requested"
+msgstr "Avís que llista els camps del formulari d'inscripció que no se sol·liciten"
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "VAT {vat} already belongs to {name}, so sample index {index} cannot be created."
+msgstr "El NIF {vat} ja pertany a {name}, així que no es pot crear l'exemple {index}."
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/selfconsumption_import_wizard.py:0
+#, python-format
+msgid "CUPS {cups} already belongs to another partner, so sample index {index} cannot be created."
+msgstr "El CUPS {cups} ja pertany a un altre contacte, així que no es pot crear l'exemple {index}."
