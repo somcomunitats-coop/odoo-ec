@@ -1,6 +1,13 @@
 name: Pull request branch, assignee and labels
 
 on:
+  push:
+    branches:
+      - "feature/**"
+      - "improvement/**"
+      - "fix/**"
+      - "bugfix/**"
+      - "refactor/**"
   pull_request:
     types: [opened, reopened, synchronize, closed]
   pull_request_target:
@@ -17,12 +24,82 @@ permissions:
 
 concurrency:
   group:
-    pr-branch-${{ github.event.pull_request.number || github.event.issue.number }}-${{
-    github.event_name }}
+    pr-branch-${{ github.event.pull_request.number || github.event.issue.number ||
+    github.ref_name }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
+  create-pull-request:
+    if: github.event_name == 'push' && github.event.deleted == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the pull request base
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: "16.0"
+          fetch-depth: 0
+      - name: Fast-forward or rebase the pushed branch onto the base
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
+          BASE_BRANCH: "16.0"
+          GIT_EDITOR: "true"
+          GIT_SEQUENCE_EDITOR: "true"
+        run: |
+          git fetch origin "${BASE_BRANCH}" "${BRANCH_NAME}"
+          if git merge-base --is-ancestor HEAD "origin/${BRANCH_NAME}"; then
+            git merge --ff-only "origin/${BRANCH_NAME}"
+            exit 0
+          fi
+
+          echo "Branch ${BRANCH_NAME} has diverged from ${BASE_BRANCH}. Rebasing."
+          expected="$(git rev-parse "refs/remotes/origin/${BRANCH_NAME}")"
+          git switch -C "${BRANCH_NAME}" "origin/${BRANCH_NAME}"
+          if ! git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase "origin/${BASE_BRANCH}"; then
+            git rebase --abort || true
+            echo "::error::Rebase of ${BRANCH_NAME} onto ${BASE_BRANCH} stopped because of conflicts. Resolve them locally and push the branch again."
+            exit 1
+          fi
+          git push --force-with-lease="refs/heads/${BRANCH_NAME}:${expected}" origin "HEAD:refs/heads/${BRANCH_NAME}"
+          git switch "${BASE_BRANCH}"
+          git merge --ff-only "origin/${BASE_BRANCH}"
+          git merge --ff-only "${BRANCH_NAME}"
+      - name: Read the pushed branch subject
+        id: subject
+        run: |
+          delimiter="$(openssl rand -hex 16)"
+          {
+            echo "title<<${delimiter}"
+            git log -1 --format=%s "origin/${{ github.ref_name }}"
+            echo "${delimiter}"
+          } >> "$GITHUB_OUTPUT"
+      - name: Build the pull request body
+        id: body
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
+        run: |
+          delimiter="$(openssl rand -hex 16)"
+          body="Opened automatically for branch \`${BRANCH_NAME}\`."
+          if [[ "${BRANCH_NAME}" =~ _([0-9]+)$ ]]; then
+            body="${body}"$'\n\n'"OP#${BASH_REMATCH[1]}"
+          fi
+          {
+            echo "text<<${delimiter}"
+            printf '%s\n' "${body}"
+            echo "${delimiter}"
+          } >> "$GITHUB_OUTPUT"
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          draft: true
+          base: "16.0"
+          branch: ${{ github.ref_name }}
+          title: ${{ steps.subject.outputs.title }}
+          body: ${{ steps.body.outputs.text }}
   branch-and-assign:
+    needs: create-pull-request
+    if:
+      always() && !cancelled() && (needs.create-pull-request.result == 'success' ||
+      needs.create-pull-request.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Sync the pull request branch, assignees and labels
@@ -95,6 +172,28 @@ jobs:
               return data;
             }
 
+            if (context.eventName === "push" && !context.payload.deleted) {
+              const branchName = (context.payload.ref || "").replace(/^refs\/heads\//, "");
+              const found = await github.rest.pulls.list({
+                owner,
+                repo,
+                head: `${owner}:${branchName}`,
+                state: "open",
+                per_page: 1,
+              });
+              if (!found.data.length) {
+                core.info(`Branch ${branchName} has no open pull request.`);
+                return;
+              }
+              const { data } = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: found.data[0].number,
+              });
+              context.payload.pull_request = data;
+              context.payload.action = "synchronize";
+            }
+
             const pr = await loadPullRequest();
             if (!pr) {
               core.info("The event is not a pull request.");
@@ -104,6 +203,7 @@ jobs:
             const branch = `pr/${pr.number}`;
             const ref = `heads/${branch}`;
             const managesBranch =
+              context.eventName === "push" ||
               context.eventName === "pull_request" ||
               context.eventName === "pull_request_target";
 
