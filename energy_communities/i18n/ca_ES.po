@@ -4358,3 +4358,28 @@ msgid ""
 msgstr ""
 "No s'ha pogut desxifrar la contrasenya SMTP. "
 "És possible que el secret de la base de dades hagi canviat."
+
+#. module: energy_communities
+#: model:ir.model.fields,field_description:energy_communities.field_account_payment_register__payment_date_equals_invoice_date
+msgid "Payment Date = Invoice Date and pay ordered by ascending invoice number"
+msgstr "Data pagament = Data factura i pagar ordenant per número de factura ascendent"
+
+#. module: energy_communities
+#: model:ir.model.fields,help:energy_communities.field_account_payment_register__payment_date_equals_invoice_date
+msgid ""
+"When enabled, each selected invoice is paid using its own invoice date. "
+"Payments are created separately and ordered by ascending invoice number."
+msgstr ""
+"Si està actiu, cada factura es paga amb la seva pròpia data de factura. "
+"Els pagaments es creen per separat i s'ordenen per número de factura ascendent."
+
+#. module: energy_communities
+#. odoo-python
+#: code:addons/energy_communities/wizards/account_payment_register.py:0
+#, python-format
+msgid ""
+"Each payment needs one invoice date. These entries have a missing or mixed "
+"invoice date: %s"
+msgstr ""
+"Cada pagament necessita una única data de factura. Aquests assentaments no "
+"tenen data de factura o en barregen diverses: %s"
