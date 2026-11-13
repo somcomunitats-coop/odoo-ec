@@ -239,6 +239,19 @@ Main functionalities:
                 name="form_configuration"
                 autofocus="autofocus"
               >
+                                <group
+                  name="conf_header_description"
+                  string="Description form"
+                >
+                                    <field
+                    name="conf_header_description"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                    <field
+                    name="conf_accept_pending_subscription"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                </group>
                                 <field name="conf_state" widget="radio" invisible="1" />
                                 <button
                   class="btn btn btn-primary"
@@ -283,6 +296,29 @@ Main functionalities:
                     name="conf_cadastral_reference_readonly"
                     attrs="{'readonly': [('conf_state', '==', 'active')]}"
                   />
+                                    <field
+                    name="conf_show_contracted_power"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                    <field
+                    name="conf_show_access_tariff"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                    <field
+                    name="conf_show_annual_consumption"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                    <field
+                    name="conf_show_participation"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                    <div
+                    class="alert alert-warning"
+                    colspan="2"
+                    attrs="{'invisible': [('conf_show_participation', '=', True)]}"
+                  >
+                                        <span>WARNING: If the person or entity should not be able to choose a participation on the form, Odoo will assign the inscription a default participation, which will be the first of the participations available in the 'Participation' list.</span>
+                                    </div>
                                 </group>
                                 <group name="conf_participation" string="Participation">
                                     <field
@@ -303,13 +339,8 @@ Main functionalities:
                                             </group>
                                         </form>
                                     </field>
-                                </group>
-                                <group
-                  name="conf_header_description"
-                  string="Description form"
-                >
                                     <field
-                    name="conf_header_description"
+                    name="conf_participation_help"
                     attrs="{'readonly': [('conf_state', '==', 'active')]}"
                   />
                                 </group>
