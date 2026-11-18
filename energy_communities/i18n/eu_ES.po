@@ -4328,11 +4328,14 @@ msgstr "Ordaintzeko data = Fakturaren data eta ordaindu goranzko fakturaren zenb
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_account_payment_register__payment_date_equals_invoice_date
 msgid ""
-"When enabled, each selected invoice is paid using its own invoice date. "
-"Payments are created separately and ordered by ascending invoice number."
+"If enabled, each invoice is marked as paid using the invoice's own date as "
+"the payment date (instead of today), and the selected invoices are processed "
+"in ascending invoice number order, without grouping payments by customer."
 msgstr ""
-"Gaituta dagoenean, faktura bakoitza bere faktura-datarekin ordaintzen da. "
-"Ordainketak banan-banan sortzen dira eta faktura-zenbakiaren arabera goranzka ordenatzen dira."
+"Aktibo badago, ordaindutzat ematen da faktura bakoitza, eta "
+"ordainketa-datatzat fakturaren beraren data hartzen da (gaurkoa hartu "
+"beharrean). Hautatutako fakturen zerrenda faktura-zenbakiaren arabera egiten "
+"da (behetik gorakoa), bezeroaren araberako ordainketak multzokatu gabe."
 
 #. module: energy_communities
 #. odoo-python

@@ -1,4 +1,4 @@
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -9,11 +9,36 @@ class AccountPaymentRegister(models.TransientModel):
         string="Payment Date = Invoice Date and pay ordered by ascending invoice number",
         default=False,
         help=(
-            "When enabled, each selected invoice is paid using its own "
-            "invoice date. Payments are created separately and ordered by "
-            "ascending invoice number."
+            "If enabled, each invoice is marked as paid using the invoice's "
+            "own date as the payment date (instead of today), and the "
+            "selected invoices are processed in ascending invoice number "
+            "order, without grouping payments by customer."
         ),
     )
+    single_invoice_payment = fields.Boolean(
+        compute="_compute_single_invoice_payment",
+    )
+
+    @api.depends_context("active_model", "active_ids")
+    def _compute_single_invoice_payment(self):
+        is_single = bool(self._get_single_active_invoice())
+        for wizard in self:
+            wizard.single_invoice_payment = is_single
+
+    def _get_single_active_invoice(self):
+        active_ids = self.env.context.get("active_ids") or []
+        if (
+            self.env.context.get("active_model") != "account.move"
+            or len(active_ids) != 1
+        ):
+            return self.env["account.move"]
+        return self.env["account.move"].browse(active_ids[0])
+
+    @api.onchange("payment_date_equals_invoice_date")
+    def _onchange_payment_date_equals_invoice_date(self):
+        invoice = self._get_single_active_invoice()
+        if self.payment_date_equals_invoice_date and invoice.invoice_date:
+            self.payment_date = invoice.invoice_date
 
     def _create_payments(self):
         self.ensure_one()

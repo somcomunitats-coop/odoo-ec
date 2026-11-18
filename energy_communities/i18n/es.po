@@ -4353,11 +4353,14 @@ msgstr "Fecha pago = Fecha factura y pagar ordenando por número factura ascende
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_account_payment_register__payment_date_equals_invoice_date
 msgid ""
-"When enabled, each selected invoice is paid using its own invoice date. "
-"Payments are created separately and ordered by ascending invoice number."
+"If enabled, each invoice is marked as paid using the invoice's own date as "
+"the payment date (instead of today), and the selected invoices are processed "
+"in ascending invoice number order, without grouping payments by customer."
 msgstr ""
-"Si está activo, cada factura se paga con su propia fecha de factura. Los "
-"pagos se crean por separado y se ordenan por número de factura ascendente."
+"Si está activo, cada factura se da por pagada asumiendo como fecha de pago "
+"la fecha de la propia factura (en lugar del dia de hoy), y recorriendo la "
+"lista de facturas seleccionadas por orden del número de factura "
+"(ascendente), sin agrupar pagos por cliente."
 
 #. module: energy_communities
 #. odoo-python
