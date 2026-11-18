@@ -236,6 +236,41 @@ class TestShareContributionProcess(common.TransactionCase):
         self.assertNotIn("T2175V", membership_a)
         self.assertNotIn("T2175B", membership_a)
 
+    def test_cooperator_type_follows_the_membership_company_in_the_context(self):
+        self.env.user.write(
+            {
+                "company_ids": [
+                    (4, self.company_a.id),
+                    (4, self.company_b.id),
+                ]
+            }
+        )
+        partner = self.env["res.partner"].create(
+            {
+                "name": "Task 2175 member",
+                "email": "task2175.member@example.com",
+            }
+        )
+        membership = partner.with_context(
+            allowed_company_ids=[self.company_a.id]
+        ).create_cooperative_membership(self.company_a)
+        self.env["share.line"].with_context(
+            allowed_company_ids=[self.company_a.id]
+        ).create(
+            {
+                "share_number": 1,
+                "share_product_id": self.share_a.product_variant_id.id,
+                "partner_id": partner.id,
+                "share_unit_price": 100.0,
+                "company_id": self.company_a.id,
+            }
+        )
+        session = membership.with_context(
+            allowed_company_ids=[self.company_b.id, self.company_a.id]
+        )
+        self.env.add_to_compute(membership._fields["cooperator_type"], session)
+        self.assertEqual(session.cooperator_type, "T2175A")
+
     def _selection(self, model):
         return model._fields["cooperator_type"]._description_selection(model.env)
 
