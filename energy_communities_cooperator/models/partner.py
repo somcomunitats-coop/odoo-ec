@@ -1,9 +1,24 @@
 from odoo import _, api, fields, models
 
+from .cooperator_type_field import CooperatorType
+
 
 class ResPartner(models.Model):
     _name = "res.partner"
     _inherit = "res.partner"
+
+    # The dropdown lists the active company's shares. Stored values of another
+    # community stay writable. See CooperatorType.
+    cooperator_type = CooperatorType(
+        selection="_get_share_type",
+        validate=False,
+    )
+
+    @api.depends_context("company")
+    def _get_share_type(self):
+        return self.env["product.template"].get_company_share_type_selection(
+            self.env.company
+        )
 
     gender = fields.Selection(
         selection_add=[
