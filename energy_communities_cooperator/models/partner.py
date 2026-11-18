@@ -1,13 +1,15 @@
 from odoo import _, api, fields, models
 
+from .cooperator_type_field import CooperatorType
+
 
 class ResPartner(models.Model):
     _name = "res.partner"
     _inherit = "res.partner"
 
-    # validate=False keeps stored types of other communities writable while the
-    # dropdown of the contact filter only lists the active company's shares.
-    cooperator_type = fields.Selection(
+    # The dropdown lists the active company's shares. Stored values of another
+    # community stay writable. See CooperatorType.
+    cooperator_type = CooperatorType(
         selection="_get_share_type",
         validate=False,
     )
