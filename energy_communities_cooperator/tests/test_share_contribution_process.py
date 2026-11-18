@@ -265,11 +265,13 @@ class TestShareContributionProcess(common.TransactionCase):
                 "company_id": self.company_a.id,
             }
         )
-        session = membership.with_context(
-            allowed_company_ids=[self.company_b.id, self.company_a.id]
-        )
-        self.env.add_to_compute(membership._fields["cooperator_type"], session)
-        self.assertEqual(session.cooperator_type, "T2175A")
+        for allowed_company_ids in (
+            [self.company_b.id, self.company_a.id],
+            [self.company_b.id],
+        ):
+            session = membership.with_context(allowed_company_ids=allowed_company_ids)
+            self.env.add_to_compute(membership._fields["cooperator_type"], session)
+            self.assertEqual(session.cooperator_type, "T2175A")
 
     def _selection(self, model):
         return model._fields["cooperator_type"]._description_selection(model.env)
