@@ -102,7 +102,22 @@ class CooperativeMembership(models.Model):
                 if line.share_number > 0:
                     share_type = line.share_product_id.default_code
                     break
-            record.cooperator_type = share_type
+            # The session company is the first one in the switcher. A payment
+            # of another community still has to store that community's share
+            # code when the user has it checked in the context.
+            record._assign_cooperator_type(share_type)
+
+    def _assign_cooperator_type(self, share_type):
+        self.ensure_one()
+        allowed_company_ids = self.env.context.get("allowed_company_ids") or []
+        target = self
+        if (
+            self.company_id
+            and self.company_id.id in allowed_company_ids
+            and self.company_id in self.env.user.company_ids
+        ):
+            target = self.with_company(self.company_id)
+        target.cooperator_type = share_type or False
 
     cooperator_type = fields.Selection(
         selection="_get_share_type",
