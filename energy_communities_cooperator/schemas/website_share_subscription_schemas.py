@@ -149,7 +149,7 @@ class WebsiteShareSubscriptionSubmissionVoluntary(BaseModel):
 
 class SubscriptionRequestCreationParams(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
-    massive_import_id: Optional[int]
+    massive_import_id: Optional[int] = None
     source: str
     email: EmailStr
     firstname: str
@@ -205,6 +205,7 @@ class SubscriptionRequestCreationParams(BaseModel):
         "contact_person_function",
         "iban",
         "partner_id",
+        "massive_import_id",
         mode="before",
     )
     @classmethod
