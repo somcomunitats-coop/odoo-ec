@@ -276,3 +276,33 @@ class TestAccountPaymentRegisterInvoiceDate(TransactionCase):
 
         with self.assertRaises(UserError):
             wizard._create_payments()
+
+    def test_single_invoice_payment_date_shows_the_invoice_date(self):
+        invoice = self._create_invoice(self.partner, date(2026, 1, 20))
+        wizard = (
+            self.env["account.payment.register"]
+            .with_company(self.company)
+            .with_context(active_model="account.move", active_ids=invoice.ids)
+            .create({})
+        )
+
+        self.assertTrue(wizard.single_invoice_payment)
+        wizard.payment_date_equals_invoice_date = True
+        wizard._onchange_payment_date_equals_invoice_date()
+        self.assertEqual(wizard.payment_date, invoice.invoice_date)
+
+    def test_several_invoices_do_not_count_as_a_single_payment(self):
+        other_partner = self._prepare_partner("Several invoices partner")
+        first = self._create_invoice(self.partner, date(2026, 1, 20))
+        second = self._create_invoice(other_partner, date(2026, 2, 20))
+        wizard = (
+            self.env["account.payment.register"]
+            .with_company(self.company)
+            .with_context(
+                active_model="account.move",
+                active_ids=(first + second).ids,
+            )
+            .create({})
+        )
+
+        self.assertFalse(wizard.single_invoice_payment)

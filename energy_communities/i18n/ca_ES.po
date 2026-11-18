@@ -4367,11 +4367,14 @@ msgstr "Data pagament = Data factura i pagar ordenant per número de factura asc
 #. module: energy_communities
 #: model:ir.model.fields,help:energy_communities.field_account_payment_register__payment_date_equals_invoice_date
 msgid ""
-"When enabled, each selected invoice is paid using its own invoice date. "
-"Payments are created separately and ordered by ascending invoice number."
+"If enabled, each invoice is marked as paid using the invoice's own date as "
+"the payment date (instead of today), and the selected invoices are processed "
+"in ascending invoice number order, without grouping payments by customer."
 msgstr ""
-"Si està actiu, cada factura es paga amb la seva pròpia data de factura. "
-"Els pagaments es creen per separat i s'ordenen per número de factura ascendent."
+"Si està actiu, cada factura es dóna per pagada assumint com a data de "
+"pagament la data de la pròpia factura (en lloc del dia d'avui), i recorrent "
+"la llista de factures seleccionades per ordre del número de factura "
+"(ascendent), sense agrupar pagaments per client."
 
 #. module: energy_communities
 #. odoo-python

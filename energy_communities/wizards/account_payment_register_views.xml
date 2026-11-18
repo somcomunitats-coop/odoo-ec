@@ -6,12 +6,14 @@
         <field name="inherit_id" ref="account.view_account_payment_register_form" />
         <field name="arch" type="xml">
             <field name="payment_date" position="before">
+                <field name="single_invoice_payment" invisible="1" />
                 <field name="payment_date_equals_invoice_date" />
             </field>
             <field name="payment_date" position="attributes">
+                <attribute name="force_save">1</attribute>
                 <attribute
                     name="attrs"
-                >{'invisible': [('payment_date_equals_invoice_date', '=', True)]}</attribute>
+                >{'invisible': [('payment_date_equals_invoice_date', '=', True), ('single_invoice_payment', '=', False)], 'readonly': [('payment_date_equals_invoice_date', '=', True), ('single_invoice_payment', '=', True)]}</attribute>
             </field>
             <field name="group_payment" position="attributes">
                 <attribute
