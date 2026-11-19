@@ -19,25 +19,21 @@ class AccountPaymentRegister(models.TransientModel):
         compute="_compute_single_invoice_payment",
     )
 
-    @api.depends_context("active_model", "active_ids")
+    @api.depends("line_ids.move_id")
     def _compute_single_invoice_payment(self):
-        is_single = bool(self._get_single_active_invoice())
         for wizard in self:
-            wizard.single_invoice_payment = is_single
-
-    def _get_single_active_invoice(self):
-        active_ids = self.env.context.get("active_ids") or []
-        if (
-            self.env.context.get("active_model") != "account.move"
-            or len(active_ids) != 1
-        ):
-            return self.env["account.move"]
-        return self.env["account.move"].browse(active_ids[0])
+            # line_ids stays on the wizard after the dialog opens. active_ids
+            # does not, so the checkbox onchange would otherwise hide the date.
+            wizard.single_invoice_payment = len(wizard.line_ids.move_id) == 1
 
     @api.onchange("payment_date_equals_invoice_date")
     def _onchange_payment_date_equals_invoice_date(self):
-        invoice = self._get_single_active_invoice()
-        if self.payment_date_equals_invoice_date and invoice.invoice_date:
+        invoice = self.line_ids.move_id
+        if (
+            self.payment_date_equals_invoice_date
+            and len(invoice) == 1
+            and invoice.invoice_date
+        ):
             self.payment_date = invoice.invoice_date
 
     def _create_payments(self):
