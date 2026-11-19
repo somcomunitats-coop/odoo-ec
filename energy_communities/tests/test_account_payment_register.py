@@ -290,6 +290,13 @@ class TestAccountPaymentRegisterInvoiceDate(TransactionCase):
         wizard.payment_date_equals_invoice_date = True
         wizard._onchange_payment_date_equals_invoice_date()
         self.assertEqual(wizard.payment_date, invoice.invoice_date)
+        # The checkbox onchange no longer receives active_ids.
+        wizard_without_context = wizard.with_context({})
+        wizard_without_context.invalidate_recordset(["single_invoice_payment"])
+        self.assertTrue(wizard_without_context.single_invoice_payment)
+        wizard_without_context.payment_date = date(2026, 11, 4)
+        wizard_without_context._onchange_payment_date_equals_invoice_date()
+        self.assertEqual(wizard_without_context.payment_date, invoice.invoice_date)
 
     def test_several_invoices_do_not_count_as_a_single_payment(self):
         other_partner = self._prepare_partner("Several invoices partner")
