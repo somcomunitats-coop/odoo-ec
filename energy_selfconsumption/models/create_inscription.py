@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from markupsafe import escape
 from stdnum.es import iban
 
 from odoo import _, models
@@ -407,10 +408,12 @@ class CreateInscription(models.AbstractModel):
         if config_error:
             return True, config_error
 
-        partner = self.resolve_inscription_partner(
-            values.get("inscription_partner_id_vat"), project
-        )
+        vat = values.get("inscription_partner_id_vat")
+        partner = self.resolve_inscription_partner(vat, project)
+        draft_subscription = self.env["subscription.request"]
         if not partner:
+            draft_subscription = self._draft_subscription_without_partner(vat, project)
+        if not partner and not draft_subscription:
             return True, self.partner_registration_error_message()
 
         # Set default date format if not provided
@@ -423,7 +426,7 @@ class CreateInscription(models.AbstractModel):
             return True, cups_error
 
         # Check for duplicate registration
-        if self._is_partner_already_registered(
+        if partner and self._is_partner_already_registered(
             project, partner, values["supplypoint_cups"]
         ):
             return True, _(
@@ -435,6 +438,10 @@ class CreateInscription(models.AbstractModel):
         # energy_project.inscription without the self-consumption inscription.
         try:
             with self.env.cr.savepoint():
+                if not partner:
+                    partner = self._create_partner_from_draft_subscription(
+                        draft_subscription, project
+                    )
                 owner = self._get_owner(values, project, partner)
                 if not owner:
                     raise ValidationError(_("Owner could not be created or found."))
@@ -507,6 +514,41 @@ class CreateInscription(models.AbstractModel):
         if partner and open_requests:
             return partner
         return open_requests.mapped("partner_id")[:1]
+
+    def _draft_subscription_without_partner(self, vat, project):
+        """Draft subscription request that can register before it is validated.
+
+        The partner does not exist until the subscription request is validated.
+        Creating it here lets the inscription proceed. The request stays in
+        draft and no invoice is created.
+        """
+        if not project.conf_accept_pending_subscription:
+            return self.env["subscription.request"]
+        return self._open_subscription_requests(vat, project).filtered(
+            lambda subscription: subscription.state == "draft"
+            and not subscription.partner_id
+        )[:1]
+
+    def _create_partner_from_draft_subscription(self, subscription, project):
+        """Create and link the partner stored on a draft subscription request.
+
+        Uses the cooperator partner setup that runs during validation, and
+        stops before the invoice. The request remains in draft.
+        """
+        subscription = subscription.sudo()
+        partner = subscription.setup_partner()
+        if subscription.vat and not partner.vat:
+            partner.vat = subscription.vat
+        if project.company_id not in partner.company_ids:
+            partner.company_ids = [(4, project.company_id.id)]
+        subscription.message_post(
+            body=_(
+                "WARNING: The person or entity linked to this request has "
+                "registered an early inscription in the photovoltaic project "
+                "{project}."
+            ).format(project=escape(project.name or ""))
+        )
+        return partner
 
     def _open_subscription_requests(self, vat, project):
         """Open subscription requests in this community for the given VAT.

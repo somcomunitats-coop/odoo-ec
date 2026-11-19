@@ -121,22 +121,22 @@ msgstr "3000 - 5000 kWh entre 1,5 - 2 kW"
 #. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_1td
 msgid "6.1TD"
-msgstr "6,1 TD"
+msgstr "6.1TD"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_2td
 msgid "6.2TD"
-msgstr "6,2 TD"
+msgstr "6.2TD"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_3td
 msgid "6.3TD"
-msgstr "6,3 TD"
+msgstr "6.3TD"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_4td
 msgid "6.4TD"
-msgstr "6,4 TD"
+msgstr "6.4TD"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
@@ -2959,8 +2959,8 @@ msgstr "Indica si este punto de suministro se utiliza en autoconsumo"
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
-msgid "Information necessary for the formalization of the distribution agreement. You can find it at cadastro.es"
-msgstr "Información necesaria para la formalización del acuerdo de distribución. Puedes encontrarla en www.edecatastro.gob.es"
+msgid "Information necessary for the formalization of the distribution agreement. You can find it at https://www.sedecatastro.gob.es/"
+msgstr "Información necesaria para la formalización del acuerdo de distribución. Puedes encontrarla en https://www.sedecatastro.gob.es/"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__inscription_id
@@ -5668,8 +5668,8 @@ msgstr "Faltan los siguientes campos obligatorios: {fields}"
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
-msgid "The form is not open. For more information write to your Energy Community {email}"
-msgstr "El formulario no está abierto. Para más información, escriba a su Comunidad de la Energía {email}"
+msgid "The form is not open. Please contact the Energy Community: {email}"
+msgstr "El formulario no está abierto. Por favor, contacta con la Comunidad Energética: {email}"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -6511,8 +6511,8 @@ msgstr "Muestra el campo de consumo anual de electricidad en el formulario de in
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
-msgid "Show contribution selector"
-msgstr "Mostrar selector de aportación"
+msgid "Show participation selector"
+msgstr "Mostrar selector de participación"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
@@ -6521,8 +6521,8 @@ msgstr "Muestra el selector de participación en el formulario de inscripción"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
-msgid "Help paragraph for the contribution selection"
-msgstr "Párrafo ayuda a la selección de la aportación"
+msgid "Help paragraph for the participation selection"
+msgstr "Párrafo ayuda a la selección de la participación"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
@@ -6748,3 +6748,15 @@ msgstr "El NIF {vat} ya pertenece a {name}, así que no se puede crear el ejempl
 #, python-format
 msgid "CUPS {cups} already belongs to another partner, so sample index {index} cannot be created."
 msgstr "El CUPS {cups} ya pertenece a otro contacto, así que no se puede crear el ejemplo {index}."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "<span>NOTE: To edit and change the settings, the form must be deactivated. Once the changes are made you can activate it again.</span>"
+msgstr "<span>NOTA: Para poder editar y cambiar las configuraciones, es necesario desactivar el formulario. Una vez hechos los cambios puedes volver a activarlo.</span>"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "WARNING: The person or entity linked to this request has registered an early inscription in the photovoltaic project {project}."
+msgstr "ATENCIÓN: La persona/entidad vinculada a esta solicitud, ha registrado una inscripción anticipada al proyecto fotovoltaico {project}."

@@ -239,19 +239,6 @@ Main functionalities:
                 name="form_configuration"
                 autofocus="autofocus"
               >
-                                <group
-                  name="conf_header_description"
-                  string="Description form"
-                >
-                                    <field
-                    name="conf_header_description"
-                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
-                  />
-                                    <field
-                    name="conf_accept_pending_subscription"
-                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
-                  />
-                                </group>
                                 <field name="conf_state" widget="radio" invisible="1" />
                                 <button
                   class="btn btn btn-primary"
@@ -279,6 +266,28 @@ Main functionalities:
                   force_save="1"
                   attrs="{'invisible': [('conf_state', '!=', 'active')]}"
                 />
+                                <div
+                  class="alert alert-warning"
+                  colspan="2"
+                  attrs="{'invisible': [('conf_state', '!=', 'active')]}"
+                >
+                                    <span>NOTE: To edit and change the settings, the form must be deactivated. Once the changes are made you can activate it again.</span>
+                                </div>
+                                <group name="conf_accept_pending">
+                                    <field
+                    name="conf_accept_pending_subscription"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                </group>
+                                <group
+                  name="conf_header_description"
+                  string="Description form"
+                >
+                                    <field
+                    name="conf_header_description"
+                    attrs="{'readonly': [('conf_state', '==', 'active')]}"
+                  />
+                                </group>
                                 <group name="conf_show" string="Configuration">
                                     <field
                     name="conf_used_in_selfconsumption"
@@ -308,6 +317,8 @@ Main functionalities:
                     name="conf_show_annual_consumption"
                     attrs="{'readonly': [('conf_state', '==', 'active')]}"
                   />
+                                </group>
+                                <group name="conf_participation" string="Participation">
                                     <field
                     name="conf_show_participation"
                     attrs="{'readonly': [('conf_state', '==', 'active')]}"
@@ -319,8 +330,6 @@ Main functionalities:
                   >
                                         <span>WARNING: If the person or entity should not be able to choose a participation on the form, Odoo will assign the inscription a default participation, which will be the first of the participations available in the 'Participation' list.</span>
                                     </div>
-                                </group>
-                                <group name="conf_participation" string="Participation">
                                     <field
                     name="conf_participation_ids"
                     widget="one2many"

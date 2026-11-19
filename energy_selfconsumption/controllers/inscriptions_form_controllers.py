@@ -141,7 +141,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
                 return {
                     "error_msgs": [
                         _(
-                            "The form is not open. For more information write to your Energy Community {email}"
+                            "The form is not open. Please contact the Energy Community: {email}"
                         ).format(
                             email=model.company_id.email or _("(email not available)")
                         )
@@ -250,11 +250,14 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
         """
         try:
             project = self._get_project_from_values(values)
-            partner = self._inscription_service().resolve_inscription_partner(
-                values.get("inscription_partner_id_vat"), project
+            service = self._inscription_service()
+            vat = values.get("inscription_partner_id_vat")
+            partner = service.resolve_inscription_partner(vat, project)
+            draft_subscription = service._draft_subscription_without_partner(
+                vat, project
             )
 
-            if not partner:
+            if not partner and not draft_subscription:
                 return {
                     "error_msgs": [
                         self._inscription_service().partner_registration_error_message()
@@ -862,7 +865,7 @@ class WebsiteInscriptionsFormController(WebsiteFormController):
             ),
             "supplypoint_cadastral_reference_title": _(
                 "Information necessary for the formalization of the distribution agreement. "
-                "You can find it at cadastro.es"
+                "You can find it at https://www.sedecatastro.gob.es/"
             ),
             "project_conf_used_in_selfconsumption_title": _(
                 "Is there already an individual photovoltaic self-consumption or "

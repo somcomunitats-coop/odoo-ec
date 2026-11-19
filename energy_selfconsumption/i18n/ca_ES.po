@@ -2901,8 +2901,8 @@ msgstr "Indica si aquest punt de subministrament s’utilitza en autoconsum"
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
-msgid "Information necessary for the formalization of the distribution agreement. You can find it at cadastro.es"
-msgstr "Informació necessària per a la formalització de l’acord de distribució. La pots trobar a www.edecatastro.gob.es"
+msgid "Information necessary for the formalization of the distribution agreement. You can find it at https://www.sedecatastro.gob.es/"
+msgstr "Informació necessària per a la formalització de l’acord de distribució. La pots trobar a https://www.sedecatastro.gob.es/"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_change_distribution_table_import_line_wizard__inscription_id
@@ -4800,7 +4800,7 @@ msgstr "Revisar comptes bancaris"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_form_fields_template
 msgid "SUPPLY POINT DATA"
-msgstr "DADES DEL PUNT DE PRESTAMENT"
+msgstr "DADES DEL PUNT DE SUBMINISTRAMENT"
 
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
@@ -5610,8 +5610,8 @@ msgstr "Falten els següents camps obligatoris: {fields}"
 #. odoo-python
 #: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
 #, python-format
-msgid "The form is not open. For more information write to your Energy Community {email}"
-msgstr "El formulari no està obert. Per a més informació, escriu a la teva Comunitat Energètica {email}"
+msgid "The form is not open. Please contact the Energy Community: {email}"
+msgstr "El formulari no està obert. Si us plau, contacta amb la Comunitat Energètica: {email}"
 
 #. module: energy_selfconsumption
 #. odoo-python
@@ -6453,8 +6453,8 @@ msgstr "Mostra el camp de consum anual d'electricitat al formulari d'inscripció
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
-msgid "Show contribution selector"
-msgstr "Mostrar selector d'aportació"
+msgid "Show participation selector"
+msgstr "Mostrar selector de participació"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
@@ -6463,8 +6463,8 @@ msgstr "Mostra el selector de participació al formulari d'inscripció"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
-msgid "Help paragraph for the contribution selection"
-msgstr "Paràgraf ajuda a la selecció de l'Aportació"
+msgid "Help paragraph for the participation selection"
+msgstr "Paràgraf d'ajuda a la selecció de la participació"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
@@ -6690,3 +6690,15 @@ msgstr "El NIF {vat} ja pertany a {name}, així que no es pot crear l'exemple {i
 #, python-format
 msgid "CUPS {cups} already belongs to another partner, so sample index {index} cannot be created."
 msgstr "El CUPS {cups} ja pertany a un altre contacte, així que no es pot crear l'exemple {index}."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "<span>NOTE: To edit and change the settings, the form must be deactivated. Once the changes are made you can activate it again.</span>"
+msgstr "<span>NOTA: Per poder editar i canviar les configuracions, cal desactivar el formulari. Un cop fets els canvis pots tornar a activar-lo.</span>"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "WARNING: The person or entity linked to this request has registered an early inscription in the photovoltaic project {project}."
+msgstr "ATENCIÓ: La persona/entitat vinculada a aquesta sol·licitud ha registrat una inscripció anticipada al projecte fotovoltaic {project}."
