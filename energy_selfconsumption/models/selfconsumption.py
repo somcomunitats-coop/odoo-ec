@@ -258,12 +258,12 @@ class Selfconsumption(models.Model):
         help="Display the annual electricity consumption field on the inscription form",
     )
     conf_show_participation = fields.Boolean(
-        "Show contribution selector",
+        "Show participation selector",
         default=True,
         help="Display the participation selector on the inscription form",
     )
     conf_participation_help = fields.Html(
-        string="Help paragraph for the contribution selection",
+        string="Help paragraph for the participation selection",
         translate=True,
         default=lambda self: PARTICIPATION_HELP_HTML_BY_LANG["en_US"],
         help="Text shown under the participation selector on the inscription form",
