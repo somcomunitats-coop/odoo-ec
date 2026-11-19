@@ -119,6 +119,7 @@ managing collective self-consumption projects under Spanish energy regulations.
         "views/distribution_table_views.xml",
         "views/inscription_views.xml",
         "views/selfconsumption_views.xml",
+        "views/res_config_settings.xml",
         "views/res_partner_views.xml",
         "views/supply_point_assignation_views.xml",
         "views/supply_point_views.xml",
