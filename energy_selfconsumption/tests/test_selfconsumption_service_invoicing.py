@@ -90,6 +90,90 @@ class TestSelfconsumptionServiceInvoicing(
     def test_project_distribution_table_change_case_3(self):
         self._project_distribution_table_change_case(_TESTING_CASES["energy_custom"])
 
+    def test_free_invoicing_activates_without_contracts(self):
+        self._confirm_free_invoicing()
+        self.assertEqual(self.selfconsumption.invoicing_mode, "free_invoicing")
+        self.assertFalse(self.selfconsumption.product_id)
+        self.assertFalse(self.selfconsumption.pricelist_id)
+        self.assertFalse(self.selfconsumption.get_sale_orders())
+        self.assertTrue(self.selfconsumption.free_invoicing_notice)
+
+        self.selfconsumption.activate()
+
+        self.assertEqual(self.selfconsumption.state, "active")
+        self.assertFalse(self.selfconsumption.get_active_contracts())
+        self.assertFalse(self.selfconsumption.get_sale_orders())
+        active_tables = self.selfconsumption.distribution_table_ids.filtered(
+            lambda table: table.state == "active"
+        )
+        self.assertEqual(len(active_tables), 1)
+
+        self._workflow_change_inscriptions()
+        self._workflow_change_distribution_table()
+        wizard = self.env[
+            "energy_selfconsumption.set_new_distribution_table.wizard"
+        ].create(
+            {
+                "selfconsumption_id": self.selfconsumption.id,
+                "execution_date": fields.Date.today(),
+            }
+        )
+        wizard.action_confirm()
+
+        self.assertFalse(self.selfconsumption.get_active_contracts())
+        self.assertFalse(self.selfconsumption.get_sale_orders())
+        active_tables = self.selfconsumption.distribution_table_ids.filtered(
+            lambda table: table.state == "active"
+        )
+        self.assertEqual(len(active_tables), 1)
+        cancelled_tables = self.selfconsumption.distribution_table_ids.filtered(
+            lambda table: table.state == "cancelled"
+        )
+        self.assertEqual(len(cancelled_tables), 1)
+
+    def test_free_invoicing_can_switch_to_integrated_mode(self):
+        self._confirm_free_invoicing()
+        self.selfconsumption.activate()
+        action = self.selfconsumption.action_change_invoicing_mode()
+        self.assertEqual(action["context"]["default_invoicing_mode"], "free_invoicing")
+
+        wizard = (
+            self.env["energy_selfconsumption.define_invoicing_mode.wizard"]
+            .with_context(**action["context"])
+            .create(
+                {
+                    "selfconsumption_id": self.selfconsumption.id,
+                    "invoicing_mode": "power_acquired",
+                    "price": 11,
+                    "recurring_rule_type": "quarterly",
+                    "recurring_interval": 2,
+                    "recurring_invoicing_type": "post-paid",
+                }
+            )
+        )
+        result = wizard.action_confirm()
+
+        self.assertEqual(self.selfconsumption.invoicing_mode, "power_acquired")
+        self.assertEqual(self.selfconsumption.state, "active")
+        self.assertTrue(self.selfconsumption.product_id)
+        self.assertTrue(self.selfconsumption.get_sale_orders())
+        self.assertFalse(self.selfconsumption.get_active_contracts())
+        self.assertEqual(
+            result["res_model"],
+            "energy_selfconsumption.contract_generation.wizard",
+        )
+        self.assertTrue(result["context"]["skip_project_activation"])
+
+    def _confirm_free_invoicing(self):
+        wizard = self.env["energy_selfconsumption.define_invoicing_mode.wizard"].create(
+            {
+                "selfconsumption_id": self.selfconsumption.id,
+                "invoicing_mode": "free_invoicing",
+            }
+        )
+        wizard.action_confirm()
+        return wizard
+
     def test_verify_and_adjust_coefficients(self):
         """
         Test that _verify_and_adjust_coefficients adjusts coefficients

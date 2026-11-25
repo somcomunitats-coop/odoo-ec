@@ -7,10 +7,11 @@ This file contains views for the invoicing mode definition wizard that allows
 configuring the billing method for energy self-consumption projects.
 
 Main functionalities:
-- Invoicing mode selection (power acquired, energy delivered, custom energy)
+- Invoicing mode selection (power acquired, energy delivered, custom energy, free invoicing)
 - Price configuration based on selected mode
 - Recurring billing configuration (interval, type)
-- Contract template creation
+- Contract template creation for integrated modes
+- Free invoicing stores the mode without creating contracts
 - Dynamic field visibility based on invoicing mode
 -->
 <odoo>
@@ -23,38 +24,42 @@ Main functionalities:
             <field name="arch" type="xml">
                 <form string="Define Invoicing Mode Wizard">
                     <sheet>
+                        <!-- Full width: the free-invoicing label is a long sentence -->
                         <group>
-                            <!-- Left column: Invoicing mode and pricing -->
+                            <field name="invoicing_mode" />
+                        </group>
+                        <group attrs="{'invisible': [('invoicing_mode', '=', 'free_invoicing')]}">
+                            <!-- Left column: pricing -->
                             <group col="1">
-                                <!-- Invoicing mode selection -->
-                                <field name="invoicing_mode" />
-                                
-                                <!-- Price for energy-based modes -->
                                 <field name="price"
                                        string="kWh Price (€/kWh)"
-                                       attrs="{'invisible': [('invoicing_mode', 'not in', ['energy_delivered', 'energy_custom'])]}" />
-                                
-                                <!-- Price for power-based mode -->
+                                       attrs="{'invisible': [('invoicing_mode', 'not in', ['energy_delivered', 'energy_custom'])], 'required': [('invoicing_mode', 'in', ['energy_delivered', 'energy_custom'])]}" />
                                 <field name="price"
                                        string="kWn Price per day (€/kWn/day)"
-                                       attrs="{'invisible': [('invoicing_mode', '!=', 'power_acquired')]}" />
+                                       attrs="{'invisible': [('invoicing_mode', '!=', 'power_acquired')], 'required': [('invoicing_mode', '=', 'power_acquired')]}" />
                             </group>
-                            
-                            <!-- Right column: Recurring billing configuration -->
+                            <!-- Right column: recurring billing -->
                             <group col="2">
-                                <field name="recurring_rule_type" required="True" />
-                                <field name="recurring_interval" required="True" />
-                                <field name="recurring_invoicing_type" required="True" />
+                                <field name="recurring_rule_type"
+                                       attrs="{'required': [('invoicing_mode', '!=', 'free_invoicing')]}" />
+                                <field name="recurring_interval"
+                                       attrs="{'required': [('invoicing_mode', '!=', 'free_invoicing')]}" />
+                                <field name="recurring_invoicing_type"
+                                       attrs="{'required': [('invoicing_mode', '!=', 'free_invoicing')]}" />
                             </group>
+                        </group>
+                        <!-- colspan 2 spans the label column and the value column -->
+                        <group attrs="{'invisible': [('invoicing_mode', '!=', 'free_invoicing')]}">
+                            <field name="free_invoicing_notice" nolabel="1" readonly="1" colspan="2" />
                         </group>
                     </sheet>
                     
-                    <!-- Footer with contract template creation -->
                     <footer>
-                        <button name="create_contract_template"
-                                string="Create Contract Template"
+                        <button name="action_confirm"
+                                string="Accept"
                                 type="object"
                                 class="btn-primary" />
+                        <button string="Cancel" special="cancel" />
                     </footer>
                 </form>
             </field>

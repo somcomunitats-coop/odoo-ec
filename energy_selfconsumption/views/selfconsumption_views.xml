@@ -9,7 +9,7 @@ Includes complete forms, tree views, actions and menus.
 Main functionalities:
 - Main form with state workflow (draft → inscription → activation → active)
 - Public inscription form configuration
-- Invoicing mode management (power acquired, energy delivered, custom energy)
+- Invoicing mode management (power acquired, energy delivered, custom energy, free invoicing)
 - Action buttons for importing/exporting data
 - Integration with distribution tables and contracts
 - Authorization and coefficient sharing reports
@@ -361,6 +361,21 @@ Main functionalities:
               >
                                 <group>
                                     <field name="invoicing_mode" readonly="True" />
+                                    <button
+                                        name="action_change_invoicing_mode"
+                                        type="object"
+                                        string="Change invoicing mode"
+                                        class="btn-secondary"
+                                        attrs="{'invisible': [('invoicing_mode', '!=', 'free_invoicing')]}"
+                                    />
+                                    <field
+                                        name="free_invoicing_notice"
+                                        nolabel="1"
+                                        readonly="1"
+                                        attrs="{'invisible': [('invoicing_mode', '!=', 'free_invoicing')]}"
+                                    />
+                                </group>
+                                <group attrs="{'invisible': [('invoicing_mode', '=', 'free_invoicing')]}">
                                     <field name="product_id" readonly="True" />
                                     <field
                                       name="contract_template_id"

@@ -55,8 +55,10 @@ from ..config import (
     SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
     SELFCONSUMPTION_DEFAULT_PARTICIPATIONS,
     SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
+    SELFCONSUMPTION_INVOICING_MODE_FREE,
     SELFCONSUMPTION_INVOICING_MODE_POWER_ACQUIRED,
     SELFCONSUMPTION_INVOICING_MODE_VALUES,
+    get_free_invoicing_notice,
 )
 
 _logger = logging.getLogger(__name__)
@@ -189,6 +191,11 @@ class Selfconsumption(models.Model):
         SELFCONSUMPTION_INVOICING_MODE_VALUES,
         string="Invoicing Mode",
         help="Method used for invoicing this project",
+    )
+    free_invoicing_notice = fields.Text(
+        string="Free invoicing notice",
+        compute="_compute_free_invoicing_notice",
+        help="Explanation shown when the project uses free external invoicing",
     )
     payment_mode_id = fields.Many2one(
         "account.payment.mode",
@@ -538,6 +545,12 @@ class Selfconsumption(models.Model):
         for record in self:
             record.write({"state": PROJECT_STATE_DRAFT})
 
+    @api.depends("invoicing_mode")
+    def _compute_free_invoicing_notice(self):
+        notice = get_free_invoicing_notice()
+        for record in self:
+            record.free_invoicing_notice = notice
+
     def set_invoicing_mode(self):
         """Open wizard to define invoicing mode"""
         return {
@@ -550,6 +563,13 @@ class Selfconsumption(models.Model):
             "target": "new",
             "context": {"default_selfconsumption_id": self.id},
         }
+
+    def action_change_invoicing_mode(self):
+        """Reopen invoicing mode definition for a project already using free invoicing."""
+        self.ensure_one()
+        action = self.set_invoicing_mode()
+        action["context"]["default_invoicing_mode"] = self.invoicing_mode
+        return action
 
     def action_set_new_distribution_table(self):
         """Open wizard to choose the distribution table change date."""
@@ -584,6 +604,13 @@ class Selfconsumption(models.Model):
 
         if not execution_date:
             execution_date = fields.Date.today()
+        if self.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_FREE:
+            return self.distribution_table_state(
+                DISTRIBUTION_STATE_VALIDATED,
+                DISTRIBUTION_STATE_ACTIVE,
+                execution_date=execution_date,
+                manage_contracts=False,
+            )
         # Snapshot the project invoicing calendar before contracts are recreated.
         # execution_date only starts the new table; new CUPS must join this period.
         reference_contract = self.get_active_contracts()[:1]
@@ -803,16 +830,17 @@ class Selfconsumption(models.Model):
         Activates the energy self-consumption project, performing various validations.
 
         This method checks for the presence of a valid code, and rated power
-        for the project. If all validations pass, it instances a wizard and generating
-        contracts for the project.
+        for the project. Integrated invoicing modes open the contract generation
+        wizard. Free invoicing activates the project and its distribution table
+        without creating contracts.
 
         Note:
-            The change of state for the 'self-consumption' and 'distribution_table'
-            models is performed in the wizard that gets opened. These state changes
-            are executed only after the contracts have been successfully generated.
+            For integrated modes, the change of state for the project and the
+            distribution table is performed in the contract generation wizard,
+            after the contracts have been successfully generated.
 
         Returns:
-            dict: A dictionary containing the action details for opening the wizard.
+            dict: Action that opens the contract wizard, or True for free invoicing.
 
         Raises:
             ValidationError: If the project does not have a valid Code, or Rated Power.
@@ -826,19 +854,44 @@ class Selfconsumption(models.Model):
                 raise ValidationError(
                     _("Project must have defined a invoicing mode before activation.")
                 )
-            return {
-                "name": _("Generate Contracts"),
-                "type": "ir.actions.act_window",
-                "view_mode": "form",
-                "res_model": "energy_selfconsumption.contract_generation.wizard",
-                "views": [(False, "form")],
-                "view_id": False,
-                "target": "new",
-                "context": {
-                    "default_selfconsumption_id": self.id,
-                    "default_company_id": self.env.company.id,
-                },
-            }
+            if record.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_FREE:
+                return record._activate_free_invoicing()
+            return record._action_open_contract_generation()
+
+    def _activate_free_invoicing(self):
+        """Activate the project and its distribution table without contracts."""
+        self.ensure_one()
+        self.distribution_table_state(
+            DISTRIBUTION_STATE_PROCESS,
+            DISTRIBUTION_STATE_ACTIVE,
+            manage_contracts=False,
+        )
+        self.write({"state": PROJECT_STATE_ACTIVE})
+        return True
+
+    def _action_open_contract_generation(self, skip_project_activation=False):
+        """Open the contract generation wizard.
+
+        skip_project_activation is used when the project is already active and
+        is leaving free invoicing: contracts are created, the table stays active.
+        """
+        self.ensure_one()
+        context = {
+            "default_selfconsumption_id": self.id,
+            "default_company_id": self.env.company.id,
+        }
+        if skip_project_activation:
+            context["skip_project_activation"] = True
+        return {
+            "name": _("Generate Contracts"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "energy_selfconsumption.contract_generation.wizard",
+            "views": [(False, "form")],
+            "view_id": False,
+            "target": "new",
+            "context": context,
+        }
 
     def activate_form(self):
         self.ensure_one()  # Ensures only one record is selected
@@ -1064,8 +1117,15 @@ class Selfconsumption(models.Model):
         execution_date=None,
         period_recurring_next_date=None,
         period_start=None,
+        manage_contracts=True,
     ):
-        self.check_dates_contract()
+        """Move a distribution table to a new state.
+
+        manage_contracts is False for free invoicing. The table and its
+        inscriptions are updated, and no contract is read or written.
+        """
+        if manage_contracts:
+            self.check_dates_contract()
         if not execution_date:
             execution_date = fields.Date.today()
         table_end_date = execution_date - relativedelta(days=1)
@@ -1097,6 +1157,8 @@ class Selfconsumption(models.Model):
                         "state": INSCRIPTION_STATE_ACTIVE,
                     }
                 )
+                if not manage_contracts:
+                    continue
                 supply_point_assignation_ids = distribution_table_active.mapped(
                     "supply_point_assignation_ids"
                 ).filtered(
@@ -1203,6 +1265,8 @@ class Selfconsumption(models.Model):
                 [("state", "=", INSCRIPTION_STATE_CHANGE)]
             )
             inscriptions.write({"state": "cancelled"})
+            if not manage_contracts:
+                return self.env["contract.contract"]
             for inscription in inscriptions:
                 supply_point_assignation_id = distribution_table_active.mapped(
                     "supply_point_assignation_ids"

@@ -146,20 +146,15 @@ class ContractGenerationWizard(models.TransientModel):
         if not self.selfconsumption_id:
             return False
 
-        try:
-            distribution_table = (
-                self.selfconsumption_id.distribution_table_ids.filtered_domain(
-                    [("state", "=", DISTRIBUTION_STATE_PROCESS)]
-                )
-            )
-            return bool(distribution_table)
-        except Exception as e:
-            logger.error(f"Error checking distribution table: {e}")
-            return False
+        return bool(self._get_distribution_table_in_process(raise_if_missing=False))
 
-    def _get_distribution_table_in_process(self):
+    def _get_distribution_table_in_process(self, raise_if_missing=True):
         """
-        Get the distribution table that is in process state
+        Get the distribution table used to generate contracts.
+
+        During activation the table is in process. When an already active
+        project leaves free invoicing, the operative table is active and the
+        project state must stay active.
 
         Returns:
             distribution_table: Distribution table record
@@ -167,17 +162,18 @@ class ContractGenerationWizard(models.TransientModel):
         Raises:
             ValidationError: If no distribution table is found
         """
-        distribution_table = (
-            self.selfconsumption_id.distribution_table_ids.filtered_domain(
-                [("state", "=", DISTRIBUTION_STATE_PROCESS)]
-            )
+        project = self.selfconsumption_id
+        distribution_table = project.distribution_table_ids.filtered_domain(
+            [("state", "=", DISTRIBUTION_STATE_PROCESS)]
         )
-
-        if not distribution_table:
+        if not distribution_table and self.env.context.get("skip_project_activation"):
+            distribution_table = project.distribution_table_ids.filtered_domain(
+                [("state", "=", DISTRIBUTION_STATE_ACTIVE)]
+            )
+        if not distribution_table and raise_if_missing:
             raise ValidationError(
                 _("There is no distribution table in process of activation.")
             )
-
         return distribution_table
 
     def action_generate_contracts(self):
@@ -247,10 +243,7 @@ class ContractGenerationWizard(models.TransientModel):
             raise ValidationError(_("No draft sale orders found to process"))
 
         # Check distribution table
-        if not self._has_distribution_table_in_process():
-            raise ValidationError(
-                _("There is no distribution table in process of activation.")
-            )
+        self._get_distribution_table_in_process()
 
     def _process_sale_orders(self, distribution_table):
         """
@@ -352,8 +345,15 @@ class ContractGenerationWizard(models.TransientModel):
 
     def _activate_project_and_distribution(self):
         """
-        Activate the project and distribution table
+        Activate the project and distribution table.
+
+        A project that leaves free invoicing is already active. Only the
+        payment mode is stored; the operative distribution table stays active.
         """
+        if self.env.context.get("skip_project_activation"):
+            self.selfconsumption_id.write({"payment_mode_id": self.payment_mode.id})
+            return
+
         # Activate project
         self.selfconsumption_id.write(
             {"payment_mode_id": self.payment_mode.id, "state": PROJECT_STATE_ACTIVE}

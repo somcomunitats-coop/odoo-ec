@@ -26,6 +26,14 @@ SELFCONSUMPTION_INVOICING_MODE_NONE = STATE_NONE
 SELFCONSUMPTION_INVOICING_MODE_POWER_ACQUIRED = "power_acquired"
 SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED = "energy_delivered"
 SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM = "energy_custom"
+SELFCONSUMPTION_INVOICING_MODE_FREE = "free_invoicing"
+
+# Modes that create recurring contracts inside this module.
+SELFCONSUMPTION_CONTRACT_INVOICING_MODES = (
+    SELFCONSUMPTION_INVOICING_MODE_POWER_ACQUIRED,
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
+    SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM,
+)
 
 SELFCONSUMPTION_INVOICING_MODE_LABELS = {
     SELFCONSUMPTION_INVOICING_MODE_NONE: STATE_LABELS[
@@ -34,6 +42,9 @@ SELFCONSUMPTION_INVOICING_MODE_LABELS = {
     SELFCONSUMPTION_INVOICING_MODE_POWER_ACQUIRED: _("Power Acquired"),
     SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED: _("Energy Delivered"),
     SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM: _("Energy Delivered Custom"),
+    SELFCONSUMPTION_INVOICING_MODE_FREE: _(
+        "Free invoicing (external to the self-consumption management module)"
+    ),
 }
 
 SELFCONSUMPTION_INVOICING_MODE_VALUES = [
@@ -55,7 +66,24 @@ SELFCONSUMPTION_INVOICING_MODE_VALUES = [
             SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM
         ],
     ),
+    (
+        SELFCONSUMPTION_INVOICING_MODE_FREE,
+        SELFCONSUMPTION_INVOICING_MODE_LABELS[SELFCONSUMPTION_INVOICING_MODE_FREE],
+    ),
 ]
+
+
+def get_free_invoicing_notice():
+    """Explanation shown when the community invoices outside this module."""
+    return _(
+        "The energy community will invoice the maintenance fees for this project "
+        "without using the recurring invoicing resources that are predefined and "
+        "integrated in this self-consumption management module. For example: by "
+        "manually creating and/or mass-importing, from the Invoicing/Accounting "
+        "module, the invoices that the community wants to register, send and collect "
+        "periodically from the people and entities linked to this project."
+    )
+
 
 SELFCONSUMPTION_DEFAULT_INVOICING_MODE = SELFCONSUMPTION_INVOICING_MODE_POWER_ACQUIRED
 
