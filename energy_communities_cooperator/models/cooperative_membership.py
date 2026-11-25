@@ -12,6 +12,7 @@ from ..config import (
     MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF,
 )
 from ..schemas import MemberShipMode, SubscriptionMode
+from .cooperator_type_field import CooperatorType
 
 
 class CooperativeMembership(models.Model):
@@ -102,11 +103,13 @@ class CooperativeMembership(models.Model):
                 if line.share_number > 0:
                     share_type = line.share_product_id.default_code
                     break
-            record.cooperator_type = share_type
+            record.cooperator_type = share_type or False
 
-    cooperator_type = fields.Selection(
+    cooperator_type = CooperatorType(
+        selection="_get_share_type",
         compute=_compute_cooperator_type,
         store=True,
+        validate=False,
     )
 
     active = fields.Boolean(string="Active", default=True)
@@ -170,16 +173,16 @@ class CooperativeMembership(models.Model):
         store=True,
     )
 
+    @api.depends_context("company")
     def _get_share_type(self):
         categ_ids = [
             self.env.ref(MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["member"]).id,
             self.env.ref(MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["invited"]).id,
             # self.env.ref(MAPPING__SUBSCRIPTION_MODE__PRODUCT_CATEG_REF["voluntary"]).id,
         ]
-        shares = self.env["product.product"].search(
-            [("is_share", "=", True), ("categ_id", "in", categ_ids)]
+        return self.env["product.template"].get_company_share_type_selection(
+            self.env.company, categ_ids
         )
-        return [(s.default_code, s.short_name) for s in shares]
 
     def assign_cooperator_register_number(self):
         """Set a new cooperator register number on the memberships if one is not
