@@ -183,9 +183,14 @@ team or refer to the project documentation.
 
 ## Changelog
 
+### 2026-11-25 (v16.0.0.8.1)
+
+- Ship the full inscription import workbook
+- Accept an inscription while the subscription is still draft
+
 ### 2026-11-25 (v16.0.0.8.0)
 
-- make the project inscription form configurable
+- Make the project inscription form configurable
 
 ### 2026-10-21 (v16.0.0.7.1)
 
