@@ -6,6 +6,12 @@
 
 ### 2026-11-25 (v16.0.0.8.7)
 
+- Make massive_import_id optional when creating a subscription request
+- Delete energy_communities_cooperator/wizards/account_payment_register.py
+- Add new field massive_import_id
+
+### 2026-11-25 (v16.0.0.8.7)
+
 - Now on product copy default_code and ref_name set (copy) on final
 - Confirm share price changes instead of a non-blocking note
 - Store the share type of the membership company during payment
