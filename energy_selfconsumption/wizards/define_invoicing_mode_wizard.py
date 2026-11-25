@@ -11,13 +11,17 @@ from odoo.addons.energy_communities_service_invoicing.config import (
     RECURRING_RULE_MONTHLY_LAST_DAY,
     SELFCONSUMPTION_SERVICE_PRODUCT_CATEG_REF,
 )
+from odoo.addons.energy_project.config import PROJECT_STATE_ACTIVE
 
 from ..config import (
+    DISTRIBUTION_STATE_ACTIVE,
     DISTRIBUTION_STATE_PROCESS,
     SELFCONSUMPTION_DEFAULT_INVOICING_MODE,
     SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM,
+    SELFCONSUMPTION_INVOICING_MODE_FREE,
     SELFCONSUMPTION_INVOICING_MODE_VALUES,
     SELFCONSUMPTION_PRODUCT_REFS,
+    get_free_invoicing_notice,
 )
 
 
@@ -53,8 +57,11 @@ class DefineInvoicingModeWizard(models.TransientModel):
         required=True,
         help="Mode of invoicing for the self-consumption project",
     )
-    price = fields.Float(
-        required=True, help="Price per unit for the selected invoicing mode"
+    price = fields.Float(help="Price per unit for the selected invoicing mode")
+    free_invoicing_notice = fields.Text(
+        string="Free invoicing notice",
+        compute="_compute_free_invoicing_notice",
+        help="Explanation shown when free external invoicing is selected",
     )
 
     # Project relationship
@@ -73,10 +80,18 @@ class DefineInvoicingModeWizard(models.TransientModel):
         Sets appropriate recurring rule type based on the selected
         invoicing mode to ensure proper billing cycles.
         """
+        if self.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_FREE:
+            return
         if self.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_ENERGY_CUSTOM:
             self.recurring_rule_type = RECURRING_RULE_MONTHLY
         else:
             self.recurring_rule_type = RECURRING_RULE_MONTHLY_LAST_DAY
+
+    @api.depends("invoicing_mode")
+    def _compute_free_invoicing_notice(self):
+        notice = get_free_invoicing_notice()
+        for wizard in self:
+            wizard.free_invoicing_notice = notice
 
     # Validation methods
     def _validate_wizard_data(self):
@@ -92,7 +107,10 @@ class DefineInvoicingModeWizard(models.TransientModel):
         if not self.invoicing_mode:
             raise ValidationError(_("Invoicing mode is required"))
 
-        if self.price <= 0:
+        if (
+            self.invoicing_mode != SELFCONSUMPTION_INVOICING_MODE_FREE
+            and self.price <= 0
+        ):
             raise ValidationError(_("Price must be greater than zero"))
 
         if self.invoicing_mode not in dict(SELFCONSUMPTION_INVOICING_MODE_VALUES):
@@ -108,18 +126,30 @@ class DefineInvoicingModeWizard(models.TransientModel):
         Raises:
             ValidationError: If no valid distribution table found
         """
-        distribution_tables = self.selfconsumption_id.distribution_table_ids.filtered(
+        project = self.selfconsumption_id
+        distribution_tables = project.distribution_table_ids.filtered(
             lambda dt: dt.state == DISTRIBUTION_STATE_PROCESS
         )
+        if distribution_tables:
+            return distribution_tables[0]
 
-        if not distribution_tables:
-            raise ValidationError(
-                _(
-                    "No distribution table found in process state for project '{project}'"
-                ).format(project=self.selfconsumption_id.name)
+        # An already active project in free invoicing has its table active.
+        # Defining an integrated mode from there uses that table.
+        if (
+            project.state == PROJECT_STATE_ACTIVE
+            and project.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_FREE
+        ):
+            active_tables = project.distribution_table_ids.filtered(
+                lambda dt: dt.state == DISTRIBUTION_STATE_ACTIVE
             )
+            if active_tables:
+                return active_tables[0]
 
-        return distribution_tables[0]
+        raise ValidationError(
+            _(
+                "No distribution table found in process state for project '{project}'"
+            ).format(project=project.name)
+        )
 
     def _validate_mandates(self, distribution_table):
         """
@@ -339,6 +369,24 @@ class DefineInvoicingModeWizard(models.TransientModel):
         self.selfconsumption_id.write(update_data)
 
     # Main action method
+    def action_confirm(self):
+        """Accept the selected invoicing mode."""
+        return self.create_contract_template()
+
+    def _confirm_free_invoicing(self):
+        """Store free invoicing without products, pricelists or contracts."""
+        self.ensure_one()
+        if not self.selfconsumption_id:
+            raise ValidationError(_("No self-consumption project selected"))
+        self.selfconsumption_id.write(
+            {
+                "invoicing_mode": SELFCONSUMPTION_INVOICING_MODE_FREE,
+                "product_id": False,
+                "pricelist_id": False,
+            }
+        )
+        return {"type": "ir.actions.act_window_close"}
+
     def create_contract_template(self):
         """
         Create contract template and configure invoicing
@@ -347,10 +395,23 @@ class DefineInvoicingModeWizard(models.TransientModel):
         creation process including validation, product setup,
         pricelist creation, and sale order generation.
 
+        Free invoicing only stores the mode. An active project that leaves
+        free invoicing opens contract generation, because activation already
+        happened and there is no second step in the status bar.
+
         Returns:
-            dict: Action to close the wizard
+            dict: Action to close the wizard or open contract generation
         """
         self.ensure_one()
+
+        if self.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_FREE:
+            return self._confirm_free_invoicing()
+
+        project = self.selfconsumption_id
+        generate_contracts_now = (
+            project.state == PROJECT_STATE_ACTIVE
+            and project.invoicing_mode == SELFCONSUMPTION_INVOICING_MODE_FREE
+        )
 
         # Validate wizard data
         self._validate_wizard_data()
@@ -381,9 +442,11 @@ class DefineInvoicingModeWizard(models.TransientModel):
                 pass  # Best effort cleanup
             raise e
 
-        return {
-            "type": "ir.actions.act_window_close",
-        }
+        if generate_contracts_now:
+            return project._action_open_contract_generation(
+                skip_project_activation=True
+            )
+        return {"type": "ir.actions.act_window_close"}
 
     # Utility methods
     def get_wizard_summary(self):

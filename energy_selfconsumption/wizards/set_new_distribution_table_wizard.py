@@ -13,6 +13,7 @@ from ..config import (
     RECURRING_INVOICING_TYPE_POSTPAID,
     RECURRING_INVOICING_TYPE_PREPAID,
     SELFCONSUMPTION_INVOICING_MODE_ENERGY_DELIVERED,
+    SELFCONSUMPTION_INVOICING_MODE_FREE,
 )
 
 
@@ -280,8 +281,12 @@ class SetNewDistributionTableWizard(models.TransientModel):
         confirm_context.pop("default_selfconsumption_id", None)
         self = self.with_context(confirm_context)
 
-        self.selfconsumption_id.check_dates_contract()
-        self._validate_execution_date()
+        if (
+            self.selfconsumption_id.invoicing_mode
+            != SELFCONSUMPTION_INVOICING_MODE_FREE
+        ):
+            self.selfconsumption_id.check_dates_contract()
+            self._validate_execution_date()
 
         original_recurring_next_date = False
         period_start = False
