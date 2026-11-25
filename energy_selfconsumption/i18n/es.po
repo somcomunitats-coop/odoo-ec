@@ -6774,6 +6774,10 @@ msgstr "Cambiar modo de facturación"
 #. module: energy_selfconsumption
 #. odoo-python
 #: code:addons/energy_selfconsumption/config.py:0
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__account_move__selfconsumption_invoicing_mode__free_invoicing
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_define_invoicing_mode_wizard__invoicing_mode__free_invoicing
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_invoicing_wizard__invoicing_mode__free_invoicing
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_selfconsumption__invoicing_mode__free_invoicing
 #, python-format
 msgid "Free invoicing (external to the self-consumption management module)"
 msgstr "Facturación libre (externa al módulo de Gestión del Autoconsumo)"

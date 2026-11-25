@@ -24,26 +24,22 @@ Main functionalities:
             <field name="arch" type="xml">
                 <form string="Define Invoicing Mode Wizard">
                     <sheet>
+                        <!-- Full width: the free-invoicing label is a long sentence -->
                         <group>
-                            <!-- Left column: Invoicing mode and pricing -->
+                            <field name="invoicing_mode" />
+                        </group>
+                        <group attrs="{'invisible': [('invoicing_mode', '=', 'free_invoicing')]}">
+                            <!-- Left column: pricing -->
                             <group col="1">
-                                <!-- Invoicing mode selection -->
-                                <field name="invoicing_mode" />
-                                
-                                <!-- Price for energy-based modes -->
                                 <field name="price"
                                        string="kWh Price (€/kWh)"
                                        attrs="{'invisible': [('invoicing_mode', 'not in', ['energy_delivered', 'energy_custom'])], 'required': [('invoicing_mode', 'in', ['energy_delivered', 'energy_custom'])]}" />
-                                
-                                <!-- Price for power-based mode -->
                                 <field name="price"
                                        string="kWn Price per day (€/kWn/day)"
                                        attrs="{'invisible': [('invoicing_mode', '!=', 'power_acquired')], 'required': [('invoicing_mode', '=', 'power_acquired')]}" />
                             </group>
-                            
-                            <!-- Right column: Recurring billing configuration -->
-                            <group col="2"
-                                   attrs="{'invisible': [('invoicing_mode', '=', 'free_invoicing')]}">
+                            <!-- Right column: recurring billing -->
+                            <group col="2">
                                 <field name="recurring_rule_type"
                                        attrs="{'required': [('invoicing_mode', '!=', 'free_invoicing')]}" />
                                 <field name="recurring_interval"
@@ -52,8 +48,9 @@ Main functionalities:
                                        attrs="{'required': [('invoicing_mode', '!=', 'free_invoicing')]}" />
                             </group>
                         </group>
-                        <group col="1" attrs="{'invisible': [('invoicing_mode', '!=', 'free_invoicing')]}">
-                            <field name="free_invoicing_notice" nolabel="1" readonly="1" />
+                        <!-- colspan 2 spans the label column and the value column -->
+                        <group attrs="{'invisible': [('invoicing_mode', '!=', 'free_invoicing')]}">
+                            <field name="free_invoicing_notice" nolabel="1" readonly="1" colspan="2" />
                         </group>
                     </sheet>
                     
