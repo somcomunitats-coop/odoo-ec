@@ -6704,21 +6704,31 @@ msgid "WARNING: The person or entity linked to this request has registered an ea
 msgstr "ATENCIÓ: La persona/entitat vinculada a aquesta sol·licitud ha registrat una inscripció anticipada al projecte fotovoltaic {project}."
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.define_invoicing_mode_wizard_form_view
 msgid "Accept"
 msgstr "Acceptar"
 
 #. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
 msgid "Change invoicing mode"
 msgstr "Canviar mode de facturació"
 
 #. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/config.py:0
+#, python-format
 msgid "Free invoicing (external to the self-consumption management module)"
 msgstr "Facturació lliure (externa al mòdul de Gestió del Autoconsum)"
 
 #. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__free_invoicing_notice
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_define_invoicing_mode_wizard__free_invoicing_notice
 msgid "Free invoicing notice"
 msgstr "Avís de facturació lliure"
 
 #. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/config.py:0
+#, python-format
 msgid "The energy community will invoice the maintenance fees for this project without using the recurring invoicing resources that are predefined and integrated in this self-consumption management module. For example: by manually creating and/or mass-importing, from the Invoicing/Accounting module, the invoices that the community wants to register, send and collect periodically from the people and entities linked to this project."
 msgstr "La Comunitat Energètica procedirà a facturar les quotes de manteniment d'aquest projecte, sense fer servir els recursos de facturació recurrent que estan predefinits/integrats en aquest mòdul de Gestió de l'Autoconsum. Per exemple: creant manualment i/o important massivament des del mòdul de Facturació/Comptabilitat, les factures que la comunitat vulgui registrar, enviar i cobrar periòdicament a les persones/entitats vinculades amb aquest projecte."

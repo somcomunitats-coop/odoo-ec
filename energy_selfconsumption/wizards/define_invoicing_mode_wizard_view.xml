@@ -52,7 +52,7 @@ Main functionalities:
                                        attrs="{'required': [('invoicing_mode', '!=', 'free_invoicing')]}" />
                             </group>
                         </group>
-                        <group attrs="{'invisible': [('invoicing_mode', '!=', 'free_invoicing')]}">
+                        <group col="1" attrs="{'invisible': [('invoicing_mode', '!=', 'free_invoicing')]}">
                             <field name="free_invoicing_notice" nolabel="1" readonly="1" />
                         </group>
                     </sheet>
