@@ -21,6 +21,7 @@ def _project(**overrides):
 class TestInscriptionFormConfiguration(TransactionCase):
     def setUp(self):
         super().setUp()
+        self.env = self.env(context=dict(self.env.context, lang="en_US"))
         self.service = self.env[
             "energy_selfconsumption.create_inscription_selfconsumption"
         ]
@@ -132,3 +133,70 @@ class TestInscriptionFormConfiguration(TransactionCase):
         first = self.project.conf_participation_ids[:1]
         found = self.service._get_participation({}, self.project)
         self.assertEqual(found, first)
+
+    def test_draft_subscription_creates_partner_without_invoice(self):
+        share = self.env["product.product"].search(
+            [
+                ("is_share", "=", True),
+                ("company_id", "in", [self.company.id, False]),
+            ],
+            limit=1,
+        )
+        if not share:
+            self.skipTest("No share product in this company")
+        project = SimpleNamespace(
+            name="Early inscription project",
+            company_id=self.company,
+            conf_accept_pending_subscription=True,
+        )
+        subscription = (
+            self.env["subscription.request"]
+            .with_context(from_form=True)
+            .create(
+                {
+                    "firstname": "Early",
+                    "lastname": "Inscription",
+                    "email": "early.inscription@example.com",
+                    "gender": "other",
+                    "address": "Inscription street 1",
+                    "city": "Girona",
+                    "zip_code": "17001",
+                    "country_id": self.env.ref("base.es").id,
+                    "lang": "en_US",
+                    "ordered_parts": 1,
+                    "share_product_id": share.id,
+                    "company_id": self.company.id,
+                    "vat": "ES21530014J",
+                    "source": "manual",
+                    "skip_iban_control": True,
+                }
+            )
+        )
+        self.assertEqual(subscription.state, "draft")
+        self.assertFalse(subscription.partner_id)
+        self.assertEqual(
+            self.service._draft_subscription_without_partner("es21530014j", project),
+            subscription,
+        )
+        self.assertFalse(
+            self.service.resolve_inscription_partner("ES21530014J", project)
+        )
+
+        invoices_before = self.env["account.move"].search_count([])
+        partner = self.service._create_partner_from_draft_subscription(
+            subscription, project
+        )
+
+        self.assertEqual(subscription.state, "draft")
+        self.assertEqual(subscription.partner_id, partner)
+        self.assertEqual(partner.vat, "ES21530014J")
+        self.assertIn(self.company, partner.company_ids)
+        self.assertEqual(self.env["account.move"].search_count([]), invoices_before)
+        self.assertIn("early inscription", subscription.message_ids[:1].body)
+        self.assertFalse(
+            self.service._draft_subscription_without_partner("ES21530014J", project)
+        )
+        self.assertEqual(
+            self.service.resolve_inscription_partner("ES21530014J", project),
+            partner,
+        )

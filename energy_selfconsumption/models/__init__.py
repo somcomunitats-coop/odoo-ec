@@ -11,6 +11,7 @@ from . import partner
 from . import inscription
 from . import product
 from . import project
+from . import res_config_settings
 from . import selfconsumption
 from . import supply_point
 from . import supply_point_assignation

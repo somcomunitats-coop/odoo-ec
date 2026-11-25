@@ -22,7 +22,7 @@ CSV_HEADERS = [
     "DNI Socio",
     "Fecha efectiva",
     "CUPS",
-    "Potencia máxima contratada",
+    "Potencia actual contratada",
     "Tarifa de acceso",
     "Calle 1",
     "Calle 2",
