@@ -4,6 +4,11 @@
 
 ## Changelog
 
+### 2026-11-25 (v16.0.0.8.6)
+
+- New filters add product_template_share_search_view and
+  cooperator.product_template_action
+
 ### 2026-10-21 (v16.0.0.8.5)
 
 - Fix tests
