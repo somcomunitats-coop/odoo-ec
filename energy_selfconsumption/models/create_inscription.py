@@ -5,7 +5,19 @@ from stdnum.es import iban
 from odoo import _, models
 from odoo.exceptions import ValidationError
 
+from ..config import (
+    ACCESS_TARIFF_VALUES,
+    TARIFF_2_0TD,
+    TARIFF_3_0TD,
+    TARIFF_POWER_LIMITS,
+    VEHICLE_ACCESS_TARIFFS,
+)
 from ..utils.validation_utils import validate_cups_code
+
+VOLUNTARY_SHARE_CATEGORY_XMLID = (
+    "energy_communities_cooperator.product_category_company_voluntary_share"
+)
+MISSING_VALUES = (None, False, "")
 
 
 class CreateInscription(models.AbstractModel):
@@ -30,22 +42,156 @@ class CreateInscription(models.AbstractModel):
     DEFAULT_TARIFF_MEDIUM = "3.0TD"
     DEFAULT_TARIFF_HIGH = "6.1TD"
 
+    def normalize_vat(self, vat):
+        """Return the VAT with surrounding spaces removed and letters in uppercase."""
+        if vat in MISSING_VALUES:
+            return ""
+        return str(vat).strip().upper()
+
+    def normalize_tariff_code(self, tariff):
+        """Return a known access-tariff code, ignoring spaces and letter case."""
+        if tariff in MISSING_VALUES:
+            return False
+        compact = "".join(str(tariff).split()).upper()
+        valid_codes = {code for code, _label in ACCESS_TARIFF_VALUES}
+        if compact in valid_codes:
+            return compact
+        return False
+
+    def _parse_power(self, raw_power):
+        """Parse a contracted-power value. Blank input stays blank."""
+        if raw_power in MISSING_VALUES:
+            return False
+        return float(str(raw_power).replace(",", "."))
+
+    def tariff_matches_power(self, tariff, contracted_power):
+        """Apply the supply-point power rules. Blank power skips the check.
+
+        Vehicle tariffs and tariffs above 3.0TD have no power rule.
+        """
+        if not tariff or not contracted_power:
+            return True
+        if tariff in VEHICLE_ACCESS_TARIFFS:
+            return True
+        if tariff == TARIFF_2_0TD:
+            return 0 <= contracted_power <= TARIFF_POWER_LIMITS[TARIFF_2_0TD]
+        if tariff == TARIFF_3_0TD:
+            return contracted_power > TARIFF_POWER_LIMITS[TARIFF_2_0TD]
+        return True
+
+    def partner_registration_error_message(self):
+        """Message shown when the VAT is not a member or an invited person."""
+        return _(
+            "No person or entity with this VAT number is registered in the energy "
+            "community to take part in the community projects (you must be an "
+            "effective member or an invited participant to submit the inscription). "
+            "If you are already a member or an invited participant, check the VAT "
+            "number you entered. Otherwise, contact the community to register "
+            "formally as a member or invited person or entity so you can proceed "
+            "with your project inscription."
+        )
+
+    def prepare_inscription_values(self, values, project):
+        """Drop hidden fields and resolve tariff and power from the form setup.
+
+        Returns an error message, or False when the values are ready to create
+        the inscription. The same rules apply to the public form and the CSV import.
+        """
+        self._normalize_inscription_vats(values)
+        if not project.conf_show_contracted_power:
+            values.pop("supplypoint_contracted_power", None)
+        if not project.conf_show_access_tariff:
+            values.pop("supplypoint_tariff", None)
+            values.pop("tariff", None)
+        if not project.conf_show_annual_consumption:
+            values["inscriptionselfconsumption_annual_electricity_use"] = 0.0
+        elif (
+            values.get("inscriptionselfconsumption_annual_electricity_use")
+            in MISSING_VALUES
+        ):
+            return _("Annual electricity consumption is required.")
+        if not project.conf_show_participation:
+            values.pop("inscriptionselfconsumption_participation", None)
+        elif values.get("inscriptionselfconsumption_participation") in MISSING_VALUES:
+            return _("Selected participation does not exist.")
+        if not project.conf_bank_details:
+            values.pop("inscription_acc_number", None)
+
+        error, tariff, power = self._resolve_tariff_and_power(values, project)
+        if error:
+            return error
+        values["tariff"] = tariff
+        values["supplypoint_contracted_power"] = power
+        return False
+
+    def _normalize_inscription_vats(self, values):
+        for key in ("inscription_partner_id_vat", "supplypoint_owner_id_vat"):
+            if key in values:
+                values[key] = self.normalize_vat(values.get(key))
+
+    def _resolve_tariff_and_power(self, values, project):
+        """Return (error, tariff, power) following the form configuration."""
+        show_power = project.conf_show_contracted_power
+        show_tariff = project.conf_show_access_tariff
+        if not show_power and not show_tariff:
+            return (
+                _(
+                    "At least one of these 2 fields must be visible on the form: "
+                    "contracted power and/or access tariff"
+                ),
+                False,
+                0.0,
+            )
+
+        power = 0.0
+        if show_power:
+            power = self._parse_power(values.get("supplypoint_contracted_power"))
+            if power is False:
+                return (
+                    _("Current contracted power at the supply point is required."),
+                    False,
+                    0.0,
+                )
+
+        tariff = False
+        if show_tariff:
+            raw_tariff = values.get("supplypoint_tariff") or values.get("tariff")
+            if raw_tariff in MISSING_VALUES:
+                return (_("Access tariff is required."), False, power or 0.0)
+            tariff = self.normalize_tariff_code(raw_tariff)
+            if not tariff:
+                return (_("The selected access tariff is not valid."), False, power)
+
+        if show_power and show_tariff:
+            if not self.tariff_matches_power(tariff, power):
+                return (
+                    _("The indicated power is incompatible with the selected tariff."),
+                    tariff,
+                    power,
+                )
+            return False, tariff, power
+        if show_tariff:
+            return False, tariff, 0.0
+        return False, self._determine_tariff(power, {}), power
+
     def _determine_tariff(self, contracted_power, values):
         """
-        Determine the appropriate tariff based on contracted power
+        Determine the appropriate tariff based on contracted power.
+
+        Vehicle tariffs are never selected from power. An explicit tariff,
+        including a vehicle tariff, is kept when the caller provides one.
 
         Args:
             contracted_power (float): Contracted power in kW
             values (dict): Form values that may contain tariff override
 
         Returns:
-            str: Tariff code (2.0TD, 3.0TD, or 6.1TD)
+            str: Tariff code (2.0TD, 3.0TD, or 6.1TD unless explicitly overridden)
         """
-        # Return explicit tariff if provided
-        if values.get("tariff"):
-            return values["tariff"]
+        explicit_tariff = self.normalize_tariff_code(values.get("tariff"))
+        if explicit_tariff:
+            return explicit_tariff
 
-        # Determine tariff based on power thresholds
         if contracted_power <= self.TARIFF_2_0TD_LIMIT:
             return self.DEFAULT_TARIFF_LOW
         elif contracted_power <= self.TARIFF_3_0TD_LIMIT:
@@ -257,20 +403,15 @@ class CreateInscription(models.AbstractModel):
         Returns:
             tuple: (error_flag, message)
         """
-        # Validate partner existence
-        partner = self._get_partner(
-            values["inscription_partner_id_vat"], project.company_id.id
+        config_error = self.prepare_inscription_values(values, project)
+        if config_error:
+            return True, config_error
+
+        partner = self.resolve_inscription_partner(
+            values.get("inscription_partner_id_vat"), project
         )
         if not partner:
-            return True, _("Partner with VAT:<b>{vat}</b> was not found.").format(
-                vat=values["inscription_partner_id_vat"]
-            )
-
-        # Validate cooperator status
-        if not self._is_cooperator(partner, project):
-            return True, _("Partner with VAT:<b>{vat}</b> is not a cooperator.").format(
-                vat=values["inscription_partner_id_vat"]
-            )
+            return True, self.partner_registration_error_message()
 
         # Set default date format if not provided
         values.setdefault("date_format", "%Y-%m-%d")
@@ -334,17 +475,66 @@ class CreateInscription(models.AbstractModel):
         Returns:
             res.partner: Partner record or False if not found
         """
+        normalized = self.normalize_vat(vat)
+        if not normalized:
+            return self.env["res.partner"]
         return (
             self.env["res.partner"]
             .sudo()
             .search(
                 [
-                    ("vat", "=", vat),
+                    ("vat", "=ilike", normalized),
                     ("parent_id", "=", False),
                     ("company_ids", "in", (company_id)),
                 ],
                 limit=1,
             )
+        )
+
+    def resolve_inscription_partner(self, vat, project):
+        """Return the partner allowed to register on this project.
+
+        Effective members and invited participants are always accepted.
+        When the project allows registrations in progress, an open
+        subscription request that is not a voluntary contribution is enough.
+        """
+        partner = self._get_partner(vat, project.company_id.id)
+        if partner and self._is_cooperator(partner, project):
+            return partner
+        if not project.conf_accept_pending_subscription:
+            return self.env["res.partner"]
+        open_requests = self._open_subscription_requests(vat, project)
+        if partner and open_requests:
+            return partner
+        return open_requests.mapped("partner_id")[:1]
+
+    def _open_subscription_requests(self, vat, project):
+        """Open subscription requests in this community for the given VAT.
+
+        Archived requests, cancelled requests and voluntary contributions
+        are excluded.
+        """
+        normalized = self.normalize_vat(vat)
+        if not normalized:
+            return self.env["subscription.request"]
+        voluntary_category = self.env.ref(VOLUNTARY_SHARE_CATEGORY_XMLID)
+        requests = (
+            self.env["subscription.request"]
+            .sudo()
+            .search(
+                [
+                    ("company_id", "=", project.company_id.id),
+                    ("active", "=", True),
+                    ("state", "!=", "cancelled"),
+                    "|",
+                    ("vat", "=ilike", normalized),
+                    ("partner_id.vat", "=ilike", normalized),
+                ]
+            )
+        )
+        return requests.filtered(
+            lambda subscription: subscription.share_product_id.categ_id
+            and subscription.share_product_id.categ_id != voluntary_category
         )
 
     def _is_cooperator(self, partner, project):
@@ -373,10 +563,32 @@ class CreateInscription(models.AbstractModel):
             )
         )
 
+    def _latest_valid_mandate(self, partner, project):
+        """Return the newest valid mandate of the partner in this community."""
+        return (
+            self.env["account.banking.mandate"]
+            .sudo()
+            .search(
+                [
+                    ("partner_id", "=", partner.id),
+                    ("company_id", "=", project.company_id.id),
+                    ("state", "=", "valid"),
+                    ("partner_bank_id", "!=", False),
+                ],
+                order="create_date desc, id desc",
+                limit=1,
+            )
+        )
+
     def _create_bank_mandate(self, values, partner, project):
+        """Create a mandate from the form IBAN, or reuse the latest valid one.
+
+        When the form does not ask for bank details, the inscription keeps the
+        most recently created valid mandate. It stays empty when there is none.
+        """
         if not project.conf_bank_details:
-            return False, None
-        """Creates a bank mandate."""
+            mandate = self._latest_valid_mandate(partner, project)
+            return False, mandate or None
         iban_number = values.get("inscription_acc_number", False)
         if not iban_number:
             return True, _("The IBAN field cannot be empty.")
@@ -521,9 +733,9 @@ class CreateInscription(models.AbstractModel):
         partner,
     ):
         # Check if the owner is the same as the partner
-        if values.get("inscription_partner_id_vat") == values.get(
-            "supplypoint_owner_id_vat", False
-        ):
+        partner_vat = self.normalize_vat(values.get("inscription_partner_id_vat"))
+        owner_vat = self.normalize_vat(values.get("supplypoint_owner_id_vat"))
+        if partner_vat and partner_vat == owner_vat:
             values["supplypoint_owner_id_same"] = "yes"
 
         """Obtains or creates the owner of the supply."""
@@ -606,34 +818,38 @@ class CreateInscription(models.AbstractModel):
             return birthdate_obj.strftime("%Y-%m-%d")
         return None
 
-    def _get_existing_contact_owner(self, values, project):
-        """Search for an existing VAT-based owner."""
+    def _search_partner_by_vat(self, vat, company_id, partner_type):
+        """Find a partner by VAT without depending on the letter case."""
+        normalized = self.normalize_vat(vat)
+        if not normalized:
+            return self.env["res.partner"]
         return (
             self.env["res.partner"]
             .sudo()
             .search(
                 [
-                    ("company_ids", "in", (project.company_id.id)),
-                    ("vat", "=", values["supplypoint_owner_id_vat"]),
-                    ("type", "=", "contact"),
+                    ("company_ids", "in", (company_id,)),
+                    ("vat", "=ilike", normalized),
+                    ("type", "=", partner_type),
                 ],
                 limit=1,
             )
         )
 
+    def _get_existing_contact_owner(self, values, project):
+        """Search for an existing VAT-based owner."""
+        return self._search_partner_by_vat(
+            values.get("supplypoint_owner_id_vat"),
+            project.company_id.id,
+            "contact",
+        )
+
     def _get_existing_owner_self_consumption_owner(self, values, project):
         """Search for an existing VAT-based owner."""
-        return (
-            self.env["res.partner"]
-            .sudo()
-            .search(
-                [
-                    ("vat", "=", values["supplypoint_owner_id_vat"]),
-                    ("type", "=", "owner_self-consumption"),
-                    ("company_ids", "in", (project.company_id.id)),
-                ],
-                limit=1,
-            )
+        return self._search_partner_by_vat(
+            values.get("supplypoint_owner_id_vat"),
+            project.company_id.id,
+            "owner_self-consumption",
         )
 
     def _create_new_owner(

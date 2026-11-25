@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.energy_communities.config import STATE_ACTIVE, STATE_INACTIVE
 
-from ..config import TARIFF_2_0TD, TARIFF_3_0TD, TARIFF_6_1TD
+from ..config import ACCESS_TARIFF_VALUES, TARIFF_2_0TD, TARIFF_3_0TD
 from ..utils.validation_utils import (
     validate_cadastral_reference,
     validate_cups_code,
@@ -16,16 +16,6 @@ from ..utils.validation_utils import (
 # Constants for tariff validation
 TARIFF_2_0TD_MAX_POWER = 15  # kW
 TARIFF_3_0TD_MIN_POWER = 15  # kW
-
-# Access tariff values
-ACCESS_TARIFF_VALUES = [
-    (TARIFF_2_0TD, TARIFF_2_0TD),
-    (TARIFF_3_0TD, TARIFF_3_0TD),
-    (TARIFF_6_1TD, TARIFF_6_1TD),
-    ("6.2TD", "6.2TD"),
-    ("6.3TD", "6.3TD"),
-    ("6.4TD", "6.4TD"),
-]
 
 # Used in self-consumption values
 USED_IN_SELFCONSUMPTION_VALUES = [

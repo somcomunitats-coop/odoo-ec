@@ -530,9 +530,12 @@ msgid "Accept terms"
 msgstr "Baldintzak onartu"
 
 #. module: energy_selfconsumption
+#. odoo-python
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__tariff
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
 msgid "Access tariff"
-msgstr "Sarbide tarifa"
+msgstr "Sarbide-tarifa"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__acc_number
@@ -769,7 +772,7 @@ msgstr "BANKUKO DATUAK"
 #. module: energy_selfconsumption
 #: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_data_error_message_template
 msgid "Back to form"
-msgstr "Itzuli formara"
+msgstr "Itzuli formulariora"
 
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__mandate_id
@@ -6408,3 +6411,160 @@ msgstr ""
 "fakturazio-aldia %(period_start)setik %(period_end)sera da. Jarraian "
 "hautatzen duzun ordezkapenaren benetako datak tarte horren barruan egon "
 "behar du."
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_contracted_power
+msgid "Show contracted power"
+msgstr "Bistaratu kontratatutako potentzia"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_contracted_power
+msgid "Display the contracted power field on the inscription form"
+msgstr "Erakutsi kontratatutako potentziaren eremua izen-emate formularioan"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_access_tariff
+msgid "Show access tariff"
+msgstr "Erakutsi sarbide-tarifa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_access_tariff
+msgid "Display the access tariff field on the inscription form"
+msgstr "Erakutsi sarbide-tarifaren eremua izen-emate formularioan"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_annual_consumption
+msgid "Show annual consumption"
+msgstr "Erakutsi urteko kontsumoa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_annual_consumption
+msgid "Display the annual electricity consumption field on the inscription form"
+msgstr "Erakutsi urteko elektrizitate-kontsumoaren eremua izen-emate formularioan"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
+msgid "Show contribution selector"
+msgstr "Erakutsi partaidetza-hautatzailea"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
+msgid "Display the participation selector on the inscription form"
+msgstr "Erakutsi partaidetza-hautatzailea izen-emate formularioan"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
+msgid "Help paragraph for the contribution selection"
+msgstr "Partaidetza hautatzeko laguntza-paragrafoa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
+msgid "Text shown under the participation selector on the inscription form"
+msgstr "Partaidetza-hautatzailearen azpian erakusten den testua izen-emate formularioan"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_accept_pending_subscription
+msgid "Accept inscriptions while member or invited registration is in progress"
+msgstr "Bazkide/gonbidatu gisa izena emateko prozesuan dauden izen-emateak onartzea"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_accept_pending_subscription
+msgid "When enabled, a person who is not yet an effective member or invited participant can register if they have an open subscription request in this community that is not a voluntary contribution."
+msgstr "Aktibatuta badago, oraindik bazkide efektiboa edo gonbidatua ez den pertsona batek izena eman dezake komunitate honetan borondatezko ekarpena ez den alta-eskaera ireki bat badu."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "At least one of these 2 fields must be visible on the form: contracted power and/or access tariff"
+msgstr "Gutxienez 2 eremu hauetako batek ikusgai egon behar du formularioan: kontratatutako potentzia eta/edo sarbide-tarifa"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "<span>WARNING: If the person or entity should not be able to choose a participation on the form, Odoo will assign the inscription a default participation, which will be the first of the participations available in the 'Participation' list.</span>"
+msgstr "<span>KONTUZ: Pertsona/entitate batek formularioan parte hartzerik aukeratzea nahi ez badu, Odook parte-hartzearen balio lehenetsia esleituko dio izen-emateari. Balio hori 'Partaidetza' zerrendan dauden 1. partaidetzari dagokiona izango da</span>"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid "Current contracted power at the supply point"
+msgstr "Hornidura-puntuan kontratatutako gaur egungo potentzia"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid "You can find the current contracted power on the electricity bill. Enter it in kW."
+msgstr "Kontratatutako potentzia faktura elektrikoan aurki dezakezu. Adierazi kW-etan"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid "Electricity access tariff applied to the supply point. You can find it on your electricity bill."
+msgstr "Hornidura-puntuari aplikatutako elektrizitatearen sarbide-tarifa. Faktura elektrikoan ikus dezakezu."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "The indicated power is incompatible with the selected tariff."
+msgstr "Adierazitako potentzia ez da bateragarria hautatutako tarifarekin"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Current contracted power at the supply point is required."
+msgstr "Hornidura-puntuan kontratatutako gaur egungo potentzia nahitaezkoa da."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Annual electricity consumption is required."
+msgstr "Urteko elektrizitate-kontsumoa nahitaezkoa da."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Access tariff is required."
+msgstr "Sarbide-tarifa nahitaezkoa da."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "The selected access tariff is not valid."
+msgstr "Hautatutako sarbide-tarifa ez da baliozkoa."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "No person or entity with this VAT number is registered in the energy community to take part in the community projects (you must be an effective member or an invited participant to submit the inscription). If you are already a member or an invited participant, check the VAT number you entered. Otherwise, contact the community to register formally as a member or invited person or entity so you can proceed with your project inscription."
+msgstr "Komunitate energetikoan ez dago IFZ/IFK hori duen pertsonarik/erakunderik Erkidegoaren proiektuetan parte hartu ahal izateko (bazkide efektiboa edo parte hartzera gonbidatua izan behar da izen-ematea egin ahal izateko). Dagoeneko bazkidea edo gonbidatua bazara, berrikusi IFZ/IFK, eta, hala ez bada, jarri harremanetan komunitatearekin, formalki erregistratzeko pertsona/erakunde bazkide edo gonbidatu gisa, eta, hala, proiektuan izena eman ahal izateko"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__3_0tdve
+msgid "3.0TDVE"
+msgstr "3.0TDVE"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_1tdve
+msgid "6.1TDVE"
+msgstr "6.1TDVE"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_2tdve
+msgid "6.2TDVE"
+msgstr "6.2TDVE"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "<p>The usual recommendation for an annual electrical use of is 0.5kW of PV power per 1500 kWh of electrical consumption.</p><p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p><p>1500 - 3000 kWh between 0.5 and 1 kW</p><p>3000 - 5000 kWh between 1.5 - 2 kW</p>"
+msgstr "<p>Urteko erabilera elektrikorako ohiko gomendioa PV 0,5 kW da potentzia kontsumo elektrikoko 1500 kWh bakoitzeko.</p><p>1000 - 1500 kWh gehienez 0,5 kW parte hartzea gomendatzen da</p><p>1500 - 3000 kWh 0,5 eta 1 kW artean</p><p>3000 - 5000 kWh 1,5 - 2 kW artean</p>"

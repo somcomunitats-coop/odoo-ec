@@ -146,17 +146,71 @@ CUPS_LENGTH_22 = 22
 CAU_SEPARATOR = "A"
 LAST_DIGITS_COUNT = 3
 
-# Tariff constants
+# Tariff constants. Codes have no space between the number and the letters.
 TARIFF_2_0TD = "2.0TD"
 TARIFF_3_0TD = "3.0TD"
+TARIFF_3_0TDVE = "3.0TDVE"
 TARIFF_6_1TD = "6.1TD"
+TARIFF_6_1TDVE = "6.1TDVE"
 TARIFF_6_2TD = "6.2TD"
+TARIFF_6_2TDVE = "6.2TDVE"
 TARIFF_6_3TD = "6.3TD"
 TARIFF_6_4TD = "6.4TD"
+
+# Alphabetical order used by the supply point and the public form.
+ACCESS_TARIFF_VALUES = [
+    (TARIFF_2_0TD, TARIFF_2_0TD),
+    (TARIFF_3_0TD, TARIFF_3_0TD),
+    (TARIFF_3_0TDVE, TARIFF_3_0TDVE),
+    (TARIFF_6_1TD, TARIFF_6_1TD),
+    (TARIFF_6_1TDVE, TARIFF_6_1TDVE),
+    (TARIFF_6_2TD, TARIFF_6_2TD),
+    (TARIFF_6_2TDVE, TARIFF_6_2TDVE),
+    (TARIFF_6_3TD, TARIFF_6_3TD),
+    (TARIFF_6_4TD, TARIFF_6_4TD),
+]
+
+# Electric-vehicle tariffs are never inferred from contracted power.
+VEHICLE_ACCESS_TARIFFS = {
+    TARIFF_3_0TDVE,
+    TARIFF_6_1TDVE,
+    TARIFF_6_2TDVE,
+}
 
 TARIFF_POWER_LIMITS = {
     TARIFF_2_0TD: 15,  # kW
     TARIFF_3_0TD: 300,  # kW
+}
+
+PARTICIPATION_HELP_HTML_BY_LANG = {
+    "en_US": (
+        "<p>The usual recommendation for an annual electrical use of is 0.5kW "
+        "of PV power per 1500 kWh of electrical consumption.</p>"
+        "<p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p>"
+        "<p>1500 - 3000 kWh between 0.5 and 1 kW</p>"
+        "<p>3000 - 5000 kWh between 1.5 - 2 kW</p>"
+    ),
+    "es_ES": (
+        "<p>La recomendación habitual para un uso eléctrico anual es de 0,5 kW "
+        "de energía fotovoltaica de potencia por 1500 kWh de consumo eléctrico.</p>"
+        "<p>1000 - 1500 kWh se recomienda un máximo de 0,5 kW de participación</p>"
+        "<p>1500 - 3000 kWh entre 0,5 y 1 kW</p>"
+        "<p>3000 - 5000 kWh entre 1,5 - 2 kW</p>"
+    ),
+    "ca_ES": (
+        "<p>La recomanació habitual per a un ús elèctric anual de 0,5 kW de FV "
+        "potència per 1500 kWh de consum elèctric.</p>"
+        "<p>1000 - 1500 kWh es recomana un màxim de 0,5 kW de participació</p>"
+        "<p>1500 - 3000 kWh entre 0,5 i 1 kW</p>"
+        "<p>3000 - 5000 kWh entre 1,5 - 2 kW</p>"
+    ),
+    "eu_ES": (
+        "<p>Urteko erabilera elektrikorako ohiko gomendioa PV 0,5 kW da "
+        "potentzia kontsumo elektrikoko 1500 kWh bakoitzeko.</p>"
+        "<p>1000 - 1500 kWh gehienez 0,5 kW parte hartzea gomendatzen da</p>"
+        "<p>1500 - 3000 kWh 0,5 eta 1 kW artean</p>"
+        "<p>3000 - 5000 kWh 1,5 - 2 kW artean</p>"
+    ),
 }
 
 # Power validation constants

@@ -464,7 +464,10 @@ msgid "Accept terms"
 msgstr ""
 
 #. module: energy_selfconsumption
+#. odoo-python
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__tariff
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
 msgid "Access tariff"
 msgstr ""
 
@@ -6270,4 +6273,161 @@ msgid ""
 "The next invoicing period planned on the contracts linked to the current "
 "distribution table is from %(period_start)s to %(period_end)s. The "
 "effective replacement date you select below must be within this range."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "<p>The usual recommendation for an annual electrical use of is 0.5kW of PV power per 1500 kWh of electrical consumption.</p><p>1000 - 1500 kWh a maximum of 0.5 kW of participation is recommended</p><p>1500 - 3000 kWh between 0.5 and 1 kW</p><p>3000 - 5000 kWh between 1.5 - 2 kW</p>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_contracted_power
+msgid "Show contracted power"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_contracted_power
+msgid "Display the contracted power field on the inscription form"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_access_tariff
+msgid "Show access tariff"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_access_tariff
+msgid "Display the access tariff field on the inscription form"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_annual_consumption
+msgid "Show annual consumption"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_annual_consumption
+msgid "Display the annual electricity consumption field on the inscription form"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
+msgid "Show contribution selector"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_show_participation
+msgid "Display the participation selector on the inscription form"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
+msgid "Help paragraph for the contribution selection"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_participation_help
+msgid "Text shown under the participation selector on the inscription form"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_accept_pending_subscription
+msgid "Accept inscriptions while member or invited registration is in progress"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__conf_accept_pending_subscription
+msgid "When enabled, a person who is not yet an effective member or invited participant can register if they have an open subscription request in this community that is not a voluntary contribution."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/selfconsumption.py:0
+#, python-format
+msgid "At least one of these 2 fields must be visible on the form: contracted power and/or access tariff"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid "Current contracted power at the supply point"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid "You can find the current contracted power on the electricity bill. Enter it in kW."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/controllers/inscriptions_form_controllers.py:0
+#, python-format
+msgid "Electricity access tariff applied to the supply point. You can find it on your electricity bill."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "The indicated power is incompatible with the selected tariff."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Current contracted power at the supply point is required."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Annual electricity consumption is required."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "Access tariff is required."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "The selected access tariff is not valid."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/create_inscription.py:0
+#, python-format
+msgid "No person or entity with this VAT number is registered in the energy community to take part in the community projects (you must be an effective member or an invited participant to submit the inscription). If you are already a member or an invited participant, check the VAT number you entered. Otherwise, contact the community to register formally as a member or invited person or entity so you can proceed with your project inscription."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.selfconsumption_form_view
+msgid "<span>WARNING: If the person or entity should not be able to choose a participation on the form, Odoo will assign the inscription a default participation, which will be the first of the participations available in the 'Participation' list.</span>"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__3_0tdve
+msgid "3.0TDVE"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_1tdve
+msgid "6.1TDVE"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields.selection,name:energy_selfconsumption.selection__energy_selfconsumption_supply_point__tariff__6_2tdve
+msgid "6.2TDVE"
 msgstr ""
