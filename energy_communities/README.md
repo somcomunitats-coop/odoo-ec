@@ -4,6 +4,13 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-11-25 (v16.0.0.10.6)
+
+- Pay mass invoices on each invoice date
+- Pay invoices ordered by invoice number
+- Show the invoice date when paying a single invoice
+- Keep the invoice date visible for a single payment
+
 ### 2026-11-25 (v16.0.0.10.5)
 
 - Landing cooperator buttons for non-profit associations and neighborhood communities
