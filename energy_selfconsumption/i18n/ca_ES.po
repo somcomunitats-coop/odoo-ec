@@ -6702,3 +6702,39 @@ msgstr "<span>NOTA: Per poder editar i canviar les configuracions, cal desactiva
 #, python-format
 msgid "WARNING: The person or entity linked to this request has registered an early inscription in the photovoltaic project {project}."
 msgstr "ATENCIÓ: La persona/entitat vinculada a aquesta sol·licitud ha registrat una inscripció anticipada al projecte fotovoltaic {project}."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_tree_view
+msgid "Population"
+msgstr "Nom de la població"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_differs_from_owner
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_search_view
+msgid "Cooperator different from owner"
+msgstr "Sòcia diferent de la titular"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_differs_from_owner
+msgid "True when the cooperator and the owner are different partners"
+msgstr "Cert quan la sòcia i la titular són contactes diferents"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_search_view
+msgid "Linked to a distribution table"
+msgstr "Vinculat a taula de repartiment"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_search_view
+msgid "Linked to an active distribution table"
+msgstr "Vinculat a una taula de repartiment activa"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
+msgid "No supply points yet."
+msgstr "Encara no hi ha punts de subministrament."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
+msgid "Supply points are created from an inscription or from a CSV import."
+msgstr "Els punts de subministrament es creen des d'una inscripció o des d'una importació CSV."

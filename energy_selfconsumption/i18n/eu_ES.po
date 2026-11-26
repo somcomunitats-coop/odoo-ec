@@ -6693,3 +6693,39 @@ msgstr "<span>OHARRA: Konfigurazioak editatzeko eta aldatzeko, formularioa desak
 #, python-format
 msgid "WARNING: The person or entity linked to this request has registered an early inscription in the photovoltaic project {project}."
 msgstr "OHARRA: Eskaera honi lotutako pertsonak edo erakundeak izen-emate aurreratua erregistratu du proiektu fotovoltaiko honetan: {project}."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_tree_view
+msgid "Population"
+msgstr "Herriaren izena"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_differs_from_owner
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_search_view
+msgid "Cooperator different from owner"
+msgstr "Titularra ez den bazkidea"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_differs_from_owner
+msgid "True when the cooperator and the owner are different partners"
+msgstr "Egia bazkidea eta titularra kontaktu desberdinak direnean"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_search_view
+msgid "Linked to a distribution table"
+msgstr "Banaketa-taulari lotua"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_search_view
+msgid "Linked to an active distribution table"
+msgstr "Banaketa-taula aktibo bati lotua"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
+msgid "No supply points yet."
+msgstr "Oraindik ez dago hornidura-punturik."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
+msgid "Supply points are created from an inscription or from a CSV import."
+msgstr "Hornidura-puntuak izen-emate batetik edo CSV inportazio batetik sortzen dira."
