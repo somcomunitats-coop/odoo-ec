@@ -6787,3 +6787,12 @@ msgstr "CANVI DE SÒCIA: L'usuari %(user)s ha canviat la titular preexistent %(o
 #, python-format
 msgid "CHANGE JUSTIFICATION: %(justification)s"
 msgstr "JUSTIFICACIÓ DEL CANVI: %(justification)s"
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "Reception date"
+msgstr "Data de recepció"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__inscription_ids
+msgid "Inscriptions linked to this CUPS"
+msgstr "Inscripcions vinculades a aquest CUPS"

@@ -134,6 +134,26 @@ Main functionalities:
                                     </tree>
                                 </field>
                             </page>
+                            <page string="Inscriptions" name="inscriptions">
+                                <field name="inscription_ids">
+                                    <tree
+                                        create="false"
+                                        delete="false"
+                                        edit="false"
+                                        default_order="create_date desc"
+                                    >
+                                        <field name="state" readonly="1" />
+                                        <field name="partner_id" string="Cooperator" readonly="1" />
+                                        <field name="create_date" string="Reception date" readonly="1" />
+                                        <field name="effective_date" readonly="1" />
+                                        <field name="selfconsumption_project_id" string="Project" readonly="1" />
+                                        <field name="participation_quantity" readonly="1" />
+                                        <field name="participation_assigned_quantity" readonly="1" />
+                                        <field name="participation_real_quantity" readonly="1" />
+                                        <field name="acc_number" string="IBAN" readonly="1" />
+                                    </tree>
+                                </field>
+                            </page>
                         </notebook>
                     </sheet>
                     

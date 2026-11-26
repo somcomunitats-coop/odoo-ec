@@ -148,6 +148,13 @@ class SupplyPoint(models.Model):
         readonly=True,
         help="Distribution table assignments for this supply point",
     )
+    inscription_ids = fields.One2many(
+        "energy_selfconsumption.inscription_selfconsumption",
+        "supply_point_id",
+        string="Inscriptions",
+        readonly=True,
+        help="Inscriptions linked to this CUPS",
+    )
     active = fields.Boolean(
         default=True,
         help="If unchecked, this supply point will be hidden from most views",
