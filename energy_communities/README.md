@@ -4,6 +4,10 @@ Base addon for the basis operacion with energy communities
 
 ## Changelog
 
+### 2026-11-26 (v16.0.0.10.7)
+
+- Keep voluntary share requests valid when the representative is incomplete
+
 ### 2026-11-25 (v16.0.0.10.6)
 
 - Pay mass invoices on each invoice date
