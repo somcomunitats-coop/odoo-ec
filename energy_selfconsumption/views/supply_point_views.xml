@@ -126,7 +126,10 @@ Main functionalities:
                                     <tree default_order="distribution_table_create_date desc">
                                         <field name="selfconsumption_project_id"
                                                string="Name" />
+                                        <field name="distribution_table_id" />
                                         <field name="distribution_table_state" />
+                                        <field name="energy_shares" />
+                                        <field name="coefficient" />
                                         <field name="distribution_table_create_date" />
                                     </tree>
                                 </field>
