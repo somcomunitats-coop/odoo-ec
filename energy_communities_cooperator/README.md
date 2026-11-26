@@ -4,7 +4,11 @@
 
 ## Changelog
 
-### 2026-11-25 (v16.0.0.8.7)
+### 2026-11-26 (v16.0.0.8.9)
+
+- Keep voluntary share requests valid when the representative is incomplete
+
+### 2026-11-25 (v16.0.0.8.8)
 
 - Make massive_import_id optional when creating a subscription request
 - Delete energy_communities_cooperator/wizards/account_payment_register.py
