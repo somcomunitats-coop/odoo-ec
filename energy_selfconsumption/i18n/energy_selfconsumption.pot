@@ -6576,3 +6576,52 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
 msgid "Supply points are created from an inscription or from a CSV import."
 msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_modify_wizard__justification
+msgid "Change justification"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "Modify Supply Point"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+msgid "Free text field in case you want to record the reason for the change for historical traceability. It is not mandatory."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+msgid "ATTENTION: If the Supply Point is linked to the active distribution table, changing the cooperator person or entity means the current fee invoicing contract related to this Supply Point must be modified to link it to the new cooperator."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+msgid "ATTENTION: If the Supply Point is linked to the active distribution table, changing the owner person or entity may mean the representation documents and the project distribution agreement have to be submitted again to the distributor."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/supply_point_modify_wizard.py:0
+#, python-format
+msgid "COOPERATOR CHANGE: User %(user)s has changed the existing cooperator %(old)s for this new one %(new)s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/supply_point_modify_wizard.py:0
+#, python-format
+msgid "OWNER CHANGE: User %(user)s has changed the existing owner %(old)s for this new one %(new)s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/supply_point_modify_wizard.py:0
+#, python-format
+msgid "CHANGE JUSTIFICATION: %(justification)s"
+msgstr ""

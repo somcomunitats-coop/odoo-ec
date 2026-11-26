@@ -349,3 +349,21 @@ class SupplyPoint(models.Model):
         """Toggle active state of the supply point"""
         for record in self:
             record.active = not record.active
+
+    def action_open_modify_wizard(self):
+        """Open the wizard that changes the cooperator or the owner."""
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Modify Supply Point"),
+            "res_model": "energy_selfconsumption.supply_point.modify.wizard",
+            "view_mode": "form",
+            "target": "new",
+            "context": {
+                "default_supply_point_id": self.id,
+                "default_partner_id": self.partner_id.id,
+                "default_owner_id": self.owner_id.id,
+                "default_original_partner_id": self.partner_id.id,
+                "default_original_owner_id": self.owner_id.id,
+            },
+        }

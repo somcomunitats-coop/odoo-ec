@@ -6796,3 +6796,52 @@ msgstr "Todavía no hay puntos de suministro."
 #: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
 msgid "Supply points are created from an inscription or from a CSV import."
 msgstr "Los puntos de suministro se crean desde una inscripción o desde una importación CSV."
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_modify_wizard__justification
+msgid "Change justification"
+msgstr "Justificación del cambio"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "Modify Supply Point"
+msgstr "Modificar Punto de Suministro"
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+msgid "Free text field in case you want to record the reason for the change for historical traceability. It is not mandatory."
+msgstr "Campo de texto libre por si se desea dejar constancia del motivo del cambio de cara a trazabilidad histórica. No es obligatorio rellenarlo."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+msgid "ATTENTION: If the Supply Point is linked to the active distribution table, changing the cooperator person or entity means the current fee invoicing contract related to this Supply Point must be modified to link it to the new cooperator."
+msgstr "ATENCIÓN: Si el Punto de Suministro está vinculado a la tabla de reparto activa, el cambio de la persona/entidad socia, implica la necesidad de modificar el contrato vigente de facturación de cuotas que está relacionado con este Punto de suministro para vincularlo con la nueva socia."
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+msgid "ATTENTION: If the Supply Point is linked to the active distribution table, changing the owner person or entity may mean the representation documents and the project distribution agreement have to be submitted again to the distributor."
+msgstr "ATENCIÓN: Si el Punto de Suministro está vinculado a la tabla de reparto activa, el cambio de la persona/entidad titular, puede implicar la necesidad de volver a presentar a la distribuidora los documentos de representación y el acuerdo de reparto del proyecto."
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/supply_point_modify_wizard.py:0
+#, python-format
+msgid "COOPERATOR CHANGE: User %(user)s has changed the existing cooperator %(old)s for this new one %(new)s"
+msgstr "CAMBIO DE SOCIA: El usuario %(user)s ha cambiado la socia preexistente %(old)s por esta nueva %(new)s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/supply_point_modify_wizard.py:0
+#, python-format
+msgid "OWNER CHANGE: User %(user)s has changed the existing owner %(old)s for this new one %(new)s"
+msgstr "CAMBIO DE TITULAR: El usuario %(user)s ha cambiado la titular preexistente %(old)s por esta nueva %(new)s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/supply_point_modify_wizard.py:0
+#, python-format
+msgid "CHANGE JUSTIFICATION: %(justification)s"
+msgstr "JUSTIFICACIÓN DEL CAMBIO: %(justification)s"

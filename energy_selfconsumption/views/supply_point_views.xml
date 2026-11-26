@@ -24,6 +24,15 @@ Main functionalities:
             <field name="model">energy_selfconsumption.supply_point</field>
             <field name="arch" type="xml">
                 <form string="Supply Points" create="false">
+                    <header>
+                        <button
+                            name="action_open_modify_wizard"
+                            type="object"
+                            string="Modify Supply Point"
+                            class="oe_highlight"
+                            groups="energy_project.group_admin"
+                        />
+                    </header>
                     <sheet>
                         <!-- Supply point title -->
                         <div class="oe_title">
@@ -38,13 +47,16 @@ Main functionalities:
                             <!-- Left column: Technical and partner data -->
                             <group>
                                 <!-- CUPS identification code -->
-                                <field name="code" />
+                                <field name="id" invisible="1" />
+                                <field name="code" attrs="{'readonly': [('id', '!=', False)]}" />
                                 
                                 <!-- Partner relationships -->
                                 <field name="partner_id"
-                                       options="{'no_create': True}" />
+                                       options="{'no_create': True}"
+                                       attrs="{'readonly': [('id', '!=', False)]}" />
                                 <field name="owner_id"
-                                       domain="['|', ('member', '=' , False), ('id', '=', partner_id)]" />
+                                       domain="['|', ('member', '=' , False), ('id', '=', partner_id)]"
+                                       attrs="{'readonly': [('id', '!=', False)]}" />
                                 
                                 <!-- Energy suppliers -->
                                 <field name="reseller_id"

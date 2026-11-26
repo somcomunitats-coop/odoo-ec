@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="supply_point_modify_wizard_form_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.supply_point.modify.wizard.form</field>
+            <field name="model">energy_selfconsumption.supply_point.modify.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Modify Supply Point">
+                    <field name="show_partner_warning" invisible="1" />
+                    <field name="show_owner_warning" invisible="1" />
+                    <field name="original_partner_id" invisible="1" />
+                    <field name="original_owner_id" invisible="1" />
+                    <div
+                        class="alert alert-warning"
+                        role="alert"
+                        attrs="{'invisible': [('show_partner_warning', '=', False)]}"
+                    >
+                        ATTENTION: If the Supply Point is linked to the active distribution table, changing the cooperator person or entity means the current fee invoicing contract related to this Supply Point must be modified to link it to the new cooperator.
+                    </div>
+                    <group>
+                        <field name="supply_point_id" invisible="1" />
+                        <field name="partner_id" options="{'no_create': True}" />
+                        <field
+                            name="owner_id"
+                            options="{'no_create': True}"
+                            domain="['|', ('member', '=', False), ('id', '=', partner_id)]"
+                        />
+                        <field
+                            name="justification"
+                            placeholder="Free text field in case you want to record the reason for the change for historical traceability. It is not mandatory."
+                        />
+                    </group>
+                    <div
+                        class="alert alert-warning"
+                        role="alert"
+                        attrs="{'invisible': [('show_owner_warning', '=', False)]}"
+                    >
+                        ATTENTION: If the Supply Point is linked to the active distribution table, changing the owner person or entity may mean the representation documents and the project distribution agreement have to be submitted again to the distributor.
+                    </div>
+                    <footer>
+                        <button
+                            name="action_confirm"
+                            type="object"
+                            string="Modify Supply Point"
+                            class="btn-primary"
+                        />
+                        <button special="cancel" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
