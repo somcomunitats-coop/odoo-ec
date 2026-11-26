@@ -285,10 +285,27 @@ class SubscriptionRequestUtils(Component, ValidationMixin):
                     "company_email": partner.email,
                     "firstname": representative_partner.firstname
                     or representative_partner.name
+                    or partner.name
+                    or partner.firstname
                     or ".",
-                    "lastname": representative_partner.lastname or ".",
-                    "email": representative_partner.email or ".",
+                    "lastname": representative_partner.lastname
+                    or partner.lastname
+                    or ".",
+                    "email": representative_partner.email
+                    or self._email_with_representative_alias(partner.email)
+                    or ".",
                 }
             )
 
         return partner_params
+
+    def _email_with_representative_alias(self, email):
+        """Return a representative alias built from the company email.
+
+        agr@gmail.com becomes agr+representante@gmail.com.
+        """
+        email = (email or "").strip()
+        if "@" not in email:
+            return email
+        local_part, domain = email.rsplit("@", 1)
+        return "{}+legal_rep@{}".format(local_part, domain)

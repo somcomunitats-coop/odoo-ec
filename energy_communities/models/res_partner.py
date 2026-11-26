@@ -139,8 +139,18 @@ class ResPartner(models.Model):
         domain = [("vat", "ilike", vat)]
         if company_id:
             domain.append(("company_ids", "in", int(company_id)))
-        partner = self.search(domain, limit=1)
-        return partner
+        # Root contacts (empty parent_id) must come before child contacts that
+        # share the same VAT. Ordering by the parent_id many2one sorts on the
+        # parent name and puts empty parents last, so the preference is applied
+        # after the search.
+        partners = self.search(domain)
+        return partners.sorted(
+            key=lambda partner: (
+                bool(partner.parent_id),
+                partner.display_name or "",
+                -partner.id,
+            )
+        )[:1]
 
     def action_my_community(self):
         return {
