@@ -25,6 +25,12 @@ Main functionalities:
                       decoration-warning="state == 'change'" 
                       decoration-success="state == 'active'" 
                       decoration-danger="state == 'cancelled'">
+                    <button
+                        name="action_open_form"
+                        type="object"
+                        icon="fa-external-link"
+                        title="Open form"
+                    />
                     <!-- Inscription state -->
                     <field name="state" width="6%" optional="show" readonly="1"/>
                     
@@ -63,6 +69,91 @@ Main functionalities:
                     <field name="participation_real_quantity" 
                            sum="True" width="6%" optional="show" readonly="1" />
                 </tree>
+            </field>
+        </record>
+
+        <record id="inscription_view_form" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.inscription_selfconsumption.form</field>
+            <field name="model">energy_selfconsumption.inscription_selfconsumption</field>
+            <field name="arch" type="xml">
+                <form string="Inscription" create="false">
+                    <header>
+                        <field
+                            name="state"
+                            widget="statusbar"
+                            readonly="1"
+                            statusbar_visible="inactive,active,change,cancelled"
+                        />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button
+                                name="action_open_supply_point"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-bolt"
+                            >
+                                <span>Supply Point</span>
+                            </button>
+                            <button
+                                name="action_open_cooperator"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-user"
+                            >
+                                <span>Cooperator</span>
+                            </button>
+                            <button
+                                name="action_open_owner"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-home"
+                            >
+                                <span>Owner</span>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" options="{'no_create': True}" />
+                                <field name="owner_id" />
+                                <field name="supply_point_id" options="{'no_create': True}" />
+                                <field name="code" />
+                            </group>
+                            <group>
+                                <field name="selfconsumption_project_id" />
+                                <field name="effective_date" />
+                                <field name="create_date" string="Reception date" />
+                                <field name="acc_number" string="IBAN" />
+                            </group>
+                        </group>
+                        <group string="Participation">
+                            <field name="participation_id" />
+                            <field name="participation_quantity" />
+                            <field
+                                name="participation_assigned_quantity"
+                                attrs="{'readonly': [('state', '=', 'active')]}"
+                            />
+                            <field name="participation_real_quantity" readonly="1" />
+                        </group>
+                        <group string="Distribution Tables">
+                            <field
+                                name="distribution_table_ids"
+                                widget="many2many_tags"
+                                readonly="1"
+                            />
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
             </field>
         </record>
 

@@ -6785,3 +6785,75 @@ msgstr "Jasotze-data"
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__inscription_ids
 msgid "Inscriptions linked to this CUPS"
 msgstr "CUPS honi lotutako izen-emateak"
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_view_tree
+msgid "Open form"
+msgstr "Ireki formularioa"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__distribution_table_ids
+msgid "Distribution tables of this project that include the supply point"
+msgstr "Proiektu honetako banaketa-taulak, hornidura-puntua barne hartzen dutenak"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Inscription received with the following values:"
+msgstr "Izen-ematea balio hauekin jaso da:"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Project: %s"
+msgstr "Proiektua: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Cooperator: %s"
+msgstr "Bazkidea: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Owner: %s"
+msgstr "Titularra: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Supply point: %s"
+msgstr "Hornidura-puntua: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Effective date: %s"
+msgstr "Data eraginkorra: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Requested participation: %s"
+msgstr "Eskatutako parte-hartzea: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Annual electricity use: %s kWh"
+msgstr "Urteko kontsumo elektrikoa: %s kWh"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "IBAN: %s"
+msgstr "IBAN: %s"

@@ -1,3 +1,5 @@
+from markupsafe import Markup
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -26,6 +28,7 @@ class Inscription(models.Model):
     """
 
     _name = "energy_selfconsumption.inscription_selfconsumption"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _inherits = {
         "energy_project.inscription": "inscription_id",
     }
@@ -56,6 +59,7 @@ class Inscription(models.Model):
     participation_id = fields.Many2one(
         comodel_name="energy_selfconsumptions.participation",
         string="Participation",
+        tracking=True,
         help="Participation option selected for this inscription",
     )
     participation_quantity = fields.Float(
@@ -68,6 +72,7 @@ class Inscription(models.Model):
         default=lambda self: self.participation_id.quantity
         if self.participation_id
         else 0.0,
+        tracking=True,
         help="Participation quantity agreed upon during registration",
     )
     participation_real_quantity = fields.Float(
@@ -75,6 +80,7 @@ class Inscription(models.Model):
         default=lambda self: self.participation_id.quantity
         if self.participation_id
         else 0.0,
+        tracking=True,
         help="Current actual participation quantity in the project",
     )
 
@@ -89,6 +95,7 @@ class Inscription(models.Model):
         string="Status",
         selection=INSCRIPTION_STATE_VALUES,
         default=INSCRIPTION_STATE_DEFAULT_VALUE,
+        tracking=True,
         help="Current status of the inscription",
     )
     accept = fields.Boolean(string="I accept bank wire transfer")
@@ -115,6 +122,33 @@ class Inscription(models.Model):
         related="supply_point_id.owner_id.vulnerability_situation",
         help="Vulnerability situation of the supply point owner",
     )
+    distribution_table_ids = fields.Many2many(
+        "energy_selfconsumption.distribution_table",
+        compute="_compute_distribution_table_ids",
+        string="Distribution Tables",
+        help="Distribution tables of this project that include the supply point",
+    )
+
+    @api.depends("supply_point_id", "selfconsumption_project_id")
+    def _compute_distribution_table_ids(self):
+        """Distribution tables of this project that assign this supply point."""
+        assignation_model = self.env["energy_selfconsumption.supply_point_assignation"]
+        empty_tables = self.env["energy_selfconsumption.distribution_table"]
+        for record in self:
+            if not record.supply_point_id or not record.selfconsumption_project_id:
+                record.distribution_table_ids = empty_tables
+                continue
+            assignations = assignation_model.search(
+                [
+                    ("supply_point_id", "=", record.supply_point_id.id),
+                    (
+                        "selfconsumption_project_id",
+                        "=",
+                        record.selfconsumption_project_id.id,
+                    ),
+                ]
+            )
+            record.distribution_table_ids = assignations.distribution_table_id
 
     # Onchange methods
     @api.onchange("participation_assigned_quantity")
@@ -257,6 +291,89 @@ class Inscription(models.Model):
         ).read()[0]
         action["context"] = ctx
         return action
+
+    def action_open_form(self):
+        """Open this inscription in its form view."""
+        self.ensure_one()
+        return self._open_record_action(self)
+
+    def action_open_supply_point(self):
+        """Open the supply point linked to this inscription."""
+        self.ensure_one()
+        return self._open_record_action(self.supply_point_id)
+
+    def action_open_cooperator(self):
+        """Open the cooperator linked to this inscription."""
+        self.ensure_one()
+        return self._open_record_action(self.partner_id)
+
+    def action_open_owner(self):
+        """Open the supply point owner linked to this inscription."""
+        self.ensure_one()
+        return self._open_record_action(self.owner_id)
+
+    def _open_record_action(self, record):
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": record._name,
+            "res_id": record.id,
+            "view_mode": "form",
+            "target": "current",
+        }
+
+    def post_received_values(self):
+        """Log on the chatter the values received from the form or the CSV."""
+        author = self.env.user.partner_id
+        for inscription in self:
+            inscription.sudo().message_post(
+                body=inscription._received_values_message(),
+                author_id=author.id,
+                subtype_xmlid="mail.mt_note",
+            )
+
+    def _partner_chatter_link(self, partner):
+        if not partner:
+            return "-"
+        title = "[{}] {}".format(partner.id, partner.display_name)
+        return partner._get_html_link(title=title)
+
+    def _received_values_message(self):
+        """HTML note with the values stored when the inscription was created."""
+        self.ensure_one()
+        supply_point = self.supply_point_id
+        lines = [
+            self._message_line(
+                _("Project: %s"), self.selfconsumption_project_id._get_html_link()
+            ),
+            self._message_line(
+                _("Cooperator: %s"), self._partner_chatter_link(self.partner_id)
+            ),
+            self._message_line(
+                _("Owner: %s"), self._partner_chatter_link(self.owner_id)
+            ),
+            self._message_line(
+                _("Supply point: %s"),
+                supply_point._get_html_link(
+                    title=supply_point.code or supply_point.display_name
+                ),
+            ),
+            self._message_line(_("Effective date: %s"), self.effective_date or ""),
+            self._message_line(
+                _("Requested participation: %s"), self.participation_quantity or 0.0
+            ),
+            self._message_line(
+                _("Annual electricity use: %s kWh"), self.annual_electricity_use or 0.0
+            ),
+        ]
+        if self.acc_number:
+            lines.append(self._message_line(_("IBAN: %s"), self.acc_number))
+        return Markup("<p>%s</p><ul>%s</ul>") % (
+            _("Inscription received with the following values:"),
+            Markup("").join(lines),
+        )
+
+    def _message_line(self, label, value):
+        return Markup("<li>%s</li>") % (Markup(label) % value)
 
     # CRUD methods
     def unlink(self):

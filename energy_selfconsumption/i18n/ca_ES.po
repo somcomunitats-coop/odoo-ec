@@ -6794,3 +6794,75 @@ msgstr "Data de recepció"
 #: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__inscription_ids
 msgid "Inscriptions linked to this CUPS"
 msgstr "Inscripcions vinculades a aquest CUPS"
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_view_tree
+msgid "Open form"
+msgstr "Obrir formulari"
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__distribution_table_ids
+msgid "Distribution tables of this project that include the supply point"
+msgstr "Taules de distribució d'aquest projecte que inclouen el punt de subministrament"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Inscription received with the following values:"
+msgstr "Inscripció rebuda amb els següents valors:"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Project: %s"
+msgstr "Projecte: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Cooperator: %s"
+msgstr "Sòcia: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Owner: %s"
+msgstr "Titular: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Supply point: %s"
+msgstr "Punt de subministrament: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Effective date: %s"
+msgstr "Data efectiva: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Requested participation: %s"
+msgstr "Participació sol·licitada: %s"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Annual electricity use: %s kWh"
+msgstr "Consum elèctric anual: %s kWh"
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "IBAN: %s"
+msgstr "IBAN: %s"

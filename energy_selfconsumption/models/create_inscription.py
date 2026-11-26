@@ -750,23 +750,29 @@ class CreateInscription(models.AbstractModel):
         supply_point,
     ):
         # partner = partner.sudo().get_partner_with_type()
-        """Creates the registration record."""
-        self.env["energy_selfconsumption.inscription_selfconsumption"].sudo().create(
-            {
-                "project_id": project.project_id.id,
-                "selfconsumption_project_id": project.id,
-                "partner_id": partner.id,
-                "effective_date": effective_date,
-                "mandate_id": mandate.id if mandate else False,
-                "participation_id": participation.id,
-                "participation_assigned_quantity": participation.quantity,
-                "participation_real_quantity": participation.quantity,
-                "annual_electricity_use": annual_electricity_use,
-                "accept": True,
-                "member": True,
-                "supply_point_id": supply_point.id,
-            }
+        """Creates the registration record and logs the received values."""
+        inscription = (
+            self.env["energy_selfconsumption.inscription_selfconsumption"]
+            .sudo()
+            .create(
+                {
+                    "project_id": project.project_id.id,
+                    "selfconsumption_project_id": project.id,
+                    "partner_id": partner.id,
+                    "effective_date": effective_date,
+                    "mandate_id": mandate.id if mandate else False,
+                    "participation_id": participation.id,
+                    "participation_assigned_quantity": participation.quantity,
+                    "participation_real_quantity": participation.quantity,
+                    "annual_electricity_use": annual_electricity_use,
+                    "accept": True,
+                    "member": True,
+                    "supply_point_id": supply_point.id,
+                }
+            )
         )
+        inscription.with_user(self.env.user).post_received_values()
+        return inscription
 
     def _get_owner(
         self,
