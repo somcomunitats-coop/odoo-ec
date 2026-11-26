@@ -73,6 +73,12 @@ class SupplyPoint(models.Model):
         required=True,
         help="Cooperator subscribed to the self-consumption project",
     )
+    partner_differs_from_owner = fields.Boolean(
+        string="Cooperator different from owner",
+        compute="_compute_partner_differs_from_owner",
+        search="_search_partner_differs_from_owner",
+        help="True when the cooperator and the owner are different partners",
+    )
 
     # Company and external relationships
     company_id = fields.Many2one(
@@ -142,6 +148,13 @@ class SupplyPoint(models.Model):
         readonly=True,
         help="Distribution table assignments for this supply point",
     )
+    inscription_ids = fields.One2many(
+        "energy_selfconsumption.inscription_selfconsumption",
+        "supply_point_id",
+        string="Inscriptions",
+        readonly=True,
+        help="Inscriptions linked to this CUPS",
+    )
     active = fields.Boolean(
         default=True,
         help="If unchecked, this supply point will be hidden from most views",
@@ -152,6 +165,33 @@ class SupplyPoint(models.Model):
     def _onchange_partner_id(self):
         """Set owner to partner by default when partner changes"""
         self.owner_id = self.partner_id
+
+    @api.depends("partner_id", "owner_id")
+    def _compute_partner_differs_from_owner(self):
+        """True when the cooperator is not the supply point owner."""
+        for record in self:
+            record.partner_differs_from_owner = bool(
+                record.partner_id and record.partner_id != record.owner_id
+            )
+
+    def _search_partner_differs_from_owner(self, operator, value):
+        """Search supply points whose cooperator and owner differ."""
+        if operator not in ("=", "!="):
+            return []
+        wants_difference = (operator == "=" and bool(value)) or (
+            operator == "!=" and not bool(value)
+        )
+        self.env.cr.execute(
+            """
+            SELECT id
+              FROM energy_selfconsumption_supply_point
+             WHERE partner_id IS DISTINCT FROM owner_id
+            """
+        )
+        differing_ids = [row[0] for row in self.env.cr.fetchall()]
+        if wants_difference:
+            return [("id", "in", differing_ids)]
+        return [("id", "not in", differing_ids)]
 
     @api.depends("partner_id", "street")
     def _compute_supply_point_name(self):
@@ -316,3 +356,21 @@ class SupplyPoint(models.Model):
         """Toggle active state of the supply point"""
         for record in self:
             record.active = not record.active
+
+    def action_open_modify_wizard(self):
+        """Open the wizard that changes the cooperator or the owner."""
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Modify Supply Point"),
+            "res_model": "energy_selfconsumption.supply_point.modify.wizard",
+            "view_mode": "form",
+            "target": "new",
+            "context": {
+                "default_supply_point_id": self.id,
+                "default_partner_id": self.partner_id.id,
+                "default_owner_id": self.owner_id.id,
+                "default_original_partner_id": self.partner_id.id,
+                "default_original_owner_id": self.owner_id.id,
+            },
+        }

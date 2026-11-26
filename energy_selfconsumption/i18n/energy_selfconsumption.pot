@@ -140,7 +140,6 @@ msgid ""
 "<b>\n"
 "                                        The indicated maximum contracted power is very high.\n"
 "                                        Please check that this is correct.\n"
-"                                        Remember that we use '.' to express decimals, not ','.\n"
 "                                    </b>"
 msgstr ""
 
@@ -1280,6 +1279,7 @@ msgstr ""
 #. module: energy_selfconsumption
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__partner_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_modify_wizard__partner_id
 msgid "Cooperator"
 msgstr ""
 
@@ -4101,6 +4101,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_selfconsumption__owner_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__owner_id
 #: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_assignation__owner_id
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_modify_wizard__owner_id
 msgid "Owner"
 msgstr ""
 
@@ -6539,4 +6540,170 @@ msgstr ""
 #: code:addons/energy_selfconsumption/models/create_inscription.py:0
 #, python-format
 msgid "WARNING: The person or entity linked to this request has registered an early inscription in the photovoltaic project {project}."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_tree_view
+msgid "Population"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_differs_from_owner
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_search_view
+msgid "Cooperator different from owner"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__partner_differs_from_owner
+msgid "True when the cooperator and the owner are different partners"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_search_view
+msgid "Linked to a distribution table"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_search_view
+msgid "Linked to an active distribution table"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
+msgid "No supply points yet."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.actions.act_window,help:energy_selfconsumption.supply_point_form_act_window
+msgid "Supply points are created from an inscription or from a CSV import."
+msgstr ""
+#. module: energy_selfconsumption
+#: model:ir.model.fields,field_description:energy_selfconsumption.field_energy_selfconsumption_supply_point_modify_wizard__justification
+msgid "Change justification"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/supply_point.py:0
+#, python-format
+msgid "Modify Supply Point"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+msgid "Free text field in case you want to record the reason for the change for historical traceability. It is not mandatory."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+msgid "ATTENTION: If the Supply Point is linked to the active distribution table, changing the cooperator person or entity means the current fee invoicing contract related to this Supply Point must be modified to link it to the new cooperator."
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_modify_wizard_form_view
+msgid "ATTENTION: If the Supply Point is linked to the active distribution table, changing the owner person or entity may mean the representation documents and the project distribution agreement have to be submitted again to the distributor."
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/supply_point_modify_wizard.py:0
+#, python-format
+msgid "COOPERATOR CHANGE: User %(user)s has changed the existing cooperator %(old)s for this new one %(new)s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/supply_point_modify_wizard.py:0
+#, python-format
+msgid "OWNER CHANGE: User %(user)s has changed the existing owner %(old)s for this new one %(new)s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/wizards/supply_point_modify_wizard.py:0
+#, python-format
+msgid "CHANGE JUSTIFICATION: %(justification)s"
+msgstr ""
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.supply_point_form_view
+msgid "Reception date"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_supply_point__inscription_ids
+msgid "Inscriptions linked to this CUPS"
+msgstr ""
+#. module: energy_selfconsumption
+#: model_terms:ir.ui.view,arch_db:energy_selfconsumption.inscription_view_tree
+msgid "Open form"
+msgstr ""
+
+#. module: energy_selfconsumption
+#: model:ir.model.fields,help:energy_selfconsumption.field_energy_selfconsumption_inscription_selfconsumption__distribution_table_ids
+msgid "Distribution tables of this project that include the supply point"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Inscription received with the following values:"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Project: %s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Cooperator: %s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Owner: %s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Supply point: %s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Effective date: %s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Requested participation: %s"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "Annual electricity use: %s kWh"
+msgstr ""
+
+#. module: energy_selfconsumption
+#. odoo-python
+#: code:addons/energy_selfconsumption/models/inscription.py:0
+#, python-format
+msgid "IBAN: %s"
 msgstr ""

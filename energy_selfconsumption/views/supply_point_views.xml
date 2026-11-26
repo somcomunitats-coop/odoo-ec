@@ -23,7 +23,16 @@ Main functionalities:
             <field name="name">energy_selfconsumption.supply_point.form</field>
             <field name="model">energy_selfconsumption.supply_point</field>
             <field name="arch" type="xml">
-                <form string="Supply Points">
+                <form string="Supply Points" create="false">
+                    <header>
+                        <button
+                            name="action_open_modify_wizard"
+                            type="object"
+                            string="Modify Supply Point"
+                            class="oe_highlight"
+                            groups="energy_project.group_admin"
+                        />
+                    </header>
                     <sheet>
                         <!-- Supply point title -->
                         <div class="oe_title">
@@ -38,13 +47,16 @@ Main functionalities:
                             <!-- Left column: Technical and partner data -->
                             <group>
                                 <!-- CUPS identification code -->
-                                <field name="code" />
+                                <field name="id" invisible="1" />
+                                <field name="code" attrs="{'readonly': [('id', '!=', False)]}" />
                                 
                                 <!-- Partner relationships -->
                                 <field name="partner_id"
-                                       options="{'no_create': True}" />
+                                       options="{'no_create': True}"
+                                       attrs="{'readonly': [('id', '!=', False)]}" />
                                 <field name="owner_id"
-                                       domain="['|', ('member', '=' , False), ('id', '=', partner_id)]" />
+                                       domain="['|', ('member', '=' , False), ('id', '=', partner_id)]"
+                                       attrs="{'readonly': [('id', '!=', False)]}" />
                                 
                                 <!-- Energy suppliers -->
                                 <field name="reseller_id"
@@ -65,7 +77,6 @@ Main functionalities:
                                     <b>
                                         The indicated maximum contracted power is very high.
                                         Please check that this is correct.
-                                        Remember that we use '.' to express decimals, not ','.
                                     </b>
                                 </p>
                                 
@@ -114,8 +125,32 @@ Main functionalities:
                                     <tree default_order="distribution_table_create_date desc">
                                         <field name="selfconsumption_project_id"
                                                string="Name" />
+                                        <field name="distribution_table_id" />
                                         <field name="distribution_table_state" />
+                                        <field name="energy_shares" />
+                                        <field name="coefficient" />
                                         <field name="distribution_table_create_date" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Inscriptions" name="inscriptions">
+                                <field name="inscription_ids">
+                                    <tree
+                                        create="false"
+                                        delete="false"
+                                        edit="false"
+                                        default_order="create_date desc"
+                                    >
+                                        <field name="company_id" invisible="1" />
+                                        <field name="state" readonly="1" />
+                                        <field name="partner_id" string="Cooperator" readonly="1" />
+                                        <field name="create_date" string="Reception date" readonly="1" />
+                                        <field name="effective_date" readonly="1" />
+                                        <field name="selfconsumption_project_id" string="Project" readonly="1" />
+                                        <field name="participation_quantity" readonly="1" />
+                                        <field name="participation_assigned_quantity" readonly="1" />
+                                        <field name="participation_real_quantity" readonly="1" />
+                                        <field name="acc_number" string="IBAN" readonly="1" />
                                     </tree>
                                 </field>
                             </page>
@@ -137,13 +172,44 @@ Main functionalities:
             <field name="name">energy_selfconsumption.supply_point.tree</field>
             <field name="model">energy_selfconsumption.supply_point</field>
             <field name="arch" type="xml">
-                <tree string="Supply Points">
+                <tree string="Supply Points" create="false">
                     <!-- Main identification fields -->
                     <field name="street" />
+                    <field name="city" string="Population" />
                     <field name="code" />
                     <field name="partner_id" />
                     <field name="owner_id" />
                 </tree>
+            </field>
+        </record>
+
+        <!-- Search View: CUPS, cooperator, owner and predefined filters -->
+        <record id="supply_point_search_view" model="ir.ui.view">
+            <field name="name">energy_selfconsumption.supply_point.search</field>
+            <field name="model">energy_selfconsumption.supply_point</field>
+            <field name="arch" type="xml">
+                <search string="Supply Points">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="partner_id" />
+                    <field name="owner_id" />
+                    <separator />
+                    <filter
+                        name="linked_to_distribution_table"
+                        string="Linked to a distribution table"
+                        domain="[('supply_point_assignation_ids', '!=', False)]"
+                    />
+                    <filter
+                        name="linked_to_active_distribution_table"
+                        string="Linked to an active distribution table"
+                        domain="[('supply_point_assignation_ids.distribution_table_state', '=', 'active')]"
+                    />
+                    <filter
+                        name="partner_differs_from_owner"
+                        string="Cooperator different from owner"
+                        domain="[('partner_differs_from_owner', '=', True)]"
+                    />
+                </search>
             </field>
         </record>
 
@@ -154,8 +220,11 @@ Main functionalities:
             <field name="res_model">energy_selfconsumption.supply_point</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    There is no examples click here to add new Supply Points.
+                <p class="o_view_nocontent_smiling_face">
+                    No supply points yet.
+                </p>
+                <p>
+                    Supply points are created from an inscription or from a CSV import.
                 </p>
             </field>
             <!-- Default to Spanish country -->
