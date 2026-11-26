@@ -141,6 +141,7 @@ Main functionalities:
                                         edit="false"
                                         default_order="create_date desc"
                                     >
+                                        <field name="company_id" invisible="1" />
                                         <field name="state" readonly="1" />
                                         <field name="partner_id" string="Cooperator" readonly="1" />
                                         <field name="create_date" string="Reception date" readonly="1" />
